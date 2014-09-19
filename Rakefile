@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-WarehouseTwo::Application.load_tasks
+UnifiedWarehouse::Application.load_tasks

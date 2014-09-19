@@ -9,7 +9,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module WarehouseTwo
+module UnifiedWarehouse
   class Application < Rails::Application
     config.autoload_paths    += [ "#{config.root}/lib" ]
     config.time_zone          = 'UTC'

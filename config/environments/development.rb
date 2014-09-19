@@ -1,4 +1,4 @@
-WarehouseTwo::Application.configure do
+UnifiedWarehouse::Application.configure do
   # NOTE: Much of this can probably be removed as we're not really using Rails, more AR.
   config.cache_classes = false
   config.whiny_nils = true

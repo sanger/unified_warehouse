@@ -29,7 +29,7 @@ class Load < Thor
 
   no_tasks do
     def consumer(queue_configuration, &block)
-      AmqpConsumer.new(WarehouseTwo::Application.config.amqp.send(queue_configuration)).tap do |consumer|
+      AmqpConsumer.new(UnifiedWarehouse::Application.config.amqp.send(queue_configuration)).tap do |consumer|
         consumer.instance_eval(&block) if block_given?
       end.run
     end

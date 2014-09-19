@@ -101,7 +101,7 @@ class ApiConsumer
   def initialize(model)
     @model                        = model
     @payload_name, @resource_name = [ :singularize, :pluralize ].map { |s| @model.name.underscore.send(s) }
-    @client                       = RestClient::Resource.new(WarehouseTwo::Application.config.api.root)
+    @client                       = RestClient::Resource.new(UnifiedWarehouse::Application.config.api.root)
   end
 
   attr_reader :model
