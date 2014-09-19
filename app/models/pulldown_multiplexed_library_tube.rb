@@ -1,2 +1,0 @@
-class PulldownMultiplexedLibraryTube < MultiplexedLibraryTube
-end
