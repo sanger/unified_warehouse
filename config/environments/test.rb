@@ -29,6 +29,4 @@ UnifiedWarehouse::Application.configure do
   config.amqp.deadletter.exchange    = 'deadletters'
   config.amqp.deadletter.routing_key = 'test.deadletter'
 
-  # Configure the API interface
-  config.api.root = 'http://www.example.com/api'
 end

@@ -40,6 +40,4 @@ UnifiedWarehouse::Application.configure do
   config.amqp.deadletter.reconnect_interval              = 10
   config.amqp.deadletter.empty_queue_disconnect_interval = 30
 
-  # Configure the API interface
-  config.api.root = 'http://localhost:3000/0_5/'
 end
