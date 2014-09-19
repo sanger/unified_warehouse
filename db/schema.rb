@@ -11,791 +11,224 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131029125121) do
+ActiveRecord::Schema.define(:version => 0) do
 
-  create_table "aliquots", :id => false, :force => true do |t|
-    t.binary   "uuid",                     :limit => 16, :null => false
-    t.integer  "internal_id",                            :null => false
-    t.binary   "receptacle_uuid",          :limit => 16
-    t.integer  "receptacle_internal_id"
-    t.binary   "study_uuid",               :limit => 16
-    t.integer  "study_internal_id"
-    t.binary   "project_uuid",             :limit => 16
-    t.integer  "project_internal_id"
-    t.binary   "library_uuid",             :limit => 16
-    t.integer  "library_internal_id"
-    t.binary   "sample_uuid",              :limit => 16
-    t.integer  "sample_internal_id"
-    t.binary   "tag_uuid",                 :limit => 16
-    t.integer  "tag_internal_id"
-    t.string   "receptacle_type"
-    t.string   "library_type"
-    t.integer  "insert_size_from"
-    t.integer  "insert_size_to"
-    t.boolean  "is_current",                             :null => false
-    t.datetime "checked_at",                             :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                           :null => false
-    t.datetime "current_to"
-    t.string   "bait_name"
-    t.string   "bait_target_species"
-    t.string   "bait_supplier_identifier"
-    t.string   "bait_supplier_name"
+  create_table "flgen_plate", :primary_key => "id_flgen_plate_tmp", :force => true do |t|
+    t.integer  "id_sample_tmp",                     :null => false
+    t.integer  "id_study_tmp",                      :null => false
+    t.string   "cost_code",           :limit => 20, :null => false
+    t.string   "id_lims",             :limit => 10, :null => false
+    t.datetime "last_updated",                      :null => false
+    t.integer  "plate_barcode",                     :null => false
+    t.integer  "plate_barcode_lims",                :null => false
+    t.string   "plate_uuid_lims",     :limit => 36
+    t.string   "plate_id_lims",       :limit => 20, :null => false
+    t.integer  "plate_size",          :limit => 2
+    t.integer  "plate_size_occupied", :limit => 2
+    t.string   "well_label",          :limit => 10, :null => false
+    t.string   "well_uuid_lims",      :limit => 36
+    t.boolean  "qc_state"
   end
 
-  add_index "aliquots", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
+  add_index "flgen_plate", ["id_sample_tmp"], :name => "flgen_plate_sample_fk"
+  add_index "flgen_plate", ["id_study_tmp"], :name => "flgen_plate_study_fk"
 
-  create_table "asset_audits", :id => false, :force => true do |t|
-    t.binary   "uuid",                 :limit => 16, :null => false
-    t.integer  "internal_id",                        :null => false
-    t.string   "key"
-    t.string   "message"
-    t.string   "created_by"
-    t.boolean  "is_current",                         :null => false
-    t.datetime "checked_at",                         :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "asset_barcode"
-    t.string   "asset_barcode_prefix"
-    t.binary   "asset_uuid",           :limit => 16
-    t.string   "witnessed_by"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                       :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "asset_audits", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "asset_freezers", :primary_key => "dont_use_id", :force => true do |t|
-    t.binary   "uuid",           :limit => 16, :null => false
-    t.integer  "internal_id"
-    t.string   "name"
-    t.string   "asset_type"
-    t.string   "barcode"
-    t.string   "barcode_prefix"
-    t.string   "building"
-    t.string   "room"
-    t.string   "freezer"
-    t.string   "shelf"
-    t.boolean  "is_current"
-    t.datetime "checked_at"
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-  end
-
-  add_index "asset_freezers", ["uuid", "is_current"], :name => "uuid_and_is_current_idx"
-
-  create_table "asset_links", :id => false, :force => true do |t|
-    t.binary   "uuid",                   :limit => 16, :null => false
-    t.binary   "ancestor_uuid",          :limit => 16
-    t.integer  "ancestor_internal_id",                 :null => false
-    t.string   "ancestor_type"
-    t.binary   "descendant_uuid",        :limit => 16
-    t.integer  "descendant_internal_id",               :null => false
-    t.string   "descendant_type"
-    t.boolean  "is_current"
-    t.datetime "checked_at"
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                         :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "asset_links", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "batch_requests", :id => false, :force => true do |t|
-    t.binary   "uuid",                     :limit => 16, :null => false
-    t.integer  "internal_id",                            :null => false
-    t.binary   "batch_uuid",               :limit => 16
-    t.integer  "batch_internal_id"
-    t.binary   "request_uuid",             :limit => 16
-    t.integer  "request_internal_id"
-    t.string   "request_type"
-    t.binary   "source_asset_uuid",        :limit => 16
-    t.integer  "source_asset_internal_id"
-    t.string   "source_asset_name"
-    t.binary   "target_asset_uuid",        :limit => 16
-    t.integer  "target_asset_internal_id"
-    t.string   "target_asset_name"
-    t.boolean  "is_current",                             :null => false
-    t.datetime "checked_at",                             :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                           :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "batch_requests", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "batches", :id => false, :force => true do |t|
-    t.binary   "uuid",                 :limit => 16, :null => false
-    t.integer  "internal_id",                        :null => false
-    t.string   "created_by",           :limit => 30
-    t.string   "assigned_to",          :limit => 30
-    t.string   "pipeline_name"
-    t.binary   "pipeline_uuid",        :limit => 16
-    t.integer  "pipeline_internal_id"
-    t.string   "state",                :limit => 50
-    t.string   "qc_state",             :limit => 50
-    t.string   "production_state",     :limit => 50
-    t.boolean  "is_current",                         :null => false
-    t.datetime "checked_at",                         :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                       :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "batches", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "billing_events", :id => false, :force => true do |t|
-    t.binary   "uuid",                :limit => 16, :null => false
-    t.integer  "internal_id",                       :null => false
-    t.string   "reference"
-    t.integer  "project_internal_id"
-    t.binary   "project_uuid",        :limit => 16
-    t.string   "project_name"
-    t.string   "division"
-    t.string   "created_by"
-    t.integer  "request_internal_id"
-    t.binary   "request_uuid",        :limit => 16
-    t.string   "request_type"
-    t.string   "library_type"
-    t.string   "cost_code"
-    t.integer  "price"
-    t.float    "quantity"
-    t.string   "kind"
-    t.string   "description"
-    t.boolean  "is_current",                        :null => false
-    t.datetime "entry_date"
-    t.datetime "checked_at",                        :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                      :null => false
-    t.datetime "current_to"
-    t.string   "bait_library_type"
-  end
-
-  add_index "billing_events", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "current_aliquots", :id => false, :force => true do |t|
-    t.binary   "uuid",                     :limit => 16, :null => false
-    t.integer  "internal_id",                            :null => false
-    t.binary   "receptacle_uuid",          :limit => 16
-    t.integer  "receptacle_internal_id"
-    t.binary   "study_uuid",               :limit => 16
-    t.integer  "study_internal_id"
-    t.binary   "project_uuid",             :limit => 16
-    t.integer  "project_internal_id"
-    t.binary   "library_uuid",             :limit => 16
-    t.integer  "library_internal_id"
-    t.binary   "sample_uuid",              :limit => 16
-    t.integer  "sample_internal_id"
-    t.binary   "tag_uuid",                 :limit => 16
-    t.integer  "tag_internal_id"
-    t.string   "receptacle_type"
-    t.string   "library_type"
-    t.integer  "insert_size_from"
-    t.integer  "insert_size_to"
-    t.boolean  "is_current",                             :null => false
-    t.datetime "checked_at",                             :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                           :null => false
-    t.datetime "current_to"
-    t.string   "bait_name"
-    t.string   "bait_target_species"
-    t.string   "bait_supplier_identifier"
-    t.string   "bait_supplier_name"
-  end
-
-  add_index "current_aliquots", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_aliquots", ["library_internal_id", "study_internal_id"], :name => "library_internal_id_study_internal_id_idx"
-  add_index "current_aliquots", ["library_uuid", "receptacle_type"], :name => "library_uuid_and_receptacle_type_idx"
-  add_index "current_aliquots", ["receptacle_internal_id"], :name => "receptacle_internal_id_idx"
-  add_index "current_aliquots", ["sample_internal_id", "receptacle_internal_id"], :name => "sample_internal_id_receptacle_internal_id_idx"
-  add_index "current_aliquots", ["study_internal_id", "receptacle_internal_id"], :name => "study_internal_id_receptacle_internal_id_idx"
-  add_index "current_aliquots", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_asset_audits", :id => false, :force => true do |t|
-    t.binary   "uuid",                 :limit => 16, :null => false
-    t.integer  "internal_id",                        :null => false
-    t.string   "key"
-    t.string   "message"
-    t.string   "created_by"
-    t.boolean  "is_current",                         :null => false
-    t.datetime "checked_at",                         :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "asset_barcode"
-    t.string   "asset_barcode_prefix"
-    t.binary   "asset_uuid",           :limit => 16
-    t.string   "witnessed_by"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                       :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_asset_audits", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_asset_audits", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_asset_links", :id => false, :force => true do |t|
-    t.binary   "uuid",                   :limit => 16, :null => false
-    t.binary   "ancestor_uuid",          :limit => 16
-    t.integer  "ancestor_internal_id",                 :null => false
-    t.string   "ancestor_type"
-    t.binary   "descendant_uuid",        :limit => 16
-    t.integer  "descendant_internal_id",               :null => false
-    t.string   "descendant_type"
-    t.boolean  "is_current"
-    t.datetime "checked_at"
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                         :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_asset_links", ["ancestor_internal_id", "descendant_internal_id", "descendant_type"], :name => "ancestor_internal_id_descendant_internal_id_descendant_type_idx"
-  add_index "current_asset_links", ["descendant_internal_id", "ancestor_internal_id", "ancestor_type"], :name => "descendant_internal_id_ancestor_internal_id_ancestor_type_idx"
-  add_index "current_asset_links", ["descendant_uuid", "ancestor_uuid"], :name => "descendant_uuid_ancestor_uuid_idx"
-  add_index "current_asset_links", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_batch_requests", :id => false, :force => true do |t|
-    t.binary   "uuid",                     :limit => 16, :null => false
-    t.integer  "internal_id",                            :null => false
-    t.binary   "batch_uuid",               :limit => 16
-    t.integer  "batch_internal_id"
-    t.binary   "request_uuid",             :limit => 16
-    t.integer  "request_internal_id"
-    t.string   "request_type"
-    t.binary   "source_asset_uuid",        :limit => 16
-    t.integer  "source_asset_internal_id"
-    t.string   "source_asset_name"
-    t.binary   "target_asset_uuid",        :limit => 16
-    t.integer  "target_asset_internal_id"
-    t.string   "target_asset_name"
-    t.boolean  "is_current",                             :null => false
-    t.datetime "checked_at",                             :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                           :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_batch_requests", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_batch_requests", ["source_asset_internal_id", "request_internal_id"], :name => "source_asset_internal_id_request_internal_id_idx"
-  add_index "current_batch_requests", ["target_asset_internal_id", "batch_uuid"], :name => "target_asset_internal_id_batch_uuid_idx"
-  add_index "current_batch_requests", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_batches", :id => false, :force => true do |t|
-    t.binary   "uuid",                 :limit => 16, :null => false
-    t.integer  "internal_id",                        :null => false
-    t.string   "created_by",           :limit => 30
-    t.string   "assigned_to",          :limit => 30
-    t.string   "pipeline_name"
-    t.binary   "pipeline_uuid",        :limit => 16
-    t.integer  "pipeline_internal_id"
-    t.string   "state",                :limit => 50
-    t.string   "qc_state",             :limit => 50
-    t.string   "production_state",     :limit => 50
-    t.boolean  "is_current",                         :null => false
-    t.datetime "checked_at",                         :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                       :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_batches", ["created_by"], :name => "created_by_idx"
-  add_index "current_batches", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_batches", ["state"], :name => "state_idx"
-  add_index "current_batches", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_billing_events", :id => false, :force => true do |t|
-    t.binary   "uuid",                :limit => 16, :null => false
-    t.integer  "internal_id",                       :null => false
-    t.string   "reference"
-    t.integer  "project_internal_id"
-    t.binary   "project_uuid",        :limit => 16
-    t.string   "project_name"
-    t.string   "division"
-    t.string   "created_by"
-    t.integer  "request_internal_id"
-    t.binary   "request_uuid",        :limit => 16
-    t.string   "request_type"
-    t.string   "library_type"
-    t.string   "cost_code"
-    t.integer  "price"
-    t.float    "quantity"
-    t.string   "kind"
-    t.string   "description"
-    t.boolean  "is_current",                        :null => false
-    t.datetime "entry_date"
-    t.datetime "checked_at",                        :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                      :null => false
-    t.datetime "current_to"
-    t.string   "bait_library_type"
-  end
-
-  add_index "current_billing_events", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_billing_events", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_events", :id => false, :force => true do |t|
-    t.binary   "uuid",               :limit => 16, :null => false
-    t.integer  "internal_id",                      :null => false
-    t.integer  "source_internal_id"
-    t.binary   "source_uuid",        :limit => 16
-    t.string   "source_type"
-    t.string   "message"
-    t.string   "state"
-    t.string   "identifier"
-    t.string   "location"
-    t.boolean  "actioned"
-    t.text     "content"
-    t.string   "created_by"
-    t.string   "of_interest_to"
-    t.string   "descriptor_key"
-    t.boolean  "is_current",                       :null => false
-    t.datetime "checked_at",                       :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                     :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_events", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_events", ["source_uuid", "state"], :name => "source_uuid_and_state_idx"
-  add_index "current_events", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_lanes", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16, :null => false
-    t.integer  "internal_id",                           :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.string   "barcode_prefix",          :limit => 2
-    t.boolean  "closed"
-    t.string   "state",                   :limit => 50
-    t.string   "two_dimensional_barcode"
+  create_table "iseq_flowcell", :primary_key => "id_iseq_flowcell_tmp", :force => true do |t|
+    t.datetime "last_updated",                                                :null => false
+    t.integer  "id_sample_tmp",                                               :null => false
+    t.integer  "id_study_tmp",                                                :null => false
+    t.string   "cost_code",                  :limit => 20,                    :null => false
+    t.boolean  "is_r_and_d",                               :default => false, :null => false
+    t.string   "id_lims",                    :limit => 10,                    :null => false
+    t.integer  "priority",                   :limit => 2,  :default => 1
+    t.boolean  "manual_qc"
     t.boolean  "external_release"
-    t.boolean  "is_current",                            :null => false
-    t.date     "scanned_in_date"
-    t.datetime "checked_at",                            :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                          :null => false
-    t.datetime "current_to"
+    t.string   "flowcell_barcode",           :limit => 15
+    t.string   "flowcell_id",                :limit => 20,                    :null => false
+    t.integer  "position",                   :limit => 2,                     :null => false
+    t.string   "entity_type",                :limit => 30,                    :null => false
+    t.string   "entity_id_lims",             :limit => 20,                    :null => false
+    t.integer  "num_target_components",      :limit => 2,                     :null => false
+    t.integer  "tag_index",                  :limit => 2
+    t.string   "tag_sequence",               :limit => 30
+    t.string   "tag_set_id_lims",            :limit => 20
+    t.string   "tag_set_name",               :limit => 50
+    t.boolean  "is_spiked",                                :default => false, :null => false
+    t.string   "pipeline_id_lims",           :limit => 50,                    :null => false
+    t.string   "bait_name",                  :limit => 50
+    t.integer  "requested_insert_size_from"
+    t.integer  "requested_insert_size_to"
+    t.integer  "forward_read_length",        :limit => 2
+    t.integer  "reverse_read_length",        :limit => 2
   end
 
-  add_index "current_lanes", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_lanes", ["uuid"], :name => "uuid_idx", :unique => true
+  add_index "iseq_flowcell", ["id_sample_tmp"], :name => "iseq_flowcell_sample_fk"
+  add_index "iseq_flowcell", ["id_study_tmp"], :name => "iseq_flowcell_study_fk"
 
-  create_table "current_library_tubes", :id => false, :force => true do |t|
-    t.binary   "uuid",                        :limit => 16,                                :null => false
-    t.integer  "internal_id",                                                              :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.string   "barcode_prefix",              :limit => 2
-    t.boolean  "closed"
-    t.string   "state",                       :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.binary   "sample_uuid",                 :limit => 16
-    t.integer  "sample_internal_id"
-    t.decimal  "volume",                                    :precision => 10, :scale => 2
-    t.decimal  "concentration",                             :precision => 18, :scale => 2
-    t.binary   "tag_uuid",                    :limit => 16
-    t.integer  "tag_internal_id"
-    t.string   "expected_sequence"
-    t.integer  "tag_map_id"
-    t.string   "tag_group_name"
-    t.binary   "tag_group_uuid",              :limit => 16
-    t.integer  "tag_group_internal_id"
-    t.integer  "source_request_internal_id"
-    t.binary   "source_request_uuid",         :limit => 16
-    t.string   "library_type"
-    t.string   "fragment_size_required_from"
-    t.string   "fragment_size_required_to"
-    t.string   "sample_name"
-    t.boolean  "is_current",                                                               :null => false
-    t.date     "scanned_in_date"
-    t.datetime "checked_at",                                                               :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "public_name"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                             :null => false
-    t.datetime "current_to"
+  create_table "iseq_product_metrics", :primary_key => "id_iseq_pr_metrics_tmp", :force => true do |t|
+    t.integer "id_iseq_lane_metrics_tmp",                              :null => false
+    t.integer "id_iseq_flowcell_tmp"
+    t.integer "id_run",                                                :null => false
+    t.integer "position",                               :limit => 2,   :null => false
+    t.integer "tag_index",                              :limit => 2
+    t.string  "tag_sequence",                           :limit => 30
+    t.float   "tag_decode_percent",                     :limit => 5
+    t.integer "tag_decode_count"
+    t.integer "insert_size_quartile1",                  :limit => 2
+    t.integer "insert_size_quartile3",                  :limit => 2
+    t.integer "insert_size_median",                     :limit => 2
+    t.float   "gc_percent_forward_read",                :limit => 5
+    t.float   "gc_percent_reverse_read",                :limit => 5
+    t.float   "sequence_mismatch_percent_forward_read", :limit => 4
+    t.float   "sequence_mismatch_percent_reverse_read", :limit => 4
+    t.float   "adapters_percent_forward_read",          :limit => 5
+    t.float   "adapters_percent_reverse_read",          :limit => 5
+    t.string  "contaminants_scan_hit1_name",            :limit => 50
+    t.float   "contaminants_scan_hit1_score",           :limit => 6
+    t.string  "contaminants_scan_hit2_name",            :limit => 50
+    t.float   "contaminants_scan_hit2_score",           :limit => 6
+    t.string  "ref_match1_name",                        :limit => 100
+    t.float   "ref_match1_percent",                     :limit => 5
+    t.string  "ref_match2_name",                        :limit => 100
+    t.float   "ref_match2_percent",                     :limit => 5
+    t.integer "q20_yield_kb_forward_read"
+    t.integer "q20_yield_kb_reverse_read"
+    t.integer "q30_yield_kb_forward_read"
+    t.integer "q30_yield_kb_reverse_read"
+    t.integer "q40_yield_kb_forward_read"
+    t.integer "q40_yield_kb_reverse_read"
+    t.integer "bam_num_reads",                          :limit => 8
+    t.float   "bam_percent_mapped_target",              :limit => 5
+    t.float   "bam_percent_duplicate_target",           :limit => 5
+    t.float   "bam_percent_mapped_human",               :limit => 5
+    t.float   "bam_percent_duplicate_human",            :limit => 5
+    t.string  "human_split_type",                       :limit => 5
+    t.float   "bam_percent_mapped_spike",               :limit => 5
+    t.float   "bam_percent_duplicate_spike",            :limit => 5
+    t.string  "genotype_sample_name_match",             :limit => 8
+    t.string  "genotype_sample_name_relaxed_match",     :limit => 8
+    t.float   "genotype_mean_depth",                    :limit => 7
+    t.float   "mean_bait_coverage",                     :limit => 6
+    t.float   "on_bait_percent",                        :limit => 5
+    t.float   "on_or_near_bait_percent",                :limit => 5
+    t.integer "verify_bam_id_average_depth",            :limit => 2
+    t.float   "verify_bam_id_score",                    :limit => 7
   end
 
-  add_index "current_library_tubes", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_library_tubes", ["name"], :name => "name_idx"
-  add_index "current_library_tubes", ["uuid"], :name => "uuid_idx", :unique => true
+  add_index "iseq_product_metrics", ["id_iseq_flowcell_tmp"], :name => "iseq_pr_metrics_flc_fk"
+  add_index "iseq_product_metrics", ["id_iseq_lane_metrics_tmp"], :name => "iseq_pr_metrics_lm_fk"
+  add_index "iseq_product_metrics", ["id_run", "position", "tag_index"], :name => "iseq_pm_fcid_run_pos_tag_index"
+  add_index "iseq_product_metrics", ["id_run", "position"], :name => "iseq_pm_run_pos_index"
+  add_index "iseq_product_metrics", ["id_run"], :name => "iseq_pm_run_index"
 
-  create_table "current_multiplexed_library_tubes", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16,                                :null => false
-    t.integer  "internal_id",                                                          :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.string   "barcode_prefix",          :limit => 2
-    t.boolean  "closed"
-    t.string   "state",                   :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.decimal  "volume",                                :precision => 5,  :scale => 2
-    t.decimal  "concentration",                         :precision => 10, :scale => 2
-    t.boolean  "is_current",                                                           :null => false
-    t.date     "scanned_in_date"
-    t.datetime "checked_at",                                                           :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "public_name"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                         :null => false
-    t.datetime "current_to"
+  create_table "iseq_run_lane_metrics", :primary_key => "id_iseq_lane_metrics_tmp", :force => true do |t|
+    t.integer  "id_iseq_flowcell_tmp"
+    t.string   "flowcell_barcode",                       :limit => 15
+    t.integer  "id_run",                                                                   :null => false
+    t.integer  "position",                               :limit => 2,                      :null => false
+    t.string   "instrument_name",                        :limit => 32
+    t.string   "instrument_model",                       :limit => 64
+    t.boolean  "paired_read",                                           :default => false, :null => false
+    t.integer  "forward_read_length",                    :limit => 2
+    t.integer  "reverse_read_length",                    :limit => 2
+    t.integer  "indexing_read_length",                   :limit => 2
+    t.boolean  "indexed_run",                                                              :null => false
+    t.integer  "cycles",                                                                   :null => false
+    t.boolean  "cancelled",                                             :default => false, :null => false
+    t.datetime "run_pending"
+    t.datetime "run_complete"
+    t.datetime "qc_complete"
+    t.integer  "pf_cluster_count",                       :limit => 8
+    t.integer  "raw_cluster_count",                      :limit => 8
+    t.float    "raw_cluster_density",                    :limit => 12
+    t.float    "pf_cluster_density",                     :limit => 12
+    t.integer  "pf_bases",                               :limit => 8
+    t.integer  "q20_yield_kb_forward_read"
+    t.integer  "q20_yield_kb_reverse_read"
+    t.integer  "q30_yield_kb_forward_read"
+    t.integer  "q30_yield_kb_reverse_read"
+    t.integer  "q40_yield_kb_forward_read"
+    t.integer  "q40_yield_kb_reverse_read"
+    t.float    "tags_decode_percent",                    :limit => 5
+    t.float    "tags_decode_cv",                         :limit => 6
+    t.float    "adapters_percent_forward_read",          :limit => 5
+    t.float    "adapters_percent_reverse_read",          :limit => 5
+    t.integer  "insert_size_quartile1",                  :limit => 2
+    t.integer  "insert_size_quartile3",                  :limit => 2
+    t.integer  "insert_size_median",                     :limit => 2
+    t.string   "ref_match1_name",                        :limit => 100
+    t.float    "ref_match1_percent",                     :limit => 5
+    t.string   "ref_match2_name",                        :limit => 100
+    t.float    "ref_match2_percent",                     :limit => 5
+    t.float    "gc_percent_forward_read",                :limit => 5
+    t.float    "gc_percent_reverse_read",                :limit => 5
+    t.float    "sequence_mismatch_percent_forward_read", :limit => 4
+    t.float    "sequence_mismatch_percent_reverse_read", :limit => 4
   end
 
-  add_index "current_multiplexed_library_tubes", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_multiplexed_library_tubes", ["name"], :name => "name_idx"
-  add_index "current_multiplexed_library_tubes", ["uuid"], :name => "uuid_idx", :unique => true
+  add_index "iseq_run_lane_metrics", ["cancelled", "run_complete"], :name => "iseq_rlm_cancelled_and_run_complete_index"
+  add_index "iseq_run_lane_metrics", ["cancelled", "run_pending"], :name => "iseq_rlm_cancelled_and_run_pending_index"
+  add_index "iseq_run_lane_metrics", ["id_iseq_flowcell_tmp", "id_run", "position"], :name => "iseq_rlm_fcid_run_pos", :unique => true
+  add_index "iseq_run_lane_metrics", ["id_run", "position"], :name => "iseq_rlm_run_position_index", :unique => true
+  add_index "iseq_run_lane_metrics", ["id_run"], :name => "iseq_rlmm_id_run_index"
 
-  create_table "current_orders", :id => false, :force => true do |t|
-    t.binary   "uuid",                        :limit => 16, :null => false
-    t.integer  "internal_id",                               :null => false
-    t.boolean  "is_current",                                :null => false
-    t.datetime "checked_at",                                :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "created_by"
-    t.string   "template_name"
-    t.string   "study_name"
-    t.binary   "study_uuid",                  :limit => 16
-    t.string   "project_name"
-    t.binary   "project_uuid",                :limit => 16
-    t.text     "comments"
-    t.datetime "inserted_at"
-    t.integer  "read_length"
-    t.string   "fragment_size_required_from"
-    t.string   "fragment_size_required_to"
-    t.string   "library_type"
-    t.string   "sequencing_type"
-    t.integer  "insert_size"
-    t.integer  "number_of_lanes"
-    t.binary   "submission_uuid",             :limit => 16
-    t.datetime "deleted_at"
-    t.datetime "current_from",                              :null => false
-    t.datetime "current_to"
+  create_table "iseq_run_status", :primary_key => "id_run_status", :force => true do |t|
+    t.integer  "id_run",             :null => false
+    t.datetime "date",               :null => false
+    t.integer  "id_run_status_dict", :null => false
+    t.integer  "id_user",            :null => false
+    t.boolean  "iscurrent",          :null => false
   end
 
-  add_index "current_orders", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_orders", ["uuid"], :name => "uuid_idx", :unique => true
+  add_index "iseq_run_status", ["id_run_status_dict"], :name => "iseq_run_status_rsd_fk"
 
-  create_table "current_pac_bio_library_tubes", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16,                               :null => false
-    t.integer  "internal_id",                                                         :null => false
-    t.string   "name"
-    t.string   "barcode_prefix",          :limit => 2
-    t.string   "barcode"
-    t.boolean  "closed"
-    t.string   "state",                   :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.decimal  "volume",                                :precision => 5, :scale => 2
-    t.decimal  "concentration",                         :precision => 5, :scale => 2
-    t.date     "scanned_in_date"
-    t.string   "public_name"
-    t.string   "prep_kit_barcode"
-    t.string   "binding_kit_barcode"
-    t.string   "smrt_cells_available"
-    t.string   "movie_length"
-    t.string   "protocol"
-    t.boolean  "is_current",                                                          :null => false
-    t.datetime "checked_at",                                                          :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                        :null => false
-    t.datetime "current_to"
+  create_table "iseq_run_status_dict", :primary_key => "id_run_status_dict", :force => true do |t|
+    t.string  "description",    :limit => 64, :null => false
+    t.integer "iscurrent",      :limit => 1,  :null => false
+    t.integer "temporal_index", :limit => 2
   end
 
-  add_index "current_pac_bio_library_tubes", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_pac_bio_library_tubes", ["uuid"], :name => "uuid_idx", :unique => true
+  add_index "iseq_run_status_dict", ["description"], :name => "iseq_run_status_dict_description_index"
 
-  create_table "current_plate_purposes", :id => false, :force => true do |t|
-    t.binary   "uuid",         :limit => 16, :null => false
-    t.integer  "internal_id",                :null => false
-    t.string   "name"
-    t.boolean  "is_current",                 :null => false
-    t.datetime "checked_at",                 :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",               :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_plate_purposes", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_plate_purposes", ["name"], :name => "name_idx"
-  add_index "current_plate_purposes", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_plates", :id => false, :force => true do |t|
-    t.binary   "uuid",                      :limit => 16, :null => false
-    t.integer  "internal_id",                             :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.string   "barcode_prefix",            :limit => 2
-    t.integer  "plate_size"
-    t.boolean  "is_current",                              :null => false
-    t.datetime "checked_at",                              :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "plate_purpose_name"
-    t.integer  "plate_purpose_internal_id"
-    t.binary   "plate_purpose_uuid",        :limit => 16
-    t.string   "infinium_barcode"
-    t.string   "location"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                            :null => false
-    t.datetime "current_to"
-    t.string   "fluidigm_barcode"
-  end
-
-  add_index "current_plates", ["barcode"], :name => "barcode_idx"
-  add_index "current_plates", ["infinium_barcode", "barcode"], :name => "infinium_barcode_and_barcode_idx"
-  add_index "current_plates", ["inserted_at"], :name => "inserted_at_idx"
-  add_index "current_plates", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_plates", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_projects", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16, :null => false
-    t.integer  "internal_id",                           :null => false
-    t.string   "name"
-    t.string   "collaborators"
-    t.text     "funding_comments"
-    t.string   "cost_code"
-    t.string   "funding_model"
-    t.boolean  "approved"
-    t.string   "budget_division"
-    t.string   "external_funding_source"
-    t.string   "project_manager"
-    t.string   "budget_cost_centre"
-    t.string   "state",                   :limit => 50
-    t.boolean  "is_current",                            :null => false
-    t.datetime "checked_at",                            :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                          :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_projects", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_projects", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_quotas", :id => false, :force => true do |t|
-    t.binary   "uuid",                :limit => 16, :null => false
-    t.integer  "internal_id",                       :null => false
-    t.integer  "quota_limit"
-    t.string   "request_type"
-    t.integer  "project_internal_id"
-    t.binary   "project_uuid",        :limit => 16
-    t.string   "project_name"
-    t.boolean  "is_current",                        :null => false
-    t.datetime "checked_at",                        :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                      :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_quotas", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_quotas", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_reference_genomes", :id => false, :force => true do |t|
-    t.binary   "uuid",         :limit => 16, :null => false
-    t.integer  "internal_id",                :null => false
-    t.string   "name"
-    t.boolean  "is_current",                 :null => false
-    t.datetime "checked_at",                 :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",               :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_reference_genomes", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_reference_genomes", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_requests", :id => false, :force => true do |t|
-    t.binary   "uuid",                                 :limit => 16, :null => false
-    t.integer  "internal_id",                                        :null => false
-    t.string   "request_type"
-    t.string   "fragment_size_from"
-    t.string   "fragment_size_to"
-    t.integer  "read_length"
-    t.string   "library_type"
-    t.binary   "study_uuid",                           :limit => 16
-    t.integer  "study_internal_id"
-    t.string   "study_name"
-    t.binary   "project_uuid",                         :limit => 16
-    t.integer  "project_internal_id"
-    t.string   "project_name"
-    t.binary   "source_asset_uuid",                    :limit => 16
-    t.integer  "source_asset_internal_id"
-    t.string   "source_asset_type",                    :limit => 50
-    t.string   "source_asset_name"
-    t.string   "source_asset_barcode"
-    t.string   "source_asset_barcode_prefix"
-    t.string   "source_asset_state"
-    t.boolean  "source_asset_closed"
-    t.string   "source_asset_two_dimensional_barcode"
-    t.binary   "source_asset_sample_uuid",             :limit => 16
-    t.integer  "source_asset_sample_internal_id"
-    t.binary   "target_asset_uuid",                    :limit => 16
-    t.integer  "target_asset_internal_id"
-    t.string   "target_asset_type",                    :limit => 50
-    t.string   "target_asset_name"
-    t.string   "target_asset_barcode"
-    t.string   "target_asset_barcode_prefix"
-    t.string   "target_asset_state"
-    t.boolean  "target_asset_closed"
-    t.string   "target_asset_two_dimensional_barcode"
-    t.binary   "target_asset_sample_uuid",             :limit => 16
-    t.integer  "target_asset_sample_internal_id"
-    t.boolean  "is_current",                                         :null => false
-    t.datetime "checked_at",                                         :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "state",                                :limit => 40
-    t.integer  "priority"
-    t.string   "user"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.binary   "submission_uuid",                      :limit => 16
-    t.integer  "submission_internal_id"
-    t.datetime "current_from",                                       :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_requests", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_requests", ["source_asset_internal_id", "target_asset_internal_id", "source_asset_type"], :name => "assets_via_internal_id_from_source_idx"
-  add_index "current_requests", ["source_asset_uuid", "request_type"], :name => "source_asset_uuid_and_request_type_idx"
-  add_index "current_requests", ["study_internal_id"], :name => "study_internal_id_idx"
-  add_index "current_requests", ["target_asset_internal_id", "source_asset_internal_id", "target_asset_type"], :name => "assets_via_internal_id_idx"
-  add_index "current_requests", ["target_asset_uuid", "source_asset_internal_id"], :name => "target_asset_uuid_source_asset_internal_id_idx"
-  add_index "current_requests", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_sample_tubes", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16,                                :null => false
-    t.integer  "internal_id",                                                          :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.boolean  "closed"
-    t.string   "state",                   :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.binary   "sample_uuid",             :limit => 16
-    t.integer  "sample_internal_id"
-    t.string   "sample_name"
-    t.date     "scanned_in_date"
-    t.decimal  "volume",                                :precision => 5,  :scale => 2
-    t.decimal  "concentration",                         :precision => 10, :scale => 2
-    t.boolean  "is_current",                                                           :null => false
-    t.datetime "checked_at",                                                           :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "barcode_prefix",          :limit => 2
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                         :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_sample_tubes", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_sample_tubes", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_samples", :id => false, :force => true do |t|
-    t.binary   "uuid",                       :limit => 16,                    :null => false
-    t.integer  "internal_id",                                                 :null => false
+  create_table "sample", :primary_key => "id_sample_tmp", :force => true do |t|
+    t.string   "id_lims",             :limit => 10,                    :null => false
+    t.string   "uuid_sample_lims",    :limit => 36
+    t.string   "id_sample_lims",      :limit => 20,                    :null => false
+    t.datetime "last_updated",                                         :null => false
     t.string   "name"
     t.string   "reference_genome"
     t.string   "organism"
-    t.string   "accession_number",           :limit => 50
+    t.string   "accession_number",    :limit => 50
     t.string   "common_name"
     t.text     "description"
-    t.string   "taxon_id"
+    t.integer  "taxon_id"
     t.string   "father"
     t.string   "mother"
     t.string   "replicate"
     t.string   "ethnicity"
-    t.string   "gender",                     :limit => 20
+    t.string   "gender",              :limit => 20
     t.string   "cohort"
     t.string   "country_of_origin"
     t.string   "geographical_region"
-    t.boolean  "is_current",                                                  :null => false
-    t.datetime "checked_at",                                                  :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "sanger_sample_id"
     t.boolean  "control"
-    t.boolean  "empty_supplier_sample_name"
     t.string   "supplier_name"
     t.string   "public_name"
     t.string   "sample_visibility"
     t.string   "strain"
-    t.boolean  "updated_by_manifest"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                :null => false
-    t.datetime "current_to"
-    t.boolean  "consent_withdrawn",                        :default => false, :null => false
+    t.boolean  "consent_withdrawn",                 :default => false, :null => false
     t.string   "donor_id"
   end
 
-  add_index "current_samples", ["accession_number"], :name => "accession_number_idx"
-  add_index "current_samples", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_samples", ["name"], :name => "name_idx"
-  add_index "current_samples", ["sanger_sample_id"], :name => "sanger_sample_id_idx"
-  add_index "current_samples", ["uuid"], :name => "uuid_idx", :unique => true
+  add_index "sample", ["accession_number"], :name => "sample_accession_number_index"
+  add_index "sample", ["id_sample_lims"], :name => "sample_id_sample_lims_index", :unique => true
+  add_index "sample", ["name"], :name => "sample_name_index"
+  add_index "sample", ["uuid_sample_lims"], :name => "sample_uuid_sample_lims_index"
 
-  create_table "current_studies", :id => false, :force => true do |t|
-    t.binary   "uuid",                           :limit => 16,                    :null => false
-    t.integer  "internal_id",                                                     :null => false
+  create_table "study", :primary_key => "id_study_tmp", :force => true do |t|
+    t.string   "id_lims",                        :limit => 10,                    :null => false
+    t.string   "uuid_study_lims",                :limit => 36
+    t.string   "id_study_lims",                  :limit => 20,                    :null => false
+    t.datetime "last_updated",                                                    :null => false
     t.string   "name"
     t.string   "reference_genome"
     t.boolean  "ethically_approved"
@@ -806,10 +239,6 @@ ActiveRecord::Schema.define(:version => 20131029125121) do
     t.string   "abbreviation"
     t.string   "accession_number",               :limit => 50
     t.text     "description"
-    t.boolean  "is_current",                                                      :null => false
-    t.datetime "checked_at",                                                      :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
     t.string   "contains_human_dna"
     t.string   "contaminated_human_dna"
     t.string   "data_release_strategy"
@@ -820,10 +249,6 @@ ActiveRecord::Schema.define(:version => 20131029125121) do
     t.string   "ega_dac_accession_number"
     t.string   "array_express_accession_number"
     t.string   "ega_policy_accession_number"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                    :null => false
-    t.datetime "current_to"
     t.string   "data_release_timing"
     t.string   "data_release_delay_period"
     t.string   "data_release_delay_reason"
@@ -833,697 +258,20 @@ ActiveRecord::Schema.define(:version => 20131029125121) do
     t.string   "data_access_group"
   end
 
-  add_index "current_studies", ["accession_number"], :name => "accession_number_idx"
-  add_index "current_studies", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_studies", ["name"], :name => "name_idx"
-  add_index "current_studies", ["uuid"], :name => "uuid_idx", :unique => true
+  add_index "study", ["accession_number"], :name => "study_accession_number_index"
+  add_index "study", ["id_study_lims"], :name => "study_id_study_lims_index", :unique => true
+  add_index "study", ["name"], :name => "study_name_index"
+  add_index "study", ["uuid_study_lims"], :name => "study_uuid_study_lims_index"
 
-  create_table "current_study_samples", :id => false, :force => true do |t|
-    t.binary   "uuid",               :limit => 16, :null => false
-    t.integer  "internal_id",                      :null => false
-    t.integer  "sample_internal_id"
-    t.binary   "sample_uuid",        :limit => 16
-    t.integer  "study_internal_id"
-    t.binary   "study_uuid",         :limit => 16
-    t.boolean  "is_current",                       :null => false
-    t.datetime "checked_at",                       :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                     :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_study_samples", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_study_samples", ["sample_internal_id", "study_internal_id"], :name => "sample_internal_id_study_internal_id_idx"
-  add_index "current_study_samples", ["sample_uuid", "study_internal_id"], :name => "sample_uuid_study_internal_id_idx"
-  add_index "current_study_samples", ["study_internal_id", "sample_internal_id"], :name => "study_internal_id_sample_internal_id_idx"
-  add_index "current_study_samples", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_submissions", :id => false, :force => true do |t|
-    t.binary   "uuid",         :limit => 16, :null => false
-    t.integer  "internal_id",                :null => false
-    t.boolean  "is_current",                 :null => false
-    t.datetime "checked_at",                 :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "created_by"
-    t.string   "state"
-    t.string   "message"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",               :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_submissions", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_submissions", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_tags", :id => false, :force => true do |t|
-    t.binary   "uuid",                  :limit => 16, :null => false
-    t.integer  "internal_id",                         :null => false
-    t.string   "expected_sequence"
-    t.integer  "map_id"
-    t.string   "tag_group_name"
-    t.binary   "tag_group_uuid",        :limit => 16
-    t.integer  "tag_group_internal_id"
-    t.boolean  "is_current",                          :null => false
-    t.datetime "checked_at",                          :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                        :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "current_tags", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_tags", ["map_id", "internal_id"], :name => "map_id_internal_id_idx"
-  add_index "current_tags", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "current_wells", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16,                                :null => false
-    t.integer  "internal_id",                                                          :null => false
+  create_table "study_users", :primary_key => "id_study_users_tmp", :force => true do |t|
+    t.integer  "id_study_tmp", :null => false
+    t.datetime "last_updated", :null => false
+    t.string   "role"
+    t.string   "login"
+    t.string   "email"
     t.string   "name"
-    t.string   "map",                     :limit => 5
-    t.string   "plate_barcode"
-    t.string   "plate_barcode_prefix",    :limit => 2
-    t.binary   "sample_uuid",             :limit => 16
-    t.integer  "sample_internal_id"
-    t.string   "sample_name"
-    t.string   "gel_pass"
-    t.decimal  "concentration",                         :precision => 10, :scale => 2
-    t.float    "current_volume"
-    t.float    "buffer_volume"
-    t.float    "requested_volume"
-    t.float    "picked_volume"
-    t.string   "pico_pass"
-    t.boolean  "is_current",                                                           :null => false
-    t.datetime "checked_at",                                                           :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.binary   "plate_uuid",              :limit => 16
-    t.decimal  "measured_volume",                       :precision => 5,  :scale => 2
-    t.integer  "sequenom_count"
-    t.string   "gender_markers",          :limit => 40
-    t.string   "genotyping_status"
-    t.string   "genotyping_snp_plate_id"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                         :null => false
-    t.datetime "current_to"
-    t.string   "display_name",            :limit => 20
   end
 
-  add_index "current_wells", ["inserted_at"], :name => "inserted_at_idx"
-  add_index "current_wells", ["internal_id"], :name => "internal_id_idx", :unique => true
-  add_index "current_wells", ["plate_barcode", "plate_barcode_prefix", "map"], :name => "plate_barcode_plate_barcode_prefix_map_idx"
-  add_index "current_wells", ["uuid"], :name => "uuid_idx", :unique => true
-
-  create_table "events", :id => false, :force => true do |t|
-    t.binary   "uuid",               :limit => 16, :null => false
-    t.integer  "internal_id",                      :null => false
-    t.integer  "source_internal_id"
-    t.binary   "source_uuid",        :limit => 16
-    t.string   "source_type"
-    t.string   "message"
-    t.string   "state"
-    t.string   "identifier"
-    t.string   "location"
-    t.boolean  "actioned"
-    t.text     "content"
-    t.string   "created_by"
-    t.string   "of_interest_to"
-    t.string   "descriptor_key"
-    t.boolean  "is_current",                       :null => false
-    t.datetime "checked_at",                       :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                     :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "events", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "lanes", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16, :null => false
-    t.integer  "internal_id",                           :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.string   "barcode_prefix",          :limit => 2
-    t.boolean  "closed"
-    t.string   "state",                   :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.boolean  "external_release"
-    t.boolean  "is_current",                            :null => false
-    t.date     "scanned_in_date"
-    t.datetime "checked_at",                            :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                          :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "lanes", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "library_tubes", :id => false, :force => true do |t|
-    t.binary   "uuid",                        :limit => 16,                                :null => false
-    t.integer  "internal_id",                                                              :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.string   "barcode_prefix",              :limit => 2
-    t.boolean  "closed"
-    t.string   "state",                       :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.binary   "sample_uuid",                 :limit => 16
-    t.integer  "sample_internal_id"
-    t.decimal  "volume",                                    :precision => 10, :scale => 2
-    t.decimal  "concentration",                             :precision => 18, :scale => 2
-    t.binary   "tag_uuid",                    :limit => 16
-    t.integer  "tag_internal_id"
-    t.string   "expected_sequence"
-    t.integer  "tag_map_id"
-    t.string   "tag_group_name"
-    t.binary   "tag_group_uuid",              :limit => 16
-    t.integer  "tag_group_internal_id"
-    t.integer  "source_request_internal_id"
-    t.binary   "source_request_uuid",         :limit => 16
-    t.string   "library_type"
-    t.string   "fragment_size_required_from"
-    t.string   "fragment_size_required_to"
-    t.string   "sample_name"
-    t.boolean  "is_current",                                                               :null => false
-    t.date     "scanned_in_date"
-    t.datetime "checked_at",                                                               :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "public_name"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                             :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "library_tubes", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "multiplexed_library_tubes", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16,                                :null => false
-    t.integer  "internal_id",                                                          :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.string   "barcode_prefix",          :limit => 2
-    t.boolean  "closed"
-    t.string   "state",                   :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.decimal  "volume",                                :precision => 5,  :scale => 2
-    t.decimal  "concentration",                         :precision => 10, :scale => 2
-    t.boolean  "is_current",                                                           :null => false
-    t.date     "scanned_in_date"
-    t.datetime "checked_at",                                                           :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "public_name"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                         :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "multiplexed_library_tubes", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "orders", :id => false, :force => true do |t|
-    t.binary   "uuid",                        :limit => 16, :null => false
-    t.integer  "internal_id",                               :null => false
-    t.boolean  "is_current",                                :null => false
-    t.datetime "checked_at",                                :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "created_by"
-    t.string   "template_name"
-    t.string   "study_name"
-    t.binary   "study_uuid",                  :limit => 16
-    t.string   "project_name"
-    t.binary   "project_uuid",                :limit => 16
-    t.text     "comments"
-    t.datetime "inserted_at"
-    t.integer  "read_length"
-    t.string   "fragment_size_required_from"
-    t.string   "fragment_size_required_to"
-    t.string   "library_type"
-    t.string   "sequencing_type"
-    t.integer  "insert_size"
-    t.integer  "number_of_lanes"
-    t.binary   "submission_uuid",             :limit => 16
-    t.datetime "deleted_at"
-    t.datetime "current_from",                              :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "orders", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "pac_bio_library_tubes", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16,                               :null => false
-    t.integer  "internal_id",                                                         :null => false
-    t.string   "name"
-    t.string   "barcode_prefix",          :limit => 2
-    t.string   "barcode"
-    t.boolean  "closed"
-    t.string   "state",                   :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.decimal  "volume",                                :precision => 5, :scale => 2
-    t.decimal  "concentration",                         :precision => 5, :scale => 2
-    t.date     "scanned_in_date"
-    t.string   "public_name"
-    t.string   "prep_kit_barcode"
-    t.string   "binding_kit_barcode"
-    t.string   "smrt_cells_available"
-    t.string   "movie_length"
-    t.string   "protocol"
-    t.boolean  "is_current",                                                          :null => false
-    t.datetime "checked_at",                                                          :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                        :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "pac_bio_library_tubes", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "plate_purposes", :id => false, :force => true do |t|
-    t.binary   "uuid",         :limit => 16, :null => false
-    t.integer  "internal_id",                :null => false
-    t.string   "name"
-    t.boolean  "is_current",                 :null => false
-    t.datetime "checked_at",                 :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",               :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "plate_purposes", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "plates", :id => false, :force => true do |t|
-    t.binary   "uuid",                      :limit => 16, :null => false
-    t.integer  "internal_id",                             :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.string   "barcode_prefix",            :limit => 2
-    t.integer  "plate_size"
-    t.boolean  "is_current",                              :null => false
-    t.datetime "checked_at",                              :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "plate_purpose_name"
-    t.integer  "plate_purpose_internal_id"
-    t.binary   "plate_purpose_uuid",        :limit => 16
-    t.string   "infinium_barcode"
-    t.string   "location"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                            :null => false
-    t.datetime "current_to"
-    t.string   "fluidigm_barcode"
-  end
-
-  add_index "plates", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "project_users", :force => true do |t|
-    t.integer "project_internal_id",               :null => false
-    t.binary  "project_uuid",        :limit => 16, :null => false
-    t.string  "role",                              :null => false
-    t.string  "login",                             :null => false
-    t.string  "email"
-    t.string  "name"
-  end
-
-  create_table "projects", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16, :null => false
-    t.integer  "internal_id",                           :null => false
-    t.string   "name"
-    t.string   "collaborators"
-    t.text     "funding_comments"
-    t.string   "cost_code"
-    t.string   "funding_model"
-    t.boolean  "approved"
-    t.string   "budget_division"
-    t.string   "external_funding_source"
-    t.string   "project_manager"
-    t.string   "budget_cost_centre"
-    t.string   "state",                   :limit => 50
-    t.boolean  "is_current",                            :null => false
-    t.datetime "checked_at",                            :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                          :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "projects", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "quotas", :id => false, :force => true do |t|
-    t.binary   "uuid",                :limit => 16, :null => false
-    t.integer  "internal_id",                       :null => false
-    t.integer  "quota_limit"
-    t.string   "request_type"
-    t.integer  "project_internal_id"
-    t.binary   "project_uuid",        :limit => 16
-    t.string   "project_name"
-    t.boolean  "is_current",                        :null => false
-    t.datetime "checked_at",                        :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                      :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "quotas", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "reference_genomes", :id => false, :force => true do |t|
-    t.binary   "uuid",         :limit => 16, :null => false
-    t.integer  "internal_id",                :null => false
-    t.string   "name"
-    t.boolean  "is_current",                 :null => false
-    t.datetime "checked_at",                 :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",               :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "reference_genomes", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "requests", :id => false, :force => true do |t|
-    t.binary   "uuid",                                 :limit => 16, :null => false
-    t.integer  "internal_id",                                        :null => false
-    t.string   "request_type"
-    t.string   "fragment_size_from"
-    t.string   "fragment_size_to"
-    t.integer  "read_length"
-    t.string   "library_type"
-    t.binary   "study_uuid",                           :limit => 16
-    t.integer  "study_internal_id"
-    t.string   "study_name"
-    t.binary   "project_uuid",                         :limit => 16
-    t.integer  "project_internal_id"
-    t.string   "project_name"
-    t.binary   "source_asset_uuid",                    :limit => 16
-    t.integer  "source_asset_internal_id"
-    t.string   "source_asset_type",                    :limit => 50
-    t.string   "source_asset_name"
-    t.string   "source_asset_barcode"
-    t.string   "source_asset_barcode_prefix"
-    t.string   "source_asset_state"
-    t.boolean  "source_asset_closed"
-    t.string   "source_asset_two_dimensional_barcode"
-    t.binary   "source_asset_sample_uuid",             :limit => 16
-    t.integer  "source_asset_sample_internal_id"
-    t.binary   "target_asset_uuid",                    :limit => 16
-    t.integer  "target_asset_internal_id"
-    t.string   "target_asset_type",                    :limit => 50
-    t.string   "target_asset_name"
-    t.string   "target_asset_barcode"
-    t.string   "target_asset_barcode_prefix"
-    t.string   "target_asset_state"
-    t.boolean  "target_asset_closed"
-    t.string   "target_asset_two_dimensional_barcode"
-    t.binary   "target_asset_sample_uuid",             :limit => 16
-    t.integer  "target_asset_sample_internal_id"
-    t.boolean  "is_current",                                         :null => false
-    t.datetime "checked_at",                                         :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "state",                                :limit => 40
-    t.integer  "priority"
-    t.string   "user"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.binary   "submission_uuid",                      :limit => 16
-    t.integer  "submission_internal_id"
-    t.datetime "current_from",                                       :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "requests", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "sample_tubes", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16,                                :null => false
-    t.integer  "internal_id",                                                          :null => false
-    t.string   "name"
-    t.string   "barcode"
-    t.boolean  "closed"
-    t.string   "state",                   :limit => 50
-    t.string   "two_dimensional_barcode"
-    t.binary   "sample_uuid",             :limit => 16
-    t.integer  "sample_internal_id"
-    t.string   "sample_name"
-    t.date     "scanned_in_date"
-    t.decimal  "volume",                                :precision => 5,  :scale => 2
-    t.decimal  "concentration",                         :precision => 10, :scale => 2
-    t.boolean  "is_current",                                                           :null => false
-    t.datetime "checked_at",                                                           :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "barcode_prefix",          :limit => 2
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                         :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "sample_tubes", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "samples", :id => false, :force => true do |t|
-    t.binary   "uuid",                       :limit => 16,                    :null => false
-    t.integer  "internal_id",                                                 :null => false
-    t.string   "name"
-    t.string   "reference_genome"
-    t.string   "organism"
-    t.string   "accession_number",           :limit => 50
-    t.string   "common_name"
-    t.text     "description"
-    t.string   "taxon_id"
-    t.string   "father"
-    t.string   "mother"
-    t.string   "replicate"
-    t.string   "ethnicity"
-    t.string   "gender",                     :limit => 20
-    t.string   "cohort"
-    t.string   "country_of_origin"
-    t.string   "geographical_region"
-    t.boolean  "is_current",                                                  :null => false
-    t.datetime "checked_at",                                                  :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "sanger_sample_id"
-    t.boolean  "control"
-    t.boolean  "empty_supplier_sample_name"
-    t.string   "supplier_name"
-    t.string   "public_name"
-    t.string   "sample_visibility"
-    t.string   "strain"
-    t.boolean  "updated_by_manifest"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                :null => false
-    t.datetime "current_to"
-    t.boolean  "consent_withdrawn",                        :default => false, :null => false
-    t.string   "donor_id"
-  end
-
-  add_index "samples", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "studies", :id => false, :force => true do |t|
-    t.binary   "uuid",                           :limit => 16,                    :null => false
-    t.integer  "internal_id",                                                     :null => false
-    t.string   "name"
-    t.string   "reference_genome"
-    t.boolean  "ethically_approved"
-    t.string   "faculty_sponsor"
-    t.string   "state",                          :limit => 50
-    t.string   "study_type",                     :limit => 50
-    t.text     "abstract"
-    t.string   "abbreviation"
-    t.string   "accession_number",               :limit => 50
-    t.text     "description"
-    t.boolean  "is_current",                                                      :null => false
-    t.datetime "checked_at",                                                      :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "contains_human_dna"
-    t.string   "contaminated_human_dna"
-    t.string   "data_release_strategy"
-    t.string   "data_release_sort_of_study"
-    t.string   "ena_project_id"
-    t.string   "study_title"
-    t.string   "study_visibility"
-    t.string   "ega_dac_accession_number"
-    t.string   "array_express_accession_number"
-    t.string   "ega_policy_accession_number"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                    :null => false
-    t.datetime "current_to"
-    t.string   "data_release_timing"
-    t.string   "data_release_delay_period"
-    t.string   "data_release_delay_reason"
-    t.boolean  "remove_x_and_autosomes",                       :default => false, :null => false
-    t.boolean  "alignments_in_bam",                            :default => true,  :null => false
-    t.boolean  "separate_y_chromosome_data",                   :default => false, :null => false
-    t.string   "data_access_group"
-  end
-
-  add_index "studies", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "study_samples", :id => false, :force => true do |t|
-    t.binary   "uuid",               :limit => 16, :null => false
-    t.integer  "internal_id",                      :null => false
-    t.integer  "sample_internal_id"
-    t.binary   "sample_uuid",        :limit => 16
-    t.integer  "study_internal_id"
-    t.binary   "study_uuid",         :limit => 16
-    t.boolean  "is_current",                       :null => false
-    t.datetime "checked_at",                       :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                     :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "study_samples", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "study_users", :force => true do |t|
-    t.integer "study_internal_id",               :null => false
-    t.binary  "study_uuid",        :limit => 16, :null => false
-    t.string  "role",                            :null => false
-    t.string  "login",                           :null => false
-    t.string  "email"
-    t.string  "name"
-  end
-
-  create_table "submissions", :id => false, :force => true do |t|
-    t.binary   "uuid",         :limit => 16, :null => false
-    t.integer  "internal_id",                :null => false
-    t.boolean  "is_current",                 :null => false
-    t.datetime "checked_at",                 :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.string   "created_by"
-    t.string   "state"
-    t.string   "message"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",               :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "submissions", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "submitted_assets", :primary_key => "dont_use_id", :force => true do |t|
-    t.binary   "order_uuid", :limit => 16
-    t.binary   "asset_uuid", :limit => 16
-    t.datetime "deleted_at"
-  end
-
-  add_index "submitted_assets", ["order_uuid", "asset_uuid"], :name => "submission_uuid_and_asset_uuid_idx"
-
-  create_table "tags", :id => false, :force => true do |t|
-    t.binary   "uuid",                  :limit => 16, :null => false
-    t.integer  "internal_id",                         :null => false
-    t.string   "expected_sequence"
-    t.integer  "map_id"
-    t.string   "tag_group_name"
-    t.binary   "tag_group_uuid",        :limit => 16
-    t.integer  "tag_group_internal_id"
-    t.boolean  "is_current",                          :null => false
-    t.datetime "checked_at",                          :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                        :null => false
-    t.datetime "current_to"
-  end
-
-  add_index "tags", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  create_table "wells", :id => false, :force => true do |t|
-    t.binary   "uuid",                    :limit => 16,                                :null => false
-    t.integer  "internal_id",                                                          :null => false
-    t.string   "name"
-    t.string   "map",                     :limit => 5
-    t.string   "plate_barcode"
-    t.string   "plate_barcode_prefix",    :limit => 2
-    t.binary   "sample_uuid",             :limit => 16
-    t.integer  "sample_internal_id"
-    t.string   "sample_name"
-    t.string   "gel_pass"
-    t.decimal  "concentration",                         :precision => 10, :scale => 2
-    t.float    "current_volume"
-    t.float    "buffer_volume"
-    t.float    "requested_volume"
-    t.float    "picked_volume"
-    t.string   "pico_pass"
-    t.boolean  "is_current",                                                           :null => false
-    t.datetime "checked_at",                                                           :null => false
-    t.datetime "last_updated"
-    t.datetime "created"
-    t.binary   "plate_uuid",              :limit => 16
-    t.decimal  "measured_volume",                       :precision => 5,  :scale => 2
-    t.integer  "sequenom_count"
-    t.string   "gender_markers",          :limit => 40
-    t.string   "genotyping_status"
-    t.string   "genotyping_snp_plate_id"
-    t.datetime "inserted_at"
-    t.datetime "deleted_at"
-    t.datetime "current_from",                                                         :null => false
-    t.datetime "current_to"
-    t.string   "display_name",            :limit => 20
-  end
-
-  add_index "wells", ["uuid", "current_from", "current_to"], :name => "uuid_and_current_from_and_current_to_idx", :unique => true
-
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_aliquots WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_aliquots(`uuid`,`internal_id`,`receptacle_uuid`,`receptacle_internal_id`,`study_uuid`,`study_internal_id`,`project_uuid`,`project_internal_id`,`library_uuid`,`library_internal_id`,`sample_uuid`,`sample_internal_id`,`tag_uuid`,`tag_internal_id`,`receptacle_type`,`library_type`,`insert_size_from`,`insert_size_to`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`,`bait_name`,`bait_target_species`,`bait_supplier_identifier`,`bait_supplier_name`) VALUES(NEW.uuid,NEW.internal_id,NEW.receptacle_uuid,NEW.receptacle_internal_id,NEW.study_uuid,NEW.study_internal_id,NEW.project_uuid,NEW.project_internal_id,NEW.library_uuid,NEW.library_internal_id,NEW.sample_uuid,NEW.sample_internal_id,NEW.tag_uuid,NEW.tag_internal_id,NEW.receptacle_type,NEW.library_type,NEW.insert_size_from,NEW.insert_size_to,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to,NEW.bait_name,NEW.bait_target_species,NEW.bait_supplier_identifier,NEW.bait_supplier_name);\n          END ; END IF ;\n        END", {:name=>"maintain_current_aliquots_trigger", :event=>:insert, :on=>"aliquots"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_asset_audits WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_asset_audits(`uuid`,`internal_id`,`key`,`message`,`created_by`,`is_current`,`checked_at`,`last_updated`,`created`,`asset_barcode`,`asset_barcode_prefix`,`asset_uuid`,`witnessed_by`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.key,NEW.message,NEW.created_by,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.asset_barcode,NEW.asset_barcode_prefix,NEW.asset_uuid,NEW.witnessed_by,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_asset_audits_trigger", :event=>:insert, :on=>"asset_audits"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_asset_links WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_asset_links(`uuid`,`ancestor_uuid`,`ancestor_internal_id`,`ancestor_type`,`descendant_uuid`,`descendant_internal_id`,`descendant_type`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.ancestor_uuid,NEW.ancestor_internal_id,NEW.ancestor_type,NEW.descendant_uuid,NEW.descendant_internal_id,NEW.descendant_type,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_asset_links_trigger", :event=>:insert, :on=>"asset_links"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_batch_requests WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_batch_requests(`uuid`,`internal_id`,`batch_uuid`,`batch_internal_id`,`request_uuid`,`request_internal_id`,`request_type`,`source_asset_uuid`,`source_asset_internal_id`,`source_asset_name`,`target_asset_uuid`,`target_asset_internal_id`,`target_asset_name`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.batch_uuid,NEW.batch_internal_id,NEW.request_uuid,NEW.request_internal_id,NEW.request_type,NEW.source_asset_uuid,NEW.source_asset_internal_id,NEW.source_asset_name,NEW.target_asset_uuid,NEW.target_asset_internal_id,NEW.target_asset_name,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_batch_requests_trigger", :event=>:insert, :on=>"batch_requests"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_batches WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_batches(`uuid`,`internal_id`,`created_by`,`assigned_to`,`pipeline_name`,`pipeline_uuid`,`pipeline_internal_id`,`state`,`qc_state`,`production_state`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.created_by,NEW.assigned_to,NEW.pipeline_name,NEW.pipeline_uuid,NEW.pipeline_internal_id,NEW.state,NEW.qc_state,NEW.production_state,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_batches_trigger", :event=>:insert, :on=>"batches"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_billing_events WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_billing_events(`uuid`,`internal_id`,`reference`,`project_internal_id`,`project_uuid`,`project_name`,`division`,`created_by`,`request_internal_id`,`request_uuid`,`request_type`,`library_type`,`cost_code`,`price`,`quantity`,`kind`,`description`,`is_current`,`entry_date`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`,`bait_library_type`) VALUES(NEW.uuid,NEW.internal_id,NEW.reference,NEW.project_internal_id,NEW.project_uuid,NEW.project_name,NEW.division,NEW.created_by,NEW.request_internal_id,NEW.request_uuid,NEW.request_type,NEW.library_type,NEW.cost_code,NEW.price,NEW.quantity,NEW.kind,NEW.description,NEW.is_current,NEW.entry_date,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to,NEW.bait_library_type);\n          END ; END IF ;\n        END", {:name=>"maintain_current_billing_events_trigger", :event=>:insert, :on=>"billing_events"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_events WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_events(`uuid`,`internal_id`,`source_internal_id`,`source_uuid`,`source_type`,`message`,`state`,`identifier`,`location`,`actioned`,`content`,`created_by`,`of_interest_to`,`descriptor_key`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.source_internal_id,NEW.source_uuid,NEW.source_type,NEW.message,NEW.state,NEW.identifier,NEW.location,NEW.actioned,NEW.content,NEW.created_by,NEW.of_interest_to,NEW.descriptor_key,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_events_trigger", :event=>:insert, :on=>"events"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_lanes WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_lanes(`uuid`,`internal_id`,`name`,`barcode`,`barcode_prefix`,`closed`,`state`,`two_dimensional_barcode`,`external_release`,`is_current`,`scanned_in_date`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.barcode,NEW.barcode_prefix,NEW.closed,NEW.state,NEW.two_dimensional_barcode,NEW.external_release,NEW.is_current,NEW.scanned_in_date,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_lanes_trigger", :event=>:insert, :on=>"lanes"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_library_tubes WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_library_tubes(`uuid`,`internal_id`,`name`,`barcode`,`barcode_prefix`,`closed`,`state`,`two_dimensional_barcode`,`sample_uuid`,`sample_internal_id`,`volume`,`concentration`,`tag_uuid`,`tag_internal_id`,`expected_sequence`,`tag_map_id`,`tag_group_name`,`tag_group_uuid`,`tag_group_internal_id`,`source_request_internal_id`,`source_request_uuid`,`library_type`,`fragment_size_required_from`,`fragment_size_required_to`,`sample_name`,`is_current`,`scanned_in_date`,`checked_at`,`last_updated`,`created`,`public_name`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.barcode,NEW.barcode_prefix,NEW.closed,NEW.state,NEW.two_dimensional_barcode,NEW.sample_uuid,NEW.sample_internal_id,NEW.volume,NEW.concentration,NEW.tag_uuid,NEW.tag_internal_id,NEW.expected_sequence,NEW.tag_map_id,NEW.tag_group_name,NEW.tag_group_uuid,NEW.tag_group_internal_id,NEW.source_request_internal_id,NEW.source_request_uuid,NEW.library_type,NEW.fragment_size_required_from,NEW.fragment_size_required_to,NEW.sample_name,NEW.is_current,NEW.scanned_in_date,NEW.checked_at,NEW.last_updated,NEW.created,NEW.public_name,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_library_tubes_trigger", :event=>:insert, :on=>"library_tubes"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_multiplexed_library_tubes WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_multiplexed_library_tubes(`uuid`,`internal_id`,`name`,`barcode`,`barcode_prefix`,`closed`,`state`,`two_dimensional_barcode`,`volume`,`concentration`,`is_current`,`scanned_in_date`,`checked_at`,`last_updated`,`created`,`public_name`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.barcode,NEW.barcode_prefix,NEW.closed,NEW.state,NEW.two_dimensional_barcode,NEW.volume,NEW.concentration,NEW.is_current,NEW.scanned_in_date,NEW.checked_at,NEW.last_updated,NEW.created,NEW.public_name,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_multiplexed_library_tubes_trigger", :event=>:insert, :on=>"multiplexed_library_tubes"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_orders WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_orders(`uuid`,`internal_id`,`is_current`,`checked_at`,`last_updated`,`created`,`created_by`,`template_name`,`study_name`,`study_uuid`,`project_name`,`project_uuid`,`comments`,`inserted_at`,`read_length`,`fragment_size_required_from`,`fragment_size_required_to`,`library_type`,`sequencing_type`,`insert_size`,`number_of_lanes`,`submission_uuid`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.created_by,NEW.template_name,NEW.study_name,NEW.study_uuid,NEW.project_name,NEW.project_uuid,NEW.comments,NEW.inserted_at,NEW.read_length,NEW.fragment_size_required_from,NEW.fragment_size_required_to,NEW.library_type,NEW.sequencing_type,NEW.insert_size,NEW.number_of_lanes,NEW.submission_uuid,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_orders_trigger", :event=>:insert, :on=>"orders"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_pac_bio_library_tubes WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_pac_bio_library_tubes(`uuid`,`internal_id`,`name`,`barcode_prefix`,`barcode`,`closed`,`state`,`two_dimensional_barcode`,`volume`,`concentration`,`scanned_in_date`,`public_name`,`prep_kit_barcode`,`binding_kit_barcode`,`smrt_cells_available`,`movie_length`,`protocol`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.barcode_prefix,NEW.barcode,NEW.closed,NEW.state,NEW.two_dimensional_barcode,NEW.volume,NEW.concentration,NEW.scanned_in_date,NEW.public_name,NEW.prep_kit_barcode,NEW.binding_kit_barcode,NEW.smrt_cells_available,NEW.movie_length,NEW.protocol,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_pac_bio_library_tubes_trigger", :event=>:insert, :on=>"pac_bio_library_tubes"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_plate_purposes WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_plate_purposes(`uuid`,`internal_id`,`name`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_plate_purposes_trigger", :event=>:insert, :on=>"plate_purposes"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_plates WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_plates(`uuid`,`internal_id`,`name`,`barcode`,`barcode_prefix`,`plate_size`,`is_current`,`checked_at`,`last_updated`,`created`,`plate_purpose_name`,`plate_purpose_internal_id`,`plate_purpose_uuid`,`infinium_barcode`,`location`,`inserted_at`,`deleted_at`,`current_from`,`current_to`,`fluidigm_barcode`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.barcode,NEW.barcode_prefix,NEW.plate_size,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.plate_purpose_name,NEW.plate_purpose_internal_id,NEW.plate_purpose_uuid,NEW.infinium_barcode,NEW.location,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to,NEW.fluidigm_barcode);\n          END ; END IF ;\n        END", {:name=>"maintain_current_plates_trigger", :event=>:insert, :on=>"plates"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_projects WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_projects(`uuid`,`internal_id`,`name`,`collaborators`,`funding_comments`,`cost_code`,`funding_model`,`approved`,`budget_division`,`external_funding_source`,`project_manager`,`budget_cost_centre`,`state`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.collaborators,NEW.funding_comments,NEW.cost_code,NEW.funding_model,NEW.approved,NEW.budget_division,NEW.external_funding_source,NEW.project_manager,NEW.budget_cost_centre,NEW.state,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_projects_trigger", :event=>:insert, :on=>"projects"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_quotas WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_quotas(`uuid`,`internal_id`,`quota_limit`,`request_type`,`project_internal_id`,`project_uuid`,`project_name`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.quota_limit,NEW.request_type,NEW.project_internal_id,NEW.project_uuid,NEW.project_name,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_quotas_trigger", :event=>:insert, :on=>"quotas"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_reference_genomes WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_reference_genomes(`uuid`,`internal_id`,`name`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_reference_genomes_trigger", :event=>:insert, :on=>"reference_genomes"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_requests WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_requests(`uuid`,`internal_id`,`request_type`,`fragment_size_from`,`fragment_size_to`,`read_length`,`library_type`,`study_uuid`,`study_internal_id`,`study_name`,`project_uuid`,`project_internal_id`,`project_name`,`source_asset_uuid`,`source_asset_internal_id`,`source_asset_type`,`source_asset_name`,`source_asset_barcode`,`source_asset_barcode_prefix`,`source_asset_state`,`source_asset_closed`,`source_asset_two_dimensional_barcode`,`source_asset_sample_uuid`,`source_asset_sample_internal_id`,`target_asset_uuid`,`target_asset_internal_id`,`target_asset_type`,`target_asset_name`,`target_asset_barcode`,`target_asset_barcode_prefix`,`target_asset_state`,`target_asset_closed`,`target_asset_two_dimensional_barcode`,`target_asset_sample_uuid`,`target_asset_sample_internal_id`,`is_current`,`checked_at`,`last_updated`,`created`,`state`,`priority`,`user`,`inserted_at`,`deleted_at`,`submission_uuid`,`submission_internal_id`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.request_type,NEW.fragment_size_from,NEW.fragment_size_to,NEW.read_length,NEW.library_type,NEW.study_uuid,NEW.study_internal_id,NEW.study_name,NEW.project_uuid,NEW.project_internal_id,NEW.project_name,NEW.source_asset_uuid,NEW.source_asset_internal_id,NEW.source_asset_type,NEW.source_asset_name,NEW.source_asset_barcode,NEW.source_asset_barcode_prefix,NEW.source_asset_state,NEW.source_asset_closed,NEW.source_asset_two_dimensional_barcode,NEW.source_asset_sample_uuid,NEW.source_asset_sample_internal_id,NEW.target_asset_uuid,NEW.target_asset_internal_id,NEW.target_asset_type,NEW.target_asset_name,NEW.target_asset_barcode,NEW.target_asset_barcode_prefix,NEW.target_asset_state,NEW.target_asset_closed,NEW.target_asset_two_dimensional_barcode,NEW.target_asset_sample_uuid,NEW.target_asset_sample_internal_id,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.state,NEW.priority,NEW.user,NEW.inserted_at,NEW.deleted_at,NEW.submission_uuid,NEW.submission_internal_id,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_requests_trigger", :event=>:insert, :on=>"requests"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_sample_tubes WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_sample_tubes(`uuid`,`internal_id`,`name`,`barcode`,`closed`,`state`,`two_dimensional_barcode`,`sample_uuid`,`sample_internal_id`,`sample_name`,`scanned_in_date`,`volume`,`concentration`,`is_current`,`checked_at`,`last_updated`,`created`,`barcode_prefix`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.barcode,NEW.closed,NEW.state,NEW.two_dimensional_barcode,NEW.sample_uuid,NEW.sample_internal_id,NEW.sample_name,NEW.scanned_in_date,NEW.volume,NEW.concentration,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.barcode_prefix,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_sample_tubes_trigger", :event=>:insert, :on=>"sample_tubes"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_samples WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_samples(`uuid`,`internal_id`,`name`,`reference_genome`,`organism`,`accession_number`,`common_name`,`description`,`taxon_id`,`father`,`mother`,`replicate`,`ethnicity`,`gender`,`cohort`,`country_of_origin`,`geographical_region`,`is_current`,`checked_at`,`last_updated`,`created`,`sanger_sample_id`,`control`,`empty_supplier_sample_name`,`supplier_name`,`public_name`,`sample_visibility`,`strain`,`updated_by_manifest`,`inserted_at`,`deleted_at`,`current_from`,`current_to`,`consent_withdrawn`,`donor_id`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.reference_genome,NEW.organism,NEW.accession_number,NEW.common_name,NEW.description,NEW.taxon_id,NEW.father,NEW.mother,NEW.replicate,NEW.ethnicity,NEW.gender,NEW.cohort,NEW.country_of_origin,NEW.geographical_region,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.sanger_sample_id,NEW.control,NEW.empty_supplier_sample_name,NEW.supplier_name,NEW.public_name,NEW.sample_visibility,NEW.strain,NEW.updated_by_manifest,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to,NEW.consent_withdrawn,NEW.donor_id);\n          END ; END IF ;\n        END", {:name=>"maintain_current_samples_trigger", :event=>:insert, :on=>"samples"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_studies WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_studies(`uuid`,`internal_id`,`name`,`reference_genome`,`ethically_approved`,`faculty_sponsor`,`state`,`study_type`,`abstract`,`abbreviation`,`accession_number`,`description`,`is_current`,`checked_at`,`last_updated`,`created`,`contains_human_dna`,`contaminated_human_dna`,`data_release_strategy`,`data_release_sort_of_study`,`ena_project_id`,`study_title`,`study_visibility`,`ega_dac_accession_number`,`array_express_accession_number`,`ega_policy_accession_number`,`inserted_at`,`deleted_at`,`current_from`,`current_to`,`data_release_timing`,`data_release_delay_period`,`data_release_delay_reason`,`remove_x_and_autosomes`,`alignments_in_bam`,`separate_y_chromosome_data`,`data_access_group`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.reference_genome,NEW.ethically_approved,NEW.faculty_sponsor,NEW.state,NEW.study_type,NEW.abstract,NEW.abbreviation,NEW.accession_number,NEW.description,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.contains_human_dna,NEW.contaminated_human_dna,NEW.data_release_strategy,NEW.data_release_sort_of_study,NEW.ena_project_id,NEW.study_title,NEW.study_visibility,NEW.ega_dac_accession_number,NEW.array_express_accession_number,NEW.ega_policy_accession_number,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to,NEW.data_release_timing,NEW.data_release_delay_period,NEW.data_release_delay_reason,NEW.remove_x_and_autosomes,NEW.alignments_in_bam,NEW.separate_y_chromosome_data,NEW.data_access_group);\n          END ; END IF ;\n        END", {:name=>"maintain_current_studies_trigger", :event=>:insert, :on=>"studies"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_study_samples WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_study_samples(`uuid`,`internal_id`,`sample_internal_id`,`sample_uuid`,`study_internal_id`,`study_uuid`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.sample_internal_id,NEW.sample_uuid,NEW.study_internal_id,NEW.study_uuid,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_study_samples_trigger", :event=>:insert, :on=>"study_samples"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_submissions WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_submissions(`uuid`,`internal_id`,`is_current`,`checked_at`,`last_updated`,`created`,`created_by`,`state`,`message`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.created_by,NEW.state,NEW.message,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_submissions_trigger", :event=>:insert, :on=>"submissions"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_tags WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_tags(`uuid`,`internal_id`,`expected_sequence`,`map_id`,`tag_group_name`,`tag_group_uuid`,`tag_group_internal_id`,`is_current`,`checked_at`,`last_updated`,`created`,`inserted_at`,`deleted_at`,`current_from`,`current_to`) VALUES(NEW.uuid,NEW.internal_id,NEW.expected_sequence,NEW.map_id,NEW.tag_group_name,NEW.tag_group_uuid,NEW.tag_group_internal_id,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to);\n          END ; END IF ;\n        END", {:name=>"maintain_current_tags_trigger", :event=>:insert, :on=>"tags"})
-  after_trigger("BEGIN\n          IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN\n            DELETE FROM current_wells WHERE uuid=NEW.uuid;\n          END ; END IF ;\n          IF NEW.current_to IS NULL THEN BEGIN\n            INSERT INTO current_wells(`uuid`,`internal_id`,`name`,`map`,`plate_barcode`,`plate_barcode_prefix`,`sample_uuid`,`sample_internal_id`,`sample_name`,`gel_pass`,`concentration`,`current_volume`,`buffer_volume`,`requested_volume`,`picked_volume`,`pico_pass`,`is_current`,`checked_at`,`last_updated`,`created`,`plate_uuid`,`measured_volume`,`sequenom_count`,`gender_markers`,`genotyping_status`,`genotyping_snp_plate_id`,`inserted_at`,`deleted_at`,`current_from`,`current_to`,`display_name`) VALUES(NEW.uuid,NEW.internal_id,NEW.name,NEW.map,NEW.plate_barcode,NEW.plate_barcode_prefix,NEW.sample_uuid,NEW.sample_internal_id,NEW.sample_name,NEW.gel_pass,NEW.concentration,NEW.current_volume,NEW.buffer_volume,NEW.requested_volume,NEW.picked_volume,NEW.pico_pass,NEW.is_current,NEW.checked_at,NEW.last_updated,NEW.created,NEW.plate_uuid,NEW.measured_volume,NEW.sequenom_count,NEW.gender_markers,NEW.genotyping_status,NEW.genotyping_snp_plate_id,NEW.inserted_at,NEW.deleted_at,NEW.current_from,NEW.current_to,NEW.display_name);\n          END ; END IF ;\n        END", {:name=>"maintain_current_wells_trigger", :event=>:insert, :on=>"wells"})
+  add_index "study_users", ["id_study_tmp"], :name => "study_users_study_fk"
 
 end
