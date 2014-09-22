@@ -4,7 +4,7 @@ module ResourceTools::CoreExtensions
   describe NilClass do
     context '#check' do
       let(:callback) do
-        mock(:callback).tap do |callback|
+        double(:callback).tap do |callback|
           callback.should_receive(:call)
         end
       end
@@ -24,17 +24,17 @@ module ResourceTools::CoreExtensions
 
     context '#within_acceptable_bounds?' do
       it 'returns true if all values are within acceptable bounds' do
-        expect(subject.within_acceptable_bounds?(:a => 1, :b => 2)).to be_true
+        expect(subject.within_acceptable_bounds?(:a => 1, :b => 2)).to be true
       end
 
       it 'returns true if all present values are within acceptable bounds' do
-        expect(subject.within_acceptable_bounds?(:a => 1)).to be_true
-        expect(subject.within_acceptable_bounds?(:b => 2)).to be_true
+        expect(subject.within_acceptable_bounds?(:a => 1)).to be true
+        expect(subject.within_acceptable_bounds?(:b => 2)).to be true
       end
 
       it 'returns false if a single value is not within acceptable bounds' do
-        expect(subject.within_acceptable_bounds?(:a => 5, :b => 2)).to be_false
-        expect(subject.within_acceptable_bounds?(:a => 1, :b => 5)).to be_false
+        expect(subject.within_acceptable_bounds?(:a => 5, :b => 2)).to be false
+        expect(subject.within_acceptable_bounds?(:a => 1, :b => 5)).to be false
       end
     end
 
@@ -55,11 +55,11 @@ module ResourceTools::CoreExtensions
 
     context '#within_acceptable_bounds?' do
       it 'returns false if the object is not equal' do
-        expect(subject.within_acceptable_bounds?(::Object.new)).to be_false
+        expect(subject.within_acceptable_bounds?(::Object.new)).to be false
       end
 
       it 'returns true if the object is equal' do
-        expect(subject.within_acceptable_bounds?(subject)).to be_true
+        expect(subject.within_acceptable_bounds?(subject)).to be true
       end
     end
   end
@@ -69,15 +69,15 @@ module ResourceTools::CoreExtensions
 
     context '#within_acceptable_bounds?' do
       it 'returns false if the value is nil' do
-        expect(subject.within_acceptable_bounds?(nil)).to be_false
+        expect(subject.within_acceptable_bounds?(nil)).to be false
       end
 
       it 'returns false if the string value is not equal' do
-        expect(subject.within_acceptable_bounds?('different')).to be_false
+        expect(subject.within_acceptable_bounds?('different')).to be false
       end
 
       it 'returns true if the string value is equal' do
-        expect(subject.within_acceptable_bounds?('value')).to be_true
+        expect(subject.within_acceptable_bounds?('value')).to be true
       end
 
       it 'returns true if the value is equal when converted to a string' do
@@ -86,7 +86,7 @@ module ResourceTools::CoreExtensions
             'value'
           end
         end
-        expect(subject.within_acceptable_bounds?(object)).to be_true
+        expect(subject.within_acceptable_bounds?(object)).to be true
       end
     end
   end
@@ -104,23 +104,23 @@ module ResourceTools::CoreExtensions
       end
 
       it 'returns false if the value is nil' do
-        expect(subject.within_acceptable_bounds?(nil)).to be_false
+        expect(subject.within_acceptable_bounds?(nil)).to be false
       end
 
       it 'returns true if the value is within the upper bounds' do
-        expect(subject.within_acceptable_bounds?(bounds.last)).to be_true
+        expect(subject.within_acceptable_bounds?(bounds.last)).to be true
       end
 
       it 'returns true if the value is within the lower bounds' do
-        expect(subject.within_acceptable_bounds?(bounds.first)).to be_true
+        expect(subject.within_acceptable_bounds?(bounds.first)).to be true
       end
 
       it 'returns false if the value is above the upper bounds' do
-        expect(subject.within_acceptable_bounds?(bounds.last + 0.00001)).to be_false
+        expect(subject.within_acceptable_bounds?(bounds.last + 0.00001)).to be false
       end
 
       it 'returns false if the value is below the lower bounds' do
-        expect(subject.within_acceptable_bounds?(bounds.first - 0.00001)).to be_false
+        expect(subject.within_acceptable_bounds?(bounds.first - 0.00001)).to be false
       end
     end
   end
