@@ -35,7 +35,7 @@ shared_examples_for 'a resource' do
   context '.create_or_update_from_json' do
     context 'when the record is deleted' do
       before(:each) do
-        described_class.stub(:checked_time_now).and_return(checked_time_now)
+        allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
         described_class.send(:create_or_update, attributes.merge(:deleted_at => Time.now))
       end
 
@@ -58,7 +58,7 @@ shared_examples_for 'a resource' do
 
     context 'when the record is new' do
       before(:each) do
-        described_class.stub(:checked_time_now).and_return(checked_time_now)
+        allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
         described_class.create_or_update_from_json(timestamped_json)
       end
 
