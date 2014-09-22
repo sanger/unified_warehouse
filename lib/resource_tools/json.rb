@@ -39,7 +39,8 @@ module ResourceTools::Json
       def convert_key(key)
         translations[key.to_s] || key.to_s
       end
-      private :convert_key
+      # Remove privacy due to rails delegation changes
+      #private :convert_key
     end
 
     def initialize(*args, &block)

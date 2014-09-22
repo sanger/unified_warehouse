@@ -2,21 +2,20 @@ module ResourceTools
   require 'resource_tools/core_extensions'
 
   extend ActiveSupport::Concern
-  include Uuidable
-  include ResourceTools::SequenceOfDates
+  # include Uuidable
+  # include ResourceTools::SequenceOfDates
   include ResourceTools::Json
   include ResourceTools::Timestamps
 
   included do
-    # Our primary keys are composite based on the UUID of the record and it's currency.
-    self.primary_keys = [ :uuid, :current_to ]
+
     scope :updating, lambda { |r| where(:uuid => r.uuid).current }
 
     # The original data information is stored here
     attr_accessor :data
 
     # Maintain the flow of current_from and current_to.
-    sequence_of_dates_over(:current_from, :current_to)
+    # sequence_of_dates_over(:current_from, :current_to)
 
     # Before saving store whether this is a new record.  This allows us to determine whether we have inserted a new
     # row, which we use in the checks of whether the AmqpConsumer is working: if the ApiConsumer inserts a row then

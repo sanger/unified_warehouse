@@ -20,13 +20,13 @@ shared_examples_for 'associated with roles' do
   end
 
   def users_fit_exactly(roles)
-    described_class::User.count.should == roles.values.flatten.size
+    expect(described_class::User.count).to eq(roles.values.flatten.size)
 
     roles.each do |role, expected|
       found = described_class::User.all(:conditions => { :role => role.to_s }).map do |user|
         Hash[[:name, :email, :login].map { |a| [a,user[a]] }]
       end
-      found.should == expected
+      expect(found).to eq(expected)
     end
   end
 

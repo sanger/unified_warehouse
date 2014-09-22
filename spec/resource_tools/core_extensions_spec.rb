@@ -24,28 +24,28 @@ module ResourceTools::CoreExtensions
 
     context '#within_acceptable_bounds?' do
       it 'returns true if all values are within acceptable bounds' do
-        subject.within_acceptable_bounds?(:a => 1, :b => 2).should be_true
+        expect(subject.within_acceptable_bounds?(:a => 1, :b => 2)).to be_true
       end
 
       it 'returns true if all present values are within acceptable bounds' do
-        subject.within_acceptable_bounds?(:a => 1).should be_true
-        subject.within_acceptable_bounds?(:b => 2).should be_true
+        expect(subject.within_acceptable_bounds?(:a => 1)).to be_true
+        expect(subject.within_acceptable_bounds?(:b => 2)).to be_true
       end
 
       it 'returns false if a single value is not within acceptable bounds' do
-        subject.within_acceptable_bounds?(:a => 5, :b => 2).should be_false
-        subject.within_acceptable_bounds?(:a => 1, :b => 5).should be_false
+        expect(subject.within_acceptable_bounds?(:a => 5, :b => 2)).to be_false
+        expect(subject.within_acceptable_bounds?(:a => 1, :b => 5)).to be_false
       end
     end
 
     context '#reverse_slice' do
       it 'returns a hash without the specified keys' do
-        subject.reverse_slice(:b).should == { :a => 1 }
+        expect(subject.reverse_slice(:b)).to eq({ :a => 1 })
       end
 
       it 'does not affect the original hash' do
         subject.reverse_slice(:b)
-        subject.should == { :a => 1, :b => 2 }
+        expect(subject).to eq({ :a => 1, :b => 2 })
       end
     end
   end
@@ -55,11 +55,11 @@ module ResourceTools::CoreExtensions
 
     context '#within_acceptable_bounds?' do
       it 'returns false if the object is not equal' do
-        subject.within_acceptable_bounds?(::Object.new).should be_false
+        expect(subject.within_acceptable_bounds?(::Object.new)).to be_false
       end
 
       it 'returns true if the object is equal' do
-        subject.within_acceptable_bounds?(subject).should be_true
+        expect(subject.within_acceptable_bounds?(subject)).to be_true
       end
     end
   end
@@ -69,15 +69,15 @@ module ResourceTools::CoreExtensions
 
     context '#within_acceptable_bounds?' do
       it 'returns false if the value is nil' do
-        subject.within_acceptable_bounds?(nil).should be_false
+        expect(subject.within_acceptable_bounds?(nil)).to be_false
       end
 
       it 'returns false if the string value is not equal' do
-        subject.within_acceptable_bounds?('different').should be_false
+        expect(subject.within_acceptable_bounds?('different')).to be_false
       end
 
       it 'returns true if the string value is equal' do
-        subject.within_acceptable_bounds?('value').should be_true
+        expect(subject.within_acceptable_bounds?('value')).to be_true
       end
 
       it 'returns true if the value is equal when converted to a string' do
@@ -86,7 +86,7 @@ module ResourceTools::CoreExtensions
             'value'
           end
         end
-        subject.within_acceptable_bounds?(object).should be_true
+        expect(subject.within_acceptable_bounds?(object)).to be_true
       end
     end
   end
@@ -104,23 +104,23 @@ module ResourceTools::CoreExtensions
       end
 
       it 'returns false if the value is nil' do
-        subject.within_acceptable_bounds?(nil).should be_false
+        expect(subject.within_acceptable_bounds?(nil)).to be_false
       end
 
       it 'returns true if the value is within the upper bounds' do
-        subject.within_acceptable_bounds?(bounds.last).should be_true
+        expect(subject.within_acceptable_bounds?(bounds.last)).to be_true
       end
 
       it 'returns true if the value is within the lower bounds' do
-        subject.within_acceptable_bounds?(bounds.first).should be_true
+        expect(subject.within_acceptable_bounds?(bounds.first)).to be_true
       end
 
       it 'returns false if the value is above the upper bounds' do
-        subject.within_acceptable_bounds?(bounds.last + 0.00001).should be_false
+        expect(subject.within_acceptable_bounds?(bounds.last + 0.00001)).to be_false
       end
 
       it 'returns false if the value is below the lower bounds' do
-        subject.within_acceptable_bounds?(bounds.first - 0.00001).should be_false
+        expect(subject.within_acceptable_bounds?(bounds.first - 0.00001)).to be_false
       end
     end
   end

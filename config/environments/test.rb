@@ -1,19 +1,19 @@
 UnifiedWarehouse::Application.configure do
   # NOTE: Much of this can probably be removed as we're not really using Rails, more AR.
   config.cache_classes = true
-  config.whiny_nils = true
+  # config.whiny_nils = true
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
   config.action_mailer.raise_delivery_errors = false
   config.active_support.deprecation = :log
-  config.action_dispatch.best_standards_support = :builtin
-  config.assets.compress = false
+  # config.action_dispatch.best_standards_support = :builtin
+  # config.assets.compress = false
   config.assets.debug = true
   config.log_level = :warn
 
   # Here is some ActiveRecord configuration that is useful
-  config.active_record.mass_assignment_sanitizer         = :strict
-  config.active_record.auto_explain_threshold_in_seconds = 0.5
+  # config.active_record.mass_assignment_sanitizer         = :strict
+  # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # Configure the numeric tolerance
   config.numeric_tolerance = 0.05
@@ -29,4 +29,6 @@ UnifiedWarehouse::Application.configure do
   config.amqp.deadletter.exchange    = 'deadletters'
   config.amqp.deadletter.routing_key = 'test.deadletter'
 
+  # Added for rails 4
+  config.eager_load = false
 end

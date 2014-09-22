@@ -23,6 +23,10 @@ module UnifiedWarehouse
     config.worker_death_to      = 'example@example.com'
     config.worker_death_restart = %Q{Please restart the worker.}
 
+    # We've already agreed a schema with NPG, I'd prefer not to do this but rails
+    # isn't the only convention in play here.
+    config.active_record.pluralize_table_names = false
+
     # We're going to need a specialised configuration for our AMQP consumer
     config.amqp                       = ActiveSupport::Configurable::Configuration.new
     config.amqp.main                  = ActiveSupport::Configurable::Configuration.new

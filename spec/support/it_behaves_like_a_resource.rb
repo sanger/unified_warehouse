@@ -1,22 +1,22 @@
 shared_examples_for 'has only one row' do
   it 'leaves the system with only one row' do
-    described_class.count.should == 1
+    expect(described_class.count).to eq(1)
   end
 
   it 'ensures that the row is current' do
     described_class.first.tap do |row|
-      row.should                  be_current
-      row.current_from.should_not be_nil
-      row.current_to.should       be_nil
+      expect(row).to                  be_current
+      expect(row.current_from).to_not be_nil
+      expect(row.current_to).to       be_nil
     end
   end
 
   it 'ensures the row is marked as having been checked' do
-    described_class.first.checked_at.should == checked_time_now
+    expect(described_class.first.checked_at).to eq(checked_time_now)
   end
 
   it 'maintains the current view to only one row' do
-    current_records.size.should == 1
+    expect(current_records.size).to eq(1)
   end
 end
 
@@ -40,7 +40,7 @@ shared_examples_for 'a resource' do
       end
 
       it 'does not add the row to the current view' do
-        current_records.should be_empty
+        expect(current_records).to be_empty
       end
     end
 
@@ -51,8 +51,8 @@ shared_examples_for 'a resource' do
       end
 
       it 'only has the current row in the view' do
-        current_records.size.should == 1
-        current_records.first['current_to'].should be_nil
+        expect(current_records.size).to eq(1)
+        expect(current_records.first['current_to']).to be_nil
       end
     end
 

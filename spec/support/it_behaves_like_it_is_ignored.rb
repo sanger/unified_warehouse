@@ -3,13 +3,13 @@ shared_examples_for 'it is ignored' do
 
   context '#inserted_record?' do
     it 'is always true' do
-      subject.should_not be_inserted_record
+      expect(subject).to_not be_inserted_record
     end
   end
 
   context '#id' do
     it 'is ignored' do
-      subject.id.should == 'ignored'
+      expect(subject.id).to eq('ignored')
     end
   end
 end

@@ -11,22 +11,22 @@ describe ResourceTools::Json::Handler do
 
     it 'does not translate keys by default' do
       subject['key'] = 'value'
-      subject.should have_key('key')
+      expect(subject).to have_key('key')
     end
 
     it 'can translate keys' do
       subject['key'] = 'value'
-      subject.should have_key('translated')
+      expect(subject).to have_key('translated')
     end
 
     it 'translates updated_at to last_updated' do
       subject['updated_at'] = 'date'
-      subject['last_updated'].should == 'date'
+      expect(subject['last_updated']).to eq('date')
     end
 
     it 'translates created_at to created' do
       subject['created_at'] = 'date'
-      subject['created'].should == 'date'
+      expect(subject['created']).to eq('date')
     end
   end
 
@@ -34,7 +34,7 @@ describe ResourceTools::Json::Handler do
     subject { Json.new('ignored' => 'value') }
 
     it 'ignores keys on construction' do
-      subject.should_not have_key('ignored')
+      expect(subject).to_not have_key('ignored')
     end
   end
 end
