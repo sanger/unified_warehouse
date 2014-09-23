@@ -3,6 +3,8 @@ require 'amqp'
 class AmqpConsumer
   include Logging
 
+  class InvalidMessage < StandardError; end
+
   def initialize(config)
     @config = config
   end
@@ -43,6 +45,7 @@ class AmqpConsumer
   private :received
 
   def insert_record(metadata, json)
+    lims = json.delete('lims') || raise InvalidMessage, 'No Lims specified'
     payload_name = json.keys.first
     ActiveRecord::Base.transaction do
       payload_name.classify.constantize.create_or_update_from_json(json[payload_name]).tap do |record|
