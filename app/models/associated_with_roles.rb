@@ -11,7 +11,7 @@ module AssociatedWithRoles
       user_model = Class.new(ActiveRecord::Base) { include AssociatedWithRoles::User }
       user_model.associated_with(base)
       const_set(:User, user_model)
-      after_create :maintain_users, :if => :current?
+      after_create :maintain_users
     end
   end
 
@@ -40,7 +40,7 @@ module AssociatedWithRoles
       users.create!(
         users_to_maintain.map do |role,user_details|
           user_details.map do |details|
-            details.reverse_merge(:role => role.to_s, :uuid => uuid, :internal_id => internal_id)
+            details.reverse_merge(:role => role.to_s, :associated_id => id)
           end
         end
       )
@@ -53,13 +53,17 @@ module AssociatedWithRoles
   module User
     extend ActiveSupport::Concern
 
+    included do |base|
+      base.pluralize_table_names = true
+    end
+
     module ClassMethods
       def associated_with(model)
         association_name = model.name.underscore
-        alias_attribute(:uuid, "#{association_name}_uuid")
-        alias_attribute(:internal_id, "#{association_name}_internal_id")
+        # alias_attribute(:uuid, "#{association_name}_uuid")
+        alias_attribute(:associated_id, "id_#{association_name}_tmp")
 
-        scope :owned_by, lambda { |record| where("#{association_name}_uuid" => record.uuid) }
+        scope :owned_by, lambda { |record| where("id_#{association_name}_tmp" => record.send(:"id_#{association_name}_tmp")) }
       end
     end
   end

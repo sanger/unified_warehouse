@@ -2,19 +2,15 @@ require 'spec_helper'
 
 module ResourceTools::CoreExtensions
   describe NilClass do
-    context '#check' do
+    context '#latest' do
       let(:callback) do
         double(:callback).tap do |callback|
-          callback.should_receive(:call)
+          expect(callback).to receive(:call).with('value')
         end
       end
 
-      it 'yields if the value is nil' do
-        nil.check(nil, &callback.method(:call))
-      end
-
-      it 'yields if the value is not nil' do
-        nil.check('value', &callback.method(:call))
+      it 'yields value' do
+        nil.latest('value', &callback.method(:call))
       end
     end
   end

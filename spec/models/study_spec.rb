@@ -2,16 +2,20 @@ require 'spec_helper'
 
 describe Study do
   it_behaves_like 'a singular resource'
-  it_behaves_like 'maps JSON fields', :id => :internal_id, :sac_sponsor => :faculty_sponsor
+  it_behaves_like 'maps JSON fields', {
+    :id => :id_study_lims,
+    :sac_sponsor => :faculty_sponsor
+  }
+
   it_behaves_like 'ignores JSON fields', [
     :projects,
     :commercially_available,
     :samples
   ]
 
-  it_behaves_like 'associated with roles' do
-    let(:additional_roles) { [ :data_access_contact, :slf_manager, :lab_manager ] }
-  end
+  # it_behaves_like 'associated with roles' do
+  #   let(:additional_roles) { [ :data_access_contact, :slf_manager, :lab_manager ] }
+  # end
 
   let(:json) do
     {

@@ -263,7 +263,7 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   add_index "study", ["accession_number"], name: "study_accession_number_index", using: :btree
-  add_index "study", ["id_study_lims"], name: "study_id_study_lims_index", unique: true, using: :btree
+  add_index "study", ["id_lims", "id_study_lims"], name: "study_id_lims_id_study_lims_index", unique: true, using: :btree
   add_index "study", ["name"], name: "study_name_index", using: :btree
   add_index "study", ["uuid_study_lims"], name: "study_uuid_study_lims_index", using: :btree
 

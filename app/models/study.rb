@@ -12,7 +12,8 @@ class Study < ActiveRecord::Base
       :samples
     )
     translate(
-      :id          => :internal_id,
+      :id          => :id_study_lims,
+      :uuid        => :uuid_study_lims,
       :sac_sponsor => :faculty_sponsor
     )
   end
