@@ -9,11 +9,14 @@ class Sample < ActiveRecord::Base
       :supplier_plate_id,
       :dna_source,
       :sample_tubes,
-      :volume
+      :volume,
+      :empty_supplier_sample_name,
+      :updated_by_manifest
     )
 
     translate(
-      :id                          => :internal_id,
+      :id                          => :id_sample_lims,
+      :uuid                        => :uuid_sample_lims,
       :sample_common_name          => :common_name,
       :sample_description          => :description,
       :sample_ebi_accession_number => :accession_number,
@@ -23,4 +26,5 @@ class Sample < ActiveRecord::Base
       :sample_strain_att           => :strain
     )
   end
+
 end

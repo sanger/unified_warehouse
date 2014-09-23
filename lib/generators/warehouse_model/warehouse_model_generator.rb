@@ -37,13 +37,13 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
     @integer_generator ||= Generator.new(1)
   end
 
-  IGNORE_FIELDS = [ :dont_use_id, :inserted_at, :deleted_at, :checked_at, :is_current ]
+  IGNORE_FIELDS = [ :dont_use_id, :deleted_at, :recorded_at ]
 
   def columns
     model.columns.map do |column|
       next if IGNORE_FIELDS.include?(column.name.to_sym)
 
-      name = 
+      name =
         case column.name.to_sym
         when :last_updated then :updated_at
         when :created then :created_at

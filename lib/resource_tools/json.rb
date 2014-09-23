@@ -2,8 +2,8 @@ module ResourceTools::Json
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def create_or_update_from_json(json_data)
-      create_or_update(json.new(json_data))
+    def create_or_update_from_json(json_data,lims)
+      create_or_update(json.new(json_data),lims)
     end
 
     def json(&block)

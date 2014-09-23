@@ -21,7 +21,6 @@ module ResourceTools::ResourceTableMigration
 
       yield(t)
 
-      t.boolean(:is_current, :null => false)
       t.timestamp(:checked_at, :null => false)
       t.timestamp(:last_updated)
       t.timestamp(:created)

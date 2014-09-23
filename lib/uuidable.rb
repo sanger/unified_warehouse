@@ -1,3 +1,5 @@
+# TODO: Remove!
+
 # Extend ActiveRecord::Base with this module and all UUID columns will be automatically handled as though they
 # are stored as BINARY(16) in the database but accessible as their string representations from code.
 module Uuidable
@@ -75,7 +77,7 @@ module Uuidable
         raise NonUuidError, self
       end
 
-      # Attempts to convert the instance to its binary representation, yielding on success.  If the 
+      # Attempts to convert the instance to its binary representation, yielding on success.  If the
       # method returns then the string may already be in binary format, so that should be checked.
       def try_string_to_binary(&block)
         catch(:possibly_already_binary) {
@@ -145,7 +147,7 @@ module Uuidable
       column_changes = uuid_columns.map do |c|
         extra  = migration_helper.constrain_column_to_not_null?(c) ? "NOT NULL" : ""
         quoted = quote_column_name(c)
-        "CHANGE COLUMN #{quoted} #{quoted} BINARY(16) #{extra}" 
+        "CHANGE COLUMN #{quoted} #{quoted} BINARY(16) #{extra}"
       end
       old_indexes = connection.indexes(table_name).map(&:name).map { |idx| "DROP INDEX #{idx}" }
       new_indexes = migration_helper.indexes.map { |columns| "ADD INDEX #{columns.join('_and_')}_idx(#{columns.map(&method(:quote_column_name)).join(',')})" }

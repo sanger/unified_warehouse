@@ -48,8 +48,8 @@ module ResourceTools::CoreExtensions
   end
 
   module NilClass
-    def check(_)
-      yield
+    def latest(object)
+      yield(object)
     end
   end
 end
