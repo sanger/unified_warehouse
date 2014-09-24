@@ -11,12 +11,12 @@ module AssociatedWithRoles
       user_model = Class.new(ActiveRecord::Base) { include AssociatedWithRoles::User }
       user_model.associated_with(base)
       const_set(:User, user_model)
-      after_create :maintain_users
+      after_update :maintain_users
     end
   end
 
   def has_role(name)
-    define_method("#{name}=") { |users| add_users(name, users) }
+    define_method("#{name}=") { |users| set_users(name, users) }
   end
 
   module InstanceMethods
@@ -25,10 +25,10 @@ module AssociatedWithRoles
     end
     private :users_to_maintain
 
-    def add_users(role, user_details)
-      users_to_maintain[role.to_s].concat(user_details)
+    def set_users(role, user_details)
+      users_to_maintain[role.to_s] = (user_details)
     end
-    private :add_users
+    private :set_users
 
     def users
       self.class::User.owned_by(self)
@@ -40,7 +40,7 @@ module AssociatedWithRoles
       users.create!(
         users_to_maintain.map do |role,user_details|
           user_details.map do |details|
-            details.reverse_merge(:role => role.to_s, :associated_id => id)
+            details.reverse_merge(:role => role.to_s, :associated_id => id, :last_updated=>last_updated)
           end
         end
       )
@@ -63,7 +63,7 @@ module AssociatedWithRoles
         # alias_attribute(:uuid, "#{association_name}_uuid")
         alias_attribute(:associated_id, "id_#{association_name}_tmp")
 
-        scope :owned_by, lambda { |record| where("id_#{association_name}_tmp" => record.send(:"id_#{association_name}_tmp")) }
+        scope :owned_by, lambda { |record| where("id_#{association_name}_tmp" => record.id ) }
       end
     end
   end

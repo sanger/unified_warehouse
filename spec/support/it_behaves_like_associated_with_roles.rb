@@ -1,6 +1,7 @@
 shared_examples_for 'maintains roles correctly' do
   after(:each) do
-    described_class.create_or_update_from_json(timestamped_json.merge(updated_roles).merge(:updated_at => updated_at))
+
+    described_class.create_or_update_from_json(timestamped_json.merge(updated_roles).merge(:updated_at => updated_at),'example')
     users_fit_exactly(expected_roles)
   end
 
@@ -20,10 +21,11 @@ shared_examples_for 'associated with roles' do
   end
 
   def users_fit_exactly(roles)
+
     expect(described_class::User.count).to eq(roles.values.flatten.size)
 
     roles.each do |role, expected|
-      found = described_class::User.all(:conditions => { :role => role.to_s }).map do |user|
+      found = described_class::User.where(:role => role.to_s).map do |user|
         Hash[[:name, :email, :login].map { |a| [a,user[a]] }]
       end
       expect(found).to eq(expected)
@@ -39,7 +41,7 @@ shared_examples_for 'associated with roles' do
     let(:updated_roles) { { :manager => [ user_with_role(:manager, 1), user_with_role(:manager, 2) ] } }
 
     before(:each) do
-      described_class.create_or_update_from_json(timestamped_json.merge(roles))
+      described_class.create_or_update_from_json(timestamped_json.merge(roles),'example')
     end
 
     context 'where the update is classed current it does' do
@@ -60,7 +62,7 @@ shared_examples_for 'associated with roles' do
     let(:roles) { Hash[all_role_names.map { |role| [role,[user_with_role(role)]] }] }
 
     before(:each) do
-      described_class.create_or_update_from_json(timestamped_json.merge(roles))
+      described_class.create_or_update_from_json(timestamped_json.merge(roles),'example')
     end
 
     it 'maintains users' do
