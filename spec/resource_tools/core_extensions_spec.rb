@@ -120,4 +120,18 @@ module ResourceTools::CoreExtensions
       end
     end
   end
+
+  describe Array do
+    context '#convert' do
+
+      it 'converts a single hash to an array of 1' do
+        expect(::Array.convert({:example=>'example'})).to eq([{:example=>'example'}])
+      end
+
+      it 'does not modify an array of hashes' do
+        expect(::Array.convert([{:example=>'example'},{:example=>'example'}])).to eq([{:example=>'example'},{:example=>'example'}])
+      end
+
+    end
+  end
 end

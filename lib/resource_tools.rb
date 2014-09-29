@@ -18,7 +18,7 @@ module ResourceTools
     before_save :remember_if_we_are_a_new_record
 
     scope :for_lims, lambda { |lims| where(:id_lims=>lims) }
-    scope :with_id,  lambda { |id|   where(:"id_#{base.table_name}_lims"=>id) }
+    scope :with_id,  lambda { |id|   where(:"id_#{base.name.underscore}_lims"=>id) }
   end
 
   def remember_if_we_are_a_new_record
@@ -56,27 +56,4 @@ module ResourceTools
     not us.within_acceptable_bounds?(them)
   end
 
-  # def checked!
-  #   self.save!
-  #   self
-  # end
-
-  # def check(object)
-  #   updated_values?(object) ? yield : checked!
-  # end
-
-  def latest(other)
-    yield(self) if updated_values?(other) && ( other.last_updated > last_updated )
-  end
-
-  module ClassMethods
-    def create_or_update(attributes,lims)
-      new_atts = attributes.reverse_merge(:data => attributes,:id_lims=>lims)
-      for_lims(lims).with_id(new_atts["id_#{table_name}_lims"]).first.latest(new(new_atts)) do |record|
-        record.update_attributes(new_atts)
-        record.save!
-      end
-    end
-    private :create_or_update
-  end
 end
