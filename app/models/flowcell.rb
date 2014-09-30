@@ -26,6 +26,10 @@ class Flowcell < ActiveRecord::Base
         (controls||[]).count + (samples||[]).count
       end
 
+      custom_value(:is_spiked) do
+        controls.present? && controls.count > 0
+      end
+
       has_nested_model(:controls) do
       end
 
