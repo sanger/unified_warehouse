@@ -3,6 +3,7 @@ module ResourceTools
 
   extend ActiveSupport::Concern
   include ResourceTools::Json
+  include ResourceTools::Association
   include ResourceTools::Timestamps
 
   included do |base|
@@ -17,8 +18,9 @@ module ResourceTools
     # we're probably not capturing all of the right messages.
     before_save :remember_if_we_are_a_new_record
 
-    scope :for_lims, lambda { |lims| where(:id_lims=>lims) }
-    scope :with_id,  lambda { |id|   where(:"id_#{base.name.underscore}_lims"=>id) }
+    scope :for_lims,  lambda { |lims| where(:id_lims=>lims) }
+    scope :with_uuid, lambda { |uuid| where(:"uuid_#{base.name.underscore}_lims"=>uuid)}
+    scope :with_id,   lambda { |id|   where(:"id_#{base.name.underscore}_lims"=>id) }
   end
 
   def remember_if_we_are_a_new_record

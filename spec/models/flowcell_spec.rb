@@ -14,6 +14,15 @@ describe Flowcell do
   it_behaves_like 'ignores JSON fields', [
   ]
 
+  it_behaves_like 'belongs to', [
+    :study,
+    :sample
+  ], { :lanes => :samples }
+
+  it_behaves_like 'belongs to', [
+    :sample
+  ], {:lanes => :controls }
+
   let(:json) do
     {
 
@@ -44,7 +53,7 @@ describe Flowcell do
               :requested_insert_size_from => 100,
               :requested_insert_size_to => 200,
               :sample_uuid => "000000-0000-0000-0000-0000000000",
-              :study_uuid => "000000-0000-0000-0000-0000000000",
+              :study_uuid => "100000-0000-0000-0000-0000000000",
               :cost_code => "12345",
               :entity_id_lims => "12345",
               :is_r_and_d => false

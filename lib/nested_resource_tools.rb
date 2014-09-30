@@ -19,11 +19,11 @@ module NestedResourceTools
       lims      = base_resource.id_lims
       id_x_lims = base_resource["id_#{name.underscore}_lims"]
 
-      for_lims(lims).with_id(id_x_lims).tap do |all_records|
-        all_records.first.latest(base_resource) do |record|
-          all_records.destroy_all
-          return create!(new_atts) unless base_resource.deleted?
-        end
+      all_records = for_lims(lims).with_id(id_x_lims)
+
+      all_records.first.latest(base_resource) do |record|
+        all_records.destroy_all
+        return create!(new_atts) unless base_resource.deleted?
       end
 
     end

@@ -4,6 +4,9 @@ class Flowcell < ActiveRecord::Base
 
   self.table_name = 'iseq_flowcell'
 
+  has_associated(:study)
+  has_associated(:sample)
+
   json do
 
     has_nested_model(:lanes) do
@@ -24,11 +27,9 @@ class Flowcell < ActiveRecord::Base
       end
 
       has_nested_model(:controls) do
-        ignore(:sample_uuid)
       end
 
       has_nested_model(:samples) do
-        ignore(:sample_uuid,:study_uuid)
       end
 
     end
