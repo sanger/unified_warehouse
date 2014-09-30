@@ -11,7 +11,7 @@ module AssociatedWithRoles
       user_model = Class.new(ActiveRecord::Base) { include AssociatedWithRoles::User }
       user_model.associated_with(base)
       const_set(:User, user_model)
-      after_update :maintain_users
+      after_save :maintain_users
     end
   end
 
