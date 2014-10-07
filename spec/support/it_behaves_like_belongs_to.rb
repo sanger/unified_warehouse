@@ -28,7 +28,7 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
       let(:uuid) { owning_json[:"#{owner}_uuid"] }
 
       let!(:mock_owner_instnace) {double("mock_#{owner}",:"id_#{owner}_tmp"=>12345)}
-      let!(:mock_owner) { double("mock_#{owner}_array", :first=>mock_owner_instnace)}
+      let!(:mock_owner_array) { double("mock_#{owner}_array", first!: mock_owner_instnace)}
       let!(:mock_scope) { double("mock_scope")}
       let(:owner_class) { owner.to_s.classify.constantize }
 
@@ -37,9 +37,9 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
       end
 
       it "should look up the corresponding #{owner} entry for #{belonging_owned.to_a.flatten.join('=>')}" do
-        allow(mock_scope).to  receive(:with_id).with(id).and_return(mock_owner)
+        allow(mock_scope).to  receive(:with_id).with(id).and_return(mock_owner_array)
         allow(owner_class).to receive(:for_lims).with(example_lims).and_return(mock_scope)
-        allow(owner_class).to receive(:with_uuid).with(uuid).and_return(mock_owner)
+        allow(owner_class).to receive(:with_uuid).with(uuid).and_return(mock_owner_array)
       end
 
     end

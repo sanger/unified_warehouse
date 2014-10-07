@@ -3,6 +3,14 @@ require 'spec_helper'
 describe Flowcell do
 
   shared_examples_for 'a flowcell' do
+
+    before(:each) do
+      allow(Sample).to receive(:with_uuid).and_return(double('default', first!:double('sample')))
+      allow_any_instance_of(described_class).to receive(:sample=)
+      allow(Study).to receive(:with_uuid).and_return(double('default', first!:double('study')))
+      allow_any_instance_of(described_class).to receive(:study=)
+    end
+
     it_behaves_like 'maps JSON fields', {
     :flowcell_id => :id_flowcell_lims
     }
