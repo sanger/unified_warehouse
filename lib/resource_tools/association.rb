@@ -9,7 +9,7 @@ module ResourceTools::Association
 
     def has_associated(association)
       self.instance_eval %Q{
-        belongs_to :#{association}
+        belongs_to :#{association}, :foreign_key => :id_#{association}_tmp
         attr_accessor :#{association}_id, :#{association}_uuid
 
         before_validation do
