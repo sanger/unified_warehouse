@@ -9,8 +9,10 @@ module SingularResourceTools
   module ClassMethods
     def create_or_update(attributes)
       new_atts = attributes.reverse_merge(:data => attributes)
-      for_lims(attributes.id_lims).with_id(new_atts["id_#{name.underscore}_lims"]).first.latest(new(new_atts)) do |record|
-        record.update_attributes(new_atts)
+      new_record = new(new_atts)
+      for_lims(attributes.id_lims).with_id(new_atts["id_#{name.underscore}_lims"]).first.latest(new_record) do |record|
+        record.update_attributes(new_atts) if record.present?
+        record ||= new_record
         record.save!
       end
     end

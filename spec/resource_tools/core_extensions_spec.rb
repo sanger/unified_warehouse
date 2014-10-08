@@ -5,7 +5,7 @@ module ResourceTools::CoreExtensions
     context '#latest' do
       let(:callback) do
         double(:callback).tap do |callback|
-          expect(callback).to receive(:call).with('value')
+          expect(callback).to receive(:call).with(nil)
         end
       end
 
