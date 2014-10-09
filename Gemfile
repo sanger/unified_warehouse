@@ -23,6 +23,7 @@ gem "rest-client"
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.1'
+  gem 'factory_girl_rails'
   gem 'mocktra', '~> 1.0.2'
 end
 

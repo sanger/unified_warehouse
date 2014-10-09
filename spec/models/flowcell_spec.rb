@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe Flowcell do
 
-  shared_examples_for 'a flowcell' do
+  let!(:mock_sample) { create(:sample) }
+  let!(:mock_study)  { create(:study)  }
 
-    before(:each) do
-      allow(Sample).to receive(:with_uuid).and_return(double('default', first!:double('sample')))
-      allow_any_instance_of(described_class).to receive(:sample=)
-      allow(Study).to receive(:with_uuid).and_return(double('default', first!:double('study')))
-      allow_any_instance_of(described_class).to receive(:study=)
-    end
+  before(:each) do
+    mock_sample; mock_study
+  end
+
+  shared_examples_for 'a flowcell' do
 
     it_behaves_like 'maps JSON fields', {
     :flowcell_id => :id_flowcell_lims
@@ -66,7 +66,7 @@ describe Flowcell do
                 :requested_insert_size_from => 100,
                 :requested_insert_size_to => 200,
                 :sample_uuid => "000000-0000-0000-0000-0000000000",
-                :study_uuid => "100000-0000-0000-0000-0000000000",
+                :study_uuid => "000000-0000-0000-0000-0000000001",
                 :cost_code => "12345",
                 :entity_id_lims => "12345",
                 :is_r_and_d => false
@@ -128,7 +128,7 @@ describe Flowcell do
                 :requested_insert_size_from => 100,
                 :requested_insert_size_to => 200,
                 :sample_uuid => "000000-0000-0000-0000-0000000000",
-                :study_uuid => "100000-0000-0000-0000-0000000000",
+                :study_uuid => "000000-0000-0000-0000-0000000001",
                 :cost_code => "12345",
                 :entity_id_lims => "12345",
                 :is_r_and_d => false

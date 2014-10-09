@@ -33,7 +33,7 @@ CREATE TABLE `flgen_plate` (
   `plate_barcode` int(10) unsigned NOT NULL COMMENT 'Manufacturer (Fluidigm) chip barcode',
   `plate_barcode_lims` int(10) unsigned NOT NULL COMMENT 'LIMs-specific plate barcode',
   `plate_uuid_lims` varchar(36) DEFAULT NULL COMMENT 'LIMs-specific plate uuid',
-  `plate_id_lims` varchar(20) NOT NULL COMMENT 'LIMs-specific plate id',
+  `id_flgen_plate_lims` varchar(20) NOT NULL COMMENT 'LIMs-specific plate id',
   `plate_size` smallint(6) DEFAULT NULL COMMENT 'Total number of wells on a plate',
   `plate_size_occupied` smallint(6) DEFAULT NULL COMMENT 'Number of occupied wells on a plate',
   `well_label` varchar(10) NOT NULL COMMENT 'Manufactuer well identifierwithin a plate, S001-S192',
