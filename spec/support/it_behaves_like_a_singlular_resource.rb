@@ -40,7 +40,7 @@ shared_examples_for 'a singular resource' do
 
       before(:each) do
         described_class.create_or_update_from_json(timestamped_json.merge(:updated_at => modified_at), example_lims)
-        described_class.create_or_update_from_json(timestamped_json.merge(:updated_at => modified_at), second_lims)
+        described_class.create_or_update_from_json(timestamped_json.merge(:updated_at => modified_at, :uuid=>'other'), second_lims)
       end
 
       it 'creates multiple records' do

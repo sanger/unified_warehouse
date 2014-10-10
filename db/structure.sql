@@ -40,6 +40,7 @@ CREATE TABLE `flgen_plate` (
   `well_uuid_lims` varchar(36) DEFAULT NULL COMMENT 'LIMs-specific well uuid',
   `qc_state` tinyint(1) DEFAULT NULL COMMENT 'QC state; 1 (pass), 0 (fail), NULL (not known)',
   PRIMARY KEY (`id_flgen_plate_tmp`),
+  KEY `flgen_plate_id_lims_id_flgen_plate_lims_index` (`id_lims`,`id_flgen_plate_lims`),
   KEY `flgen_plate_sample_fk` (`id_sample_tmp`),
   KEY `flgen_plate_study_fk` (`id_study_tmp`),
   CONSTRAINT `flgen_plate_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -84,6 +85,7 @@ CREATE TABLE `iseq_flowcell` (
   `forward_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Requested forward read length, bp',
   `reverse_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Requested reverse read length, bp',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
+  KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
   KEY `iseq_flowcell_study_fk` (`id_study_tmp`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -294,7 +296,7 @@ CREATE TABLE `sample` (
   `donor_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_sample_tmp`),
   UNIQUE KEY `sample_id_lims_id_sample_lims_index` (`id_lims`,`id_sample_lims`),
-  KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
+  UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -358,7 +360,7 @@ CREATE TABLE `study` (
   `data_access_group` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_study_tmp`),
   UNIQUE KEY `study_id_lims_id_study_lims_index` (`id_lims`,`id_study_lims`),
-  KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
+  UNIQUE KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
   KEY `study_accession_number_index` (`accession_number`),
   KEY `study_name_index` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

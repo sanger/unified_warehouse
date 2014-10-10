@@ -56,6 +56,7 @@ describe Sample do
         :sample_sra_hold             => "sample visibility",
         :sample_strain_att           => "strain",
         :updated_by_manifest         => true,
+        :sample_tubes                => "Ignore this field",
         :donor_id                    => '11111111-2222-3333-4444-555555555556'
       }
     end
