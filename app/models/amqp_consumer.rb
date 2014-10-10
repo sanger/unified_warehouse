@@ -48,7 +48,7 @@ class AmqpConsumer
     lims = json.delete('lims') || raise(InvalidMessage,'No Lims specified')
     payload_name = json.keys.first
     ActiveRecord::Base.transaction do
-      payload_name.classify.constantize.create_or_update_from_json(json[payload_name]).tap do |record|
+      payload_name.classify.constantize.create_or_update_from_json(json[payload_name],lims).tap do |record|
         metadata.ack  # Acknowledge receipt!
         debug(metadata) { "#{record.inserted_record? ? 'Created' : 'Updated'} #{record.class.name}(#{record.id})" }
       end
