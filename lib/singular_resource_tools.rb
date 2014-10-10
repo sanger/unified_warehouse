@@ -3,7 +3,7 @@ module SingularResourceTools
   extend ActiveSupport::Concern
 
   def latest(other)
-    yield(self) if updated_values?(other) && ( other.last_updated > last_updated )
+    (updated_values?(other) && ( other.last_updated > last_updated )) ? yield(self) : self
   end
 
   module ClassMethods
