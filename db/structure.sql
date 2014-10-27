@@ -170,7 +170,6 @@ CREATE TABLE `iseq_run_lane_metrics` (
   `instrument_model` char(64) DEFAULT NULL,
   `paired_read` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `indexing_read_length` smallint(2) unsigned DEFAULT NULL COMMENT 'Actual reverse read length, bp',
-  `indexed_run` tinyint(1) unsigned NOT NULL COMMENT 'Boolen flag to indicate whether indexing read was done',
   `cycles` int(4) unsigned NOT NULL,
   `cancelled` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT 'Boolen flag to indicate whether the run was cancelled',
   `run_pending` datetime DEFAULT NULL COMMENT 'Timestamp of run pending status',
