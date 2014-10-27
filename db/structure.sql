@@ -106,6 +106,9 @@ CREATE TABLE `iseq_product_metrics` (
   `position` smallint(2) unsigned NOT NULL COMMENT 'Flowcell lane number',
   `tag_index` smallint(5) unsigned DEFAULT NULL COMMENT 'Tag index, NULL if lane is not a pool',
   `tag_sequence4deplexing` varchar(30) DEFAULT NULL COMMENT 'Tag sequence used for deplexing the lane, common suffix might have been truncated',
+  `actual_forward_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Actual forward read length, bp',
+  `actual_reverse_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Actual reverse read length, bp',
+  `indexing_read_length` smallint(2) unsigned DEFAULT NULL COMMENT 'Indexing read length, bp',
   `tag_decode_percent` float(5,2) unsigned DEFAULT NULL,
   `tag_decode_count` int(10) unsigned DEFAULT NULL,
   `insert_size_quartile1` smallint(5) unsigned DEFAULT NULL,
@@ -147,7 +150,7 @@ CREATE TABLE `iseq_product_metrics` (
   KEY `iseq_pr_metrics_flc_fk` (`id_iseq_flowcell_tmp`),
   KEY `iseq_pr_metrics_lm_fk` (`id_iseq_lane_metrics_tmp`),
   CONSTRAINT `iseq_pr_metrics_flc_fk` FOREIGN KEY (`id_iseq_flowcell_tmp`) REFERENCES `iseq_flowcell` (`id_iseq_flowcell_tmp`) ON DELETE SET NULL ON UPDATE NO ACTION,
-  CONSTRAINT `iseq_pr_metrics_lm_fk` FOREIGN KEY (`id_iseq_lane_metrics_tmp`) REFERENCES `iseq_run_lane_metrics` (`id_iseq_lane_metrics_tmp`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `iseq_pr_metrics_lm_fk` FOREIGN KEY (`id_run`, `position`) REFERENCES `iseq_run_lane_metrics` (`id_run`, `position`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -167,8 +170,6 @@ CREATE TABLE `iseq_run_lane_metrics` (
   `instrument_name` char(32) DEFAULT NULL,
   `instrument_model` char(64) DEFAULT NULL,
   `paired_read` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `forward_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Actual forward read length, bp',
-  `reverse_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Actual reverse read length, bp',
   `indexing_read_length` smallint(2) unsigned DEFAULT NULL COMMENT 'Actual reverse read length, bp',
   `indexed_run` tinyint(1) unsigned NOT NULL COMMENT 'Boolen flag to indicate whether indexing read was done',
   `cycles` int(4) unsigned NOT NULL,
@@ -204,7 +205,6 @@ CREATE TABLE `iseq_run_lane_metrics` (
   `sequence_mismatch_percent_reverse_read` float(4,2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id_iseq_lane_metrics_tmp`),
   UNIQUE KEY `iseq_rlm_run_position_index` (`id_run`,`position`),
-  UNIQUE KEY `iseq_rlm_fcid_run_pos` (`id_iseq_flowcell_tmp`,`id_run`,`position`),
   KEY `iseq_rlmm_id_run_index` (`id_run`),
   KEY `iseq_rlm_cancelled_and_run_pending_index` (`cancelled`,`run_pending`),
   KEY `iseq_rlm_cancelled_and_run_complete_index` (`cancelled`,`run_complete`),
