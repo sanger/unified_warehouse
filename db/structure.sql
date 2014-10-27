@@ -100,7 +100,6 @@ DROP TABLE IF EXISTS `iseq_product_metrics`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `iseq_product_metrics` (
   `id_iseq_pr_metrics_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database id, value can change',
-  `id_iseq_lane_metrics_tmp` int(10) unsigned NOT NULL COMMENT 'Lane metrics id, see "iseq_run_lane_metrics.id_iseq_lane_metrics_tmp"',
   `id_iseq_flowcell_tmp` int(10) unsigned DEFAULT NULL COMMENT 'Flowcell id, see "iseq_flowcell.id_iseq_flowcell_tmp"',
   `id_run` int(10) unsigned NOT NULL COMMENT 'NPG run identifier',
   `position` smallint(2) unsigned NOT NULL COMMENT 'Flowcell lane number',
@@ -148,7 +147,7 @@ CREATE TABLE `iseq_product_metrics` (
   KEY `iseq_pm_run_pos_index` (`id_run`,`position`),
   KEY `iseq_pm_fcid_run_pos_tag_index` (`id_run`,`position`,`tag_index`),
   KEY `iseq_pr_metrics_flc_fk` (`id_iseq_flowcell_tmp`),
-  KEY `iseq_pr_metrics_lm_fk` (`id_iseq_lane_metrics_tmp`),
+  KEY `iseq_pr_metrics_lm_fk` (`id_run`, `position`),
   CONSTRAINT `iseq_pr_metrics_flc_fk` FOREIGN KEY (`id_iseq_flowcell_tmp`) REFERENCES `iseq_flowcell` (`id_iseq_flowcell_tmp`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `iseq_pr_metrics_lm_fk` FOREIGN KEY (`id_run`, `position`) REFERENCES `iseq_run_lane_metrics` (`id_run`, `position`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
