@@ -222,7 +222,6 @@ CREATE TABLE `iseq_run_status` (
   `id_run` int(10) unsigned NOT NULL COMMENT 'NPG run identifier',
   `date` datetime NOT NULL COMMENT 'Status timestamp',
   `id_run_status_dict` int(10) unsigned NOT NULL COMMENT 'Status identifier, see iseq_run_status_dict.id_run_status_dict',
-  `id_user` int(10) unsigned NOT NULL COMMENT 'Operator usename',
   `iscurrent` tinyint(1) NOT NULL COMMENT 'Boolean flag, 1 is the status is current, 0 otherwise',
   PRIMARY KEY (`id_run_status`),
   KEY `iseq_run_status_rsd_fk` (`id_run_status_dict`),
