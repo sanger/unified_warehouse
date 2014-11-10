@@ -161,7 +161,6 @@ DROP TABLE IF EXISTS `iseq_run_lane_metrics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `iseq_run_lane_metrics` (
-  `id_iseq_lane_metrics_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database id, value can change',
   `id_iseq_flowcell_tmp` int(10) unsigned DEFAULT NULL COMMENT 'Flowcell id, see "iseq_flowcell.id_iseq_flowcell_tmp"',
   `flowcell_barcode` varchar(15) DEFAULT NULL COMMENT 'Manufacturer flowcell barcode or other identifier as recorded by NPG',
   `id_run` int(10) unsigned NOT NULL COMMENT 'NPG run identifier',
@@ -187,7 +186,7 @@ CREATE TABLE `iseq_run_lane_metrics` (
   `q40_yield_kb_forward_read` int(10) unsigned DEFAULT NULL,
   `q40_yield_kb_reverse_read` int(10) unsigned DEFAULT NULL,
   `tags_decode_percent` float(5,2) unsigned DEFAULT NULL,
-  `tags_decode_cv` float(5,2) unsigned DEFAULT NULL,
+  `tags_decode_cv` float(6,2) unsigned DEFAULT NULL,
   `adapters_percent_forward_read` float(5,2) unsigned DEFAULT NULL,
   `adapters_percent_reverse_read` float(5,2) unsigned DEFAULT NULL,
   `insert_size_quartile1` smallint(5) unsigned DEFAULT NULL,
@@ -201,8 +200,7 @@ CREATE TABLE `iseq_run_lane_metrics` (
   `gc_percent_reverse_read` float(5,2) unsigned DEFAULT NULL,
   `sequence_mismatch_percent_forward_read` float(4,2) unsigned DEFAULT NULL,
   `sequence_mismatch_percent_reverse_read` float(4,2) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id_iseq_lane_metrics_tmp`),
-  UNIQUE KEY `iseq_rlm_run_position_index` (`id_run`,`position`),
+  PRIMARY KEY (`id_run`,`position`),
   KEY `iseq_rlmm_id_run_index` (`id_run`),
   KEY `iseq_rlm_cancelled_and_run_pending_index` (`cancelled`,`run_pending`),
   KEY `iseq_rlm_cancelled_and_run_complete_index` (`cancelled`,`run_complete`),
