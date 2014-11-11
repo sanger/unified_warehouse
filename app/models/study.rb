@@ -14,9 +14,10 @@ class Study < ActiveRecord::Base
       :samples
     )
     translate(
-      :id          => :id_study_lims,
-      :uuid        => :uuid_study_lims,
-      :sac_sponsor => :faculty_sponsor
+      :id                => :id_study_lims,
+      :uuid              => :uuid_study_lims,
+      :sac_sponsor       => :faculty_sponsor,
+      :alignments_in_bam => :aligned
     )
   end
 end
