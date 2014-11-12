@@ -18,7 +18,9 @@ module ResourceTools
     # we're probably not capturing all of the right messages.
     before_save :remember_if_we_are_a_new_record
 
-    scope :for_lims,  lambda { |lims| where(:id_lims=>lims) }
+    # IDs can be alphanumerics, so the column is not set to integer. While MySQL is smart enough to handle the conversion, it
+    # slows down the queries significantly (~400ms vs 2). Ruby handles the conversion much more quickly.
+    scope :for_lims,  lambda { |lims| where(:id_lims=>lims.to_s) }
     scope :with_uuid, lambda { |uuid| where(:"uuid_#{base.name.underscore}_lims"=>uuid)}
     scope :with_id,   lambda { |id|   where(:"id_#{base.name.underscore}_lims"=>id) }
   end
