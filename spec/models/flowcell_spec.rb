@@ -41,7 +41,6 @@ describe Flowcell do
 
         :flowcell_barcode => "12345678903",
         :flowcell_id => "1123",
-        :pipeline_id_lims => "Agilent Pulldown",
         :forward_read_length => 222,
         :reverse_read_length => 222,
 
@@ -62,6 +61,8 @@ describe Flowcell do
                 :tag_sequence => "ATAG",
                 :tag_set_id_lims => "2",
                 :tag_set_name => "Sanger_168tags - 10 mer tags",
+                :pipeline_id_lims => "Agilent Pulldown",
+                :entity_type => "library_indexed",
                 :bait_name => "DDD_V5_plus",
                 :requested_insert_size_from => 100,
                 :requested_insert_size_to => 200,
@@ -76,6 +77,7 @@ describe Flowcell do
               {
                 :sample_uuid => "000000-0000-0000-0000-0000000000",
                 :tag_index => 3,
+                :entity_type => "library_indexed_spike",
                 :tag_sequence => "ATAG",
                 :tag_set_id_lims => "2",
                 :tag_set_name => "Sanger_168tags - 10 mer tags"

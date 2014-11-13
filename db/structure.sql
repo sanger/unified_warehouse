@@ -78,7 +78,7 @@ CREATE TABLE `iseq_flowcell` (
   `tag_set_id_lims` varchar(20) DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set',
   `tag_set_name` varchar(50) DEFAULT NULL COMMENT 'WTSI-wide tag set name',
   `is_spiked` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean flag indicating presence of a spike',
-  `pipeline_id_lims` varchar(50) NOT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
+  `pipeline_id_lims` varchar(30) DEFAULT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
   `bait_name` varchar(50) DEFAULT NULL COMMENT 'WTSI-wide name that uniquely identifies a bait set',
   `requested_insert_size_from` int(5) unsigned DEFAULT NULL COMMENT 'Requested insert size min value',
   `requested_insert_size_to` int(5) unsigned DEFAULT NULL COMMENT 'Requested insert size max value',
@@ -149,7 +149,7 @@ CREATE TABLE `iseq_product_metrics` (
   KEY `iseq_pm_run_pos_index` (`id_run`,`position`),
   KEY `iseq_pm_fcid_run_pos_tag_index` (`id_run`,`position`,`tag_index`),
   KEY `iseq_pr_metrics_flc_fk` (`id_iseq_flowcell_tmp`),
-  KEY `iseq_pr_metrics_lm_fk` (`id_run`, `position`),
+  KEY `iseq_pr_metrics_lm_fk` (`id_run`,`position`),
   CONSTRAINT `iseq_pr_metrics_flc_fk` FOREIGN KEY (`id_iseq_flowcell_tmp`) REFERENCES `iseq_flowcell` (`id_iseq_flowcell_tmp`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `iseq_pr_metrics_lm_fk` FOREIGN KEY (`id_run`, `position`) REFERENCES `iseq_run_lane_metrics` (`id_run`, `position`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -206,6 +206,7 @@ CREATE TABLE `iseq_run_lane_metrics` (
   KEY `iseq_rlmm_id_run_index` (`id_run`),
   KEY `iseq_rlm_cancelled_and_run_pending_index` (`cancelled`,`run_pending`),
   KEY `iseq_rlm_cancelled_and_run_complete_index` (`cancelled`,`run_complete`),
+  KEY `iseq_rl_metrics_flc_fk` (`id_iseq_flowcell_tmp`),
   CONSTRAINT `iseq_rl_metrics_flc_fk` FOREIGN KEY (`id_iseq_flowcell_tmp`) REFERENCES `iseq_flowcell` (`id_iseq_flowcell_tmp`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -387,6 +388,6 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-26 14:30:46
-
+-- Dump completed on 2014-11-13 11:22:48
+INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 

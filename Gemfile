@@ -8,6 +8,7 @@ gem "mysql2"
 gem "amqp", "~> 1.5"
 gem "hashie", "~> 3.3"
 gem "rest-client"
+gem "migration_comments"
 
 # The gems commented out below were part of warehouse_two/three
 # The extra support they provided is not needed for the unified warehouse, leaving them here
