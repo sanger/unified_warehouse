@@ -77,7 +77,7 @@ class AmqpConsumer
 
   # Returns a callback that can be used to dead letter any messages.
   def prepare_deadlettering(client)
-    return lambda { |m,p,e| warn(m) { "No dead lettering for #{e.message}" } } if deadletter.deactivated
+    return lambda { |m,p,e| warn(m) { "No dead lettering for #{e.message}: #{e.backtrace}" } } if deadletter.deactivated
 
     channel  = AMQP::Channel.new(client)
     exchange = channel.direct(deadletter.exchange, :passive => true)
