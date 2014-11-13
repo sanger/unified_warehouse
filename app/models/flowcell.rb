@@ -11,12 +11,6 @@ class Flowcell < ActiveRecord::Base
 
     has_nested_model(:lanes) do
 
-      # has_own_record
-
-      translate(
-        :id_pool_lims => :entity_id_lims
-      )
-
       ignore(
         :samples,
         :controls

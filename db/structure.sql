@@ -59,7 +59,7 @@ CREATE TABLE `iseq_flowcell` (
   `id_iseq_flowcell_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database id, value can change',
   `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
-  `id_sample_tmp` int(10) unsigned DEFAULT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
+  `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
   `id_study_tmp` int(10) unsigned DEFAULT NULL COMMENT 'Study id, see "study.id_study_tmp"',
   `cost_code` varchar(20) DEFAULT NULL COMMENT 'Valid WTSI cost code',
   `is_r_and_d` tinyint(1) DEFAULT '0' COMMENT 'A boolean flag derived from cost code, flags RandD',
@@ -84,6 +84,7 @@ CREATE TABLE `iseq_flowcell` (
   `requested_insert_size_to` int(5) unsigned DEFAULT NULL COMMENT 'Requested insert size max value',
   `forward_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Requested forward read length, bp',
   `reverse_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Requested reverse read length, bp',
+  `id_pool_lims` varchar(20) NOT NULL COMMENT 'Most specific LIMs identifier associated with the pool',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -388,6 +389,8 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-13 11:22:48
+-- Dump completed on 2014-11-13 13:32:10
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
+
+INSERT INTO schema_migrations (version) VALUES ('20141113130813');
 
