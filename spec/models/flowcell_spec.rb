@@ -28,7 +28,7 @@ describe Flowcell do
 
   context 'with controls' do
     # We have a row for the lane, the sample and the control
-    let(:expected_entries) { 3 }
+    let(:expected_entries) { 2 }
 
     it_behaves_like 'belongs to', [
       :sample
@@ -96,7 +96,7 @@ describe Flowcell do
 
   context 'without controls' do
     # We have a row for the lane, the sample and the control
-    let(:expected_entries) { 2 }
+    let(:expected_entries) { 1 }
 
     it_behaves_like 'a flowcell'
 
