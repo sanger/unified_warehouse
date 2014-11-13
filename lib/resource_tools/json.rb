@@ -72,8 +72,8 @@ module ResourceTools::Json
 
       def each_nested_model(json_data)
         nested_models.each do |name,handler|
-          next if json_data[name].nil?
-          json_data[name].each do |nested|
+          next if json_data[name.to_s].nil?
+          json_data[name.to_s].each do |nested|
             yield(nested, handler)
           end
         end

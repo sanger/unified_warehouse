@@ -20,7 +20,7 @@ end
 
 shared_examples_for 'a singular resource' do
   let(:originally_created_at) { Time.parse('2012-Mar-16 12:06') }
-  let(:timestamped_json) { json.merge(:created_at => originally_created_at, :updated_at => originally_created_at) }
+  let(:timestamped_json) { json.merge("created_at" => originally_created_at, "updated_at" => originally_created_at) }
   let(:modified_at) { originally_created_at + 1.day }
   let(:checked_time_now) { Time.parse('2012-Mar-26 13:20').utc }
   let(:checked_time_then) { Time.parse('2012-Mar-25 13:20').utc }
@@ -39,8 +39,8 @@ shared_examples_for 'a singular resource' do
       let(:second_lims) { 'example_2' }
 
       before(:each) do
-        described_class.create_or_update_from_json(timestamped_json.merge(:updated_at => modified_at), example_lims)
-        described_class.create_or_update_from_json(timestamped_json.merge(:updated_at => modified_at, :uuid=>'other'), second_lims)
+        described_class.create_or_update_from_json(timestamped_json.merge("updated_at" => modified_at), example_lims)
+        described_class.create_or_update_from_json(timestamped_json.merge("updated_at" => modified_at, "uuid" =>'other'), second_lims)
       end
 
       it 'creates multiple records' do
@@ -59,7 +59,7 @@ shared_examples_for 'a singular resource' do
 
         before(:each) do
           allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
-          described_class.send(:create_or_update, attributes.merge(:updated_at=>modified_at,:deleted_at => modified_at,:id_lims=>example_lims))
+          described_class.send(:create_or_update, attributes.merge("updated_at" =>modified_at,"deleted_at" => modified_at,:id_lims=>example_lims))
         end
 
         it 'flags the record as deleted' do
@@ -84,12 +84,12 @@ shared_examples_for 'a singular resource' do
 
       before(:each) do
         allow(described_class).to receive(:checked_time_now).and_return(checked_time_then)
-        described_class.create_or_update_from_json(timestamped_json.merge(:updated_at => modified_at), example_lims)
+        described_class.create_or_update_from_json(timestamped_json.merge("updated_at" => modified_at), example_lims)
       end
 
       context 'when the new record is not current' do
         before(:each) do
-          described_class.send(:create_or_update, attributes.merge(:updated_at => modified_at - 2.hours, :id_lims=>example_lims))
+          described_class.send(:create_or_update, attributes.merge("updated_at" => modified_at - 2.hours, :id_lims=>example_lims))
         end
 
         it 'only has the current row in the view' do
@@ -105,7 +105,7 @@ shared_examples_for 'a singular resource' do
 
         before(:each) do
           allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
-          described_class.create_or_update_from_json(timestamped_json.merge(:updated_at => modified_at), example_lims)
+          described_class.create_or_update_from_json(timestamped_json.merge("updated_at" => modified_at), example_lims)
         end
 
         it_behaves_like 'has only one row'
@@ -124,7 +124,7 @@ shared_examples_for 'a singular resource' do
               # and then update the attribute.
               allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
               attributes[attribute] = 'changed'
-              described_class.send(:create_or_update, attributes.merge(:updated_at => modified_at,:id_lims=>example_lims))
+              described_class.send(:create_or_update, attributes.merge("updated_at" => modified_at,:id_lims =>example_lims))
             end
 
             it_behaves_like 'has only one row'

@@ -3,10 +3,10 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   let!(:json_handler) { described_class.send(:json) }
 
   def find_target(json,graph)
-    return json[graph].first if graph.is_a?(Symbol)
-    return json[graph.first].first if (graph.count==1 && graph.first.is_a?(Symbol))
+    return json[graph.to_s].first if graph.is_a?(Symbol)
+    return json[graph.first.to_s].first if (graph.count==1 && graph.first.is_a?(Symbol))
     k,v = graph.first
-    find_target(json[k].first,v)
+    find_target(json[k.to_s].first,v)
   end
 
   def find_handler(handler,graph)
