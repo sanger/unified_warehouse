@@ -78,7 +78,7 @@ CREATE TABLE `iseq_flowcell` (
   `tag_set_id_lims` varchar(20) DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set',
   `tag_set_name` varchar(50) DEFAULT NULL COMMENT 'WTSI-wide tag set name',
   `is_spiked` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean flag indicating presence of a spike',
-  `pipeline_id_lims` varchar(30) DEFAULT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
+  `pipeline_id_lims` varchar(60) DEFAULT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
   `bait_name` varchar(50) DEFAULT NULL COMMENT 'WTSI-wide name that uniquely identifies a bait set',
   `requested_insert_size_from` int(5) unsigned DEFAULT NULL COMMENT 'Requested insert size min value',
   `requested_insert_size_to` int(5) unsigned DEFAULT NULL COMMENT 'Requested insert size max value',
@@ -389,8 +389,10 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-13 13:32:10
+-- Dump completed on 2014-11-20 10:30:35
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
+
+INSERT INTO schema_migrations (version) VALUES ('20141120101916');
 
