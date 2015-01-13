@@ -72,7 +72,6 @@ CREATE TABLE `iseq_flowcell` (
   `position` smallint(2) unsigned NOT NULL COMMENT 'Flowcell lane number',
   `entity_type` varchar(30) NOT NULL COMMENT 'Lane type: library, pool, library_control, library_indexed, library_indexed_spike',
   `entity_id_lims` varchar(20) NOT NULL COMMENT 'Most specific LIMs identifier associated with this lane or plex or spike',
-  `num_target_components` smallint(4) unsigned NOT NULL COMMENT 'Expected number of targets, one for a non-pool and number of target tags for a pool',
   `tag_index` smallint(5) unsigned DEFAULT NULL COMMENT 'Tag index, NULL if lane is not a pool',
   `tag_sequence` varchar(30) DEFAULT NULL COMMENT 'Tag sequence',
   `tag_set_id_lims` varchar(20) DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set',
@@ -235,7 +234,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-20 12:46:26
+-- Dump completed on 2015-01-13 12:37:31
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -243,4 +242,6 @@ INSERT INTO schema_migrations (version) VALUES ('20141113130813');
 INSERT INTO schema_migrations (version) VALUES ('20141120101916');
 
 INSERT INTO schema_migrations (version) VALUES ('20141120123833');
+
+INSERT INTO schema_migrations (version) VALUES ('20150113120636');
 
