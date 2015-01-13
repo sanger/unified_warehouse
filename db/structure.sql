@@ -31,7 +31,7 @@ CREATE TABLE `flgen_plate` (
   `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
   `plate_barcode` int(10) unsigned NOT NULL COMMENT 'Manufacturer (Fluidigm) chip barcode',
-  `plate_barcode_lims` int(10) unsigned NOT NULL COMMENT 'LIMs-specific plate barcode',
+  `plate_barcode_lims` varchar(128) DEFAULT NULL COMMENT 'LIMs-specific plate barcode',
   `plate_uuid_lims` varchar(36) DEFAULT NULL COMMENT 'LIMs-specific plate uuid',
   `id_flgen_plate_lims` varchar(20) NOT NULL COMMENT 'LIMs-specific plate id',
   `plate_size` smallint(6) DEFAULT NULL COMMENT 'Total number of wells on a plate',
@@ -45,7 +45,7 @@ CREATE TABLE `flgen_plate` (
   KEY `flgen_plate_study_fk` (`id_study_tmp`),
   CONSTRAINT `flgen_plate_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `flgen_plate_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,6 @@ CREATE TABLE `iseq_flowcell` (
   `position` smallint(2) unsigned NOT NULL COMMENT 'Flowcell lane number',
   `entity_type` varchar(30) NOT NULL COMMENT 'Lane type: library, pool, library_control, library_indexed, library_indexed_spike',
   `entity_id_lims` varchar(20) NOT NULL COMMENT 'Most specific LIMs identifier associated with this lane or plex or spike',
-  `num_target_components` smallint(4) unsigned NOT NULL COMMENT 'Expected number of targets, one for a non-pool and number of target tags for a pool',
   `tag_index` smallint(5) unsigned DEFAULT NULL COMMENT 'Tag index, NULL if lane is not a pool',
   `tag_sequence` varchar(30) DEFAULT NULL COMMENT 'Tag sequence',
   `tag_set_id_lims` varchar(20) DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set',
@@ -85,6 +84,8 @@ CREATE TABLE `iseq_flowcell` (
   `forward_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Requested forward read length, bp',
   `reverse_read_length` smallint(4) unsigned DEFAULT NULL COMMENT 'Requested reverse read length, bp',
   `id_pool_lims` varchar(20) NOT NULL COMMENT 'Most specific LIMs identifier associated with the pool',
+  `legacy_library_id` int(11) DEFAULT NULL COMMENT 'Legacy library_id for backwards compatibility.',
+  `id_library_lims` varchar(255) DEFAULT NULL COMMENT 'Earliest LIMs identifier associated with library creation',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -235,7 +236,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-20 12:46:26
+-- Dump completed on 2015-01-13 15:29:46
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -243,4 +244,10 @@ INSERT INTO schema_migrations (version) VALUES ('20141113130813');
 INSERT INTO schema_migrations (version) VALUES ('20141120101916');
 
 INSERT INTO schema_migrations (version) VALUES ('20141120123833');
+
+INSERT INTO schema_migrations (version) VALUES ('20150113120636');
+
+INSERT INTO schema_migrations (version) VALUES ('20150113134336');
+
+INSERT INTO schema_migrations (version) VALUES ('20150113142419');
 

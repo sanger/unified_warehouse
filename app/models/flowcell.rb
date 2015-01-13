@@ -16,10 +16,6 @@ class Flowcell < ActiveRecord::Base
         :controls
       )
 
-      custom_value(:num_target_components) do
-        (controls||[]).count + (samples||[]).count
-      end
-
       custom_value(:is_spiked) do
         controls.present? && controls.count > 0
       end
