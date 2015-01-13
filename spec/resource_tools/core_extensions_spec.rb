@@ -5,7 +5,7 @@ module ResourceTools::CoreExtensions
     context '#latest' do
       let(:callback) do
         double(:callback).tap do |callback|
-          expect(callback).to receive(:call).with('value')
+          expect(callback).to receive(:call).with(nil)
         end
       end
 
@@ -118,6 +118,20 @@ module ResourceTools::CoreExtensions
       it 'returns false if the value is below the lower bounds' do
         expect(subject.within_acceptable_bounds?(bounds.first - 0.00001)).to be false
       end
+    end
+  end
+
+  describe Array do
+    context '#convert' do
+
+      it 'converts a single hash to an array of 1' do
+        expect(::Array.convert({:example=>'example'})).to eq([{:example=>'example'}])
+      end
+
+      it 'does not modify an array of hashes' do
+        expect(::Array.convert([{:example=>'example'},{:example=>'example'}])).to eq([{:example=>'example'},{:example=>'example'}])
+      end
+
     end
   end
 end

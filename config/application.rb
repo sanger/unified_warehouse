@@ -26,6 +26,7 @@ module UnifiedWarehouse
     # We've already agreed a schema with NPG, I'd prefer not to do this but rails
     # isn't the only convention in play here.
     config.active_record.pluralize_table_names = false
+    config.active_record.schema_format = :sql
 
     # We're going to need a specialised configuration for our AMQP consumer
     config.amqp                       = ActiveSupport::Configurable::Configuration.new

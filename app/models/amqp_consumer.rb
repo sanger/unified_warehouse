@@ -45,12 +45,13 @@ class AmqpConsumer
   private :received
 
   def insert_record(metadata, json)
-    lims = json.delete('lims') || raise InvalidMessage, 'No Lims specified'
+    lims = json.delete('lims') || raise(InvalidMessage,'No Lims specified')
     payload_name = json.keys.first
     ActiveRecord::Base.transaction do
-      payload_name.classify.constantize.create_or_update_from_json(json[payload_name]).tap do |record|
+      payload_name.classify.constantize.create_or_update_from_json(json[payload_name],lims).tap do |record|
         metadata.ack  # Acknowledge receipt!
-        debug(metadata) { "#{record.inserted_record? ? 'Created' : 'Updated'} #{record.class.name}(#{record.id})" }
+        # TODO: Restore similar debugger
+        # debug(metadata) { "#{record.inserted_record? ? 'Created' : 'Updated'} #{record.class.name}(#{record.id})" }
       end
     end
   end
@@ -76,7 +77,7 @@ class AmqpConsumer
 
   # Returns a callback that can be used to dead letter any messages.
   def prepare_deadlettering(client)
-    return lambda { |m,p,e| warn(metadata) { "No dead lettering for #{e.message}" } } if deadletter.deactivated
+    return lambda { |m,p,e| warn(m) { "No dead lettering for #{e.message}: #{e.backtrace}" } } if deadletter.deactivated
 
     channel  = AMQP::Channel.new(client)
     exchange = channel.direct(deadletter.exchange, :passive => true)

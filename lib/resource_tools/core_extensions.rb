@@ -1,4 +1,16 @@
 module ResourceTools::CoreExtensions
+
+  module Array
+    extend ActiveSupport::Concern
+
+    module ClassMethods
+      def convert(object)
+        return object if object.is_a?(Array)
+        [object]
+      end
+    end
+  end
+
   module Hash
     # Determines if this hash is within an acceptable bounds of the keys common with the
     # given hash.  It is assumed that values missing from 'other' are unchanged.
@@ -49,12 +61,13 @@ module ResourceTools::CoreExtensions
 
   module NilClass
     def latest(object)
-      yield(object)
+      yield(nil)
     end
   end
 end
 
 # Extend the core classes with the behaviour we need
+class Array    ; include ResourceTools::CoreExtensions::Array    ; end
 class Hash     ; include ResourceTools::CoreExtensions::Hash     ; end
 class Object   ; include ResourceTools::CoreExtensions::Object   ; end
 class String   ; include ResourceTools::CoreExtensions::String   ; end

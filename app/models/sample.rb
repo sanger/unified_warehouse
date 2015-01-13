@@ -1,5 +1,6 @@
 class Sample < ActiveRecord::Base
   include ResourceTools
+  include SingularResourceTools
 
   json do
     ignore(

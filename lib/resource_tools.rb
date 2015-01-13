@@ -3,6 +3,7 @@ module ResourceTools
 
   extend ActiveSupport::Concern
   include ResourceTools::Json
+  include ResourceTools::Association
   include ResourceTools::Timestamps
 
   included do |base|
@@ -17,8 +18,11 @@ module ResourceTools
     # we're probably not capturing all of the right messages.
     before_save :remember_if_we_are_a_new_record
 
-    scope :for_lims, lambda { |lims| where(:id_lims=>lims) }
-    scope :with_id,  lambda { |id|   where(:"id_#{base.table_name}_lims"=>id) }
+    # IDs can be alphanumerics, so the column is not set to integer. While MySQL is smart enough to handle the conversion, it
+    # slows down the queries significantly (~400ms vs 2). Ruby handles the conversion much more quickly.
+    scope :for_lims,  lambda { |lims| where(:id_lims=>lims) }
+    scope :with_uuid, lambda { |uuid| where(:"uuid_#{base.name.underscore}_lims"=>uuid)}
+    scope :with_id,   lambda { |id|   where(:"id_#{base.name.underscore}_lims"=>id.to_s) }
   end
 
   def remember_if_we_are_a_new_record
@@ -56,27 +60,4 @@ module ResourceTools
     not us.within_acceptable_bounds?(them)
   end
 
-  # def checked!
-  #   self.save!
-  #   self
-  # end
-
-  # def check(object)
-  #   updated_values?(object) ? yield : checked!
-  # end
-
-  def latest(other)
-    yield(self) if updated_values?(other) && ( other.last_updated > last_updated )
-  end
-
-  module ClassMethods
-    def create_or_update(attributes,lims)
-      new_atts = attributes.reverse_merge(:data => attributes,:id_lims=>lims)
-      for_lims(lims).with_id(new_atts["id_#{table_name}_lims"]).first.latest(new(new_atts)) do |record|
-        record.update_attributes(new_atts)
-        record.save!
-      end
-    end
-    private :create_or_update
-  end
 end

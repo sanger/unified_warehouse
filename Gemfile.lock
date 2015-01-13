@@ -48,6 +48,11 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    factory_girl (4.4.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.4.1)
+      factory_girl (~> 4.4.0)
+      railties (>= 3.0.0)
     ffi (1.9.3)
     formatador (0.2.5)
     guard (2.6.1)
@@ -75,6 +80,8 @@ GEM
     mail (2.6.1)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
+    migration_comments (0.3.2)
+      activerecord (>= 2.3.2)
     mime-types (2.3)
     minitest (5.4.1)
     mocktra (1.0.2)
@@ -165,10 +172,12 @@ PLATFORMS
 
 DEPENDENCIES
   amqp (~> 1.5)
+  factory_girl_rails
   guard
   guard-bundler
   guard-rspec
   hashie (~> 3.3)
+  migration_comments
   mocktra (~> 1.0.2)
   mysql2
   psd_logger!

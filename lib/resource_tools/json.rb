@@ -3,7 +3,7 @@ module ResourceTools::Json
 
   module ClassMethods
     def create_or_update_from_json(json_data,lims)
-      create_or_update(json.new(json_data),lims)
+      create_or_update(json.collection_from(json_data,lims))
     end
 
     def json(&block)
@@ -20,11 +20,27 @@ module ResourceTools::Json
     class_attribute :ignoreable
     self.ignoreable = []
 
+    class_attribute :nested_models
+    self.nested_models = {}
+
+    class_attribute :recorded
+    self.recorded = false
+
+    class_attribute :custom_values
+    self.custom_values = nil
+
     class << self
       # Hashes in subkeys might as well be normal Hashie::Mash instances as we don't want to bleed
       # the key conversion further into the data.
       def subkey_class
         Hashie::Mash
+      end
+
+      def has_nested_model(name,&block)
+        self.nested_models = Hash.new if self.nested_models.blank?
+        const_set(:"#{name.to_s.classify}JsonHandler", Class.new(ResourceTools::Json::Handler))
+        self.nested_models[name] = const_get(:"#{name.to_s.classify}JsonHandler")
+        self.nested_models[name].tap { |json_handler| json_handler.instance_eval(&block) if block_given? }
       end
 
       def ignore(*attributes)
@@ -41,11 +57,49 @@ module ResourceTools::Json
       end
       # Remove privacy due to rails delegation changes
       #private :convert_key
+
+      def collection_from(json_data,lims)
+        # We're not nested, so just return the standard json
+        return new(json_data.reverse_merge(:id_lims=>lims)) if nested_models.blank?
+        Array.new.tap do |collection|
+          original = new(json_data.reverse_merge(:id_lims=>lims))
+          collection << original if self.recorded
+          each_nested_model(json_data) do |nested,handler|
+            collection << handler.collection_from(original.reverse_merge(nested),lims)
+          end
+        end.flatten
+      end
+
+      def each_nested_model(json_data)
+        nested_models.each do |name,handler|
+          next if json_data[name.to_s].nil?
+          json_data[name.to_s].each do |nested|
+            yield(nested, handler)
+          end
+        end
+      end
+      private :each_nested_model
+
+      def has_own_record
+        self.recorded = true
+      end
+
+      def custom_value(name,&block)
+        self.custom_values = Hash.new if self.custom_values.blank?
+        self.custom_values[name] = block
+      end
     end
 
     def initialize(*args, &block)
       super
+      self.class.custom_values.each do |k,block|
+        self[k] = self.instance_eval(&block)
+      end if self.class.custom_values.present?
       delete_if { |k,_| ignoreable.include?(k) }
+    end
+
+    def deleted?
+      deleted_at.present?
     end
 
     delegate :convert_key, :to => 'self.class'
