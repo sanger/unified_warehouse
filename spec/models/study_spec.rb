@@ -17,6 +17,11 @@ describe Study do
     let(:additional_roles) { [ :data_access_contact, :slf_manager, :lab_manager ] }
   end
 
+  it_behaves_like 'store as boolean', {
+    'contains_human_dna'     => 'Yes',
+    'contaminated_human_dna' => 'No'
+  }
+
   let(:json) do
     {
       "uuid" => "11111111-2222-3333-4444-555555555555",
@@ -33,8 +38,8 @@ describe Study do
       "description" => "description",
       "updated_at" => "2012-03-11 10:20:08",
       "created_at" => "2012-03-11 10:20:08",
-      "contains_human_dna" => "contains human dna",
-      "contaminated_human_dna" => "contaminated human dna",
+      "contains_human_dna" => true,
+      "contaminated_human_dna" => true,
       "data_release_strategy" => "data release strategy",
       "data_release_sort_of_study" => "data release sort of study",
       "data_release_timing" => "data release timing",

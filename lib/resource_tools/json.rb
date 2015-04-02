@@ -20,6 +20,9 @@ module ResourceTools::Json
     class_attribute :ignoreable
     self.ignoreable = []
 
+    class_attribute :stored_as_boolean
+    self.stored_as_boolean = []
+
     class_attribute :nested_models
     self.nested_models = {}
 
@@ -45,6 +48,10 @@ module ResourceTools::Json
 
       def ignore(*attributes)
         self.ignoreable += attributes.map(&:to_s)
+      end
+
+      def store_as_boolean(*attributes)
+        self.stored_as_boolean += attributes.map(&:to_s)
       end
 
       # JSON attributes can be translated into the attributes on the way in.
@@ -95,8 +102,16 @@ module ResourceTools::Json
       self.class.custom_values.each do |k,block|
         self[k] = self.instance_eval(&block)
       end if self.class.custom_values.present?
+      convert_booleans
       delete_if { |k,_| ignoreable.include?(k) }
     end
+
+    def convert_booleans
+      self.stored_as_boolean.each do |key|
+        self[key] = self[key].to_boolean_from_arguments if self.has_key?(key)
+      end
+    end
+    private :convert_booleans
 
     def deleted?
       deleted_at.present?
