@@ -182,8 +182,8 @@ CREATE TABLE `study` (
   `abbreviation` varchar(255) DEFAULT NULL,
   `accession_number` varchar(50) DEFAULT NULL,
   `description` text,
-  `contains_human_dna` varchar(255) DEFAULT NULL,
-  `contaminated_human_dna` varchar(255) DEFAULT NULL,
+  `contains_human_dna` tinyint(1) DEFAULT NULL COMMENT 'Lane may contain human DNA',
+  `contaminated_human_dna` tinyint(1) DEFAULT NULL COMMENT 'Human DNA in the lane is a contaminant and should be removed',
   `data_release_strategy` varchar(255) DEFAULT NULL,
   `data_release_sort_of_study` varchar(255) DEFAULT NULL,
   `ena_project_id` varchar(255) DEFAULT NULL,
@@ -237,7 +237,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-01 14:40:57
+-- Dump completed on 2015-04-01 16:11:24
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -253,4 +253,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150113134336');
 INSERT INTO schema_migrations (version) VALUES ('20150113142419');
 
 INSERT INTO schema_migrations (version) VALUES ('20150401132814');
+
+INSERT INTO schema_migrations (version) VALUES ('20150401145741');
+
+INSERT INTO schema_migrations (version) VALUES ('20150401150636');
 
