@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'thor'
 require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../../lib/resource_tools/core_extensions', __FILE__)
 
 class NilClass
   def pretty_dump_to(io)
@@ -21,34 +22,18 @@ class Fixnum
 end
 
 class TrueClass
-  def to_boolean_from_arguments
-    self
-  end
-
   def pretty_dump_to(io)
     io.write('true')
   end
 end
 
 class FalseClass
-  def to_boolean_from_arguments
-    self
-  end
-
   def pretty_dump_to(io)
     io.write('false')
   end
 end
 
 class String
-  def to_boolean_from_arguments
-    case
-    when ['true', 'yes'].include?(self.downcase) then true
-    when ['false', 'no'].include?(self.downcase) then false
-    else raise "Cannot convert #{self.inspect} to a boolean safely!"
-    end
-  end
-
   def pretty_dump_to(io)
     io.write(self.inspect)
   end

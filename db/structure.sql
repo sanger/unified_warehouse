@@ -45,7 +45,7 @@ CREATE TABLE `flgen_plate` (
   KEY `flgen_plate_study_fk` (`id_study_tmp`),
   CONSTRAINT `flgen_plate_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `flgen_plate_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,6 +86,7 @@ CREATE TABLE `iseq_flowcell` (
   `id_pool_lims` varchar(20) NOT NULL COMMENT 'Most specific LIMs identifier associated with the pool',
   `legacy_library_id` int(11) DEFAULT NULL COMMENT 'Legacy library_id for backwards compatibility.',
   `id_library_lims` varchar(255) DEFAULT NULL COMMENT 'Earliest LIMs identifier associated with library creation',
+  `team` varchar(255) DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -181,8 +182,8 @@ CREATE TABLE `study` (
   `abbreviation` varchar(255) DEFAULT NULL,
   `accession_number` varchar(50) DEFAULT NULL,
   `description` text,
-  `contains_human_dna` varchar(255) DEFAULT NULL,
-  `contaminated_human_dna` varchar(255) DEFAULT NULL,
+  `contains_human_dna` tinyint(1) DEFAULT NULL COMMENT 'Lane may contain human DNA',
+  `contaminated_human_dna` tinyint(1) DEFAULT NULL COMMENT 'Human DNA in the lane is a contaminant and should be removed',
   `data_release_strategy` varchar(255) DEFAULT NULL,
   `data_release_sort_of_study` varchar(255) DEFAULT NULL,
   `ena_project_id` varchar(255) DEFAULT NULL,
@@ -236,7 +237,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-13 15:29:46
+-- Dump completed on 2015-04-01 16:11:24
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -250,4 +251,10 @@ INSERT INTO schema_migrations (version) VALUES ('20150113120636');
 INSERT INTO schema_migrations (version) VALUES ('20150113134336');
 
 INSERT INTO schema_migrations (version) VALUES ('20150113142419');
+
+INSERT INTO schema_migrations (version) VALUES ('20150401132814');
+
+INSERT INTO schema_migrations (version) VALUES ('20150401145741');
+
+INSERT INTO schema_migrations (version) VALUES ('20150401150636');
 
