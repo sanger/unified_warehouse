@@ -3,23 +3,42 @@
 # Usage: worker identity action
 # Eg: worker unified_warehouse.production.1 start
 
+PID_DIR='tmp/pids'
+
 function worker_start() {
-  cd `pwd`
-  if [ ! -f ../../shared/worker.${1}.pid ]
+  if [ -f $PID_DIR/worker.${1}.pid ] && ps `cat $PID_DIR/worker.${1}.pid` >> /dev/null
   then
-    echo "Starting Amqp worker"
-    nohup bundle exec ./script/amqp_loader main &
-    echo $! > ../../shared/worker.${1}.pid
-  else
     echo "Worker already running with pid:"
-    echo `cat ../../shared/worker.${1}.pid`
+    echo `cat $PID_DIR/worker.${1}.pid`
+    exit -1
+  else
+    echo "Starting Amqp worker"
+    nohup bundle exec ./script/amqp_loader main & >> log/worker.${1}.log 2> log/worker.${1}.error.log < /dev/null
+    echo $! > $PID_DIR/worker.${1}.pid
+    exit 0
+  fi
+}
+
+function check_stopped() {
+  if [ -f $PID_DIR/worker.${1}.pid ] && ps -p `cat $PID_DIR/worker.${1}.pid` >> /dev/null ; then
+    echo '.'
+  else
+    echo 'Worker stopped'
+    if [ -f $PID_DIR/worker.${1}.pid ]; then rm $PID_DIR/worker.${1}.pid; fi
+    exit 0
   fi
 }
 
 function worker_stop() {
-  cd `pwd`
-  kill -9 `cat ../../shared/worker.${1}.pid`
-  if [ -f ../../shared/worker.${1}.pid ]; then rm ../../shared/worker.${1}.pid; fi
+  kill `cat $PID_DIR/worker.${1}.pid`
+  echo 'Waiting for process to die'
+  for ((i = 0; i < 60; i = i + 1)); do
+    check_stopped ${1}
+    sleep 1
+  done
+  echo 'Delayed Job failed to die, killing it...'
+  kill -9 `cat $PID_DIR/worker.${1}.pid`
+  if [ -f $PID_DIR/worker.${1}.pid ]; then rm $PID_DIR/worker.${1}.pid; fi
 }
 
 function worker_restart() {
