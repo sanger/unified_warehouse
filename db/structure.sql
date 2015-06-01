@@ -87,6 +87,10 @@ CREATE TABLE `iseq_flowcell` (
   `legacy_library_id` int(11) DEFAULT NULL COMMENT 'Legacy library_id for backwards compatibility.',
   `id_library_lims` varchar(255) DEFAULT NULL COMMENT 'Earliest LIMs identifier associated with library creation',
   `team` varchar(255) DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
+  `tag_2_index` int(11) DEFAULT NULL COMMENT 'Tag 2 index, NULL if there is no second tag',
+  `tag_2_sequence` varchar(30) DEFAULT NULL COMMENT 'Tag sequence for tag 2',
+  `tag_2_set_id_lims` varchar(20) DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for tag 2',
+  `tag_2_set_name` varchar(100) DEFAULT NULL COMMENT 'WTSI-wide tag set name for tag 2',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -237,7 +241,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-01 16:11:24
+-- Dump completed on 2015-06-01 12:39:28
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -257,4 +261,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150401132814');
 INSERT INTO schema_migrations (version) VALUES ('20150401145741');
 
 INSERT INTO schema_migrations (version) VALUES ('20150401150636');
+
+INSERT INTO schema_migrations (version) VALUES ('20150601112933');
 
