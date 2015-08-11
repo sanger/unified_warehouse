@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.20, for osx10.9 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.13, for osx10.8 (x86_64)
 --
 -- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
--- Server version	5.6.20
+-- Server version	5.6.13
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -202,6 +202,7 @@ CREATE TABLE `study` (
   `aligned` tinyint(1) NOT NULL DEFAULT '1',
   `separate_y_chromosome_data` tinyint(1) NOT NULL DEFAULT '0',
   `data_access_group` varchar(255) DEFAULT NULL,
+  `prelim_id` varchar(5) DEFAULT NULL COMMENT 'Prelim Id',
   PRIMARY KEY (`id_study_tmp`),
   UNIQUE KEY `study_id_lims_id_study_lims_index` (`id_lims`,`id_study_lims`),
   UNIQUE KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
@@ -240,7 +241,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-23 12:18:20
+-- Dump completed on 2015-08-11 17:02:36
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -262,4 +263,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150401145741');
 INSERT INTO schema_migrations (version) VALUES ('20150401150636');
 
 INSERT INTO schema_migrations (version) VALUES ('20150601112933');
+
+INSERT INTO schema_migrations (version) VALUES ('20150810160101');
 
