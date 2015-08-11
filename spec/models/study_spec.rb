@@ -48,6 +48,7 @@ describe Study do
       "data_access_group" => "data access group",
       "ena_project_id" => "ena project id",
       "study_title" => "study title",
+      "prelim_id" => "S1234",
       "study_visibility" => "study visibility",
       "ega_dac_accession_number" => "ega dac accession number",
       "array_express_accession_number" => "array express accession number",
