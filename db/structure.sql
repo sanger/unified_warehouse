@@ -94,6 +94,8 @@ CREATE TABLE `iseq_flowcell` (
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
   KEY `iseq_flowcell_study_fk` (`id_study_tmp`),
+  KEY `index_iseq_flowcell_on_id_pool_lims` (`id_pool_lims`),
+  KEY `index_iseq_flowcell_on_id_library_lims` (`id_library_lims`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -240,7 +242,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-23 12:18:20
+-- Dump completed on 2015-08-13 13:33:05
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -262,4 +264,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150401145741');
 INSERT INTO schema_migrations (version) VALUES ('20150401150636');
 
 INSERT INTO schema_migrations (version) VALUES ('20150601112933');
+
+INSERT INTO schema_migrations (version) VALUES ('20150813122539');
 
