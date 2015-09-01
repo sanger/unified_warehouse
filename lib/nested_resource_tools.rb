@@ -46,8 +46,7 @@ module NestedResourceTools
     private :has_composition_keys
 
     def composite_key_for(record)
-      @composition_keys.map {|k| record.send(k) }.tap do |ck|
-      end
+      @composition_keys.map {|k| record.send(k) }
     end
     private :composite_key_for
   end
