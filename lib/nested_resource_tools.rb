@@ -12,7 +12,7 @@ module NestedResourceTools
 
       attributes = Array.convert(attributes)
 
-      new_atts  = attributes.map{ |a| a.reverse_merge(:data => attributes)}
+      new_atts  = attributes.map{ |a| a.to_hash }
 
       base_resource = attributes.first
 
