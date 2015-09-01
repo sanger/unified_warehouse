@@ -48,7 +48,7 @@ describe Flowcell do
 
         "lanes" => [
           {
-            "manual_qc" => true,
+            "manual_qc" => false,
             "entity_type" => "library",
             "position" => 1,
             "priority" => 1,
@@ -79,7 +79,7 @@ describe Flowcell do
             "controls" => [
               {
                 "sample_uuid" => "000000-0000-0000-0000-0000000000",
-                "tag_index" => 3,
+                "tag_index" => 168,
                 "entity_type" => "library_indexed_spike",
                 "tag_sequence" => "ATAG",
                 "tag_set_id_lims" => "2",
@@ -94,6 +94,47 @@ describe Flowcell do
 
     it 'flags all entries as spiked' do
       Flowcell.all.each {|fc| expect(fc.spiked).to be_true }
+    end
+
+    context 'when update with identical tag indexes' do
+
+      let(:example_lims) { 'example' }
+
+      let(:updated_json) do
+        updated_json = json
+        updated_json['lanes'].first['manual_qc'] = true
+        updated_json['updated_at'] = "2012-03-11 12:22:42"
+        updated_json
+      end
+
+      it 'reuses the existing records' do
+        described_class.create_or_update_from_json(json, example_lims)
+        original_ids = described_class.all.map(&:id_iseq_flowcell_tmp)
+        described_class.create_or_update_from_json(updated_json, example_lims)
+        new_ids = described_class.all.map(&:id_iseq_flowcell_tmp)
+        expect(new_ids).to eq(original_ids)
+      end
+    end
+
+    context 'when update with different tag indexes' do
+
+      let(:example_lims) { 'example' }
+
+      let(:updated_json) do
+        updated_json = json
+        updated_json['lanes'].first['manual_qc'] = true
+        updated_json['lanes'].first['samples'].first['tag_index'] = 4
+        updated_json['updated_at'] = "2012-03-11 12:22:42"
+        updated_json
+      end
+
+      it 'destroys the existing records' do
+        described_class.create_or_update_from_json(json, example_lims)
+        original_ids = described_class.all.map(&:id_iseq_flowcell_tmp)
+        described_class.create_or_update_from_json(updated_json, example_lims)
+        new_ids = described_class.all.map(&:id_iseq_flowcell_tmp)
+        expect(new_ids).to_not eq(original_ids)
+      end
     end
   end
 
@@ -149,4 +190,5 @@ describe Flowcell do
       Flowcell.all.each {|fc| expect(fc.spiked).to be_false }
     end
   end
+
 end

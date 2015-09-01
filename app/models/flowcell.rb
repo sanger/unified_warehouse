@@ -7,6 +7,8 @@ class Flowcell < ActiveRecord::Base
   has_associated(:study)
   has_associated(:sample)
 
+  has_composition_keys(:tag_index, :id_flowcell_lims, :entity_id_lims, :entity_type)
+
   json do
 
     has_nested_model(:lanes) do
