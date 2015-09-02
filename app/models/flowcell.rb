@@ -1,13 +1,13 @@
 class Flowcell < ActiveRecord::Base
   include ResourceTools
-  include NestedResourceTools
+  include CompositeResourceTools
 
   self.table_name = 'iseq_flowcell'
 
   has_associated(:study)
   has_associated(:sample)
 
-  has_composition_keys(:tag_index, :id_flowcell_lims, :entity_id_lims, :entity_type)
+  has_composition_keys(:tag_index, :id_flowcell_lims, :entity_id_lims, :entity_type, :position, :tag_sequence, :tag2_sequence)
 
   json do
 
