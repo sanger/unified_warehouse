@@ -26,7 +26,7 @@ describe Flowcell do
     it_behaves_like 'a nested resource'
   end
 
-  context 'with controls' do
+  context 'with controls and all optional fields' do
     # We have a row for the lane, the sample and the control
     let(:expected_entries) { 2 }
 
@@ -54,6 +54,7 @@ describe Flowcell do
             "priority" => 1,
             "id_pool_lims" => "DN324095D A1:H2",
             "external_release" => true,
+            "purpose" => "standard",
 
             "samples" => [
               {
@@ -98,7 +99,7 @@ describe Flowcell do
   end
 
 
-  context 'without controls' do
+  context 'without controls or other optional fields' do
     # We have a row for the lane, the sample and the control
     let(:expected_entries) { 1 }
 
