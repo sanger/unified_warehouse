@@ -100,6 +100,43 @@ CREATE TABLE `iseq_flowcell` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `pac_bio_run`
+--
+
+DROP TABLE IF EXISTS `pac_bio_run`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pac_bio_run` (
+  `id_pac_bio_tmp` int(11) NOT NULL AUTO_INCREMENT,
+  `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
+  `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
+  `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
+  `id_study_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "study.id_study_tmp"',
+  `id_pac_bio_run_lims` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Lims specific identifier for the pacbio run',
+  `pac_bio_run_uuid` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Uuid identifier for the pacbio run',
+  `cost_code` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Valid WTSI cost-code',
+  `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
+  `tag_identifier` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tag index within tag set, NULL if untagged',
+  `tag_sequence` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tag sequence for tag',
+  `tag_set_id_lims` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for tag',
+  `tag_set_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'WTSI-wide tag set name for tag',
+  `plate_barcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The human readable barcode for the plate loaded onto the machine',
+  `plate_uuid_lims` varchar(36) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The plate uuid',
+  `well_label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The well identifier for the plate, A1-H12',
+  `well_uuid_lims` varchar(36) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The well uuid',
+  `pac_bio_library_tube_id_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMS specific identifier for originating library tube',
+  `pac_bio_library_tube_uuid` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The uuid for the originating library tube',
+  `pac_bio_library_tube_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the originating library tube',
+  `pac_bio_library_tube_legacy_id` int(11) DEFAULT NULL COMMENT 'Legacy library_id for backwards compatibility.',
+  PRIMARY KEY (`id_pac_bio_tmp`),
+  KEY `fk_pac_bio_run_to_sample` (`id_sample_tmp`),
+  KEY `fk_pac_bio_run_to_study` (`id_study_tmp`),
+  CONSTRAINT `fk_pac_bio_run_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
+  CONSTRAINT `fk_pac_bio_run_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `sample`
 --
 
@@ -240,7 +277,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-07-23 12:18:20
+-- Dump completed on 2015-09-17 11:58:42
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -262,4 +299,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150401145741');
 INSERT INTO schema_migrations (version) VALUES ('20150401150636');
 
 INSERT INTO schema_migrations (version) VALUES ('20150601112933');
+
+INSERT INTO schema_migrations (version) VALUES ('20150917082634');
+
+INSERT INTO schema_migrations (version) VALUES ('20150917100509');
 
