@@ -33,7 +33,7 @@ describe PacBioRun do
       "last_updated" => "2012-03-11 10:22:42",
       "wells" => [
         {
-          "well_label" => "S01",
+          "well_label" => "A1",
           "well_uuid_lims" => "000000-0000-0000-0000-0000000000",
           "samples" => [
             {
@@ -63,7 +63,7 @@ describe PacBioRun do
           ]
         },
         {
-          "well_label" => "S02",
+          "well_label" => "B2",
           "well_uuid_lims" => "000000-0000-0000-0000-0000000000",
           "samples" => [
             {
@@ -78,6 +78,12 @@ describe PacBioRun do
               "tag_set_name" => "Sanger_168tags - 10 mer tags",
               "study_uuid" => '000000-0000-0000-0000-0000000001'
             }
+          ]
+        },
+        {
+          "well_label" => "C1",
+          "well_uuid_lims" => "000000-0000-0000-0000-0000000000",
+          "samples" => [
           ]
         }
       ]
