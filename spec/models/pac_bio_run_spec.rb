@@ -35,24 +35,28 @@ describe PacBioRun do
         {
           "well_label" => "S01",
           "well_uuid_lims" => "000000-0000-0000-0000-0000000000",
-          "cost_code" => "cost_code1",
-          "pac_bio_library_tube_id_lims" => "12345",
-          "pac_bio_library_tube_uuid" => '000000-0000-0000-0000-0000000000',
-          "pac_bio_library_tube_name" => "example",
           "samples" => [
             {
               "sample_uuid" => '000000-0000-0000-0000-0000000000',
+              "pac_bio_library_tube_id_lims" => "12345",
+              "pac_bio_library_tube_uuid" => '000000-0000-0000-0000-0000000000',
+              "pac_bio_library_tube_name" => "example",
               "tag_identifier" => 3,
               "tag_sequence" => "ATAG",
               "tag_set_id_lims" => "2",
+              "cost_code" => "cost_code1",
               "tag_set_name" => "Sanger_168tags - 10 mer tags",
               "study_uuid" => '000000-0000-0000-0000-0000000001',
             },
             {
               "sample_uuid" => '000000-0000-0000-0000-0000000000',
+              "pac_bio_library_tube_id_lims" => "12345",
+              "pac_bio_library_tube_uuid" => '000000-0000-0000-0000-0000000000',
+              "pac_bio_library_tube_name" => "example",
               "tag_identifier" => 4,
               "tag_sequence" => "TACG",
               "tag_set_id_lims" => "2",
+              "cost_code" => "cost_code1",
               "tag_set_name" => "Sanger_168tags - 10 mer tags",
               "study_uuid" => '000000-0000-0000-0000-0000000001',
             }
@@ -61,16 +65,16 @@ describe PacBioRun do
         {
           "well_label" => "S02",
           "well_uuid_lims" => "000000-0000-0000-0000-0000000000",
-          "cost_code" => "cost_code1",
-          "pac_bio_library_tube_id_lims" => "12345",
-          "pac_bio_library_tube_uuid" => '000000-0000-0000-0000-0000000000',
-          "pac_bio_library_tube_name" => "example",
           "samples" => [
             {
               "sample_uuid" => '000000-0000-0000-0000-0000000000',
+              "pac_bio_library_tube_id_lims" => "12345",
+              "pac_bio_library_tube_uuid" => '000000-0000-0000-0000-0000000000',
+              "pac_bio_library_tube_name" => "example",
               "tag_identifier" => 3,
               "tag_sequence" => "ATAG",
               "tag_set_id_lims" => "2",
+              "cost_code" => "cost_code1",
               "tag_set_name" => "Sanger_168tags - 10 mer tags",
               "study_uuid" => '000000-0000-0000-0000-0000000001'
             }
