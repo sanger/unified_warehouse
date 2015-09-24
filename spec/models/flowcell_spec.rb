@@ -26,7 +26,7 @@ describe Flowcell do
     it_behaves_like 'a nested resource'
   end
 
-  context 'with controls' do
+  context 'with controls and all optional fields' do
     # We have a row for the lane, the sample and the control
     let(:expected_entries) { 2 }
 
@@ -54,6 +54,7 @@ describe Flowcell do
             "priority" => 1,
             "id_pool_lims" => "DN324095D A1:H2",
             "external_release" => true,
+            "purpose" => "standard",
 
             "samples" => [
               {
@@ -61,9 +62,11 @@ describe Flowcell do
                 "tag_sequence" => "ATAG",
                 "tag_set_id_lims" => "2",
                 "tag_set_name" => "Sanger_168tags - 10 mer tags",
+                "tag_identifier" => 1,
                 "tag2_sequence" => "GGGG",
                 "tag2_set_id_lims" => "1",
                 "tag2_set_name" => "Tag 2 Set 1",
+                "tag2_identifier" => 1,
                 "pipeline_id_lims" => "Agilent Pulldown",
                 "entity_type" => "library_indexed",
                 "bait_name" => "DDD_V5_plus",
@@ -98,7 +101,7 @@ describe Flowcell do
   end
 
 
-  context 'without controls' do
+  context 'without controls or other optional fields' do
     # We have a row for the lane, the sample and the control
     let(:expected_entries) { 1 }
 
