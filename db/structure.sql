@@ -68,6 +68,7 @@ CREATE TABLE `iseq_flowcell` (
   `manual_qc` tinyint(1) DEFAULT NULL COMMENT 'Manual QC decision, NULL for unknown',
   `external_release` tinyint(1) DEFAULT NULL COMMENT 'Defaults to manual qc value; can be changed by the user later',
   `flowcell_barcode` varchar(15) DEFAULT NULL COMMENT 'Manufacturer flowcell barcode or other identifier',
+  `reagent_kit_barcode` varchar(30) DEFAULT NULL COMMENT 'The barcode for the reagent kit or cartridge',
   `id_flowcell_lims` varchar(20) NOT NULL COMMENT 'LIMs-specific flowcell id, batch_id for Sequencescape',
   `position` smallint(2) unsigned NOT NULL COMMENT 'Flowcell lane number',
   `entity_type` varchar(30) NOT NULL COMMENT 'Lane type: library, pool, library_control, library_indexed, library_indexed_spike',
@@ -76,9 +77,11 @@ CREATE TABLE `iseq_flowcell` (
   `tag_sequence` varchar(30) DEFAULT NULL COMMENT 'Tag sequence',
   `tag_set_id_lims` varchar(20) DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set',
   `tag_set_name` varchar(100) DEFAULT NULL COMMENT 'WTSI-wide tag set name',
+  `tag_identifier` varchar(30) DEFAULT NULL COMMENT 'The position of tag within the tag group',
   `tag2_sequence` varchar(30) DEFAULT NULL COMMENT 'Tag sequence for tag 2',
   `tag2_set_id_lims` varchar(20) DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for tag 2',
   `tag2_set_name` varchar(100) DEFAULT NULL COMMENT 'WTSI-wide tag set name for tag 2',
+  `tag2_identifier` varchar(30) DEFAULT NULL COMMENT 'The position of tag2 within the tag group',
   `is_spiked` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Boolean flag indicating presence of a spike',
   `pipeline_id_lims` varchar(60) DEFAULT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
   `bait_name` varchar(50) DEFAULT NULL COMMENT 'WTSI-wide name that uniquely identifies a bait set',
@@ -90,6 +93,7 @@ CREATE TABLE `iseq_flowcell` (
   `legacy_library_id` int(11) DEFAULT NULL COMMENT 'Legacy library_id for backwards compatibility.',
   `id_library_lims` varchar(255) DEFAULT NULL COMMENT 'Earliest LIMs identifier associated with library creation',
   `team` varchar(255) DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
+  `purpose` varchar(30) DEFAULT NULL COMMENT 'Describes the reason the sequencing was conducted. Eg. Standard, QC, Control',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -242,7 +246,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-13 13:33:05
+-- Dump completed on 2015-08-13 10:49:35
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -265,5 +269,11 @@ INSERT INTO schema_migrations (version) VALUES ('20150401150636');
 
 INSERT INTO schema_migrations (version) VALUES ('20150601112933');
 
+INSERT INTO schema_migrations (version) VALUES ('20150813094119');
+
 INSERT INTO schema_migrations (version) VALUES ('20150813122539');
+
+INSERT INTO schema_migrations (version) VALUES ('20150819120400');
+
+INSERT INTO schema_migrations (version) VALUES ('20150827140317');
 
