@@ -98,6 +98,8 @@ CREATE TABLE `iseq_flowcell` (
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
   KEY `iseq_flowcell_study_fk` (`id_study_tmp`),
+  KEY `index_iseq_flowcell_on_id_pool_lims` (`id_pool_lims`),
+  KEY `index_iseq_flowcell_on_id_library_lims` (`id_library_lims`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -268,6 +270,8 @@ INSERT INTO schema_migrations (version) VALUES ('20150401150636');
 INSERT INTO schema_migrations (version) VALUES ('20150601112933');
 
 INSERT INTO schema_migrations (version) VALUES ('20150813094119');
+
+INSERT INTO schema_migrations (version) VALUES ('20150813122539');
 
 INSERT INTO schema_migrations (version) VALUES ('20150819120400');
 
