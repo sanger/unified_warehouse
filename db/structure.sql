@@ -182,7 +182,7 @@ CREATE TABLE `sample` (
   `consent_withdrawn` tinyint(1) NOT NULL DEFAULT '0',
   `donor_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_sample_tmp`),
-  UNIQUE KEY `sample_id_lims_id_sample_lims_index` (`id_lims`,`id_sample_lims`),
+  UNIQUE KEY `index_sample_on_id_sample_lims_and_id_lims` (`id_sample_lims`,`id_lims`),
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
@@ -284,7 +284,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-09-17 11:58:42
+-- Dump completed on 2015-11-10 10:42:33
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -320,4 +320,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150827140317');
 INSERT INTO schema_migrations (version) VALUES ('20150917082634');
 
 INSERT INTO schema_migrations (version) VALUES ('20150917100509');
+
+INSERT INTO schema_migrations (version) VALUES ('20151110102754');
 
