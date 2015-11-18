@@ -40,7 +40,7 @@ describe Flowcell do
       {
 
         "flowcell_barcode" => "12345678903",
-        "flowcell_id" => "1123",
+        "flowcell_id" => 1123,
         "forward_read_length" => 222,
         "reverse_read_length" => 222,
 
@@ -75,7 +75,7 @@ describe Flowcell do
                 "sample_uuid" => "000000-0000-0000-0000-0000000000",
                 "study_uuid" => "000000-0000-0000-0000-0000000001",
                 "cost_code" => "12345",
-                "entity_id_lims" => "12345",
+                "entity_id_lims" => 12345,
                 "is_r_and_d" => false
               }
             ],

@@ -47,7 +47,7 @@ module CompositeResourceTools
     end
 
     def composite_key_for(record)
-      @composition_keys.map {|k| record.send(k) }
+      @composition_keys.map {|k| record.send(k).to_s }
     end
 
     def invalid_message!
