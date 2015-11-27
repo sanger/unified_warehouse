@@ -209,6 +209,7 @@ CREATE TABLE `study` (
   `separate_y_chromosome_data` tinyint(1) NOT NULL DEFAULT '0',
   `data_access_group` varchar(255) DEFAULT NULL,
   `prelim_id` varchar(20) DEFAULT NULL COMMENT 'The preliminary study id prior to entry into the LIMS',
+  `hmdmc_number` varchar(255) DEFAULT NULL COMMENT 'The Human Materials and Data Management Committee approval number(s) for the study.',
   PRIMARY KEY (`id_study_tmp`),
   UNIQUE KEY `study_id_lims_id_study_lims_index` (`id_lims`,`id_study_lims`),
   UNIQUE KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
@@ -247,7 +248,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-13 13:58:06
+-- Dump completed on 2015-11-27  9:51:34
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -279,4 +280,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150813125229');
 INSERT INTO schema_migrations (version) VALUES ('20150819120400');
 
 INSERT INTO schema_migrations (version) VALUES ('20150827140317');
+
+INSERT INTO schema_migrations (version) VALUES ('20151127094701');
 
