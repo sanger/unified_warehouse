@@ -14,6 +14,7 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
   config.before(:suite) do
+    ActiveRecord::Migration.maintain_test_schema!
     FactoryGirl.lint
   end
 
