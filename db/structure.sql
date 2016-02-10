@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.20, for osx10.9 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.21, for osx10.6 (i386)
 --
 -- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
--- Server version	5.6.20
+-- Server version	5.5.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -247,6 +247,7 @@ CREATE TABLE `study` (
   `data_access_group` varchar(255) DEFAULT NULL,
   `prelim_id` varchar(20) DEFAULT NULL COMMENT 'The preliminary study id prior to entry into the LIMS',
   `hmdmc_number` varchar(255) DEFAULT NULL COMMENT 'The Human Materials and Data Management Committee approval number(s) for the study.',
+  `data_destination` varchar(255) DEFAULT NULL COMMENT 'The data destination type(s) for the study. It could be ''standard'', ''14mg'' or ''gseq''. This may be extended, if Sanger gains more external customers. It can contain multiply destinations separated by a space.',
   PRIMARY KEY (`id_study_tmp`),
   UNIQUE KEY `study_id_lims_id_study_lims_index` (`id_lims`,`id_study_lims`),
   UNIQUE KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
@@ -285,7 +286,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-11-27  9:51:34
+-- Dump completed on 2016-01-20 17:12:58
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -325,4 +326,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150917100509');
 INSERT INTO schema_migrations (version) VALUES ('20151110102754');
 
 INSERT INTO schema_migrations (version) VALUES ('20151127094701');
+
+INSERT INTO schema_migrations (version) VALUES ('20160120155501');
 
