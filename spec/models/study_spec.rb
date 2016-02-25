@@ -61,7 +61,8 @@ describe Study do
         "alignments_in_bam" => true,
         "prelim_id" => "A1234",
         # The field may contain multiple numbers, and sometimes has comments.
-        "hmdmc_number" => "H12345; H67890; And then a comment"
+        "hmdmc_number" => "H12345; H67890; And then a comment",
+        "data_destination" => "standard"
       }
     end
 
