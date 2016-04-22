@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.21, for osx10.6 (i386)
+-- MySQL dump 10.13  Distrib 5.6.13, for osx10.8 (x86_64)
 --
 -- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
--- Server version	5.5.21
+-- Server version	5.6.13
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -100,6 +100,8 @@ CREATE TABLE `iseq_flowcell` (
   KEY `iseq_flowcell_study_fk` (`id_study_tmp`),
   KEY `index_iseq_flowcell_on_id_pool_lims` (`id_pool_lims`),
   KEY `index_iseq_flowcell_on_id_library_lims` (`id_library_lims`),
+  KEY `index_iseqflowcell__id_flowcell_lims__position__tag_index` (`id_flowcell_lims`,`position`,`tag_index`),
+  KEY `index_iseqflowcell__flowcell_barcode__position__tag_index` (`flowcell_barcode`,`position`,`tag_index`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -286,7 +288,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-20 17:12:58
+-- Dump completed on 2016-04-22 11:43:57
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -328,4 +330,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151110102754');
 INSERT INTO schema_migrations (version) VALUES ('20151127094701');
 
 INSERT INTO schema_migrations (version) VALUES ('20160120155501');
+
+INSERT INTO schema_migrations (version) VALUES ('20160422095926');
 
