@@ -100,7 +100,6 @@ CREATE TABLE `iseq_flowcell` (
   KEY `iseq_flowcell_study_fk` (`id_study_tmp`),
   KEY `index_iseq_flowcell_on_id_pool_lims` (`id_pool_lims`),
   KEY `index_iseq_flowcell_on_id_library_lims` (`id_library_lims`),
-  KEY `index_iseq_flowcell_on_flowcell_barcode` (`flowcell_barcode`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -250,7 +249,6 @@ CREATE TABLE `study` (
   `prelim_id` varchar(20) DEFAULT NULL COMMENT 'The preliminary study id prior to entry into the LIMS',
   `hmdmc_number` varchar(255) DEFAULT NULL COMMENT 'The Human Materials and Data Management Committee approval number(s) for the study.',
   `data_destination` varchar(255) DEFAULT NULL COMMENT 'The data destination type(s) for the study. It could be ''standard'', ''14mg'' or ''gseq''. This may be extended, if Sanger gains more external customers. It can contain multiply destinations separated by a space.',
-  `program` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_study_tmp`),
   UNIQUE KEY `study_id_lims_id_study_lims_index` (`id_lims`,`id_study_lims`),
   UNIQUE KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
@@ -289,7 +287,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-20  9:47:43
+-- Dump completed on 2016-04-22 13:25:56
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -330,11 +328,7 @@ INSERT INTO schema_migrations (version) VALUES ('20151110102754');
 
 INSERT INTO schema_migrations (version) VALUES ('20151127094701');
 
-INSERT INTO schema_migrations (version) VALUES ('20160113134553');
-
 INSERT INTO schema_migrations (version) VALUES ('20160120155501');
-
-INSERT INTO schema_migrations (version) VALUES ('20160212111036');
 
 INSERT INTO schema_migrations (version) VALUES ('20160420084130');
 
