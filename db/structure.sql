@@ -136,6 +136,7 @@ CREATE TABLE `pac_bio_run` (
   `pac_bio_library_tube_uuid` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The uuid for the originating library tube',
   `pac_bio_library_tube_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the originating library tube',
   `pac_bio_library_tube_legacy_id` int(11) DEFAULT NULL COMMENT 'Legacy library_id for backwards compatibility.',
+  `library_created_at` datetime DEFAULT NULL COMMENT 'Timestamp of library creation',
   PRIMARY KEY (`id_pac_bio_tmp`),
   KEY `fk_pac_bio_run_to_sample` (`id_sample_tmp`),
   KEY `fk_pac_bio_run_to_study` (`id_study_tmp`),
@@ -288,7 +289,8 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-22 11:43:57
+-- Dump completed on 2016-04-22 13:25:56
+
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -330,6 +332,8 @@ INSERT INTO schema_migrations (version) VALUES ('20151110102754');
 INSERT INTO schema_migrations (version) VALUES ('20151127094701');
 
 INSERT INTO schema_migrations (version) VALUES ('20160120155501');
+
+INSERT INTO schema_migrations (version) VALUES ('20160420084130');
 
 INSERT INTO schema_migrations (version) VALUES ('20160422095926');
 
