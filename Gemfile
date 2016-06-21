@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # TODO: We pretty much just use active record and active mailer, do we need rails?
 gem "rails", "~> 4.1"
-gem "mysql2"
+gem "mysql2", "~> 0.3.17"
 
 # TODO: COnsider switching to Bunny if possible
 gem "amqp", "~> 1.5"
