@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.20, for osx10.9 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for osx10.9 (x86_64)
 --
 -- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
--- Server version	5.6.20
+-- Server version	5.7.12
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -144,6 +144,7 @@ CREATE TABLE `sample` (
   `strain` varchar(255) DEFAULT NULL,
   `consent_withdrawn` tinyint(1) NOT NULL DEFAULT '0',
   `donor_id` varchar(255) DEFAULT NULL,
+  `phenotype` varchar(255) DEFAULT NULL COMMENT 'The phenotype of the sample as described in Sequencescape',
   PRIMARY KEY (`id_sample_tmp`),
   UNIQUE KEY `sample_id_lims_id_sample_lims_index` (`id_lims`,`id_sample_lims`),
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
@@ -247,7 +248,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-13 13:58:06
+-- Dump completed on 2016-06-21 14:18:10
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -279,4 +280,6 @@ INSERT INTO schema_migrations (version) VALUES ('20150813125229');
 INSERT INTO schema_migrations (version) VALUES ('20150819120400');
 
 INSERT INTO schema_migrations (version) VALUES ('20150827140317');
+
+INSERT INTO schema_migrations (version) VALUES ('20160621125538');
 
