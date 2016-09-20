@@ -206,6 +206,39 @@ CREATE TABLE `schema_migrations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `stock_resource`
+--
+
+DROP TABLE IF EXISTS `stock_resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stock_resource` (
+  `id_stock_resource_tmp` int(11) NOT NULL AUTO_INCREMENT,
+  `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
+  `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
+  `created` datetime NOT NULL COMMENT 'Timestamp of initial registration of stock in LIMS',
+  `deleted_at` datetime DEFAULT NULL COMMENT 'Timestamp of initial registration of deletion in parent LIMS. NULL if not deleted.',
+  `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
+  `id_study_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "study.id_study_tmp"',
+  `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
+  `id_stock_resource_lims` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Lims specific identifier for the stock',
+  `stock_resource_uuid` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Uuid identifier for the stock',
+  `labware_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of labware containing the stock. eg. Well, Tube',
+  `labware_machine_barcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The barcode of the containing labware as read by a barcode scanner',
+  `labware_human_barcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The barcode of the containing labware in human readable format',
+  `labware_coordinate` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'For wells, the coordinate on the containing plate. Null for tubes.',
+  `current_volume` float DEFAULT NULL COMMENT 'The current volume of material in microlitres based on measurements and know usage',
+  `initial_volume` float DEFAULT NULL COMMENT 'The result of the initial volume measurement in microlitres conducted on the material',
+  `concentration` float DEFAULT NULL COMMENT 'The concentration of material recorded in the lab in nanograms per microlitre',
+  `gel_pass` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The recorded result for the qel QC assay.',
+  `pico_pass` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The recorded result for the pico green assay. A pass indicates a successful assay, not sufficient material.',
+  `snp_count` int(11) DEFAULT NULL COMMENT 'The number of markers detected in genotyping assays',
+  `measured_gender` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The gender call base on the genotyping assay',
+  PRIMARY KEY (`id_stock_resource_tmp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `study`
 --
 
@@ -289,7 +322,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-10 11:13:37
+-- Dump completed on 2016-09-20 13:35:59
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -337,4 +370,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160420084130');
 INSERT INTO schema_migrations (version) VALUES ('20160422095926');
 
 INSERT INTO schema_migrations (version) VALUES ('20160810093024');
+
+INSERT INTO schema_migrations (version) VALUES ('20160919144230');
 

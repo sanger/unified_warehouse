@@ -3,6 +3,7 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   let!(:json_handler) { described_class.send(:json) }
 
   def find_target(json,graph)
+    return json if graph.nil?
     return json[graph.to_s].first if graph.is_a?(Symbol)
     return json[graph.first.to_s].first if (graph.count==1 && graph.first.is_a?(Symbol))
     k,v = graph.first
@@ -10,6 +11,7 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   end
 
   def find_handler(handler,graph)
+    return handler if graph.nil?
     return handler.nested_models[graph] if graph.is_a?(Symbol)
     return handler.nested_models[graph.first] if (graph.count==1 && graph.first.is_a?(Symbol))
     k,v = graph.first
@@ -40,6 +42,7 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   end
 
   after(:each) do
-    described_class.send(:create_or_update, subject.detect {|json| json.class == owning_handler })
+    content = subject.is_a?(Array) ? subject.detect {|json| json.class == owning_handler } : subject
+    described_class.send(:create_or_update, content)
   end
 end
