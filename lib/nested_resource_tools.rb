@@ -12,8 +12,6 @@ module NestedResourceTools
 
       attributes = Array.convert(attributes)
 
-      new_atts  = attributes.map{ |a| a.reverse_merge(:data => attributes)}
-
       base_resource = attributes.first
 
       lims      = base_resource.id_lims
@@ -22,11 +20,14 @@ module NestedResourceTools
       all_records = for_lims(lims).with_id(id_x_lims)
 
       all_records.first.latest(base_resource) do |record|
+        new_atts  = attributes.map{ |a| a.to_hash }
         all_records.destroy_all
         return create!(new_atts) unless base_resource.deleted?
       end
 
+
     end
     private :create_or_update
+
   end
 end

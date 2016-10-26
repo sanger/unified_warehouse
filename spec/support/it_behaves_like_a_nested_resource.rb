@@ -81,7 +81,7 @@ shared_examples_for 'a nested resource' do
 
       before(:each) do
         allow(described_class).to receive(:checked_time_now).and_return(checked_time_then)
-        described_class.create_or_update_from_json(timestamped_json.merge("updated_at" => modified_at), example_lims)
+        described_class.create_or_update_from_json(json.merge("updated_at" => modified_at), example_lims)
       end
 
       context 'when the new record is not current' do
@@ -102,7 +102,7 @@ shared_examples_for 'a nested resource' do
 
         before(:each) do
           allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
-          described_class.create_or_update_from_json(timestamped_json.merge("updated_at" => modified_at), example_lims)
+          described_class.create_or_update_from_json(json.merge("updated_at" => modified_at), example_lims)
         end
 
         it_behaves_like 'has multiple rows'

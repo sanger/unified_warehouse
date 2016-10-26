@@ -5,3 +5,5 @@
 require File.expand_path('../config/application', __FILE__)
 
 UnifiedWarehouse::Application.load_tasks
+
+task :spec => 'db:setup'
