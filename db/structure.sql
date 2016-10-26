@@ -184,6 +184,7 @@ CREATE TABLE `sample` (
   `strain` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `consent_withdrawn` tinyint(1) NOT NULL DEFAULT '0',
   `donor_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phenotype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The phenotype of the sample as described in Sequencescape',
   PRIMARY KEY (`id_sample_tmp`),
   UNIQUE KEY `index_sample_on_id_sample_lims_and_id_lims` (`id_sample_lims`,`id_lims`),
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
@@ -335,6 +336,8 @@ INSERT INTO schema_migrations (version) VALUES ('20160120155501');
 INSERT INTO schema_migrations (version) VALUES ('20160420084130');
 
 INSERT INTO schema_migrations (version) VALUES ('20160422095926');
+
+INSERT INTO schema_migrations (version) VALUES ('20160621125538');
 
 INSERT INTO schema_migrations (version) VALUES ('20160810093024');
 
