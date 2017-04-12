@@ -234,7 +234,11 @@ CREATE TABLE `stock_resource` (
   `pico_pass` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The recorded result for the pico green assay. A pass indicates a successful assay, not sufficient material.',
   `snp_count` int(11) DEFAULT NULL COMMENT 'The number of markers detected in genotyping assays',
   `measured_gender` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The gender call base on the genotyping assay',
-  PRIMARY KEY (`id_stock_resource_tmp`)
+  PRIMARY KEY (`id_stock_resource_tmp`),
+  KEY `fk_stock_resource_to_sample` (`id_sample_tmp`),
+  KEY `fk_stock_resource_to_study` (`id_study_tmp`),
+  CONSTRAINT `fk_stock_resource_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
+  CONSTRAINT `fk_stock_resource_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -322,7 +326,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-20 13:35:59
+-- Dump completed on 2017-04-12 14:56:42
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -372,4 +376,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160422095926');
 INSERT INTO schema_migrations (version) VALUES ('20160810093024');
 
 INSERT INTO schema_migrations (version) VALUES ('20160919144230');
+
+INSERT INTO schema_migrations (version) VALUES ('20170412135215');
 
