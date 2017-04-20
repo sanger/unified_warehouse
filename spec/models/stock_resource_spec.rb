@@ -106,8 +106,8 @@ describe StockResource do
 
         # We don't validate the barcode format, other
         # LIMS might use different standards
-        "labware_machine_barcode" => "1220456987123",
-        "labware_human_barcode" => "DN456987D",
+        "machine_barcode" => "1220456987123",
+        "human_barcode" => "DN456987D",
         "labware_coordinate" => "A1",
         "labware_type" => "well",
 
