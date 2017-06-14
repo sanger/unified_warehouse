@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.18, for osx10.10 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18, for osx10.11 (x86_64)
 --
--- Host: localhost    Database: unified_warehouse_development
+-- Host: localhost    Database: unified_warehouse_test
 -- ------------------------------------------------------
 -- Server version	5.7.18
 
@@ -94,6 +94,7 @@ CREATE TABLE `iseq_flowcell` (
   `id_library_lims` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Earliest LIMs identifier associated with library creation',
   `team` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
   `purpose` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Describes the reason the sequencing was conducted. Eg. Standard, QC, Control',
+  `suboptimal` tinyint(1) DEFAULT NULL COMMENT 'Indicates that a sample has failed a QC step during processing',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -384,5 +385,8 @@ INSERT INTO schema_migrations (version) VALUES ('20160919144230');
 
 INSERT INTO schema_migrations (version) VALUES ('20170412135215');
 
+INSERT INTO schema_migrations (version) VALUES ('20170427123459');
+
 INSERT INTO schema_migrations (version) VALUES ('20170601102958');
+
 
