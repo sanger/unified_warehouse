@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.18, for osx10.10 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.18, for osx10.11 (x86_64)
 --
--- Host: localhost    Database: unified_warehouse_development
+-- Host: localhost    Database: unified_warehouse_test
 -- ------------------------------------------------------
 -- Server version	5.7.18
 
@@ -94,6 +94,7 @@ CREATE TABLE `iseq_flowcell` (
   `id_library_lims` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Earliest LIMs identifier associated with library creation',
   `team` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
   `purpose` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Describes the reason the sequencing was conducted. Eg. Standard, QC, Control',
+  `suboptimal` tinyint(1) DEFAULT NULL COMMENT 'Indicates that a sample has failed a QC step during processing',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -102,6 +103,7 @@ CREATE TABLE `iseq_flowcell` (
   KEY `index_iseq_flowcell_on_id_library_lims` (`id_library_lims`),
   KEY `index_iseqflowcell__id_flowcell_lims__position__tag_index` (`id_flowcell_lims`,`position`,`tag_index`),
   KEY `index_iseqflowcell__flowcell_barcode__position__tag_index` (`flowcell_barcode`,`position`,`tag_index`),
+  KEY `index_iseq_flowcell_legacy_library_id` (`legacy_library_id`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -329,7 +331,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-01 11:32:18
+-- Dump completed on 2017-06-08  9:27:19
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -384,5 +386,9 @@ INSERT INTO schema_migrations (version) VALUES ('20160919144230');
 
 INSERT INTO schema_migrations (version) VALUES ('20170412135215');
 
+INSERT INTO schema_migrations (version) VALUES ('20170427123459');
+
 INSERT INTO schema_migrations (version) VALUES ('20170601102958');
+
+INSERT INTO schema_migrations (version) VALUES ('20170608082257');
 

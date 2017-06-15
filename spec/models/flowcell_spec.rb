@@ -76,7 +76,8 @@ describe Flowcell do
                 "study_uuid" => "000000-0000-0000-0000-0000000001",
                 "cost_code" => "12345",
                 "entity_id_lims" => 12345,
-                "is_r_and_d" => false
+                "is_r_and_d" => false,
+                "suboptimal" => true
               }
             ],
             "controls" => [
