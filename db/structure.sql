@@ -290,6 +290,8 @@ CREATE TABLE `study` (
   `prelim_id` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The preliminary study id prior to entry into the LIMS',
   `hmdmc_number` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The Human Materials and Data Management Committee approval number(s) for the study.',
   `data_destination` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The data destination type(s) for the study. It could be ''standard'', ''14mg'' or ''gseq''. This may be extended, if Sanger gains more external customers. It can contain multiply destinations separated by a space.',
+  `s3_email_list` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data_deletion_period` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_study_tmp`),
   UNIQUE KEY `study_id_lims_id_study_lims_index` (`id_lims`,`id_study_lims`),
   UNIQUE KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
@@ -328,7 +330,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-27 13:37:25
+-- Dump completed on 2017-06-01 11:32:18
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -384,4 +386,7 @@ INSERT INTO schema_migrations (version) VALUES ('20160919144230');
 INSERT INTO schema_migrations (version) VALUES ('20170412135215');
 
 INSERT INTO schema_migrations (version) VALUES ('20170427123459');
+
+INSERT INTO schema_migrations (version) VALUES ('20170601102958');
+
 
