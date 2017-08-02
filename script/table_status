@@ -12,7 +12,7 @@ module ActiveRecord::TableStatus
   end
   private :rows_in
 
-  def each_table(ignore = [], &block)
+  def each_table(ignore = [])
     paired, unpaired = (tables - ignore).group_by { |name| name.sub(/^current_/, '') }.partition { |_, names| names.size > 1 }
     paired.each do |name, _|
       current, total = rows_in("current_#{name}").to_i, rows_in(name).to_i

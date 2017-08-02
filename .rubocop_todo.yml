@@ -41,18 +41,6 @@ Lint/UnifiedInteger:
   Exclude:
     - 'script/dump_deadletters'
 
-# Offense count: 9
-# Cop supports --auto-correct.
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'app/models/ignoreable_resource.rb'
-    - 'lib/resource_tools/core_extensions.rb'
-    - 'lib/resource_tools/resource_table_migration.rb'
-    - 'lib/uuidable.rb'
-    - 'script/dump_deadletters'
-    - 'script/table_status'
-
 # Offense count: 1
 # Configuration parameters: ContextCreatingMethods, MethodCreatingMethods.
 Lint/UselessAccessModifier:

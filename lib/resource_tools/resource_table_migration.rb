@@ -1,5 +1,5 @@
 module ResourceTools::ResourceTableMigration
-  def each_resource_table(&block)
+  def each_resource_table
     connection.tables.each do |table|
       next if table =~ /^current_/ or ['asset_freezers'].include?(table)
       yield(table) if ['current_from', 'current_to'].all? { |c| has_column?(table, c) }
@@ -14,7 +14,7 @@ module ResourceTools::ResourceTableMigration
 
   # Ensures that both a normal and a current table are created for the given resource, as well as ensuring
   # that the triggers remain in step and there are appropriate basic indexes present.
-  def create_resource_table(name, options = {}, &block)
+  def create_resource_table(name, options = {})
     manipulate_resource_table(:create, name, options.merge(:id => false)) do |t|
       t.binary(:uuid, :limit => 16, :null => false)
       t.integer(:internal_id, :null => false)
