@@ -39,10 +39,11 @@ class AmqpConsumer
     end
   end
 
+  private
+
   def received(metadata, payload)
     insert_record(metadata, ActiveSupport::JSON.decode(payload))
   end
-  private :received
 
   def insert_record(metadata, json)
     lims = json.delete('lims') || raise(InvalidMessage, 'No Lims specified')
@@ -55,7 +56,6 @@ class AmqpConsumer
       end
     end
   end
-  private :insert_record
 
   def setup_error_handling(client)
     client.on_error do |connection, connection_close|
@@ -73,7 +73,6 @@ class AmqpConsumer
       build_client(client)
     end
   end
-  private :setup_error_handling
 
   # Returns a callback that can be used to dead letter any messages.
   def prepare_deadlettering(client)
@@ -91,7 +90,6 @@ class AmqpConsumer
       }.to_json, routing_key: "#{deadletter.routing_key}.#{metadata.routing_key}")
     end
   end
-  private :prepare_deadlettering
 
   def build_client(client, deadletter)
     info { "Connecting to queue #{queue.inspect} ..." }
@@ -147,7 +145,6 @@ class AmqpConsumer
       end
     end
   end
-  private :build_client
 
   def longterm_issue(exception)
     # We can't just use the exception class, as many Rails MySQL exceptions share the same class
@@ -160,7 +157,6 @@ class AmqpConsumer
     end
     false
   end
-  private :longterm_issue
 
   # Deals with the signals that should stop the show!
   def install_show_stopper_into(client)
@@ -171,5 +167,4 @@ class AmqpConsumer
       end)
     end
   end
-  private :install_show_stopper_into
 end
