@@ -32,7 +32,7 @@ class Flowcell < ActiveRecord::Base
     )
 
     translate(
-      :flowcell_id => :id_flowcell_lims
+      flowcell_id: :id_flowcell_lims
     )
   end
 end

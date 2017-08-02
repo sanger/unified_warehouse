@@ -40,7 +40,7 @@ module AssociatedWithRoles
       users.create!(
         users_to_maintain.map do |role, user_details|
           user_details.map do |details|
-            details.reverse_merge(:role => role.to_s, :associated_id => id, :last_updated => last_updated)
+            details.reverse_merge(role: role.to_s, associated_id: id, last_updated: last_updated)
           end
         end
       )

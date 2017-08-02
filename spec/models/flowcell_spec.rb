@@ -10,7 +10,7 @@ describe Flowcell do
 
   shared_examples_for 'a flowcell' do
     it_behaves_like 'maps JSON fields', {
-      :flowcell_id => :id_flowcell_lims
+      flowcell_id: :id_flowcell_lims
     }
 
     it_behaves_like 'ignores JSON fields', [
@@ -19,7 +19,7 @@ describe Flowcell do
     it_behaves_like 'belongs to', [
       :study,
       :sample
-    ], { :lanes => :samples }
+    ], { lanes: :samples }
 
     it_behaves_like 'a nested resource'
   end
@@ -30,7 +30,7 @@ describe Flowcell do
 
     it_behaves_like 'belongs to', [
       :sample
-    ], { :lanes => :controls }
+    ], { lanes: :controls }
 
     it_behaves_like 'a flowcell'
 

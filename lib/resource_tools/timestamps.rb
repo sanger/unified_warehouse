@@ -5,8 +5,8 @@ module ResourceTools::Timestamps
     # Ensure that the time stamps are correct whenever a record is updated
     before_save { |record| record.recorded_at = record.checked_time_now }
 
-    delegate :correct_current_time, :to => 'self.class'
-    delegate :checked_time_now, :to => 'self.class'
+    delegate :correct_current_time, to: 'self.class'
+    delegate :checked_time_now, to: 'self.class'
   end
 
   module ClassMethods

@@ -14,13 +14,13 @@ describe PacBioRun do
   end
 
   it_behaves_like 'maps JSON fields', {
-    :pac_bio_run_id => :id_pac_bio_run_lims
+    pac_bio_run_id: :id_pac_bio_run_lims
   }
 
   it_behaves_like 'belongs to', [
     :sample,
     :study
-  ], { :wells => :samples }
+  ], { wells: :samples }
 
   let(:json) do
     {

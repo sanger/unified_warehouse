@@ -15,27 +15,27 @@ module ResourceTools::ResourceTableMigration
   # Ensures that both a normal and a current table are created for the given resource, as well as ensuring
   # that the triggers remain in step and there are appropriate basic indexes present.
   def create_resource_table(name, options = {})
-    manipulate_resource_table(:create, name, options.merge(:id => false)) do |t|
-      t.binary(:uuid, :limit => 16, :null => false)
-      t.integer(:internal_id, :null => false)
+    manipulate_resource_table(:create, name, options.merge(id: false)) do |t|
+      t.binary(:uuid, limit: 16, null: false)
+      t.integer(:internal_id, null: false)
 
       yield(t)
 
-      t.timestamp(:checked_at, :null => false)
+      t.timestamp(:checked_at, null: false)
       t.timestamp(:last_updated)
       t.timestamp(:created)
       t.timestamp(:inserted_at)
       t.timestamp(:deleted_at)
-      t.timestamp(:current_from, :null => false)
+      t.timestamp(:current_from, null: false)
       t.timestamp(:current_to)
     end
 
-    change_table(name, :bulk => true) do |t|
-      t.index([:uuid, :current_from, :current_to], :name => :uuid_and_current_from_and_current_to_idx, :unique => true)
+    change_table(name, bulk: true) do |t|
+      t.index([:uuid, :current_from, :current_to], name: :uuid_and_current_from_and_current_to_idx, unique: true)
     end
-    change_table("current_#{name}", :bulk => true) do |t|
-      t.index([:internal_id], :name => :internal_id_idx, :unique => true)
-      t.index([:uuid], :name => :uuid_idx, :unique => true)
+    change_table("current_#{name}", bulk: true) do |t|
+      t.index([:internal_id], name: :internal_id_idx, unique: true)
+      t.index([:uuid], name: :uuid_idx, unique: true)
     end
   end
   private :create_resource_table
@@ -87,9 +87,9 @@ module ResourceTools::ResourceTableMigration
           END ; END IF ;
         END
       },
-      :name  => "maintain_#{current_table}_trigger",
-      :event => :insert,
-      :on    => table
+      name: "maintain_#{current_table}_trigger",
+      event: :insert,
+      on: table
     )
   end
   private :maintain_currency_triggers

@@ -118,7 +118,7 @@ class DeadLetterDumper < Thor
   def dump(requeue = true)
     client = RestClient::Resource.new(
       'http://psd2c.internal.sanger.ac.uk:55672/api/queues/production/psd.deadletters',
-      :user => 'psdp', :password => 'psdp'
+      user: 'psdp', password: 'psdp'
     )
     total_messages = ActiveSupport::JSON.decode(client.get)['messages']
     raise "Dead letter queue currently appears to be empty" if total_messages.nil? or total_messages.zero?
@@ -127,8 +127,8 @@ class DeadLetterDumper < Thor
       ActiveSupport::JSON.decode(
         client['get'].post(
           { count: total_messages, requeue: requeue.to_boolean_from_arguments, encoding: "auto" }.to_json,
-          :content_type => 'application/json',
-          :accept       => '*/*'
+          content_type: 'application/json',
+          accept: '*/*'
         )
       ).map do |amqp_message|
         ActiveSupport::JSON.decode(amqp_message['payload'])

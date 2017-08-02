@@ -4,8 +4,8 @@ describe Study do
   shared_examples_for 'a study resource' do
     it_behaves_like 'a singular resource'
     it_behaves_like 'maps JSON fields', {
-      :id => :id_study_lims,
-      :sac_sponsor => :faculty_sponsor
+      id: :id_study_lims,
+      sac_sponsor: :faculty_sponsor
     }
 
     it_behaves_like 'ignores JSON fields', [

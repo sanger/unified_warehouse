@@ -51,7 +51,7 @@ module ResourceTools::CoreExtensions
     extend ActiveSupport::Concern
 
     included do
-      delegate :numeric_tolerance, :to => 'self.class'
+      delegate :numeric_tolerance, to: 'self.class'
     end
 
     module ClassMethods

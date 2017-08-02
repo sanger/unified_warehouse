@@ -37,5 +37,5 @@ group :development do
 end
 
 group :deployment do
-  gem "psd_logger", :github => "sanger/psd_logger"
+  gem "psd_logger", github: "sanger/psd_logger"
 end

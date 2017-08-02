@@ -67,9 +67,9 @@ module ResourceTools::Json
 
       def collection_from(json_data, lims)
         # We're not nested, so just return the standard json
-        return new(json_data.reverse_merge(:id_lims => lims)) if nested_models.blank?
+        return new(json_data.reverse_merge(id_lims: lims)) if nested_models.blank?
         Array.new.tap do |collection|
-          original = new(json_data.reverse_merge(:id_lims => lims))
+          original = new(json_data.reverse_merge(id_lims: lims))
           collection << original if self.recorded
           each_nested_model(json_data) do |nested, handler|
             collection << handler.collection_from(original.reverse_merge(nested), lims)
@@ -117,8 +117,8 @@ module ResourceTools::Json
       deleted_at.present?
     end
 
-    delegate :convert_key, :to => 'self.class'
+    delegate :convert_key, to: 'self.class'
 
-    translate(:updated_at => :last_updated, :created_at => :created)
+    translate(updated_at: :last_updated, created_at: :created)
   end
 end

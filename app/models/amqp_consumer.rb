@@ -80,15 +80,15 @@ class AmqpConsumer
     return lambda { |m, _p, e| warn(m) { "No dead lettering for #{e.message}: #{e.backtrace}" } } if deadletter.deactivated
 
     channel  = AMQP::Channel.new(client)
-    exchange = channel.direct(deadletter.exchange, :passive => true)
+    exchange = channel.direct(deadletter.exchange, passive: true)
     lambda do |metadata, payload, exception|
       warn(metadata) { "Dead lettering due to #{exception.message}" }
 
       exchange.publish({
-        :routing_key => metadata.routing_key,
-        :exception   => { :message => exception.message, :backtrace => exception.backtrace },
-        :message     => payload
-      }.to_json, :routing_key => "#{deadletter.routing_key}.#{metadata.routing_key}")
+        routing_key: metadata.routing_key,
+        exception: { message: exception.message, backtrace: exception.backtrace },
+        message: payload
+      }.to_json, routing_key: "#{deadletter.routing_key}.#{metadata.routing_key}")
     end
   end
   private :prepare_deadlettering
@@ -98,7 +98,7 @@ class AmqpConsumer
 
     channel = AMQP::Channel.new(client)
     channel.prefetch(prefetch)
-    channel.queue(queue, :passive => true) do |queue, _queue_declared|
+    channel.queue(queue, passive: true) do |queue, _queue_declared|
       info { "Waiting for messages ..." }
 
       EventMachine.add_periodic_timer(empty_queue_disconnect_interval) do
@@ -110,7 +110,7 @@ class AmqpConsumer
         end
       end unless empty_queue_disconnect_interval.zero?
 
-      queue.subscribe(:ack => true) do |metadata, payload|
+      queue.subscribe(ack: true) do |metadata, payload|
         begin
           debug { "Message received from queue: #{payload.inspect}" }
           begin

@@ -20,7 +20,7 @@ class PacBioRun < ActiveRecord::Base
     end
 
     translate(
-      :pac_bio_run_id => :id_pac_bio_run_lims
+      pac_bio_run_id: :id_pac_bio_run_lims
     )
   end
 end

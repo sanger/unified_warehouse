@@ -89,7 +89,7 @@ module ResourceTools::SequenceOfDates
 
       # Ensure that on creation the currentness of the records are maintained.
       before_create(:maintain_our_currentness)
-      before_create(:if => lambda { |r| r.deleted? or not r.current? }) do
+      before_create(if: lambda { |r| r.deleted? or not r.current? }) do
         related.leading_from(self).first.runs_out_of(self)
       end
       before_create do |_record|

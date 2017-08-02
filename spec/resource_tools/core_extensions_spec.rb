@@ -20,32 +20,32 @@ module ResourceTools::CoreExtensions
   end
 
   describe Hash do
-    subject { { :a => 1, :b => 2 } }
+    subject { { a: 1, b: 2 } }
 
     context '#within_acceptable_bounds?' do
       it 'returns true if all values are within acceptable bounds' do
-        expect(subject.within_acceptable_bounds?(:a => 1, :b => 2)).to be true
+        expect(subject.within_acceptable_bounds?(a: 1, b: 2)).to be true
       end
 
       it 'returns true if all present values are within acceptable bounds' do
-        expect(subject.within_acceptable_bounds?(:a => 1)).to be true
-        expect(subject.within_acceptable_bounds?(:b => 2)).to be true
+        expect(subject.within_acceptable_bounds?(a: 1)).to be true
+        expect(subject.within_acceptable_bounds?(b: 2)).to be true
       end
 
       it 'returns false if a single value is not within acceptable bounds' do
-        expect(subject.within_acceptable_bounds?(:a => 5, :b => 2)).to be false
-        expect(subject.within_acceptable_bounds?(:a => 1, :b => 5)).to be false
+        expect(subject.within_acceptable_bounds?(a: 5, b: 2)).to be false
+        expect(subject.within_acceptable_bounds?(a: 1, b: 5)).to be false
       end
     end
 
     context '#reverse_slice' do
       it 'returns a hash without the specified keys' do
-        expect(subject.reverse_slice(:b)).to eq({ :a => 1 })
+        expect(subject.reverse_slice(:b)).to eq({ a: 1 })
       end
 
       it 'does not affect the original hash' do
         subject.reverse_slice(:b)
-        expect(subject).to eq({ :a => 1, :b => 2 })
+        expect(subject).to eq({ a: 1, b: 2 })
       end
     end
   end
@@ -165,11 +165,11 @@ module ResourceTools::CoreExtensions
   describe Array do
     context '#convert' do
       it 'converts a single hash to an array of 1' do
-        expect(::Array.convert({ :example => 'example' })).to eq([{ :example => 'example' }])
+        expect(::Array.convert({ example: 'example' })).to eq([{ example: 'example' }])
       end
 
       it 'does not modify an array of hashes' do
-        expect(::Array.convert([{ :example => 'example' }, { :example => 'example' }])).to eq([{ :example => 'example' }, { :example => 'example' }])
+        expect(::Array.convert([{ example: 'example' }, { example: 'example' }])).to eq([{ example: 'example' }, { example: 'example' }])
       end
     end
   end
