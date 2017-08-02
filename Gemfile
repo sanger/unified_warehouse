@@ -26,12 +26,14 @@ group :test, :development do
   gem 'rspec-rails', '~> 3.1'
   gem 'factory_girl_rails'
   gem 'mocktra', '~> 1.0.2'
+  gem 'pry'
 end
 
 group :development do
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rspec'
+  gem 'rubocop'
 end
 
 group :deployment do

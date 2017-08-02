@@ -122,7 +122,6 @@ class AmqpConsumer
             # then we deadletter it ourselves rather than using RabbitMQ's deadletter queueing which seems
             # unreliable for some reason.  If the message is not requeued then we need to record the error.
 
-
             requeue_message = requeue? && !metadata.redelivered?
 
             if !requeue_message && longterm_issue(exception)
