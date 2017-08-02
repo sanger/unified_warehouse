@@ -10,7 +10,7 @@ class AmqpConsumer
   end
 
   # Override the logging behaviour so that we have consistent message format
-  [ :debug, :warn, :info, :error ].each do |level|
+  [:debug, :warn, :info, :error].each do |level|
     line = __LINE__
     class_eval(%Q{
       def #{level}(metadata = nil, &message)
@@ -21,7 +21,7 @@ class AmqpConsumer
     }, __FILE__, line)
   end
 
-  delegate :url, :queue, :deadletter, :prefetch, :requeue, :reconnect_interval, :to => :@config
+  delegate :url, :queue, :deadletter, :prefetch, :requeue, :reconnect_interval, to: :@config
   alias_method(:requeue?, :requeue)
 
   def empty_queue_disconnect_interval
@@ -32,7 +32,7 @@ class AmqpConsumer
   def run
     info { "Starting AMQP consumer ..." }
 
-    AMQP.start(url) do |client, opened_ok|
+    AMQP.start(url) do |client, _opened_ok|
       install_show_stopper_into(client)
       setup_error_handling(client)
       build_client(client, prepare_deadlettering(client))
@@ -45,11 +45,11 @@ class AmqpConsumer
   private :received
 
   def insert_record(metadata, json)
-    lims = json.delete('lims') || raise(InvalidMessage,'No Lims specified')
+    lims = json.delete('lims') || raise(InvalidMessage, 'No Lims specified')
     payload_name = json.keys.first
     ActiveRecord::Base.transaction do
-      payload_name.classify.constantize.create_or_update_from_json(json[payload_name],lims).tap do |record|
-        metadata.ack  # Acknowledge receipt!
+      payload_name.classify.constantize.create_or_update_from_json(json[payload_name], lims).tap do |record|
+        metadata.ack # Acknowledge receipt!
         # TODO: Restore similar debugger
         # debug(metadata) { "#{record.inserted_record? ? 'Created' : 'Updated'} #{record.class.name}(#{record.id})" }
       end
@@ -64,7 +64,7 @@ class AmqpConsumer
         connection.periodically_reconnect(reconnect_interval)
       else
         error { "Connection error #{connection_close.reply_code}: #{connection_close.reply_text}" }
-        EventMachine.stop     # Brutally stop the consumer!
+        EventMachine.stop # Brutally stop the consumer!
       end
     end
 
@@ -77,7 +77,7 @@ class AmqpConsumer
 
   # Returns a callback that can be used to dead letter any messages.
   def prepare_deadlettering(client)
-    return lambda { |m,p,e| warn(m) { "No dead lettering for #{e.message}: #{e.backtrace}" } } if deadletter.deactivated
+    return lambda { |m, p, e| warn(m) { "No dead lettering for #{e.message}: #{e.backtrace}" } } if deadletter.deactivated
 
     channel  = AMQP::Channel.new(client)
     exchange = channel.direct(deadletter.exchange, :passive => true)
@@ -153,8 +153,8 @@ class AmqpConsumer
     # We can't just use the exception class, as many Rails MySQL exceptions share the same class
     if exception.is_a? ActiveRecord::StatementInvalid
       # Example exceptions, we may need to add more in future:
-      #<ActiveRecord::StatementInvalid: Mysql2::Error: closed MySQL connection: SELECT sleep(10) FROM studies;> Mysql2::Error: closed MySQL connection: SELECT sleep(10) FROM studies; Connection closed.
-      [/Mysql2::Error: closed MySQL connection:/,/Mysql2::Error: MySQL server has gone away/].each do |regex|
+      # <ActiveRecord::StatementInvalid: Mysql2::Error: closed MySQL connection: SELECT sleep(10) FROM studies;> Mysql2::Error: closed MySQL connection: SELECT sleep(10) FROM studies; Connection closed.
+      [/Mysql2::Error: closed MySQL connection:/, /Mysql2::Error: MySQL server has gone away/].each do |regex|
         return true if regex.match(exception.message).present?
       end
     end

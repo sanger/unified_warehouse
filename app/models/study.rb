@@ -8,7 +8,6 @@ class Study < ActiveRecord::Base
   has_role(:lab_manager)
 
   json do
-
     store_as_boolean(
       :contains_human_dna,
       :contaminated_human_dna

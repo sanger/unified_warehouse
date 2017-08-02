@@ -28,8 +28,8 @@ shared_examples_for 'store as boolean' do |boolean_fields|
   let!(:json_handler) { described_class.send(:json) }
 
   context "Handler" do
-    conversion = { 'Yes'=>true, 'No'=>false }
-    boolean_fields.each do |field,value|
+    conversion = { 'Yes' => true, 'No' => false }
+    boolean_fields.each do |field, value|
       it "converts #{field} to #{conversion[value]}" do
         expect(json_handler.new(json.merge(field => value)).fetch(field)).to eq(conversion[value])
       end

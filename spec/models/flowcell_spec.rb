@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Flowcell do
-
   let!(:mock_sample) { create(:sample) }
   let!(:mock_study)  { create(:study)  }
 
@@ -10,9 +9,8 @@ describe Flowcell do
   end
 
   shared_examples_for 'a flowcell' do
-
     it_behaves_like 'maps JSON fields', {
-     :flowcell_id => :id_flowcell_lims
+      :flowcell_id => :id_flowcell_lims
     }
 
     it_behaves_like 'ignores JSON fields', [
@@ -32,7 +30,7 @@ describe Flowcell do
 
     it_behaves_like 'belongs to', [
       :sample
-    ], {:lanes => :controls }
+    ], { :lanes => :controls }
 
     it_behaves_like 'a flowcell'
 
@@ -96,11 +94,10 @@ describe Flowcell do
     end
 
     it 'flags all entries as spiked' do
-      Flowcell.all.each {|fc| expect(fc.spiked).to be_true }
+      Flowcell.all.each { |fc| expect(fc.spiked).to be_true }
     end
 
     context 'when update with identical tag indexes' do
-
       let(:example_lims) { 'example' }
 
       let(:updated_json) do
@@ -120,7 +117,6 @@ describe Flowcell do
     end
 
     context 'when update with different tag indexes' do
-
       let(:example_lims) { 'example' }
 
       let(:updated_json) do
@@ -140,7 +136,6 @@ describe Flowcell do
       end
     end
   end
-
 
   context 'without controls or other optional fields' do
     # We have a row for the lane, the sample and the control
@@ -190,13 +185,12 @@ describe Flowcell do
     end
 
     it 'flags all entries as not-spiked' do
-      Flowcell.all.each {|fc| expect(fc.spiked).to be_false }
+      Flowcell.all.each { |fc| expect(fc.spiked).to be_false }
     end
   end
 
   context "a message with clashing samples" do
-
-    let(:expected_identifiers) { 'tag_index, id_flowcell_lims, entity_id_lims, entity_type, position, tag_sequence, tag2_sequence'}
+    let(:expected_identifiers) { 'tag_index, id_flowcell_lims, entity_id_lims, entity_type, position, tag_sequence, tag2_sequence' }
     let(:example_lims) { 'example' }
 
     let(:json) do
@@ -255,9 +249,7 @@ describe Flowcell do
     end
 
     it 'gets rejected' do
-      expect{ described_class.create_or_update_from_json(json, example_lims) }.to raise_error(CompositeResourceTools::InvalidMessage,"Contains two elements with the same composite identifier: combination of #{expected_identifiers} should be unique.")
+      expect { described_class.create_or_update_from_json(json, example_lims) }.to raise_error(CompositeResourceTools::InvalidMessage, "Contains two elements with the same composite identifier: combination of #{expected_identifiers} should be unique.")
     end
-
   end
-
 end

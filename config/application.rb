@@ -11,7 +11,7 @@ end
 
 module UnifiedWarehouse
   class Application < Rails::Application
-    config.autoload_paths    += [ "#{config.root}/lib" ]
+    config.autoload_paths    += ["#{config.root}/lib"]
     config.time_zone          = 'UTC'
     config.encoding           = "utf-8"
     config.filter_parameters += [:password]

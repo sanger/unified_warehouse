@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe FlgenPlate do
-
   it_behaves_like 'a nested resource'
 
   # We have a row for the lane, the sample and the control
@@ -15,8 +14,8 @@ describe FlgenPlate do
   end
 
   it_behaves_like 'belongs to', [
-   :sample,
-   :study
+    :sample,
+    :study
   ], [:wells]
 
   let(:json) do

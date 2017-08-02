@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe PacBioRun do
-
   it_behaves_like 'a nested resource'
 
   # We have a row for the lane, the sample and the control
@@ -14,14 +13,13 @@ describe PacBioRun do
     mock_sample; mock_study
   end
 
-
   it_behaves_like 'maps JSON fields', {
-   :pac_bio_run_id => :id_pac_bio_run_lims
+    :pac_bio_run_id => :id_pac_bio_run_lims
   }
 
   it_behaves_like 'belongs to', [
-   :sample,
-   :study
+    :sample,
+    :study
   ], { :wells => :samples }
 
   let(:json) do

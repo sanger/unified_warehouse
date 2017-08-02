@@ -51,23 +51,19 @@ module ResourceTools::CoreExtensions
   end
 
   describe TrueClass do
-
     subject { true }
 
     it 'should remain unchanged' do
       expect(subject.to_boolean_from_arguments).to be true
     end
-
   end
 
   describe FalseClass do
-
     subject { false }
 
     it 'should remain unchanged' do
       expect(subject.to_boolean_from_arguments).to be false
     end
-
   end
 
   describe Object do
@@ -85,9 +81,7 @@ module ResourceTools::CoreExtensions
   end
 
   describe String do
-
     context '#within_acceptable_bounds?' do
-
       subject { 'value' }
 
       it 'returns false if the value is nil' do
@@ -112,9 +106,7 @@ module ResourceTools::CoreExtensions
       end
     end
 
-
     context '#to_boolean_from_arguments' do
-
       context 'when it is Yes' do
         subject { 'Yes' }
         it 'returns true' do
@@ -145,7 +137,7 @@ module ResourceTools::CoreExtensions
       # trying to compare floats ... which means deltas ... which means tolerance ...
       let(:bounds) do
         tolerance_adjustment = subject.class.numeric_tolerance - 1.0e-15
-        (subject-tolerance_adjustment .. subject+tolerance_adjustment)
+        (subject - tolerance_adjustment..subject + tolerance_adjustment)
       end
 
       it 'returns false if the value is nil' do
@@ -172,15 +164,13 @@ module ResourceTools::CoreExtensions
 
   describe Array do
     context '#convert' do
-
       it 'converts a single hash to an array of 1' do
-        expect(::Array.convert({:example=>'example'})).to eq([{:example=>'example'}])
+        expect(::Array.convert({ :example => 'example' })).to eq([{ :example => 'example' }])
       end
 
       it 'does not modify an array of hashes' do
-        expect(::Array.convert([{:example=>'example'},{:example=>'example'}])).to eq([{:example=>'example'},{:example=>'example'}])
+        expect(::Array.convert([{ :example => 'example' }, { :example => 'example' }])).to eq([{ :example => 'example' }, { :example => 'example' }])
       end
-
     end
   end
 end

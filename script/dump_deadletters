@@ -50,7 +50,7 @@ end
 class Array
   def pretty_dump_to(io)
     io.indent('[', ']') do |io|
-      map { |v| v.pretty_dump_to(io) ; io.eol }
+      map { |v| v.pretty_dump_to(io); io.eol }
     end
   end
 end

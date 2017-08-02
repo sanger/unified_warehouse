@@ -59,7 +59,7 @@ module ResourceTools::SequenceOfDates
       define_method(:date_sequence_from_attribute) { from_attribute }
       define_method(:date_sequence_to_attribute) { to_attribute }
 
-      from_field, to_field = [from_attribute,to_attribute].map(&self.connection.method(:quote_column_name))
+      from_field, to_field = [from_attribute, to_attribute].map(&self.connection.method(:quote_column_name))
 
       scope :current,     where("#{to_field} IS NULL")
       scope :not_current, where("#{to_field} IS NOT NULL")

@@ -1,12 +1,10 @@
 module ResourceTools::Association
-
   extend ActiveSupport::Concern
 
   included do
   end
 
   module ClassMethods
-
     def has_associated(association)
       self.instance_eval %Q{
         belongs_to :#{association}, :foreign_key => :id_#{association}_tmp
@@ -25,6 +23,5 @@ module ResourceTools::Association
 
       }
     end
-
   end
 end

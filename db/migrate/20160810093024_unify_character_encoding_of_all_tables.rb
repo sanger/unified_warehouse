@@ -1,5 +1,4 @@
 class UnifyCharacterEncodingOfAllTables < ActiveRecord::Migration
-
   # SQL provided by David Harper
 
   def up
@@ -25,13 +24,13 @@ class UnifyCharacterEncodingOfAllTables < ActiveRecord::Migration
 
     unless psd_only
       say "Updating non psd tables"
-      say "Updating iseq_product_metrics",true
+      say "Updating iseq_product_metrics", true
       ActiveRecord::Base.connection.execute("ALTER TABLE `iseq_product_metrics` CONVERT TO CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';")
-      say "Updating iseq_run_lane_metrics",true
+      say "Updating iseq_run_lane_metrics", true
       ActiveRecord::Base.connection.execute("ALTER TABLE `iseq_run_lane_metrics` CONVERT TO CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';")
-      say "Updating iseq_run_status",true
+      say "Updating iseq_run_status", true
       ActiveRecord::Base.connection.execute("ALTER TABLE `iseq_run_status` CONVERT TO CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';")
-      say "Updating iseq_run_status_dict",true
+      say "Updating iseq_run_status_dict", true
       ActiveRecord::Base.connection.execute("ALTER TABLE `iseq_run_status_dict` CONVERT TO CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci';")
     end
   end

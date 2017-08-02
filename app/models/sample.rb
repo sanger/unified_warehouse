@@ -27,5 +27,4 @@ class Sample < ActiveRecord::Base
       :sample_strain_att           => :strain
     )
   end
-
 end

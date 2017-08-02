@@ -7,7 +7,6 @@ module ResourceTools
   include ResourceTools::Timestamps
 
   included do |base|
-
     # scope :updating, lambda { |r| where(:uuid => r.uuid).current }
 
     # The original data information is stored here
@@ -20,9 +19,9 @@ module ResourceTools
 
     # IDs can be alphanumerics, so the column is not set to integer. While MySQL is smart enough to handle the conversion, it
     # slows down the queries significantly (~400ms vs 2). Ruby handles the conversion much more quickly.
-    scope :for_lims,  lambda { |lims| where(:id_lims=>lims) }
-    scope :with_uuid, lambda { |uuid| where(:"uuid_#{base.name.underscore}_lims"=>uuid)}
-    scope :with_id,   lambda { |id|   where(:"id_#{base.name.underscore}_lims"=>id.to_s) }
+    scope :for_lims,  lambda { |lims| where(:id_lims => lims) }
+    scope :with_uuid, lambda { |uuid| where(:"uuid_#{base.name.underscore}_lims" => uuid) }
+    scope :with_id,   lambda { |id|   where(:"id_#{base.name.underscore}_lims" => id.to_s) }
   end
 
   def remember_if_we_are_a_new_record
@@ -53,11 +52,10 @@ module ResourceTools
     end
   end
 
-  IGNOREABLE_ATTRIBUTES = [ 'dont_use_id', 'recorded_at']
+  IGNOREABLE_ATTRIBUTES = ['dont_use_id', 'recorded_at']
 
   def updated_values?(object)
     us, them = self.attributes.stringify_keys, object.attributes.stringify_keys.reverse_slice(IGNOREABLE_ATTRIBUTES)
     not us.within_acceptable_bounds?(them)
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Study do
-
   shared_examples_for 'a study resource' do
     it_behaves_like 'a singular resource'
     it_behaves_like 'maps JSON fields', {
@@ -16,7 +15,7 @@ describe Study do
     ]
 
     it_behaves_like 'associated with roles' do
-      let(:additional_roles) { [ :data_access_contact, :slf_manager, :lab_manager ] }
+      let(:additional_roles) { [:data_access_contact, :slf_manager, :lab_manager] }
     end
 
     it_behaves_like 'store as boolean', {
