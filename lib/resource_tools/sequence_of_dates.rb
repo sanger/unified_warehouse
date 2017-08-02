@@ -92,7 +92,7 @@ module ResourceTools::SequenceOfDates
       before_create(:if => lambda { |r| r.deleted? or not r.current? }) do
         related.leading_from(self).first.runs_out_of(self)
       end
-      before_create do |record|
+      before_create do |_record|
         related.leading_to(self).first.runs_into(self)
       end
     end

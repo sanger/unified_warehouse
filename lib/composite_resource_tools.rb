@@ -20,7 +20,7 @@ module CompositeResourceTools
 
       all_records = for_lims(lims).with_id(id_x_lims)
 
-      all_records.first.latest(base_resource) do |record|
+      all_records.first.latest(base_resource) do |_record|
         key_attributes = Hash[attributes.map { |a| [composite_key_for(a), a.to_hash] }]
 
         # If the hash length is different from the original attributes length, then our composite key

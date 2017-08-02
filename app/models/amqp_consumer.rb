@@ -48,7 +48,7 @@ class AmqpConsumer
     lims = json.delete('lims') || raise(InvalidMessage, 'No Lims specified')
     payload_name = json.keys.first
     ActiveRecord::Base.transaction do
-      payload_name.classify.constantize.create_or_update_from_json(json[payload_name], lims).tap do |record|
+      payload_name.classify.constantize.create_or_update_from_json(json[payload_name], lims).tap do |_record|
         metadata.ack # Acknowledge receipt!
         # TODO: Restore similar debugger
         # debug(metadata) { "#{record.inserted_record? ? 'Created' : 'Updated'} #{record.class.name}(#{record.id})" }
@@ -68,7 +68,7 @@ class AmqpConsumer
       end
     end
 
-    client.on_recovery do |*args|
+    client.on_recovery do |*_args|
       info { "Connection has recovered, rebuilding system ..." }
       build_client(client)
     end
@@ -77,7 +77,7 @@ class AmqpConsumer
 
   # Returns a callback that can be used to dead letter any messages.
   def prepare_deadlettering(client)
-    return lambda { |m, p, e| warn(m) { "No dead lettering for #{e.message}: #{e.backtrace}" } } if deadletter.deactivated
+    return lambda { |m, _p, e| warn(m) { "No dead lettering for #{e.message}: #{e.backtrace}" } } if deadletter.deactivated
 
     channel  = AMQP::Channel.new(client)
     exchange = channel.direct(deadletter.exchange, :passive => true)
@@ -98,7 +98,7 @@ class AmqpConsumer
 
     channel = AMQP::Channel.new(client)
     channel.prefetch(prefetch)
-    channel.queue(queue, :passive => true) do |queue, queue_declared|
+    channel.queue(queue, :passive => true) do |queue, _queue_declared|
       info { "Waiting for messages ..." }
 
       EventMachine.add_periodic_timer(empty_queue_disconnect_interval) do

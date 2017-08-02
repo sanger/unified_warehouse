@@ -16,7 +16,7 @@ module NestedResourceTools
 
       all_records = for_lims(lims).with_id(id_x_lims)
 
-      all_records.first.latest(base_resource) do |record|
+      all_records.first.latest(base_resource) do |_record|
         new_atts = attributes.map { |a| a.to_hash }
         all_records.destroy_all
         return create!(new_atts) unless base_resource.deleted?

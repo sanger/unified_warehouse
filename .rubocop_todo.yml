@@ -41,16 +41,6 @@ Lint/UnifiedInteger:
   Exclude:
     - 'script/dump_deadletters'
 
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'app/models/amqp_consumer.rb'
-    - 'lib/composite_resource_tools.rb'
-    - 'lib/nested_resource_tools.rb'
-    - 'lib/resource_tools/sequence_of_dates.rb'
-
 # Offense count: 9
 # Cop supports --auto-correct.
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
