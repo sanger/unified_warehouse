@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
 
 # TODO: We pretty much just use active record and active mailer, do we need rails?
-gem "rails", "~> 4.1"
 gem "mysql2", "~> 0.3.17"
+gem "rails", "~> 4.1"
 
 # TODO: COnsider switching to Bunny if possible
 gem "amqp", "~> 1.5"
 gem "hashie", "~> 3.3"
-gem "rest-client"
 gem "migration_comments"
+gem "rest-client"
 
 # The gems commented out below were part of warehouse_two/three
 # The extra support they provided is not needed for the unified warehouse, leaving them here
@@ -23,10 +23,10 @@ gem "migration_comments"
 # gem "rails_sql_views", :git => "git+ssh://git@github.com/anathematic/rails_sql_views.git"
 
 group :test, :development do
-  gem 'rspec-rails', '~> 3.1'
   gem 'factory_girl_rails'
   gem 'mocktra', '~> 1.0.2'
   gem 'pry'
+  gem 'rspec-rails', '~> 3.1'
 end
 
 group :development do
