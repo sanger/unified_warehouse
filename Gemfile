@@ -8,7 +8,6 @@ gem "bunny"
 gem "daemons"
 gem "hashie", "~> 3.3"
 gem "migration_comments"
-gem "rest-client"
 
 # The gems commented out below were part of warehouse_two/three
 # The extra support they provided is not needed for the unified warehouse, leaving them here
