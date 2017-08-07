@@ -10,7 +10,7 @@ class Postman
       @queue_name = config.queue
       @routing_keys = config.routing_keys
       @deadletter_exchange = config.deadletter_exchange
-      @ttl = config.fetch(:ttl, 0)
+      @ttl = config.ttl
       @type = type
     end
 
@@ -20,11 +20,13 @@ class Postman
       queue.subscribe(manual_ack: true, block: false, consumer_tag: consumer_tag, &block)
     end
 
+    # Publishes a message to the configured queue
     def publish(payload, options)
       options[:persistent] = true
       exchange.publish(payload, options)
     end
 
+    # Ensures the queues and channels are set up to receive messages
     def activate!
       establish_bindings!
     end
@@ -45,7 +47,9 @@ class Postman
     end
 
     def queue_arguments
-      { 'x-dead-letter-exchange' => @deadletter_exchange, 'x-message-ttl' => @ttl }
+      config = { 'x-dead-letter-exchange' => @deadletter_exchange }
+      config['x-message-ttl'] = @ttl if @ttl.present?
+      config
     end
 
     def routing_keys

@@ -54,13 +54,12 @@ class AmqpClient
     def daemon
       Daemons.run_proc(server_name, multiple: multiple, dir: @pid_dir, backtrace: true, log_output: true) do
         client = Bunny.new(Rails.application.config.amqp.url)
+        main_exchange = Postman::Channel.new(client: client, config: Rails.application.config.amqp.main)
         delay_exchange = Postman::Channel.new(client: client, config: Rails.application.config.amqp.delay, type: :fanout)
         Postman.new(
           client: client,
-          exchange_name: Rails.application.config.amqp.main.exchange,
-          queue_name: "psd.#{@app_name}",
-          routing_keys: Rails.application.config.amqp.main.routing_keys,
-          deadletter_exchange: Rails.application.config.amqp.main.deadletter.exchange,
+          max_retries: Rails.application.config.amqp.max_retries,
+          main_exchange: main_exchange,
           delay_exchange: delay_exchange
         ).run!
       end

@@ -12,19 +12,18 @@ class Postman
     /Mysql2::Error: MySQL server has gone away/,
     /Mysql2::Error: Can't connect to local MySQL server through socket/
   ].freeze
+  # Maximum wait time between database retries: 5 minutes
+  MAX_RECONNECT_DELAY = 60 * 5
 
-  attr_reader :client, :queue_name, :exchange_name, :routing_keys, :deadletter_exchange
+  attr_reader :client, :queue_name, :exchange_name, :routing_keys
 
-  def initialize(client:, queue_name:, exchange_name:, routing_keys:, consumer_tag: nil, deadletter_exchange:, delay_exchange:)
+  def initialize(client:, consumer_tag: nil, main_exchange:, delay_exchange:, max_retries:)
     @client = client
-    @queue_name = queue_name.dup.freeze
-    @exchange_name = exchange_name.dup.freeze
-    @routing_keys = routing_keys.map { |k| k.dup.freeze }
     @consumer_tag = consumer_tag || "#{@queue_name}_#{Rails.env}_#{Process.pid}"
-    @deadletter_exchange = deadletter_exchange.dup.freeze
     @state = :initialized
-    @delay_exchange =  delay_exchange
-    @recovery_attempts = 0
+    @main_exchange = main_exchange
+    @delay_exchange = delay_exchange
+    @max_retries = max_retries
   end
 
   def stopping?
@@ -41,18 +40,6 @@ class Postman
 
   def paused?
     @state == :paused
-  end
-
-  def channel
-    @channel ||= @client.create_channel
-  end
-
-  def exchange
-    channel.topic(exchange_name, auto_delete: false, durable: true)
-  end
-
-  def queue
-    channel.queue(queue_name, arguments: { 'x-dead-letter-exchange' => deadletter_exchange })
   end
 
   def establish_bindings!
@@ -72,8 +59,8 @@ class Postman
 
     # We reconnect to the database after the fork.
     ActiveRecord::Base.establish_connection
-    @client.start       # Start the client
-    establish_bindings! # Set up the queues
+    @client.start            # Start the client
+    @main_exchange.activate! # Set up the queues
     @delay_exchange.activate!
     @state = :running   # Transition to running state
     subscribe!          # Subscribe to the queue
@@ -117,7 +104,7 @@ class Postman
   # 4. There doesn't seem to be much gained from spinning up the control loop in its own thread
   def subscribe!
     raise StandardError, "Consumer already exists" unless @consumer.nil?
-    @consumer ||= queue.subscribe(manual_ack: true, block: false, consumer_tag: @consumer_tag) do |delivery_info, metadata, payload|
+    @consumer ||= @main_exchange.subscribe(@consumer_tag) do |delivery_info, metadata, payload|
       process(delivery_info, metadata, payload)
     end
   end
@@ -127,7 +114,6 @@ class Postman
     ActiveRecord::Base.connection.reconnect!
     @state = :running
     @consumer.recover_from_network_failure
-    @recovery_attempts = 0
     0
   rescue Mysql2::Error
     @recovery_attempts += 1
@@ -136,7 +122,7 @@ class Postman
   end
 
   def delay_for_attempt
-    [2 ^ @recovery_attempts, 60 * 5].min
+    [2 ^ @recovery_attempts, MAX_RECONNECT_DELAY].min
   end
 
   # Called in an interrupt. (Ctrl-C)
@@ -149,10 +135,12 @@ class Postman
   def pause!
     return if stopping? || stopped?
     @consumer.cancel
+    @recovery_attempts = 0
     @state = :paused
   end
 
   def process(delivery_info, metadata, payload)
+    attempt = metadata.headers.fetch('attempts', 0)
     begin
       Rails.logger.info "Started message process"
       Rails.logger.debug payload
@@ -166,17 +154,16 @@ class Postman
 
     begin
       message.record
-      channel.ack(delivery_info.delivery_tag)
+      @main_exchange.ack(delivery_info.delivery_tag)
     rescue ActiveRecord::StatementInvalid => exception
       if DATABASE_CONNECTION_MESSAGES.any? { |regex| regex.match?(exception.message) }
         pause!
         requeue(delivery_info, payload, exception)
       else
-        attempt = metadata.headers.fetch('attempts', 0)
         delay(delivery_info, payload, exception, attempt)
       end
     rescue => exception
-      delay(delivery_info, payload, exception)
+      delay(delivery_info, payload, exception, attempt)
     end
 
     Rails.logger.info "Finished message process"
@@ -187,10 +174,14 @@ class Postman
   def delay(delivery_info, payload, exception, attempt)
     Rails.logger.warn "Delay: #{payload}"
     Rails.logger.warn exception.message
-    # Publish the message to the delay queue
-    @delay_exchange.publish(payload, routing_key: delivery_info.routing_key, headers: { attempts: attempt + 1 })
-    # Acknowledge the original message
-    channel.ack(delivery_info.delivery_tag)
+    if attempt <= @max_retries
+      # Publish the message to the delay queue
+      @delay_exchange.publish(payload, routing_key: delivery_info.routing_key, headers: { attempts: attempt + 1 })
+      # Acknowledge the original message
+      @main_exchange.ack(delivery_info.delivery_tag)
+    else
+      deadletter(delivery_info, payload, exception)
+    end
   end
 
   # Reject the message and requeue ready for
@@ -198,7 +189,7 @@ class Postman
   def requeue(delivery_info, payload, exception)
     Rails.logger.warn "Re-queue: #{payload}"
     Rails.logger.warn exception.message
-    channel.nack(delivery_info.delivery_tag, false, true)
+    @main_exchange.nack(delivery_info.delivery_tag, false, true)
   end
 
   # Reject the message without re-queuing
@@ -206,6 +197,6 @@ class Postman
   def deadletter(delivery_info, payload, exception)
     Rails.logger.error "Deadletter: #{payload}"
     Rails.logger.error exception.message
-    channel.nack(delivery_info.delivery_tag)
+    @main_exchange.nack(delivery_info.delivery_tag)
   end
 end

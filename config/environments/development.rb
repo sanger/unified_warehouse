@@ -28,13 +28,14 @@ UnifiedWarehouse::Application.configure do
   # Configure the main AMQP consumer
 
   config.amqp.url                         = 'amqp://guest:guest@127.0.0.1:5672'
+  config.amqp.max_retries                 = 20
 
-  config.amqp.main.queue                  = 'queue'
+  config.amqp.main.queue                  = 'psd.mlwh'
   config.amqp.main.exchange               = 'psd.sequencescape'
   config.amqp.main.routing_keys           = ['test.key']
-  config.amqp.main.deadletter.exchange    = 'deadletters'
+  config.amqp.main.deadletter_exchange    = 'deadletters'
 
-  config.amqp.delay.queue                  = 'delay'
+  config.amqp.delay.queue                  = 'psd.mlwh.delay'
   config.amqp.delay.exchange               = 'psd.sequencescape.delay'
   config.amqp.delay.routing_keys           = []
   config.amqp.delay.ttl                    = 30 * 1000
