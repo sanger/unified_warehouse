@@ -4,8 +4,8 @@ source 'https://rubygems.org'
 gem "mysql2", "~> 0.3.17"
 gem "rails", "~> 4.1"
 
-# TODO: COnsider switching to Bunny if possible
-gem "amqp", "~> 1.5"
+gem "bunny"
+gem "daemons"
 gem "hashie", "~> 3.3"
 gem "migration_comments"
 gem "rest-client"

@@ -10,6 +10,8 @@ UnifiedWarehouse::Application.configure do
   # config.assets.compress = false
   config.assets.debug = true
 
+  config.logger = Logger.new(STDOUT)
+
   # Here is some ActiveRecord configuration that is useful
   # But not rails 4 compatible!
   # config.active_record.mass_assignment_sanitizer         = :strict
@@ -25,15 +27,18 @@ UnifiedWarehouse::Application.configure do
 
   # Configure the main AMQP consumer
 
-  config.amqp.main.url                    = 'amqp://guest:guest@127.0.0.1:5672'
-  config.amqp.main.queue                  = 'queue'
-  config.amqp.main.prefetch               = 50
-  config.amqp.main.requeue                = true
-  config.amqp.main.reconnect_interval     = 10
+  config.amqp.url                         = 'amqp://guest:guest@127.0.0.1:5672'
 
-  config.amqp.main.deadletter.deactivated = true
+  config.amqp.main.queue                  = 'queue'
+  config.amqp.main.exchange               = 'psd.sequencescape'
+  config.amqp.main.routing_keys           = ['test.key']
   config.amqp.main.deadletter.exchange    = 'deadletters'
-  config.amqp.main.deadletter.routing_key = 'test.deadletter'
+
+  config.amqp.delay.queue                  = 'delay'
+  config.amqp.delay.exchange               = 'psd.sequencescape.delay'
+  config.amqp.delay.routing_keys           = []
+  config.amqp.delay.ttl                    = 30 * 1000
+  config.amqp.delay.deadletter_exchange    = 'psd.sequencescape'
 
   # Configure the deadletter AMQP consumer
   config.amqp.deadletter.url                             = 'amqp://guest:guest@127.0.0.1:5672'

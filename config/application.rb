@@ -31,6 +31,7 @@ module UnifiedWarehouse
     # We're going to need a specialised configuration for our AMQP consumer
     config.amqp                       = ActiveSupport::Configurable::Configuration.new
     config.amqp.main                  = ActiveSupport::Configurable::Configuration.new
+    config.amqp.delay                 = ActiveSupport::Configurable::Configuration.new
     config.amqp.main.deadletter       = ActiveSupport::Configurable::Configuration.new
     config.amqp.deadletter            = ActiveSupport::Configurable::Configuration.new
   end
