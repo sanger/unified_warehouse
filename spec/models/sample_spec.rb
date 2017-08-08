@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Sample do
-
   shared_examples 'a sample resource' do
     it_behaves_like 'a singular resource'
     it_behaves_like 'maps JSON fields', {

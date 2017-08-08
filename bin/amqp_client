@@ -9,18 +9,16 @@ APP_PATH = File.expand_path('../config/application', __dir__)
 
 class AmqpClient
   APP_NAME = 'unified_warehouse'.freeze
-  DEFAULT_THREADS = 2
   DEFAULT_WORKERS = 2
   DEFAULT_PID_DIR = './tmp/pids'.freeze
 
   NotImplimented = Class.new(StandardError)
 
   class WorkerPool
-    def initialize(app_name, pid_dir, workers, threads, instance)
+    def initialize(app_name, pid_dir, workers, instance)
       @app_name = app_name
       @pid_dir = pid_dir
       @worker_count = workers
-      @thread_count = threads
       @instance = instance
     end
 
@@ -66,63 +64,49 @@ class AmqpClient
     end
   end
 
-  attr_reader :workers, :threads, :instance, :pid_dir
+  attr_reader :workers, :instance, :pid_dir
 
   def initialize(args)
     @action = args.first
     # TODO: DRY this out
     self.workers = args.detect { |arg| arg =~ /\Aw[0-9]+\z/ }
-    self.threads = args.detect { |arg| arg =~ /\At[0-9]+\z/ }
     self.instance = args.detect { |arg| arg =~ /\Ai[0-9]+\z/ }
     self.pid_dir = args.detect { |arg| arg =~ /\Apid_dir=.+\z/ }
   end
 
   # TODO: DRY this out
   def workers=(workers_config)
-    if workers_config.nil?
-      @workers = DEFAULT_WORKERS
-    else
-      @workers = workers_config.slice(1,workers_config.length).to_i
-    end
-  end
-
-  def threads=(threads_config)
-    if threads_config.nil?
-      @threads = DEFAULT_THREADS
-    else
-      raise NotImplimented, "Threaded Workers have not been implemented yet."
-      @threads = threads_config.slice(1,threads_config.length).to_i
-    end
+    @workers = if workers_config.nil?
+                 DEFAULT_WORKERS
+               else
+                 workers_config.slice(1, workers_config.length).to_i
+               end
   end
 
   def pid_dir=(pid_dir_config)
-    if pid_dir_config.nil?
-      @pid_dir = DEFAULT_PID_DIR
-    else
-      @pid_dir = /\Apid_dir=(.+)\z/.match(pid_dir_config)[1]
-    end
+    @pid_dir = if pid_dir_config.nil?
+                 DEFAULT_PID_DIR
+               else
+                 /\Apid_dir=(.+)\z/.match(pid_dir_config)[1]
+               end
   end
 
   def instance=(instance_config)
-    unless instance_config.nil?
-      @instance = instance_config.slice(1, instance_config.length).to_i
-    end
+    @instance = instance_config.slice(1, instance_config.length).to_i if instance_config.present?
   end
 
   def worker_pool
-    @wp ||= WorkerPool.new(APP_NAME, pid_dir, workers, threads, instance)
+    @wp ||= WorkerPool.new(APP_NAME, pid_dir, workers, instance)
   end
 
   def run
-    if preload_required?
-      worker_pool.load_rails!
-    end
+    worker_pool.load_rails! if preload_required?
     start? ? worker_pool.start! : worker_pool.daemon
   end
 
   # Only bother loading rails if necessary
   def preload_required?
-    ['start','restart','reload','run'].include?(@action)
+    %w[start restart reload run].include?(@action)
   end
 
   def start?

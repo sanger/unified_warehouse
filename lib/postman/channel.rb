@@ -53,7 +53,7 @@ class Postman
     end
 
     def routing_keys
-      if  @type == :topic
+      if @type == :topic
         @routing_keys
       else
         [:topic]
