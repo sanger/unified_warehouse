@@ -20,11 +20,6 @@ UnifiedWarehouse::Application.configure do
   # Configure the numeric tolerance
   config.numeric_tolerance = 0.05
 
-  # Configure the worker death messages
-  config.worker_death_from    = 'example@example.com'
-  config.worker_death_to      = 'example@example.com'
-  config.worker_death_restart = %Q{Please restart the worker.}
-
   # Configure the main AMQP consumer
 
   config.amqp.url                         = 'amqp://guest:guest@127.0.0.1:5672'

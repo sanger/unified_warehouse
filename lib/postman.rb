@@ -1,97 +1,95 @@
-
 require 'bunny'
-require_relative 'message'
+require 'active_support'
+require 'active_support/core_ext'
+require_relative 'payload'
+require_relative 'postman/state_machine'
 
 # A postman listens to a rabbitMQ message queues
-# and funnels messages onto it.
+# and manages state and reconnection.
 class Postman
-  # Database connection messages indicated temporary issues connecting to the database
-  # We handle them separately to ensure we can recover from network issues.
-  DATABASE_CONNECTION_MESSAGES = [
-    /Mysql2::Error: closed MySQL connection:/,
-    /Mysql2::Error: MySQL server has gone away/,
-    /Mysql2::Error: Can't connect to local MySQL server through socket/
-  ].freeze
+  extend StateMachine::Helper
   # Maximum wait time between database retries: 5 minutes
   MAX_RECONNECT_DELAY = 60 * 5
 
-  attr_reader :client, :queue_name, :exchange_name, :routing_keys
+  attr_reader :client, :state, :main_exchange, :delay_exchange, :max_retries
 
   def initialize(client:, consumer_tag: nil, main_exchange:, delay_exchange:, max_retries:)
     @client = client
-    @consumer_tag = consumer_tag || "#{@queue_name}_#{Rails.env}_#{Process.pid}"
+    @consumer_tag = consumer_tag || "uwh_#{Rails.env}_#{Process.pid}"
     @state = :initialized
     @main_exchange = main_exchange
     @delay_exchange = delay_exchange
     @max_retries = max_retries
   end
 
-  def stopping?
-    @state == :stopping
+  states :stopping, :stopped, :paused, :starting, :started, :running
+  delegate :warn, :info, :error, :debug, to: :logger
+
+  def logger
+    Rails.logger
   end
 
   def alive?
-    @state != :stopped
-  end
-
-  def stopped?
-    @state == :stopped
-  end
-
-  def paused?
-    @state == :paused
-  end
-
-  def establish_bindings!
-    routing_keys.each do |key|
-      queue.bind(exchange, routing_key: key)
-    end
+    !stopped?
   end
 
   def run!
-    @state = :starting
-    # Capture the term signal and set the state to stopping.
-    # We can't directly cancel the consumer from here as Bunny
-    # uses Mutex locking while checking the state. Ruby forbids this
-    # from inside a trap block.
-    Signal.trap("TERM") { stop! }
-    Signal.trap("INT") { manual_stop! }
+    starting!
+    trap_signals
 
-    # We reconnect to the database after the fork.
-    ActiveRecord::Base.establish_connection
-    @client.start            # Start the client
-    @main_exchange.activate! # Set up the queues
-    @delay_exchange.activate!
-    @state = :running   # Transition to running state
+    ActiveRecord::Base.establish_connection # We reconnect to the database after the fork.
+    @client.start           # Start the client
+    main_exchange.activate! # Set up the queues
+    delay_exchange.activate!
+    running!            # Transition to running state
     subscribe!          # Subscribe to the queue
     # Monitor our state to control stopping and re-connection
     # This loop blocks until the state is :stopped
     control_loop while alive?
     # And we leave the application
-    Rails.logger.info "Stopped #{@consumer_tag}"
-    Rails.logger.info "Goodbye!"
+    info "Stopped #{@consumer_tag}"
+    info "Goodbye!"
   ensure
     @client.close
   end
 
   def stop!
-    @state = :stopping
+    stopping!
     STDOUT.puts "Stopping #{@consumer_tag}"
+  end
+
+  def pause!
+    return unless running?
+    unsubscribe!
+    @recovery_attempts = 0
+    @recover_at = Time.now
+    paused!
   end
 
   private
 
+  # Capture the term signal and set the state to stopping.
+  # We can't directly cancel the consumer from here as Bunny
+  # uses Mutex locking while checking the state. Ruby forbids this
+  # from inside a trap block.
+  # INT is triggered by Ctrl-C and we provide a manual override to
+  # kill things a little quicker as this will mostly happen in
+  # development.
+  def trap_signals
+    Signal.trap("TERM") { stop! }
+    Signal.trap("INT") { manual_stop! }
+  end
+
   # The control loop. Checks the state of the process every three seconds
   # stopping: cancels the consumer, sets the processes to stopped and breaks the loop
-  # stopped: (alive? returns false) terminates the loop. In practice the break should have achieved this
+  # stopped: (alive? returns false) terminates the loop.
   # anything else: waits three seconds and tries again
   def control_loop
     if stopping?
-      @consumer.cancel
-      @state = :stopped
-    elsif paused?
-      sleep(attempt_recovery)
+      unsubscribe!
+      stopped!
     else
+      attempt_recovery if paused?
       sleep(3)
     end
   end
@@ -109,20 +107,34 @@ class Postman
     end
   end
 
+  # Cancels the consumer and unregisters it
+  def unsubscribe!
+    @consumer.try(:cancel)
+    @consumer = nil
+  end
+
+  # Rest for database recovery and restore the consumer.
   def attempt_recovery
-    Rails.logger.warn "Attempting recovery of database connection: #{@recovery_attempts}"
-    ActiveRecord::Base.connection.reconnect!
-    @state = :running
-    @consumer.recover_from_network_failure
-    0
-  rescue Mysql2::Error
-    @recovery_attempts += 1
-    # We haven't recovered, increase out wait time to a maximum of 5 minutes
-    delay_for_attempt
+    return unless Time.now > @recover_at
+    warn "Attempting recovery of database connection: #{@recovery_attempts}"
+    if recovered?
+      running!
+      subscribe!
+    else
+      @recovery_attempts += 1
+      @recover_at = Time.now + delay_for_attempt
+    end
   end
 
   def delay_for_attempt
-    [2 ^ @recovery_attempts, MAX_RECONNECT_DELAY].min
+    [2**@recovery_attempts, MAX_RECONNECT_DELAY].min
+  end
+
+  def recovered?
+    ActiveRecord::Base.connection.reconnect!
+    true
+  rescue Mysql2::Error
+    false
   end
 
   # Called in an interrupt. (Ctrl-C)
@@ -132,71 +144,7 @@ class Postman
     STDOUT.puts "Press Ctrl-C again to stop immediately."
   end
 
-  def pause!
-    return if stopping? || stopped?
-    @consumer.cancel
-    @recovery_attempts = 0
-    @state = :paused
-  end
-
   def process(delivery_info, metadata, payload)
-    attempt = metadata.headers.fetch('attempts', 0)
-    begin
-      Rails.logger.info "Started message process"
-      Rails.logger.debug payload
-      message = Message.from_json(payload)
-    rescue Message::InvalidMessage => exception
-      # Our message fails to meet our basic requirements, there's little point
-      # sending it to the delayed queue, as it will still be invalid next time.
-      deadletter(delivery_info, payload, exception)
-      return
-    end
-
-    begin
-      message.record
-      @main_exchange.ack(delivery_info.delivery_tag)
-    rescue ActiveRecord::StatementInvalid => exception
-      if DATABASE_CONNECTION_MESSAGES.any? { |regex| regex.match?(exception.message) }
-        pause!
-        requeue(delivery_info, payload, exception)
-      else
-        delay(delivery_info, payload, exception, attempt)
-      end
-    rescue => exception
-      delay(delivery_info, payload, exception, attempt)
-    end
-
-    Rails.logger.info "Finished message process"
-  end
-
-  # Re-queue the message for later processing
-  # Remove from the standard queue
-  def delay(delivery_info, payload, exception, attempt)
-    Rails.logger.warn "Delay: #{payload}"
-    Rails.logger.warn exception.message
-    if attempt <= @max_retries
-      # Publish the message to the delay queue
-      @delay_exchange.publish(payload, routing_key: delivery_info.routing_key, headers: { attempts: attempt + 1 })
-      # Acknowledge the original message
-      @main_exchange.ack(delivery_info.delivery_tag)
-    else
-      deadletter(delivery_info, payload, exception)
-    end
-  end
-
-  # Reject the message and requeue ready for
-  # immediate reprocessing.
-  def requeue(delivery_info, payload, exception)
-    Rails.logger.warn "Re-queue: #{payload}"
-    Rails.logger.warn exception.message
-    @main_exchange.nack(delivery_info.delivery_tag, false, true)
-  end
-
-  # Reject the message without re-queuing
-  # Will end up getting dead-lettered
-  def deadletter(delivery_info, payload, exception)
-    Rails.logger.error "Deadletter: #{payload}"
-    Rails.logger.error exception.message
-    @main_exchange.nack(delivery_info.delivery_tag)
+    Message.new(self, delivery_info, metadata, payload).process
   end
 end

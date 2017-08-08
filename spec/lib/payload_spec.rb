@@ -1,14 +1,14 @@
 require 'spec_helper'
-require './lib/message'
+require './lib/payload'
 require './app/models/flowcell'
 require './app/models/sample'
 require './app/models/flgen_plate'
 
-RSpec.describe Message, type: :lib do
-  subject(:message_from_json) { Message.from_json(message_json) }
+RSpec.describe Payload, type: :lib do
+  subject(:message_from_json) { Payload.from_json(message_json) }
 
   shared_examples 'valid json' do
-    it { is_expected.to be_a(Message) }
+    it { is_expected.to be_a(Payload) }
 
     let(:message_json) do
       {
@@ -58,7 +58,7 @@ RSpec.describe Message, type: :lib do
   context 'invalid json' do
     let(:message_json) { '#%2' }
     it 'raises InvalidMessage' do
-      expect { subject }.to raise_error(Message::InvalidMessage)
+      expect { subject }.to raise_error(Payload::InvalidMessage)
     end
   end
 
@@ -73,7 +73,7 @@ RSpec.describe Message, type: :lib do
     end
 
     it 'raises InvalidMessage' do
-      expect { subject }.to raise_error(Message::InvalidMessage)
+      expect { subject }.to raise_error(Payload::InvalidMessage)
     end
   end
 
@@ -88,7 +88,7 @@ RSpec.describe Message, type: :lib do
     end
 
     it 'raises InvalidMessage' do
-      expect { subject }.to raise_error(Message::InvalidMessage)
+      expect { subject }.to raise_error(Payload::InvalidMessage)
     end
   end
 
@@ -103,7 +103,7 @@ RSpec.describe Message, type: :lib do
     end
 
     it 'raises InvalidMessage' do
-      expect { subject }.to raise_error(Message::InvalidMessage)
+      expect { subject }.to raise_error(Payload::InvalidMessage)
     end
   end
 end

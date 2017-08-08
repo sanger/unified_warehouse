@@ -1,4 +1,6 @@
-class Message
+# A payload takes a message body, provides basic validation and
+# generates the corresponding record on record
+class Payload
   InvalidMessage = Class.new(StandardError)
 
   module ClassMethods
