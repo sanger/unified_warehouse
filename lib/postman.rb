@@ -36,8 +36,6 @@ class Postman
   def run!
     starting!
     trap_signals
-
-    ActiveRecord::Base.establish_connection # We reconnect to the database after the fork.
     @client.start           # Start the client
     main_exchange.activate! # Set up the queues
     delay_exchange.activate!
@@ -62,7 +60,7 @@ class Postman
     return unless running?
     unsubscribe!
     @recovery_attempts = 0
-    @recover_at = Time.now
+    @recover_at = Time.current
     paused!
   end
 
@@ -115,19 +113,23 @@ class Postman
 
   # Rest for database recovery and restore the consumer.
   def attempt_recovery
-    return unless Time.now > @recover_at
+    return unless recovery_due?
     warn "Attempting recovery of database connection: #{@recovery_attempts}"
     if recovered?
       running!
       subscribe!
     else
       @recovery_attempts += 1
-      @recover_at = Time.now + delay_for_attempt
+      @recover_at = Time.current + delay_for_attempt
     end
   end
 
   def delay_for_attempt
     [2**@recovery_attempts, MAX_RECONNECT_DELAY].min
+  end
+
+  def recovery_due?
+    Time.current > @recover_at
   end
 
   def recovered?

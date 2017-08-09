@@ -27,13 +27,13 @@ class AmqpClient
     end
 
     def start!
-      worker_count.times do
-        daemon
+      worker_count.times do |i|
+        daemon(@instance || i)
       end
     end
 
-    def server_name
-      @instance ? "#{@app_name}_num#{@instance}" : @app_name
+    def server_name(i)
+      "#{@app_name}_num#{i}"
     end
 
     def multiple
@@ -49,8 +49,9 @@ class AmqpClient
       puts "Loaded!"
     end
 
-    def daemon
-      Daemons.run_proc(server_name, multiple: multiple, dir: @pid_dir, backtrace: true, log_output: true) do
+    def daemon(instance)
+      Daemons.run_proc(server_name(instance), multiple: multiple, dir: @pid_dir, backtrace: true, log_output: true) do
+        ActiveRecord::Base.establish_connection # We reconnect to the database after the fork.
         client = Bunny.new(Rails.application.config.amqp.url)
         main_exchange = Postman::Channel.new(client: client, config: Rails.application.config.amqp.main)
         delay_exchange = Postman::Channel.new(client: client, config: Rails.application.config.amqp.delay, type: :fanout)
@@ -101,7 +102,7 @@ class AmqpClient
 
   def run
     worker_pool.load_rails! if preload_required?
-    start? ? worker_pool.start! : worker_pool.daemon
+    start? ? worker_pool.start! : worker_pool.daemon(0)
   end
 
   # Only bother loading rails if necessary
