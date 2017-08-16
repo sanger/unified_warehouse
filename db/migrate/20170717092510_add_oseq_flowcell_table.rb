@@ -1,6 +1,7 @@
 class AddOseqFlowcellTable < ActiveRecord::Migration
   def change
     create_table :oseq_flowcell, primary_key: :id_oseq_flowcell_tmp, options: 'CHARSET=utf8 COLLATE=utf8_unicode_ci' do |t|
+      t.string :id_flowcell_lims,             null: false, comment: 'LIMs-specific flowcell id', index: true
       t.datetime :last_updated,               null: false, comment: 'Timestamp of last update'
       t.datetime :recorded_at,                null: false, comment: 'Timestamp of warehouse update'
 

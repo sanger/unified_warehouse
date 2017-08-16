@@ -118,6 +118,7 @@ DROP TABLE IF EXISTS `oseq_flowcell`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `oseq_flowcell` (
   `id_oseq_flowcell_tmp` int(10) unsigned NOT NULL,
+  `id_flowcell_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific flowcell id',
   `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
   `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
@@ -358,7 +359,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-16 13:22:43
+-- Dump completed on 2017-08-16 15:07:16
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
