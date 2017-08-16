@@ -117,16 +117,16 @@ DROP TABLE IF EXISTS `oseq_flowcell`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `oseq_flowcell` (
-  `id_oseq_flowcell_tmp` int(11) NOT NULL AUTO_INCREMENT,
+  `id_oseq_flowcell_tmp` int(10) unsigned NOT NULL,
   `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
   `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
-  `id_study_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "study.id_study_tmp"',
-  `id_run` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The run identifier of the instrument',
+  `id_study_tmp` int(10) unsigned NOT NULL COMMENT 'Study id, see "study.id_study_tmp"',
+  `experiment_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the experiment',
   `instrument_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the instrument on which the sample was run',
-  `instrument_number` int(11) NOT NULL COMMENT 'The numeric identifier of the instrument on which the sample was run',
+  `instrument_slot` int(11) NOT NULL COMMENT 'The numeric identifier of the slot on which the sample was run',
   `pipeline_id_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
-  `requested_file_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of file requests for the produced sequencing data',
+  `requested_data_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of data produces by sequencing, eg. basecalls only',
   `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
   PRIMARY KEY (`id_oseq_flowcell_tmp`),
   KEY `fk_oseq_flowcell_to_sample` (`id_sample_tmp`),
@@ -358,7 +358,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-17 10:41:45
+-- Dump completed on 2017-08-16 13:22:43
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -422,4 +422,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170608082257');
 INSERT INTO schema_migrations (version) VALUES ('20170717092510');
 
 INSERT INTO schema_migrations (version) VALUES ('20170717093707');
+
+INSERT INTO schema_migrations (version) VALUES ('20170816121503');
 
