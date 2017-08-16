@@ -123,7 +123,7 @@ CREATE TABLE `oseq_flowcell` (
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
   `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
   `id_study_tmp` int(10) unsigned NOT NULL COMMENT 'Study id, see "study.id_study_tmp"',
-  `experiment_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the experiment',
+  `experiment_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the experiment, eg. The lims generated run id',
   `instrument_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the instrument on which the sample was run',
   `instrument_slot` int(11) NOT NULL COMMENT 'The numeric identifier of the slot on which the sample was run',
   `pipeline_id_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
@@ -359,7 +359,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-16 15:07:16
+-- Dump completed on 2017-08-16 16:01:06
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');

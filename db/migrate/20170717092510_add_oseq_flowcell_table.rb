@@ -9,7 +9,7 @@ class AddOseqFlowcellTable < ActiveRecord::Migration
       t.column :id_study_tmp,    'integer unsigned',   null: false, comment: 'Study id, see "study.id_study_tmp"'
 
       # Set to string for the moment, until we know more
-      t.string :experiment_name, null: false, comment: 'The name of the experiment'
+      t.string :experiment_name, null: false, comment: 'The name of the experiment, eg. The lims generated run id'
       t.string :instrument_name, null: false, comment: 'The name of the instrument on which the sample was run'
       t.integer :instrument_slot, null: false, comment: 'The numeric identifier of the slot on which the sample was run'
 
