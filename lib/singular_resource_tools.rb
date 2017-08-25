@@ -9,7 +9,7 @@ module SingularResourceTools
   module ClassMethods
     def create_or_update(attributes)
       new_record = new(attributes.to_hash)
-      for_lims(attributes.id_lims).with_id(attributes["id_#{name.underscore}_lims"]).first.latest(new_record) do |record|
+      for_lims(attributes.id_lims).with_id(attributes[base_resource_key]).first.latest(new_record) do |record|
         record.update_attributes(attributes.to_hash) if record.present?
         record ||= new_record
         record.save!

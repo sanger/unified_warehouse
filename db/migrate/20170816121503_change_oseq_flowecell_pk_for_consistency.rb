@@ -3,7 +3,7 @@
 # elsewhere
 class ChangeOseqFlowecellPkForConsistency < ActiveRecord::Migration
   def up
-    change_column :oseq_flowcell, :id_oseq_flowcell_tmp, 'int(10) unsigned'
+    change_column :oseq_flowcell, :id_oseq_flowcell_tmp, 'int(10) unsigned AUTO_INCREMENT'
   end
 
   def down

@@ -117,7 +117,7 @@ DROP TABLE IF EXISTS `oseq_flowcell`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `oseq_flowcell` (
-  `id_oseq_flowcell_tmp` int(10) unsigned NOT NULL,
+  `id_oseq_flowcell_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_flowcell_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific flowcell id',
   `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
@@ -128,6 +128,7 @@ CREATE TABLE `oseq_flowcell` (
   `instrument_slot` int(11) NOT NULL COMMENT 'The numeric identifier of the slot on which the sample was run',
   `pipeline_id_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
   `requested_data_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of data produces by sequencing, eg. basecalls only',
+  `deleted_at` datetime DEFAULT NULL COMMENT 'Timestamp of any flowcell destruction',
   `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
   PRIMARY KEY (`id_oseq_flowcell_tmp`),
   KEY `fk_oseq_flowcell_to_sample` (`id_sample_tmp`),
@@ -359,7 +360,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-16 16:01:06
+-- Dump completed on 2017-08-25 13:47:47
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
