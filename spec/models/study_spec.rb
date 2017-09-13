@@ -61,7 +61,9 @@ describe Study do
         "prelim_id" => "A1234",
         # The field may contain multiple numbers, and sometimes has comments.
         "hmdmc_number" => "H12345; H67890; And then a comment",
-        "data_destination" => "standard"
+        "data_destination" => "standard",
+        "s3_email_list" => "aa1@sanger.ac.uk;aa2@sanger.ac.uk",
+        "data_deletion_period" => "3 months"
       }
     end
 

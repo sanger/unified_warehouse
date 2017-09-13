@@ -16,7 +16,7 @@ module CompositeResourceTools
       base_resource = attributes.first
 
       lims      = base_resource.id_lims
-      id_x_lims = base_resource["id_#{name.underscore}_lims"]
+      id_x_lims = base_resource[base_resource_key]
 
       all_records = for_lims(lims).with_id(id_x_lims)
 
