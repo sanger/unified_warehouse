@@ -25,6 +25,7 @@ UnifiedWarehouse::Application.configure do
   config.amqp.url                         = 'amqp://guest:guest@127.0.0.1:5672'
   config.amqp.max_retries                 = 20
 
+  config.amqp.requeue_key                 = "requeue.#{Rails.env}"
   config.amqp.main.queue                  = 'psd.mlwh'
   config.amqp.main.exchange               = 'psd.sequencescape'
   config.amqp.main.routing_keys           = ['test.key']

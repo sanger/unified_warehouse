@@ -16,7 +16,7 @@ class Postman
 
     delegate :nack, :ack, to: :channel
 
-    def subscribe(consumer_tag = '', &block)
+    def subscribe(consumer_tag, &block)
       queue.subscribe(manual_ack: true, block: false, consumer_tag: consumer_tag, &block)
     end
 
@@ -27,8 +27,14 @@ class Postman
     end
 
     # Ensures the queues and channels are set up to receive messages
-    def activate!
+    # keys: additional routing_keys to bind
+    def activate!(keys: [])
       establish_bindings!
+      keys.each { |key| add_routing_key(key) }
+    end
+
+    def add_routing_key(key)
+      queue.bind(exchange, routing_key: key)
     end
 
     private
@@ -61,9 +67,7 @@ class Postman
     end
 
     def establish_bindings!
-      routing_keys.each do |key|
-        queue.bind(exchange, routing_key: key)
-      end
+      routing_keys.each { |key| add_routing_key(key) }
     end
   end
 end

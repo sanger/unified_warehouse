@@ -11,15 +11,16 @@ class Postman
   # Maximum wait time between database retries: 5 minutes
   MAX_RECONNECT_DELAY = 60 * 5
 
-  attr_reader :client, :state, :main_exchange, :delay_exchange, :max_retries
+  attr_reader :client, :state, :main_exchange, :delay_exchange, :max_retries, :requeue_key
 
-  def initialize(client:, consumer_tag: nil, main_exchange:, delay_exchange:, max_retries:)
+  def initialize(client:, main_exchange:, delay_exchange:, max_retries:, requeue_key:)
     @client = client
-    @consumer_tag = consumer_tag || "uwh_#{Rails.env}_#{Process.pid}"
+    @consumer_tag = "uwh_#{Rails.env}_#{Process.pid}"
     @state = :initialized
     @main_exchange = main_exchange
     @delay_exchange = delay_exchange
     @max_retries = max_retries
+    @requeue_key = requeue_key
   end
 
   states :stopping, :stopped, :paused, :starting, :started, :running
@@ -36,8 +37,8 @@ class Postman
   def run!
     starting!
     trap_signals
-    @client.start           # Start the client
-    main_exchange.activate! # Set up the queues
+    @client.start # Start the client
+    main_exchange.activate!(keys: [requeue_key]) # Set up the queues
     delay_exchange.activate!
     running!            # Transition to running state
     subscribe!          # Subscribe to the queue

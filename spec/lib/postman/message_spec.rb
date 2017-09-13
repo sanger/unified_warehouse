@@ -3,7 +3,7 @@ require './lib/postman/message'
 
 RSpec.describe Postman::Message, type: :lib do
   let(:postman) do
-    instance_double('Postman', main_exchange: main_exchange, delay_exchange: delay_exchange, max_retries: 2)
+    instance_double('Postman', main_exchange: main_exchange, delay_exchange: delay_exchange, max_retries: 2, requeue_key: 'requeue.test')
   end
   let(:main_exchange) { instance_double('Postman::Channel', 'main_exchange') }
   let(:delay_exchange) { instance_double('Postman::Channel', 'delay_exchange') }
@@ -44,7 +44,7 @@ RSpec.describe Postman::Message, type: :lib do
         expect(Payload).to receive(:from_json).with(payload).and_return(payload)
         expect(payload).to receive(:record).and_raise(ActiveRecord::RecordInvalid)
         expect(main_exchange).to receive(:ack).with('delivery_tag')
-        expect(delay_exchange).to receive(:publish).with(payload, routing_key: 'test.key', headers: { attempts: 1 })
+        expect(delay_exchange).to receive(:publish).with(payload, routing_key: 'requeue.test', headers: { attempts: 1 })
       end
 
       it "can be processed" do

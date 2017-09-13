@@ -3,7 +3,15 @@ require './lib/postman'
 
 RSpec.describe Postman, type: :lib do
   # Describe state machine behaviour, then move across
-  subject(:instance) { described_class.new(client: nil, main_exchange: nil, delay_exchange: nil, max_retries: nil) }
+  subject(:instance) do
+    described_class.new(
+      client: nil,
+      main_exchange: nil,
+      delay_exchange: nil,
+      max_retries: nil,
+      requeue_key: 'requeue.test'
+    )
+  end
 
   context 'initial state' do
     describe '#state' do

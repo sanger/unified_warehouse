@@ -59,7 +59,8 @@ class AmqpClient
           client: client,
           max_retries: Rails.application.config.amqp.max_retries,
           main_exchange: main_exchange,
-          delay_exchange: delay_exchange
+          delay_exchange: delay_exchange,
+          requeue_key: Rails.application.config.amqp.requeue_key
         ).run!
       end
     end

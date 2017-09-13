@@ -87,7 +87,7 @@ class Postman
       warn exception.message
       if attempt <= max_retries
         # Publish the message to the delay queue
-        delay_exchange.publish(payload, routing_key: delivery_info.routing_key, headers: { attempts: attempt + 1 })
+        delay_exchange.publish(payload, routing_key: postman.requeue_key, headers: { attempts: attempt + 1 })
         # Acknowledge the original message
         main_exchange.ack(delivery_tag)
       else
