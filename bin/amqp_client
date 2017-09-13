@@ -52,7 +52,7 @@ class AmqpClient
     def daemon(instance)
       Daemons.run_proc(server_name(instance), multiple: multiple, dir: @pid_dir, backtrace: true, log_output: true) do
         ActiveRecord::Base.establish_connection # We reconnect to the database after the fork.
-        client = Bunny.new(Rails.application.config.amqp.url)
+        client = Bunny.new(Rails.application.config.amqp.server)
         main_exchange = Postman::Channel.new(client: client, config: Rails.application.config.amqp.main)
         delay_exchange = Postman::Channel.new(client: client, config: Rails.application.config.amqp.delay, type: :fanout)
         Postman.new(

@@ -22,7 +22,12 @@ UnifiedWarehouse::Application.configure do
 
   # Configure the main AMQP consumer
 
-  config.amqp.url                         = 'amqp://guest:guest@127.0.0.1:5672'
+  config.amqp.server.host                 = '127.0.0.1'
+  config.amqp.server.username             = 'guest'
+  config.amqp.server.password             = 'guest'
+  config.amqp.server.port                 = 5672
+  config.amqp.server.heartbeat            = 30
+
   config.amqp.max_retries                 = 20
 
   config.amqp.requeue_key                 = "requeue.#{Rails.env}"
