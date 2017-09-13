@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.18, for osx10.11 (x86_64)
 --
--- Host: localhost    Database: unified_warehouse_test
+-- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
 -- Server version	5.7.18
 
@@ -106,6 +106,35 @@ CREATE TABLE `iseq_flowcell` (
   KEY `index_iseq_flowcell_legacy_library_id` (`legacy_library_id`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `oseq_flowcell`
+--
+
+DROP TABLE IF EXISTS `oseq_flowcell`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oseq_flowcell` (
+  `id_oseq_flowcell_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_flowcell_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific flowcell id',
+  `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
+  `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
+  `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
+  `id_study_tmp` int(10) unsigned NOT NULL COMMENT 'Study id, see "study.id_study_tmp"',
+  `experiment_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the experiment, eg. The lims generated run id',
+  `instrument_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the instrument on which the sample was run',
+  `instrument_slot` int(11) NOT NULL COMMENT 'The numeric identifier of the slot on which the sample was run',
+  `pipeline_id_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific pipeline identifier that unambiguously defines library type',
+  `requested_data_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of data produces by sequencing, eg. basecalls only',
+  `deleted_at` datetime DEFAULT NULL COMMENT 'Timestamp of any flowcell destruction',
+  `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
+  PRIMARY KEY (`id_oseq_flowcell_tmp`),
+  KEY `fk_oseq_flowcell_to_sample` (`id_sample_tmp`),
+  KEY `fk_oseq_flowcell_to_study` (`id_study_tmp`),
+  CONSTRAINT `fk_oseq_flowcell_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
+  CONSTRAINT `fk_oseq_flowcell_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -331,7 +360,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-08  9:27:19
+-- Dump completed on 2017-08-25 13:47:47
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -391,4 +420,10 @@ INSERT INTO schema_migrations (version) VALUES ('20170427123459');
 INSERT INTO schema_migrations (version) VALUES ('20170601102958');
 
 INSERT INTO schema_migrations (version) VALUES ('20170608082257');
+
+INSERT INTO schema_migrations (version) VALUES ('20170717092510');
+
+INSERT INTO schema_migrations (version) VALUES ('20170717093707');
+
+INSERT INTO schema_migrations (version) VALUES ('20170816121503');
 
