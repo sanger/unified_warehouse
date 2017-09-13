@@ -18,7 +18,7 @@ shared_examples_for 'has only one row' do
   end
 end
 
-shared_examples_for 'a singular resource' do
+shared_examples_for 'a singular resource' do |undeletable: true|
   let(:originally_created_at) { Time.parse('2012-Mar-16 12:06') }
   let(:timestamped_json) { json.merge("created_at" => originally_created_at, "updated_at" => originally_created_at) }
   let(:modified_at) { originally_created_at + 1.day }
@@ -62,9 +62,15 @@ shared_examples_for 'a singular resource' do
           described_class.send(:create_or_update, attributes.merge("updated_at" =>modified_at,"deleted_at" => modified_at,:id_lims=>example_lims))
         end
 
-        it 'flags the record as deleted' do
-          expect(current_records.count).to eq(1)
-          expect(current_records.first['deleted_at']).to eq(modified_at)
+        if undeletable
+          it 'flags the record as deleted' do
+            expect(current_records.count).to eq(1)
+            expect(current_records.first['deleted_at']).to eq(modified_at)
+          end
+        else
+          it 'removes the record' do
+            expect(current_records.count).to eq(0)
+          end
         end
       end
 
