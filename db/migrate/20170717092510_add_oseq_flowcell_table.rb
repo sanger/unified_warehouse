@@ -17,9 +17,9 @@ class AddOseqFlowcellTable < ActiveRecord::Migration
       t.string :pipeline_id_lims, null: false, comment: 'LIMs-specific pipeline identifier that unambiguously defines library type'
       t.string :requested_data_type, null: false, comment: 'The type of data produces by sequencing, eg. basecalls only'
 
-      t.datetime :deleted_at,  null: true, comment: 'Timestamp of any flowcell destruction'
+      t.datetime :deleted_at, null: true, comment: 'Timestamp of any flowcell destruction'
 
-      t.string :id_lims,          limit:10,   null:false, comment: 'LIM system identifier'
+      t.string :id_lims, limit: 10, null: false, comment: 'LIM system identifier'
     end
   end
 end
