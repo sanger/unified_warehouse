@@ -11,6 +11,7 @@ UnifiedWarehouse::Application.configure do
   config.assets.debug = true
 
   config.logger = Logger.new(STDOUT)
+  config.log_level = :debug
 
   # Here is some ActiveRecord configuration that is useful
   # But not rails 4 compatible!

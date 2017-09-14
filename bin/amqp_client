@@ -98,12 +98,12 @@ class AmqpClient
   end
 
   def worker_pool
-    @wp ||= WorkerPool.new(APP_NAME, pid_dir, workers, instance)
+    @wp ||= WorkerPool.new(APP_NAME, pid_dir, worker_count, instance)
   end
 
   def run
     worker_pool.load_rails! if preload_required?
-    start? ? worker_pool.start! : worker_pool.daemon(0)
+    worker_pool.start!
   end
 
   # Only bother loading rails if necessary
@@ -111,8 +111,11 @@ class AmqpClient
     %w[start restart reload run].include?(@action)
   end
 
-  def start?
-    @action == 'start'
+  # If we're not daemonising we limit ourselves to one worker.
+  # Otherwise we end up running our various workers in series
+  # which isn't really what we want.
+  def worker_count
+    @action == 'run' ? 1 : workers
   end
 end
 

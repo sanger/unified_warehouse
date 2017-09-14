@@ -7,22 +7,14 @@ PID_DIR='tmp/pids'
 
 function worker_start() {
   echo "Starting Amqp worker"
-  bundle exec ./bin//amqp_client start
+  bundle exec ./bin/amqp_client start
   exit 0
 }
 
-function check_stopped() {
-  if [ -f $PID_DIR/worker.${1}.pid ] && ps -p `cat $PID_DIR/worker.${1}.pid` >> /dev/null ; then
-    echo '.'
-  else
-    echo 'Worker stopped'
-    if [ -f $PID_DIR/worker.${1}.pid ]; then rm $PID_DIR/worker.${1}.pid; fi
-    exit 0
-  fi
-}
-
 function worker_stop() {
-  bundle exec ./bin//amqp_client stop
+  echo "Starting Amqp worker"
+  bundle exec ./bin/amqp_client stop
+  exit 0
 }
 
 function worker_restart() {
