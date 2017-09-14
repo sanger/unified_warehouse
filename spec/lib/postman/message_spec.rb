@@ -8,7 +8,8 @@ RSpec.describe Postman::Message, type: :lib do
   let(:main_exchange) { instance_double('Postman::Channel', 'main_exchange') }
   let(:delay_exchange) { instance_double('Postman::Channel', 'delay_exchange') }
   let(:delivery_info) { instance_double('Bunny::DeliveryInfo', delivery_tag: 'delivery_tag', routing_key: 'test.key') }
-  let(:metadata) { instance_double('Bunny::MessageProperties', headers: { 'attempts' => retry_attempts }) }
+  let(:metadata) { instance_double('Bunny::MessageProperties', headers: headers) }
+  let(:headers) { retry_attempts.zero? ? nil : { 'attempts' => retry_attempts } }
   let(:retry_attempts) { 0 }
   let(:payload) { instance_double('Payload') }
   subject { described_class.new(postman, delivery_info, metadata, payload) }

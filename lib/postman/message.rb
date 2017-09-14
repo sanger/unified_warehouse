@@ -34,19 +34,16 @@ class Postman
       debug payload
 
       begin
-        message
+        message.record
+        main_exchange.ack(delivery_info.delivery_tag)
       rescue Payload::InvalidMessage => exception
         # Our message fails to meet our basic requirements, there's little point
         # sending it to the delayed queue, as it will still be invalid next time.
         deadletter(exception)
-        return
-      end
-
-      begin
-        message.record
-        main_exchange.ack(delivery_info.delivery_tag)
       rescue ActiveRecord::StatementInvalid => exception
         if database_connection_error?(exception)
+          # We have some temporary database issues. Requeue the message and pause
+          # until the issue is resolved.
           requeue(exception)
           postman.pause!
         else
@@ -55,6 +52,7 @@ class Postman
       rescue => exception
         delay(exception)
       end
+
       info "Finished message process"
     end
 
@@ -64,8 +62,14 @@ class Postman
       @message ||= Payload.from_json(payload)
     end
 
+    def headers
+      # Annoyingly it appears that a message with no headers
+      # returns nil, not an empty hash
+      metadata.headers || {}
+    end
+
     def attempt
-      metadata.headers.fetch('attempts', 0)
+      headers.fetch('attempts', 0)
     end
 
     def delivery_tag
