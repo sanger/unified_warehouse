@@ -6,39 +6,15 @@
 PID_DIR='tmp/pids'
 
 function worker_start() {
-  if [ -f $PID_DIR/worker.${1}.pid ] && ps `cat $PID_DIR/worker.${1}.pid` >> /dev/null
-  then
-    echo "Worker already running with pid:"
-    echo `cat $PID_DIR/worker.${1}.pid`
-    exit -1
-  else
-    echo "Starting Amqp worker"
-    nohup bundle exec ./script/amqp_loader main & >> log/worker.${1}.log 2> log/worker.${1}.error.log < /dev/null
-    echo $! > $PID_DIR/worker.${1}.pid
-    exit 0
-  fi
-}
-
-function check_stopped() {
-  if [ -f $PID_DIR/worker.${1}.pid ] && ps -p `cat $PID_DIR/worker.${1}.pid` >> /dev/null ; then
-    echo '.'
-  else
-    echo 'Worker stopped'
-    if [ -f $PID_DIR/worker.${1}.pid ]; then rm $PID_DIR/worker.${1}.pid; fi
-    exit 0
-  fi
+  echo "Starting Amqp worker"
+  bundle exec ./bin/amqp_client start
+  exit 0
 }
 
 function worker_stop() {
-  kill `cat $PID_DIR/worker.${1}.pid`
-  echo 'Waiting for process to die'
-  for ((i = 0; i < 60; i = i + 1)); do
-    check_stopped ${1}
-    sleep 1
-  done
-  echo 'Delayed Job failed to die, killing it...'
-  kill -9 `cat $PID_DIR/worker.${1}.pid`
-  if [ -f $PID_DIR/worker.${1}.pid ]; then rm $PID_DIR/worker.${1}.pid; fi
+  echo "Starting Amqp worker"
+  bundle exec ./bin/amqp_client stop
+  exit 0
 }
 
 function worker_restart() {

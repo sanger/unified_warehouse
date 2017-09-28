@@ -6,27 +6,21 @@ class PacBioRun < ActiveRecord::Base
   has_associated(:sample)
 
   json do
-
     ignore(
       :wells
     )
 
     has_nested_model(:wells) do
-
       ignore(
         :samples
       )
 
       has_nested_model(:samples) do
       end
-
     end
 
     translate(
-      :pac_bio_run_id => :id_pac_bio_run_lims
+      pac_bio_run_id: :id_pac_bio_run_lims
     )
   end
-
-
-
 end

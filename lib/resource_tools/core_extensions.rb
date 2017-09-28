@@ -1,5 +1,4 @@
 module ResourceTools::CoreExtensions
-
   module Array
     extend ActiveSupport::Concern
 
@@ -23,7 +22,7 @@ module ResourceTools::CoreExtensions
     # Does the opposite of slice, returning a hash that does not have the specified keys!
     def reverse_slice(*keys)
       keys.flatten!
-      dup.delete_if { |k,_| keys.include?(k) }
+      dup.delete_if { |k, _| keys.include?(k) }
     end
   end
 
@@ -52,7 +51,7 @@ module ResourceTools::CoreExtensions
     extend ActiveSupport::Concern
 
     included do
-      delegate :numeric_tolerance, :to => 'self.class'
+      delegate :numeric_tolerance, to: 'self.class'
     end
 
     module ClassMethods
@@ -68,7 +67,7 @@ module ResourceTools::CoreExtensions
   end
 
   module NilClass
-    def latest(object)
+    def latest(_object)
       yield(nil)
     end
   end
@@ -81,11 +80,11 @@ module ResourceTools::CoreExtensions
 end
 
 # Extend the core classes with the behaviour we need
-class Array      ; include ResourceTools::CoreExtensions::Array    ; end
-class Hash       ; include ResourceTools::CoreExtensions::Hash     ; end
-class Object     ; include ResourceTools::CoreExtensions::Object   ; end
-class String     ; include ResourceTools::CoreExtensions::String   ; end
-class Numeric    ; include ResourceTools::CoreExtensions::Numeric  ; end
-class NilClass   ; include ResourceTools::CoreExtensions::NilClass; include ResourceTools::CoreExtensions::SelfReferencingBoolean ; end
-class TrueClass  ; include ResourceTools::CoreExtensions::SelfReferencingBoolean ; end
-class FalseClass ; include ResourceTools::CoreExtensions::SelfReferencingBoolean ; end
+class Array; include ResourceTools::CoreExtensions::Array; end
+class Hash; include ResourceTools::CoreExtensions::Hash; end
+class Object; include ResourceTools::CoreExtensions::Object; end
+class String; include ResourceTools::CoreExtensions::String; end
+class Numeric; include ResourceTools::CoreExtensions::Numeric; end
+class NilClass; include ResourceTools::CoreExtensions::NilClass; include ResourceTools::CoreExtensions::SelfReferencingBoolean; end
+class TrueClass; include ResourceTools::CoreExtensions::SelfReferencingBoolean; end
+class FalseClass; include ResourceTools::CoreExtensions::SelfReferencingBoolean; end

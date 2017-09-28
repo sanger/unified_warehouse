@@ -12,12 +12,12 @@ module ActiveRecord::TableStatus
   end
   private :rows_in
 
-  def each_table(ignore = [], &block)
-    paired, unpaired = (tables-ignore).group_by { |name| name.sub(/^current_/, '') }.partition { |_, names| names.size > 1 }
+  def each_table(ignore = [])
+    paired, unpaired = (tables - ignore).group_by { |name| name.sub(/^current_/, '') }.partition { |_, names| names.size > 1 }
     paired.each do |name, _|
       current, total = rows_in("current_#{name}").to_i, rows_in(name).to_i
-      non_current    = total-current
-      yield(name, current, total, non_current, ("%03.6f" % (non_current.to_f/total.to_f)))
+      non_current    = total - current
+      yield(name, current, total, non_current, ("%03.6f" % (non_current.to_f / total.to_f)))
     end
     unpaired.each do |name, _|
       yield(name, rows_in(name), '-', '-', '-')
@@ -29,7 +29,7 @@ class << ActiveRecord::Base.connection
   include ActiveRecord::TableStatus
 end
 
-IGNOREABLE = [ 'uuid_objects' ]
+IGNOREABLE = ['uuid_objects']
 
 puts "Table,Historic,Current,Non-Current,Ratio"
 ActiveRecord::Base.connection.each_table(IGNOREABLE) do |name, current_rows, total_rows, non_current, ratio|

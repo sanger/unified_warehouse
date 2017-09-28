@@ -1,5 +1,4 @@
 class FlgenPlate < ActiveRecord::Base
-
   include ResourceTools
   include NestedResourceTools
 
@@ -16,7 +15,5 @@ class FlgenPlate < ActiveRecord::Base
     ignore(
       :wells
     )
-
   end
-
 end

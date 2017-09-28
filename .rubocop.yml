@@ -1,0 +1,22 @@
+inherit_from: .rubocop_todo.yml
+AllCops:
+  # Caution! Setting this to 2.4 can cause issues with
+  # rolling back to jruby 9.1.x.x which only supports 2.3
+  # Its mainly just regex matchers. But we should wait until
+  # we're happy on MRI.
+  TargetRubyVersion: 2.4
+Rails:
+  Enabled: true
+Metrics/BlockLength:
+    Exclude:
+    - 'spec/**/*'
+    - 'config/environments/development.rb'
+Rails/ApplicationRecord:
+  Enabled: false
+# Offense count: 1
+# Configuration parameters: Include.
+# Include: app/**/*.rb, config/**/*.rb, lib/**/*.rb
+Rails/Exit:
+  Exclude:
+    - 'lib/**/*.rake'
+    - 'lib/postman.rb'

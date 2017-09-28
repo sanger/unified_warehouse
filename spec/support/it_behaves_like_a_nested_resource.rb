@@ -5,7 +5,7 @@ shared_examples_for 'has multiple rows' do
 
   it 'ensures that the all rows are current' do
     described_class.all.each do |row|
-      expect(row.last_updated).to     eq(most_recent_time)
+      expect(row.last_updated).to eq(most_recent_time)
     end
   end
 
@@ -31,9 +31,7 @@ shared_examples_for 'a nested resource' do
   end
 
   context '.create_or_update_from_json' do
-
     context 'from different lims' do
-
       let(:second_lims) { 'example_2' }
 
       before(:each) do
@@ -42,22 +40,19 @@ shared_examples_for 'a nested resource' do
       end
 
       it 'creates multiple records' do
-        expect(current_records.count).to eq(expected_entries*2)
+        expect(current_records.count).to eq(expected_entries * 2)
       end
     end
 
     context 'without existing records' do
-
       let(:recorded_time) { checked_time_now }
 
       context 'when the record is deleted' do
-
         let(:most_recent_time) { modified_at }
-
 
         before(:each) do
           allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
-          described_class.send(:create_or_update, attributes.merge("updated_at" =>modified_at,"deleted_at" => modified_at, "id_lims" =>example_lims))
+          described_class.send(:create_or_update, attributes.merge("updated_at" => modified_at, "deleted_at" => modified_at, "id_lims" => example_lims))
         end
 
         it 'removes matching records' do
@@ -66,11 +61,10 @@ shared_examples_for 'a nested resource' do
       end
 
       context 'when the record is new' do
-
         let(:most_recent_time) { originally_created_at }
         before(:each) do
           allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
-          described_class.create_or_update_from_json(timestamped_json,example_lims)
+          described_class.create_or_update_from_json(timestamped_json, example_lims)
         end
 
         it_behaves_like 'has multiple rows'
@@ -78,7 +72,6 @@ shared_examples_for 'a nested resource' do
     end
 
     context 'with an existing record' do
-
       before(:each) do
         allow(described_class).to receive(:checked_time_now).and_return(checked_time_then)
         described_class.create_or_update_from_json(json.merge("updated_at" => modified_at), example_lims)
@@ -86,7 +79,7 @@ shared_examples_for 'a nested resource' do
 
       context 'when the new record is not current' do
         before(:each) do
-          described_class.send(:create_or_update, attributes.merge("updated_at" => modified_at - 2.hours, :id_lims=>example_lims))
+          described_class.send(:create_or_update, attributes.merge("updated_at" => modified_at - 2.hours, :id_lims => example_lims))
         end
 
         it 'keeps the original rows' do
@@ -96,7 +89,6 @@ shared_examples_for 'a nested resource' do
       end
 
       context 'when the fields are unchanged' do
-
         let(:most_recent_time) { modified_at }
         let(:recorded_time) { checked_time_then }
 
@@ -121,7 +113,7 @@ shared_examples_for 'a nested resource' do
               # and then update the attribute.
               allow(described_class).to receive(:checked_time_now).and_return(checked_time_now)
               attributes[attribute] = 'changed'
-              described_class.send(:create_or_update, attributes.merge("updated_at" => modified_at, "id_lims" =>example_lims))
+              described_class.send(:create_or_update, attributes.merge("updated_at" => modified_at, "id_lims" => example_lims))
             end
 
             it_behaves_like 'has multiple rows'

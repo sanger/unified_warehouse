@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe StockResource do
-
   let!(:mock_sample) { create(:sample) }
   let!(:mock_study)  { create(:study)  }
 
@@ -10,16 +9,15 @@ describe StockResource do
   end
 
   shared_examples_for 'a stock resource' do
-
     it_behaves_like 'maps JSON fields', {
     }
 
     it_behaves_like 'ignores JSON fields', [
     ]
 
-    it_behaves_like 'belongs to',[
-     :sample,
-     :study
+    it_behaves_like 'belongs to', [
+      :sample,
+      :study
     ], [:samples]
 
     it_behaves_like 'a nested resource'
@@ -64,7 +62,6 @@ describe StockResource do
     end
 
     context 'when update with identical tag indexes' do
-
       let(:example_lims) { 'example' }
 
       let(:updated_json) do
@@ -76,13 +73,12 @@ describe StockResource do
 
       it 'reuses the existing records' do
         described_class.create_or_update_from_json(json, example_lims)
-        original_ids = described_class.pluck(:id_stock_resource_tmp,:id_sample_tmp)
+        original_ids = described_class.pluck(:id_stock_resource_tmp, :id_sample_tmp)
         described_class.create_or_update_from_json(updated_json, example_lims)
-        new_ids = described_class.pluck(:id_stock_resource_tmp,:id_sample_tmp)
+        new_ids = described_class.pluck(:id_stock_resource_tmp, :id_sample_tmp)
         expect(new_ids).to eq(original_ids)
       end
     end
-
   end
 
   context 'for a well with SS formatted data' do
@@ -122,12 +118,9 @@ describe StockResource do
 
       }
     end
-
   end
 
-
   context 'for a tube' do
-
     let(:expected_entries) { 1 }
 
     let(:json) do
@@ -154,7 +147,5 @@ describe StockResource do
 
       }
     end
-
   end
-
 end

@@ -15,13 +15,13 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
     end
 
     def +(value)
-      Uuid.new((@start+value) % 10)
+      Uuid.new((@start + value) % 10)
     end
 
     def to_s
-      values = (0..4).map { |v| (@start+v) % 10 }.map(&:to_s)
-      counts = [ 8, 4, 4, 4, 12 ]
-      values.zip(counts).map { |k,v| "#{k*v}" }.join('-')
+      values = (0..4).map { |v| (@start + v) % 10 }.map(&:to_s)
+      counts = [8, 4, 4, 4, 12]
+      values.zip(counts).map { |k, v| "#{k * v}" }.join('-')
     end
   end
 
@@ -37,7 +37,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
     @integer_generator ||= Generator.new(1)
   end
 
-  IGNORE_FIELDS = [ :dont_use_id, :deleted_at, :recorded_at ]
+  IGNORE_FIELDS = [:dont_use_id, :deleted_at, :recorded_at]
 
   def columns
     model.columns.map do |column|
@@ -61,7 +61,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
       if column.type.to_sym == :string && column.limit < value.length
         value = value.split(/\s+/).map(&:first).join.slice(0, column.limit)
       end
-      [ name, value ]
+      [name, value]
     end.compact
   end
 
