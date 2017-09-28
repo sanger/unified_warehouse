@@ -10,6 +10,9 @@ UnifiedWarehouse::Application.configure do
   # config.assets.compress = false
   config.assets.debug = true
 
+  config.logger = Logger.new(STDOUT)
+  config.log_level = :debug
+
   # Here is some ActiveRecord configuration that is useful
   # But not rails 4 compatible!
   # config.active_record.mass_assignment_sanitizer         = :strict
@@ -18,23 +21,30 @@ UnifiedWarehouse::Application.configure do
   # Configure the numeric tolerance
   config.numeric_tolerance = 0.05
 
-  # Configure the worker death messages
-  config.worker_death_from    = 'example@example.com'
-  config.worker_death_to      = 'example@example.com'
-  config.worker_death_restart = %Q{Please restart the worker.}
-
   # Configure the main AMQP consumer
-  config.amqp.main.url                    = 'amqp://localhost:5672'
-  config.amqp.main.queue                  = 'queue'
-  config.amqp.main.prefetch               = 50
-  config.amqp.main.requeue                = true
-  config.amqp.main.reconnect_interval     = 10
-  config.amqp.main.deadletter.deactivated = true
-  config.amqp.main.deadletter.exchange    = 'deadletters'
-  config.amqp.main.deadletter.routing_key = 'test.deadletter'
+
+  config.amqp.server.host                 = '127.0.0.1'
+  config.amqp.server.username             = 'guest'
+  config.amqp.server.password             = 'guest'
+  config.amqp.server.port                 = 5672
+  config.amqp.server.heartbeat            = 30
+
+  config.amqp.max_retries                 = 20
+
+  config.amqp.requeue_key                 = "requeue.#{Rails.env}"
+  config.amqp.main.queue                  = 'psd.mlwh'
+  config.amqp.main.exchange               = 'psd.sequencescape'
+  config.amqp.main.routing_keys           = ['test.key']
+  config.amqp.main.deadletter_exchange    = 'deadletters'
+
+  config.amqp.delay.queue                  = 'psd.mlwh.delay'
+  config.amqp.delay.exchange               = 'psd.sequencescape.delay'
+  config.amqp.delay.routing_keys           = []
+  config.amqp.delay.ttl                    = 30 * 1000
+  config.amqp.delay.deadletter_exchange    = 'psd.sequencescape'
 
   # Configure the deadletter AMQP consumer
-  config.amqp.deadletter.url                             = 'amqp://localhost:5672'
+  config.amqp.deadletter.url                             = 'amqp://guest:guest@127.0.0.1:5672'
   config.amqp.deadletter.queue                           = 'deadletters'
   config.amqp.deadletter.prefetch                        = 50
   config.amqp.deadletter.requeue                         = true
@@ -43,5 +53,4 @@ UnifiedWarehouse::Application.configure do
 
   # Added for rails 4
   config.eager_load = false
-
 end

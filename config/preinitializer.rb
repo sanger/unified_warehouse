@@ -7,7 +7,7 @@ end
 
 if Gem::Version.new(Bundler::VERSION) <= Gem::Version.new("0.9.24")
   raise RuntimeError, "Your bundler version is too old." +
-   "Run `gem install bundler` to upgrade."
+                      "Run `gem install bundler` to upgrade."
 end
 
 begin
@@ -16,5 +16,5 @@ begin
   Bundler.setup
 rescue Bundler::GemNotFound
   raise RuntimeError, "Bundler couldn't find some gems." +
-    "Did you run `bundle install`?"
+                      "Did you run `bundle install`?"
 end

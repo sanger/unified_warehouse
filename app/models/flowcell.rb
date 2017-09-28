@@ -10,9 +10,7 @@ class Flowcell < ActiveRecord::Base
   has_composition_keys(:tag_index, :id_flowcell_lims, :entity_id_lims, :entity_type, :position, :tag_sequence, :tag2_sequence)
 
   json do
-
     has_nested_model(:lanes) do
-
       ignore(
         :samples,
         :controls
@@ -27,7 +25,6 @@ class Flowcell < ActiveRecord::Base
 
       has_nested_model(:samples) do
       end
-
     end
 
     ignore(
@@ -35,8 +32,7 @@ class Flowcell < ActiveRecord::Base
     )
 
     translate(
-      :flowcell_id => :id_flowcell_lims
+      flowcell_id: :id_flowcell_lims
     )
   end
-
 end

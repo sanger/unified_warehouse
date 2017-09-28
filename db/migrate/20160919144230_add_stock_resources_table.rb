@@ -1,9 +1,7 @@
 class AddStockResourcesTable < ActiveRecord::Migration
-
   def change
     # Using singluar table names to maintain convention with rest of warehouse
     create_table :stock_resource, primary_key: :id_stock_resource_tmp do |t|
-
       t.datetime :last_updated,               null: false, comment: 'Timestamp of last update'
       t.datetime :recorded_at,                null: false, comment: 'Timestamp of warehouse update'
       t.datetime :created,                    null: false, comment: 'Timestamp of initial registration of stock in LIMS'
@@ -11,9 +9,9 @@ class AddStockResourcesTable < ActiveRecord::Migration
 
       t.column :id_sample_tmp,   'integer unsigned',   null: false, comment: 'Sample id, see "sample.id_sample_tmp"'
       t.column :id_study_tmp,    'integer unsigned',   null: false, comment: 'Sample id, see "study.id_study_tmp"'
-      t.string :id_lims,                   limit:10,   null:false, comment: 'LIM system identifier'
+      t.string :id_lims, limit: 10, null: false, comment: 'LIM system identifier'
 
-      t.string :id_stock_resource_lims,  limit: 20, null: false, comment: 'Lims specific identifier for the stock'
+      t.string :id_stock_resource_lims, limit: 20, null: false, comment: 'Lims specific identifier for the stock'
       t.string :stock_resource_uuid,        limit: 36,              comment: 'Uuid identifier for the stock'
 
       t.string :labware_type,            null: false, comment: 'The type of labware containing the stock. eg. Well, Tube'

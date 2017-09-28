@@ -21,7 +21,7 @@ module AssociatedWithRoles
 
   module InstanceMethods
     def users_to_maintain
-      @users ||= Hash.new { |h,k| h[k] = [] }
+      @users ||= Hash.new { |h, k| h[k] = [] }
     end
     private :users_to_maintain
 
@@ -38,9 +38,9 @@ module AssociatedWithRoles
       users.destroy_all
 
       users.create!(
-        users_to_maintain.map do |role,user_details|
+        users_to_maintain.map do |role, user_details|
           user_details.map do |details|
-            details.reverse_merge(:role => role.to_s, :associated_id => id, :last_updated=>last_updated)
+            details.reverse_merge(role: role.to_s, associated_id: id, last_updated: last_updated)
           end
         end
       )
@@ -63,7 +63,7 @@ module AssociatedWithRoles
         # alias_attribute(:uuid, "#{association_name}_uuid")
         alias_attribute(:associated_id, "id_#{association_name}_tmp")
 
-        scope :owned_by, lambda { |record| where("id_#{association_name}_tmp" => record.id ) }
+        scope :owned_by, lambda { |record| where("id_#{association_name}_tmp" => record.id) }
       end
     end
   end

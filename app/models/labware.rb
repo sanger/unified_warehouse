@@ -3,8 +3,8 @@ module Labware
     base.class_eval do
       json do
         translate(
-          :id       => :internal_id,
-          :qc_state => :state
+          id: :internal_id,
+          qc_state: :state
         )
       end
     end

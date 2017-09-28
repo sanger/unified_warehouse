@@ -1,5 +1,4 @@
 class AddForeiginKeyContraintsToStockTable < ActiveRecord::Migration
-
   require './lib/foreign_key_constraint'
   include ForeignKeyConstraint
 

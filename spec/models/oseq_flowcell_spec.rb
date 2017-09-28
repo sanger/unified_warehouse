@@ -13,7 +13,7 @@ describe OseqFlowcell do
 
   it_behaves_like 'maps JSON fields', flowcell_id: :id_flowcell_lims
 
-  it_behaves_like 'belongs to', %i[study sample], nil
+  it_behaves_like 'belongs to', [:study, :sample], nil
 
   let(:json) do
     {
