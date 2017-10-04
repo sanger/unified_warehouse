@@ -17,6 +17,7 @@ class Postman
     delegate :nack, :ack, to: :channel
 
     def subscribe(consumer_tag, &block)
+      channel.prefetch(10)
       queue.subscribe(manual_ack: true, block: false, consumer_tag: consumer_tag, &block)
     end
 
