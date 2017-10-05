@@ -269,6 +269,7 @@ CREATE TABLE `stock_resource` (
   PRIMARY KEY (`id_stock_resource_tmp`),
   KEY `fk_stock_resource_to_sample` (`id_sample_tmp`),
   KEY `fk_stock_resource_to_study` (`id_study_tmp`),
+  KEY `composition_lookup_index` (`id_stock_resource_lims`,`id_sample_tmp`,`id_lims`),
   CONSTRAINT `fk_stock_resource_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
   CONSTRAINT `fk_stock_resource_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -360,7 +361,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-08-25 13:47:47
+-- Dump completed on 2017-10-05 12:02:19
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -426,4 +427,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170717092510');
 INSERT INTO schema_migrations (version) VALUES ('20170717093707');
 
 INSERT INTO schema_migrations (version) VALUES ('20170816121503');
+
+INSERT INTO schema_migrations (version) VALUES ('20171005105857');
 
