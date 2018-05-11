@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.22, for osx10.12 (x86_64)
 --
--- Host: localhost    Database: unified_warehouse_development
+-- Host: localhost    Database: unified_warehouse_test
 -- ------------------------------------------------------
 -- Server version	5.7.22
 
@@ -201,6 +201,8 @@ CREATE TABLE `qc_result` (
   `date_updated` datetime NOT NULL COMMENT 'The date the qc_result was last updated in SS',
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
   PRIMARY KEY (`id_qc_result_tmp`),
+  KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
+  CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -249,7 +251,7 @@ CREATE TABLE `sample` (
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,7 +391,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-10 16:22:51
+-- Dump completed on 2018-05-11 10:46:29
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -461,4 +463,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171005105857');
 INSERT INTO schema_migrations (version) VALUES ('20180222132523');
 
 INSERT INTO schema_migrations (version) VALUES ('20180510132219');
+
+INSERT INTO schema_migrations (version) VALUES ('20180511093531');
 
