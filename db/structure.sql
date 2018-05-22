@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.22, for osx10.12 (x86_64)
 --
--- Host: localhost    Database: unified_warehouse_test
+-- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
 -- Server version	5.7.22
 
@@ -95,7 +95,7 @@ CREATE TABLE `iseq_flowcell` (
   `team` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
   `purpose` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Describes the reason the sequencing was conducted. Eg. Standard, QC, Control',
   `suboptimal` tinyint(1) DEFAULT NULL COMMENT 'Indicates that a sample has failed a QC step during processing',
-  `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Primer Panel name',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -251,7 +251,7 @@ CREATE TABLE `sample` (
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -391,7 +391,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-11 10:46:29
+-- Dump completed on 2018-05-21 16:50:57
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
