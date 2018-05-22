@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.21, for osx10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.22, for osx10.12 (x86_64)
 --
 -- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
--- Server version	5.7.21
+-- Server version	5.7.22
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -95,7 +95,7 @@ CREATE TABLE `iseq_flowcell` (
   `team` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
   `purpose` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Describes the reason the sequencing was conducted. Eg. Standard, QC, Control',
   `suboptimal` tinyint(1) DEFAULT NULL COMMENT 'Indicates that a sample has failed a QC step during processing',
-  `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Primer Panel name',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -174,6 +174,35 @@ CREATE TABLE `pac_bio_run` (
   KEY `fk_pac_bio_run_to_study` (`id_study_tmp`),
   CONSTRAINT `fk_pac_bio_run_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
   CONSTRAINT `fk_pac_bio_run_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `qc_result`
+--
+
+DROP TABLE IF EXISTS `qc_result`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `qc_result` (
+  `id_qc_result_tmp` int(11) NOT NULL AUTO_INCREMENT,
+  `id_sample_tmp` int(10) unsigned NOT NULL,
+  `id_qc_result_lims` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMS-specific qc_result identifier',
+  `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMS system identifier (e.g. SEQUENCESCAPE)',
+  `id_pool_lims` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Most specific LIMs identifier associated with the pool. (Asset external_identifier in SS)',
+  `id_library_lims` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Earliest LIMs identifier associated with library creation. (Aliquot external_identifier in SS)',
+  `labware_purpose` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Labware Purpose name. (e.g. Plate Purpose for a Well)',
+  `assay` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'assay type and version',
+  `value` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Value of the mesurement',
+  `units` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Mesurement unit',
+  `cv` float DEFAULT NULL COMMENT 'Coefficient of variance',
+  `qc_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Type of mesurement',
+  `date_created` datetime NOT NULL COMMENT 'The date the qc_result was first created in SS',
+  `date_updated` datetime NOT NULL COMMENT 'The date the qc_result was last updated in SS',
+  `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
+  PRIMARY KEY (`id_qc_result_tmp`),
+  KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
+  CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -362,7 +391,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-22 13:41:34
+-- Dump completed on 2018-05-21 16:50:57
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -432,4 +461,8 @@ INSERT INTO schema_migrations (version) VALUES ('20170816121503');
 INSERT INTO schema_migrations (version) VALUES ('20171005105857');
 
 INSERT INTO schema_migrations (version) VALUES ('20180222132523');
+
+INSERT INTO schema_migrations (version) VALUES ('20180510132219');
+
+INSERT INTO schema_migrations (version) VALUES ('20180511093531');
 
