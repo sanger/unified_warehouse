@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe QcResult do
+  it_behaves_like 'a nested resource'
+
   let!(:mock_sample) { create :sample }
   let(:example_lims) { 'example' }
+  let(:expected_entries) { 1 }
   let(:json) do
     { 'id_qc_result_lims' => '123',
       'assay'        => 'qPCR 1.0',
@@ -13,7 +16,7 @@ describe QcResult do
       'id_pool_lims' => 'NT10369L',
       'labware_purpose' => 'Stock Plate',
       'date_created' => '2012-03-11 10:22:42',
-      'date_updated' => '2018-04-12 11:11:11',
+      'last_updated' => '2018-04-12 11:11:11',
       'aliquots' => [{
         'id_library_lims' => 'NT10369L',
         'sample_uuid' => '000000-0000-0000-0000-0000000000'

@@ -198,7 +198,7 @@ CREATE TABLE `qc_result` (
   `cv` float DEFAULT NULL COMMENT 'Coefficient of variance',
   `qc_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Type of mesurement',
   `date_created` datetime NOT NULL COMMENT 'The date the qc_result was first created in SS',
-  `date_updated` datetime NOT NULL COMMENT 'The date the qc_result was last updated in SS',
+  `last_updated` datetime NOT NULL COMMENT 'The date the qc_result was last updated in SS',
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
   PRIMARY KEY (`id_qc_result_tmp`),
   KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
@@ -391,7 +391,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-21 16:50:57
+-- Dump completed on 2018-07-31 15:28:26
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -465,4 +465,8 @@ INSERT INTO schema_migrations (version) VALUES ('20180222132523');
 INSERT INTO schema_migrations (version) VALUES ('20180510132219');
 
 INSERT INTO schema_migrations (version) VALUES ('20180511093531');
+
+INSERT INTO schema_migrations (version) VALUES ('20180731122912');
+
+INSERT INTO schema_migrations (version) VALUES ('20180731142628');
 
