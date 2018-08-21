@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.22, for osx10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.19, for osx10.11 (x86_64)
 --
 -- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
--- Server version	5.7.22
+-- Server version	5.7.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -202,6 +202,7 @@ CREATE TABLE `qc_result` (
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
   PRIMARY KEY (`id_qc_result_tmp`),
   KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
+  KEY `lookup_index` (`id_qc_result_lims`,`id_lims`),
   CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -391,7 +392,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-31 15:28:26
+-- Dump completed on 2018-08-21 12:53:01
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -469,4 +470,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180511093531');
 INSERT INTO schema_migrations (version) VALUES ('20180731122912');
 
 INSERT INTO schema_migrations (version) VALUES ('20180731142628');
+
+INSERT INTO schema_migrations (version) VALUES ('20180821113540');
 
