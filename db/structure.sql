@@ -202,6 +202,7 @@ CREATE TABLE `qc_result` (
   `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
   PRIMARY KEY (`id_qc_result_tmp`),
   KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
+  KEY `lookup_index` (`id_qc_result_lims`,`id_lims`),
   CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
