@@ -1,5 +1,6 @@
 language: ruby
 dist: xenial
+services: mysql
 # We don't specify a list of ruby versions, as Travis will fall back to .ruby-version
 bundler_args: --without deployment
 cache:
