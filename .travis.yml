@@ -1,14 +1,23 @@
 language: ruby
 dist: xenial
 services: mysql
-# We don't specify a list of ruby versions, as Travis will fall back to .ruby-version
-bundler_args: --without deployment
+bundler_args: "--without deployment"
 cache:
   bundler: true
 before_script:
-  - bundle exec rake db:setup
+- bundle exec rake db:setup
 script:
-  - bundle exec rubocop
-  - bundle exec rspec
-
+- bundle exec rubocop
+- bundle exec rspec
+before_deploy: "./compile-build"
+deploy:
+  provider: releases
+  file: release.tar.gz
+  file_glob: true
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: radome/unified_warehouse
+  api_key:
+    secure: KmHYGzQClMiwsqpDUDXt/pZ40dx8ETS3zhDszF3pxzTb2LdzavOsaWRjKP6T93jZqUVjC7Jsq+VbG2j4H9lLOxedoVW23MdzEoqC7T6x8FH0W6/BrUmGsx4I/KWj/8Oy4ZqeRjkwJE0kXdwwaMAGTu7vIaZTyG59cNkDp+mFXOqaxOQBYFPT7wnHK+ftn90Qg13jXT84P7xXLjlg57HyoCPkcbNwicY+9RN16ZGvpRfjfkOlNw9C8Hg6P4AUaTg90AkVICU0UXEK8IJodyicDnpjy2qZi04AbAaoHC/H+6AzuF/rEN1aytG6XOo1/E80zBCla+2vqu8idhbUky7WGvPVHa+t+m4SRHjn1erN/bJGcZQRmiGxauWG2eloBg46uyi6+mIcfiR0amtFN0Wp4rtfkltWH8G4UBYrNtj/II2LtpbbZN2lq2q12Bp09Tclxxg/Q2WqbWyAD+S7UujKbQ2VNGspNatIU1F/ka+zgFd4jn5JjWaGqNmAHPJ287EkuqOwoVYgUmNdF1HSJ+22uquF7wzQppaTQ6Xdxwdaf6DC52h1O9qx/DHhFQlqCgae0NITtGKnAczTaNMGEHqo9ol8CWt8S82m6nvyMYXFFEkYgl/S8mvxzMTUoxlXvMqjp2qTfrB28ZOmRIHeVtUFy2L3z2WANt6aiJ4iqQ5Sghc=
 
