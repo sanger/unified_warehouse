@@ -51,6 +51,10 @@ shared_examples 'full flowcell json' do
           "id_pool_lims" => "DN324095D A1:H2",
           "external_release" => true,
           "purpose" => "standard",
+          "spiked_phix_barcode" => "NT12345Q",
+          "spiked_phix_percentage" => "30",
+          "workflow" => "Standard",
+          "loading_concentration" => "20",
 
           "samples" => [
             {
