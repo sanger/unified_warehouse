@@ -95,7 +95,11 @@ CREATE TABLE `iseq_flowcell` (
   `team` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
   `purpose` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Describes the reason the sequencing was conducted. Eg. Standard, QC, Control',
   `suboptimal` tinyint(1) DEFAULT NULL COMMENT 'Indicates that a sample has failed a QC step during processing',
-  `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Primer Panel name',
+  `spiked_phix_barcode` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Barcode of the PhiX tube added to the lane',
+  `spiked_phix_percentage` float DEFAULT NULL COMMENT 'Percentage PhiX tube spiked in the pool in terms of molar concentration',
+  `loading_concentration` float DEFAULT NULL COMMENT 'Final instrument loading concentration (pM)',
+  `workflow` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Workflow used when processing the flowcell',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -393,7 +397,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-07 13:41:23
+-- Dump completed on 2018-12-10 15:13:16
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -475,4 +479,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180731142628');
 INSERT INTO schema_migrations (version) VALUES ('20180821113540');
 
 INSERT INTO schema_migrations (version) VALUES ('20181016142505');
+
+INSERT INTO schema_migrations (version) VALUES ('20181210145626');
 
