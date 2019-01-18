@@ -38,6 +38,11 @@ Metrics/LineLength:
 Metrics/MethodLength:
   Max: 29
 
+# Offense count: 1
+Naming/BinaryOperatorParameterName:
+  Exclude:
+    - 'lib/generators/warehouse_model/warehouse_model_generator.rb'
+
 # Offense count: 4
 # Cop supports --auto-correct.
 Performance/RegexpMatch:
@@ -207,11 +212,6 @@ Style/NumericPredicate:
     - 'spec/**/*'
     - 'app/models/flowcell.rb'
 
-# Offense count: 1
-Style/OpMethod:
-  Exclude:
-    - 'lib/generators/warehouse_model/warehouse_model_generator.rb'
-
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/ParallelAssignment:
@@ -339,7 +339,7 @@ Style/TernaryParentheses:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyleForMultiline, SupportedStylesForMultiline.
 # SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInHashLiteral:
   Exclude:
     - 'spec/models/pac_bio_run_spec.rb'
 
