@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # TODO: We pretty much just use active record and active mailer, do we need rails?
-gem "mysql2", "~> 0.3.17"
+gem "mysql2", "~> 0.4.10"
 gem "rails", "~> 4.1"
 
 gem "bunny"
@@ -13,7 +13,7 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'mocktra', '~> 1.0.2'
   gem 'pry'
-  gem 'rspec-rails', '~> 3.1'
+  gem 'rspec-rails'
 end
 
 group :development do
