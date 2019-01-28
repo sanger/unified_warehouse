@@ -89,6 +89,7 @@ class Postman
     def delay(exception)
       warn "Delay: #{payload}"
       warn exception.message
+      capture_duplication_errors(exception.message, payload)
       if attempt <= max_retries
         # Publish the message to the delay queue
         delay_exchange.publish(payload, routing_key: postman.requeue_key, headers: { attempts: attempt + 1 })
@@ -113,6 +114,12 @@ class Postman
       error "Deadletter: #{payload}"
       error exception.message
       main_exchange.nack(delivery_tag)
+    end
+
+    def capture_duplication_errors(exception_message, payload)
+      if /\AMysql2::Error: Duplicate entry/.match?(exception_message)
+        FileLogger.error("Exception: #{exception_message} Payload: #{payload}")
+      end
     end
   end
 end
