@@ -1,5 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext'
+require_relative './file_logger'
 
 class Postman
   # A message takes a rabbitMQ message, and handles its acknowledgement
