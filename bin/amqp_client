@@ -9,7 +9,7 @@ APP_PATH = File.expand_path('../config/application', __dir__)
 
 class AmqpClient
   APP_NAME = 'unified_warehouse'.freeze
-  DEFAULT_WORKERS = 2
+  DEFAULT_WORKERS = 1
   DEFAULT_PID_DIR = './tmp/pids'.freeze
 
   NotImplimented = Class.new(StandardError)
