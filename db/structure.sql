@@ -133,9 +133,6 @@ CREATE TABLE `iseq_flowcell` (
   `spiked_phix_percentage` float DEFAULT NULL COMMENT 'Percentage PhiX tube spiked in the pool in terms of molar concentration',
   `loading_concentration` float DEFAULT NULL COMMENT 'Final instrument loading concentration (pM)',
   `workflow` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Workflow used when processing the flowcell',
-=======
-  `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
->>>>>>> radome/test_openstack
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -145,15 +142,9 @@ CREATE TABLE `iseq_flowcell` (
   KEY `index_iseqflowcell__id_flowcell_lims__position__tag_index` (`id_flowcell_lims`,`position`,`tag_index`),
   KEY `index_iseqflowcell__flowcell_barcode__position__tag_index` (`flowcell_barcode`,`position`,`tag_index`),
   KEY `index_iseq_flowcell_legacy_library_id` (`legacy_library_id`),
-<<<<<<< HEAD
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-=======
-  CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
-  CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
->>>>>>> radome/test_openstack
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -250,11 +241,7 @@ CREATE TABLE `qc_result` (
   KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
   KEY `lookup_index` (`id_qc_result_lims`,`id_lims`),
   CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
-<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-=======
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
->>>>>>> radome/test_openstack
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,11 +290,8 @@ CREATE TABLE `sample` (
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
-<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=1100 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-=======
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
->>>>>>> radome/test_openstack
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -434,13 +418,9 @@ CREATE TABLE `study_users` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_study_users_tmp`),
   KEY `study_users_study_fk` (`id_study_tmp`),
-<<<<<<< HEAD
   CONSTRAINT `study_users_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-=======
-  CONSTRAINT `study_users_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
->>>>>>> radome/test_openstack
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -452,11 +432,8 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
 -- Dump completed on 2019-04-03 11:14:47
-=======
--- Dump completed on 2018-11-07 13:41:23
->>>>>>> radome/test_openstack
+
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
