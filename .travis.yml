@@ -3,12 +3,13 @@ dist: xenial
 services: mysql
 sudo: required
 before_install:
+  - gem update --system
   - gem install bundler
 before_script:
-- bundle exec rake db:setup
+  - bundle exec rake db:setup
 script:
-- bundle exec rubocop
-- bundle exec rspec
+  - bundle exec rubocop
+  - bundle exec rspec
 before_deploy: "./compile-build"
 deploy:
   provider: releases
