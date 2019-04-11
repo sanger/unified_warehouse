@@ -1,7 +1,7 @@
 language: ruby
 dist: xenial
 services: mysql
-bundler_args: "--without deployment"
+sudo: required
 cache:
   bundler: true
 before_script:
