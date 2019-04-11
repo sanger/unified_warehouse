@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 5.7.20, for osx10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.12, for osx10.12 (x86_64)
 --
 -- Host: localhost    Database: unified_warehouse_test
 -- ------------------------------------------------------
--- Server version	5.7.20
+-- Server version	8.0.12
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+ SET NAMES utf8 ;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -53,7 +53,7 @@ CREATE TABLE `bmap_flowcell` (
 
 DROP TABLE IF EXISTS `flgen_plate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `flgen_plate` (
   `id_flgen_plate_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database id, value can change',
   `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
@@ -86,7 +86,7 @@ CREATE TABLE `flgen_plate` (
 
 DROP TABLE IF EXISTS `iseq_flowcell`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `iseq_flowcell` (
   `id_iseq_flowcell_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database id, value can change',
   `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
@@ -127,11 +127,15 @@ CREATE TABLE `iseq_flowcell` (
   `team` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
   `purpose` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Describes the reason the sequencing was conducted. Eg. Standard, QC, Control',
   `suboptimal` tinyint(1) DEFAULT NULL COMMENT 'Indicates that a sample has failed a QC step during processing',
+<<<<<<< HEAD
   `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Primer Panel name',
   `spiked_phix_barcode` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Barcode of the PhiX tube added to the lane',
   `spiked_phix_percentage` float DEFAULT NULL COMMENT 'Percentage PhiX tube spiked in the pool in terms of molar concentration',
   `loading_concentration` float DEFAULT NULL COMMENT 'Final instrument loading concentration (pM)',
   `workflow` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Workflow used when processing the flowcell',
+=======
+  `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+>>>>>>> radome/test_openstack
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
@@ -141,9 +145,15 @@ CREATE TABLE `iseq_flowcell` (
   KEY `index_iseqflowcell__id_flowcell_lims__position__tag_index` (`id_flowcell_lims`,`position`,`tag_index`),
   KEY `index_iseqflowcell__flowcell_barcode__position__tag_index` (`flowcell_barcode`,`position`,`tag_index`),
   KEY `index_iseq_flowcell_legacy_library_id` (`legacy_library_id`),
+<<<<<<< HEAD
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+=======
+  CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
+  CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+>>>>>>> radome/test_openstack
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +162,7 @@ CREATE TABLE `iseq_flowcell` (
 
 DROP TABLE IF EXISTS `oseq_flowcell`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `oseq_flowcell` (
   `id_oseq_flowcell_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_flowcell_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific flowcell id',
@@ -181,7 +191,7 @@ CREATE TABLE `oseq_flowcell` (
 
 DROP TABLE IF EXISTS `pac_bio_run`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `pac_bio_run` (
   `id_pac_bio_tmp` int(11) NOT NULL AUTO_INCREMENT,
   `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
@@ -219,7 +229,7 @@ CREATE TABLE `pac_bio_run` (
 
 DROP TABLE IF EXISTS `qc_result`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `qc_result` (
   `id_qc_result_tmp` int(11) NOT NULL AUTO_INCREMENT,
   `id_sample_tmp` int(10) unsigned NOT NULL,
@@ -240,7 +250,11 @@ CREATE TABLE `qc_result` (
   KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
   KEY `lookup_index` (`id_qc_result_lims`,`id_lims`),
   CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+>>>>>>> radome/test_openstack
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +263,7 @@ CREATE TABLE `qc_result` (
 
 DROP TABLE IF EXISTS `sample`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `sample` (
   `id_sample_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database id, value can change',
   `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE',
@@ -289,7 +303,11 @@ CREATE TABLE `sample` (
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
+<<<<<<< HEAD
 ) ENGINE=InnoDB AUTO_INCREMENT=1100 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+=======
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+>>>>>>> radome/test_openstack
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,7 +316,7 @@ CREATE TABLE `sample` (
 
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `schema_migrations` (
   `version` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   UNIQUE KEY `unique_schema_migrations` (`version`)
@@ -311,7 +329,7 @@ CREATE TABLE `schema_migrations` (
 
 DROP TABLE IF EXISTS `stock_resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `stock_resource` (
   `id_stock_resource_tmp` int(11) NOT NULL AUTO_INCREMENT,
   `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
@@ -349,7 +367,7 @@ CREATE TABLE `stock_resource` (
 
 DROP TABLE IF EXISTS `study`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `study` (
   `id_study_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database id, value can change',
   `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier, e.g. GCLP-CLARITY, SEQSCAPE',
@@ -405,7 +423,7 @@ CREATE TABLE `study` (
 
 DROP TABLE IF EXISTS `study_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+ SET character_set_client = utf8mb4 ;
 CREATE TABLE `study_users` (
   `id_study_users_tmp` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database id, value can change',
   `id_study_tmp` int(10) unsigned NOT NULL COMMENT 'Study id, see "study.id_study_tmp"',
@@ -416,8 +434,13 @@ CREATE TABLE `study_users` (
   `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_study_users_tmp`),
   KEY `study_users_study_fk` (`id_study_tmp`),
+<<<<<<< HEAD
   CONSTRAINT `study_users_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+=======
+  CONSTRAINT `study_users_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+>>>>>>> radome/test_openstack
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -429,7 +452,11 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+<<<<<<< HEAD
 -- Dump completed on 2019-04-03 11:14:47
+=======
+-- Dump completed on 2018-11-07 13:41:23
+>>>>>>> radome/test_openstack
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
