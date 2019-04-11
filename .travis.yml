@@ -2,6 +2,8 @@ language: ruby
 dist: xenial
 services: mysql
 sudo: required
+before_install:
+  - gem install bundler
 before_script:
 - bundle exec rake db:setup
 script:
