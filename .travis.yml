@@ -5,6 +5,7 @@ sudo: required
 before_install:
   - gem update --system
   - gem install bundler
+cache: bundler
 before_script:
   - bundle exec rake db:setup
 script:

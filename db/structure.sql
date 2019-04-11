@@ -127,7 +127,6 @@ CREATE TABLE `iseq_flowcell` (
   `team` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The team responsible for creating the flowcell',
   `purpose` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Describes the reason the sequencing was conducted. Eg. Standard, QC, Control',
   `suboptimal` tinyint(1) DEFAULT NULL COMMENT 'Indicates that a sample has failed a QC step during processing',
-<<<<<<< HEAD
   `primer_panel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Primer Panel name',
   `spiked_phix_barcode` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Barcode of the PhiX tube added to the lane',
   `spiked_phix_percentage` float DEFAULT NULL COMMENT 'Percentage PhiX tube spiked in the pool in terms of molar concentration',
