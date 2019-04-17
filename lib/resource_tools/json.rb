@@ -3,7 +3,9 @@ module ResourceTools::Json
 
   module ClassMethods
     def create_or_update_from_json(json_data, lims)
-      create_or_update(json.collection_from(json_data, lims))
+      ActiveRecord::Base.transaction do |t|
+        create_or_update(json.collection_from(json_data, lims))
+      end
     end
 
     def json(&block)
