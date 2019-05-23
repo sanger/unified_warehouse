@@ -8,6 +8,7 @@ module NestedResourceTools
   module ClassMethods
     def create_or_update(attributes)
       attributes = Array.convert(attributes)
+      return true if attributes.empty?
 
       base_resource = attributes.first
 

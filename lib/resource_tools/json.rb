@@ -64,8 +64,6 @@ module ResourceTools::Json
       def convert_key(key)
         translations[key.to_s] || key.to_s
       end
-      # Remove privacy due to rails delegation changes
-      # private :convert_key
 
       def collection_from(json_data, lims)
         # We're not nested, so just return the standard json
