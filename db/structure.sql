@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.20, for osx10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.19, for osx10.11 (x86_64)
 --
--- Host: localhost    Database: unified_warehouse_test
+-- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
--- Server version	5.7.20
+-- Server version	5.7.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -77,7 +77,7 @@ CREATE TABLE `flgen_plate` (
   KEY `flgen_plate_study_fk` (`id_study_tmp`),
   CONSTRAINT `flgen_plate_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `flgen_plate_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -133,6 +133,7 @@ CREATE TABLE `iseq_flowcell` (
   `loading_concentration` float DEFAULT NULL COMMENT 'Final instrument loading concentration (pM)',
   `workflow` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Workflow used when processing the flowcell',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
+  UNIQUE KEY `index_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims` (`id_flowcell_lims`,`position`,`tag_index`,`id_lims`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
   KEY `iseq_flowcell_study_fk` (`id_study_tmp`),
@@ -143,7 +144,7 @@ CREATE TABLE `iseq_flowcell` (
   KEY `index_iseq_flowcell_legacy_library_id` (`legacy_library_id`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +173,7 @@ CREATE TABLE `oseq_flowcell` (
   KEY `fk_oseq_flowcell_to_study` (`id_study_tmp`),
   CONSTRAINT `fk_oseq_flowcell_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
   CONSTRAINT `fk_oseq_flowcell_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,7 +211,7 @@ CREATE TABLE `pac_bio_run` (
   KEY `fk_pac_bio_run_to_study` (`id_study_tmp`),
   CONSTRAINT `fk_pac_bio_run_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
   CONSTRAINT `fk_pac_bio_run_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
-) ENGINE=InnoDB AUTO_INCREMENT=267 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,7 +241,7 @@ CREATE TABLE `qc_result` (
   KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
   KEY `lookup_index` (`id_qc_result_lims`,`id_lims`),
   CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -289,7 +290,7 @@ CREATE TABLE `sample` (
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1100 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -340,7 +341,7 @@ CREATE TABLE `stock_resource` (
   KEY `composition_lookup_index` (`id_stock_resource_lims`,`id_sample_tmp`,`id_lims`),
   CONSTRAINT `fk_stock_resource_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
   CONSTRAINT `fk_stock_resource_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
-) ENGINE=InnoDB AUTO_INCREMENT=204 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -396,7 +397,7 @@ CREATE TABLE `study` (
   UNIQUE KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
   KEY `study_accession_number_index` (`accession_number`),
   KEY `study_name_index` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1079 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +418,7 @@ CREATE TABLE `study_users` (
   PRIMARY KEY (`id_study_users_tmp`),
   KEY `study_users_study_fk` (`id_study_tmp`),
   CONSTRAINT `study_users_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=309 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -429,7 +430,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-03 11:14:47
+-- Dump completed on 2019-05-23 10:20:41
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -513,6 +514,8 @@ INSERT INTO schema_migrations (version) VALUES ('20180821113540');
 INSERT INTO schema_migrations (version) VALUES ('20181016142505');
 
 INSERT INTO schema_migrations (version) VALUES ('20181210145626');
+
+INSERT INTO schema_migrations (version) VALUES ('20190118111752');
 
 INSERT INTO schema_migrations (version) VALUES ('20190403081352');
 

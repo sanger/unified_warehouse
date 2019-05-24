@@ -11,7 +11,7 @@ class AddQcResultTable < ActiveRecord::Migration
       t.string :value,    null: false, comment: 'Value of the mesurement'
       t.string :units,    null: false, comment: 'Mesurement unit'
       t.float  :cv,                    comment: 'Coefficient of variance'
-      t.string :qc_type,  null: false, comment: 'Type of mesurement'
+      t.string :qc_type, null: false, comment: 'Type of mesurement'
       t.datetime :date_created, null: false, comment: 'The date the qc_result was first created in SS'
       t.datetime :date_updated, null: false, comment: 'The date the qc_result was last updated in SS'
       t.datetime :recorded_at,  null: false, comment: 'Timestamp of warehouse update'
