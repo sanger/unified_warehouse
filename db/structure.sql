@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.20, for osx10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.19, for osx10.11 (x86_64)
 --
 -- Host: localhost    Database: unified_warehouse_development
 -- ------------------------------------------------------
--- Server version	5.7.20
+-- Server version	5.7.19
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,6 +14,38 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `bmap_flowcell`
+--
+
+DROP TABLE IF EXISTS `bmap_flowcell`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bmap_flowcell` (
+  `id_bmap_flowcell_tmp` int(11) NOT NULL AUTO_INCREMENT,
+  `last_updated` datetime NOT NULL COMMENT 'Timestamp of last update',
+  `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
+  `id_sample_tmp` int(10) unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
+  `id_study_tmp` int(10) unsigned NOT NULL COMMENT 'Study id, see "study.id_study_tmp"',
+  `experiment_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the experiment, eg. The lims generated run id',
+  `instrument_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the instrument on which the sample was run',
+  `enzyme_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the recognition enzyme used',
+  `chip_barcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Manufacturer chip identifier',
+  `chip_serialnumber` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Manufacturer chip identifier',
+  `position` int(10) unsigned DEFAULT NULL COMMENT 'Flowcell position',
+  `id_flowcell_lims` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific flowcell id',
+  `id_library_lims` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Earliest LIMs identifier associated with library creation',
+  `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
+  PRIMARY KEY (`id_bmap_flowcell_tmp`),
+  KEY `index_bmap_flowcell_on_id_flowcell_lims` (`id_flowcell_lims`),
+  KEY `index_bmap_flowcell_on_id_library_lims` (`id_library_lims`),
+  KEY `fk_bmap_flowcell_to_sample` (`id_sample_tmp`),
+  KEY `fk_bmap_flowcell_to_study` (`id_study_tmp`),
+  CONSTRAINT `fk_bmap_flowcell_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
+  CONSTRAINT `fk_bmap_flowcell_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `flgen_plate`
@@ -101,6 +133,7 @@ CREATE TABLE `iseq_flowcell` (
   `loading_concentration` float DEFAULT NULL COMMENT 'Final instrument loading concentration (pM)',
   `workflow` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Workflow used when processing the flowcell',
   PRIMARY KEY (`id_iseq_flowcell_tmp`),
+  UNIQUE KEY `index_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims` (`id_flowcell_lims`,`position`,`tag_index`,`id_lims`),
   KEY `iseq_flowcell_id_lims_id_flowcell_lims_index` (`id_lims`,`id_flowcell_lims`),
   KEY `iseq_flowcell_sample_fk` (`id_sample_tmp`),
   KEY `iseq_flowcell_study_fk` (`id_study_tmp`),
@@ -397,7 +430,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-10 15:13:16
+-- Dump completed on 2019-05-23 10:20:41
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -481,4 +514,8 @@ INSERT INTO schema_migrations (version) VALUES ('20180821113540');
 INSERT INTO schema_migrations (version) VALUES ('20181016142505');
 
 INSERT INTO schema_migrations (version) VALUES ('20181210145626');
+
+INSERT INTO schema_migrations (version) VALUES ('20190118111752');
+
+INSERT INTO schema_migrations (version) VALUES ('20190403081352');
 

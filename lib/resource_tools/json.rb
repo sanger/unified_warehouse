@@ -3,7 +3,9 @@ module ResourceTools::Json
 
   module ClassMethods
     def create_or_update_from_json(json_data, lims)
-      create_or_update(json.collection_from(json_data, lims))
+      ActiveRecord::Base.transaction do
+        create_or_update(json.collection_from(json_data, lims))
+      end
     end
 
     def json(&block)
@@ -62,8 +64,6 @@ module ResourceTools::Json
       def convert_key(key)
         translations[key.to_s] || key.to_s
       end
-      # Remove privacy due to rails delegation changes
-      # private :convert_key
 
       def collection_from(json_data, lims)
         # We're not nested, so just return the standard json
