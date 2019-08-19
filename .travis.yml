@@ -15,8 +15,8 @@ deploy:
   file_glob: true
   skip_cleanup: true
   on:
-    tags: true
     repo: sanger/unified_warehouse
+    tags: true
   provider: releases
   api_key:
-    secure: o4dbl8x4wjybATSLacMLSESF4ktMHfWa9w+GFeVOc+FVRtYY8gVT59lq+isTsAiUy0+hEf5PY0MJMTqX1dOMQp9rmRK7SDuMZvkUiK+bvC3JDMJtl/AkOPOaidVvYGaod1DzIRk3/UH2KR9GUE9FZnmoP3l0pW9q+rz54me7KDggzdjozRbTP2PXxZYtEgLC+fmLZJqkcA2kDa/jY6VcF3TgBm3hVmKKSi7zZ7ZUhEAGlhzwWrtlquIGyPMmTaUUKfvTZ9GIGY7NtDEsRyl52SwozOPICEV0u+uHboPkDbCD53dBw+psjoRAFbAZMlIWgVSG/keT4gLRGImquckdkpjaB2BADkzP2zBVrqPL0L7Yne4HnkfHuVDty+owhgL+5p8hxzdJkA5+8Dk8jaHZRbWdpLvl0Z/NkckLkxrv4v3knuKtN6yvnV1HsxuUCtv691Efs4vZtsyf0Sz5Z04ZwmpM/+Suoms9hXRW8s3yxI/7TEJKccfo+pd1RADIKpRCXtLXW/C29c7W/p1ZVWmH1PssOnQP+kmHgZcmlCYF1ZT4C+DVonGx0I9Q0xRd9ley/bZ4S5O2q1PfPagaXQiE8HB3RFOlFBb5HoHW3EjVveE4u47YB3NPt1t9VyaRo1ILUfdkkuxQZbYdu8ET6k0PQvcVL/mG4CneHD6k0xWLOnE=
+    secure: ZliaLdfkU3OUFeMU3B3DlcIb7lLPSIYBjOHNbDmGE5NVxyof66H24mRq1aRqhH9OrVs1AY16nQ4E4ri9FT6JQPf0GzggNQ7b543YKMp7R8Omg7vZRiCxb1YG58EFRMf9vbATBNkvEHB+r2HhvV3F/rEpr4iuzvg9U+5it6gHp+Q=
