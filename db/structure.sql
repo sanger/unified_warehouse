@@ -240,6 +240,7 @@ CREATE TABLE `qc_result` (
   PRIMARY KEY (`id_qc_result_tmp`),
   KEY `fk_qc_result_to_sample` (`id_sample_tmp`),
   KEY `lookup_index` (`id_qc_result_lims`,`id_lims`),
+  KEY `qc_result_id_library_lims_index` (`id_library_lims`),
   CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -519,3 +520,4 @@ INSERT INTO schema_migrations (version) VALUES ('20190118111752');
 
 INSERT INTO schema_migrations (version) VALUES ('20190403081352');
 
+INSERT INTO schema_migrations (version) VALUES ('20191015143307');
