@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class AddBmapFlowcellTable < ActiveRecord::Migration
   def change
+    # rubocop:disable Rails/CreateTableWithTimestamps
     create_table :bmap_flowcell, primary_key: :id_bmap_flowcell_tmp do |t|
       t.datetime :last_updated,               null: false, comment: 'Timestamp of last update'
       t.datetime :recorded_at,                null: false, comment: 'Timestamp of warehouse update'
@@ -15,6 +18,8 @@ class AddBmapFlowcellTable < ActiveRecord::Migration
       t.string :id_library_lims, comment: 'Earliest LIMs identifier associated with library creation', index: true
       t.string :id_lims, limit: 10, null: false, comment: 'LIM system identifier'
     end
+    # rubocop:enable Rails/CreateTableWithTimestamps
+
     add_foreign_key :bmap_flowcell, :sample, column: :id_sample_tmp, primary_key: :id_sample_tmp, name: 'fk_bmap_flowcell_to_sample'
     add_foreign_key :bmap_flowcell, :study, column: :id_study_tmp, primary_key: :id_study_tmp, name: 'fk_bmap_flowcell_to_study'
   end
