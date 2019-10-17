@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe BmapFlowcell do
@@ -10,7 +12,7 @@ describe BmapFlowcell do
       'sample_uuid' => mock_sample.uuid_sample_lims,
       'study_uuid' => mock_study.uuid_study_lims,
       'last_updated' => '2018-04-12 11:11:11',
-      'recorded_at' =>  '2012-03-11 10:22:42',
+      'recorded_at' => '2012-03-11 10:22:42',
       'experiment_name' => 'experiment-1',
       'instrument_name' => 'clive',
       'enzyme_name' => 'DLE-1',

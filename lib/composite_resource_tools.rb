@@ -12,8 +12,8 @@ module CompositeResourceTools
 
     def create_or_update(attributes)
       attributes = Array.convert(attributes)
-
       return true if attributes.empty?
+
       base_resource = attributes.first
 
       lims      = base_resource.id_lims
