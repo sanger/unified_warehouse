@@ -1,18 +1,19 @@
-Unified Warehouse Builder
-=========================
-[![Build Status](https://travis-ci.org/radome/unified_warehouse.svg?branch=test_openstack)](https://travis-ci.org/radome/unified_warehouse)
+# Unified Warehouse Builder
 
-Description
------------
+[![Build Status](https://travis-ci.org/sanger/unified_warehouse.svg?branch=develop)](https://travis-ci.org/sanger/unified_warehouse)
 
 This application is a denormalised warehouse for multiple LIMS.
 
-Usage (Development)
-----------------------
+## Usage (Development)
 
 1. Clone the git repository
-2. Ensure ruby-2.5.1 is installed
-3. Install the relevant gems through bundler:
-    `bundle install`
-4. Ensure the test suite is running:
-    `bundle exec rspec`
+1. Install the relevant ruby is installed - have a look in the `.ruby-version` file
+1. Install bundler the version of bundler used to create the `Gemfile.lock`:
+
+        gem install bundler -v $(tail -1 Gemfile.lock)
+1. Install the relevant gems using bundler:
+
+        bundle install
+1. Ensure the test suite is running and passing:
+
+        bundle exec rspec

@@ -20,3 +20,6 @@ deploy:
   provider: releases
   api_key:
     secure: ZliaLdfkU3OUFeMU3B3DlcIb7lLPSIYBjOHNbDmGE5NVxyof66H24mRq1aRqhH9OrVs1AY16nQ4E4ri9FT6JQPf0GzggNQ7b543YKMp7R8Omg7vZRiCxb1YG58EFRMf9vbATBNkvEHB+r2HhvV3F/rEpr4iuzvg9U+5it6gHp+Q=
+notifications:
+  slack:
+    secure: WOTWRYxxesHC3dBKSOmN6PO4hXrspjUA6Pnd/Z1H0AKUZO+pWPZExt3crnD1SdEq1FbNF7TYevJaXRURb9flG3cirvpm/uM4pRB3nMgWSjA3SQrl9JJeVGybAPuUNrrNc4LqyvFz6g3m96OzaQAE9hkkUclsVud6aYQ00jArBEw=
