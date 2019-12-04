@@ -11,15 +11,15 @@ script:
 - bundle exec rspec
 before_deploy: "./compile-build"
 deploy:
+  provider: releases
+  api_key:
+    secure: a8c2BCVF8JT328qV9rJAD2ytPmffeO+zOoCvsY2XFSg51eTMCi/mITFwGT/6Le+tNYxPJfwyYgktUZ0VGCjDaJ2D3YDG+VVShQqHxkzjN3dFLBp4KkgkH9QC/HqnudefnMugm/uGh8i9uuzBT33fvuOqVB9OyEkFBvdoYeqBi3s=
   file: release.tar.gz
-  file_glob: true
-  skip_cleanup: true
   on:
     repo: sanger/unified_warehouse
     tags: true
-  provider: releases
-  api_key:
-    secure: ZliaLdfkU3OUFeMU3B3DlcIb7lLPSIYBjOHNbDmGE5NVxyof66H24mRq1aRqhH9OrVs1AY16nQ4E4ri9FT6JQPf0GzggNQ7b543YKMp7R8Omg7vZRiCxb1YG58EFRMf9vbATBNkvEHB+r2HhvV3F/rEpr4iuzvg9U+5it6gHp+Q=
+  file_glob: true
+  skip_cleanup: true
 notifications:
   slack:
     secure: WOTWRYxxesHC3dBKSOmN6PO4hXrspjUA6Pnd/Z1H0AKUZO+pWPZExt3crnD1SdEq1FbNF7TYevJaXRURb9flG3cirvpm/uM4pRB3nMgWSjA3SQrl9JJeVGybAPuUNrrNc4LqyvFz6g3m96OzaQAE9hkkUclsVud6aYQ00jArBEw=
