@@ -1,24 +1,25 @@
 language: ruby
 dist: xenial
 services: mysql
-sudo: required
-before_install:
-  - gem update --system
-  - gem install bundler
-cache: bundler
+bundler_args: "--without deployment"
+cache:
+  bundler: true
 before_script:
-  - bundle exec rake db:setup
+- bundle exec rake db:setup
 script:
-  - bundle exec rspec
+- bundle exec rubocop
+- bundle exec rspec
 before_deploy: "./compile-build"
 deploy:
   provider: releases
   api_key:
-    secure: nV+LnKe2+Z9zPgm2Lc1RHJ6nObOsOLYp0McR2C35A8QlS6UNrxZMNMtljVkgLcknJrsk7n3oz4lnEyzh7jG2YsWS/A8AkIuDHD1k+VuUgzEgCbT2By/YmTAVB34q+N4ILTj3Q3ES6A6/bvAEOc1dqV45tR+XaAjDAGaClXd8QQI=
+    secure: a8c2BCVF8JT328qV9rJAD2ytPmffeO+zOoCvsY2XFSg51eTMCi/mITFwGT/6Le+tNYxPJfwyYgktUZ0VGCjDaJ2D3YDG+VVShQqHxkzjN3dFLBp4KkgkH9QC/HqnudefnMugm/uGh8i9uuzBT33fvuOqVB9OyEkFBvdoYeqBi3s=
   file: release.tar.gz
+  on:
+    repo: sanger/unified_warehouse
+    tags: true
   file_glob: true
   skip_cleanup: true
-  on:
-    tags: true
-    repo: sanger/unified_warehouse
-    branch: traction_open_stack
+notifications:
+  slack:
+    secure: WOTWRYxxesHC3dBKSOmN6PO4hXrspjUA6Pnd/Z1H0AKUZO+pWPZExt3crnD1SdEq1FbNF7TYevJaXRURb9flG3cirvpm/uM4pRB3nMgWSjA3SQrl9JJeVGybAPuUNrrNc4LqyvFz6g3m96OzaQAE9hkkUclsVud6aYQ00jArBEw=

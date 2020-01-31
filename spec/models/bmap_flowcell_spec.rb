@@ -1,17 +1,18 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe BmapFlowcell do
-
   let!(:mock_sample) { create(:sample) }
   let!(:mock_study)  { create(:study)  }
   let(:example_lims) { 'example' }
   let(:expected_entries) { 1 }
   let(:json) do
-   {
+    {
       'sample_uuid' => mock_sample.uuid_sample_lims,
       'study_uuid' => mock_study.uuid_study_lims,
       'last_updated' => '2018-04-12 11:11:11',
-      'recorded_at' =>  '2012-03-11 10:22:42',
+      'recorded_at' => '2012-03-11 10:22:42',
       'experiment_name' => 'experiment-1',
       'instrument_name' => 'clive',
       'enzyme_name' => 'DLE-1',
@@ -20,8 +21,8 @@ describe BmapFlowcell do
       'position' => '1',
       'id_flowcell_lims' => '123',
       'id_library_lims' => '456',
-      'id_lims'=> 'TRAC'
-   }
+      'id_lims' => 'TRAC'
+    }
   end
 
   before(:each) do

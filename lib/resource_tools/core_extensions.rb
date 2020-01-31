@@ -3,6 +3,9 @@ module ResourceTools::CoreExtensions
     extend ActiveSupport::Concern
 
     module ClassMethods
+      # Returns object if it is an array, or an array of object if it isn't
+      # Array(object) can not be used, as it converts hashes to arrays of
+      # [key, value]
       def convert(object)
         return object if object.is_a?(Array)
         [object]
