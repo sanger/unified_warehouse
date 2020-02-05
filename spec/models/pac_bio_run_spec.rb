@@ -25,6 +25,7 @@ describe PacBioRun do
   let(:json) do
     {
       "pac_bio_run_id" => "12345",
+      "pac_bio_run_name" => "12345",
       "pac_bio_run_uuid" => "000000-0000-0000-0000-0000000005",
       "plate_barcode" => 'DN12345T',
       "plate_uuid_lims" => "000000-0000-0000-0000-0000000000",

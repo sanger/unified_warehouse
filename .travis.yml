@@ -1,14 +1,16 @@
 language: ruby
 dist: xenial
 services: mysql
-bundler_args: "--without deployment"
-cache:
-  bundler: true
+sudo: required
+before_install:
+  - gem update --system
+  - gem install bundler
+cache: bundler
 before_script:
-- bundle exec rake db:setup
+  - bundle exec rake db:setup
 script:
-- bundle exec rubocop
-- bundle exec rspec
+  - bundle exec rubocop
+  - bundle exec rspec
 before_deploy: "./compile-build"
 deploy:
   provider: releases
