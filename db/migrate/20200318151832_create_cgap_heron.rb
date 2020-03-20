@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Table for CGaP Heron
 class CreateCgapHeron < ActiveRecord::Migration
   def change
     # rubocop:disable Rails/CreateTableWithTimestamps
