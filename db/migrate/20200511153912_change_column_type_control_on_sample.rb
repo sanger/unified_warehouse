@@ -1,11 +1,11 @@
 class ChangeColumnTypeControlOnSample < ActiveRecord::Migration
   CONTROL_DATA_MAPPING_UP = {
-    '0' => 'no_control',
+    '0' => 'not_control',
     '1' => 'control'
   }
 
   CONTROL_DATA_MAPPING_DOWN = {
-    'no_control' => '0',
+    'not_control' => '0',
     'control' => '1',
     'positive_control' => '1', # there shouldn't be any of these, but if there are then they should map to control rather than not control
     'negative_control' => '1' # there shouldn't be any of these, but if there are then they should map to control rather than not control
