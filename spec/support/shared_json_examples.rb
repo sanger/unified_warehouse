@@ -130,7 +130,8 @@ shared_examples 'sample json' do
       "sample_strain_att" => "strain",
       "updated_by_manifest" => true,
       "sample_tubes" => "Ignore this field",
-      "donor_id" => '11111111-2222-3333-4444-555555555556'
+      "donor_id" => '11111111-2222-3333-4444-555555555556',
+      "control_type" => 'positive'
     }
   end
 end
