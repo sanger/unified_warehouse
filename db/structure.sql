@@ -287,6 +287,7 @@ CREATE TABLE `sample` (
   `donor_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phenotype` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The phenotype of the sample as described in Sequencescape',
   `developmental_stage` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Developmental Stage',
+  `control_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_sample_tmp`),
   UNIQUE KEY `index_sample_on_id_sample_lims_and_id_lims` (`id_sample_lims`,`id_lims`),
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
@@ -432,7 +433,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-02-03 15:44:25
+-- Dump completed on 2020-05-13 10:03:21
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -524,4 +525,6 @@ INSERT INTO schema_migrations (version) VALUES ('20190403081352');
 INSERT INTO schema_migrations (version) VALUES ('20191015143307');
 
 INSERT INTO schema_migrations (version) VALUES ('20200131111908');
+
+INSERT INTO schema_migrations (version) VALUES ('20200512152113');
 
