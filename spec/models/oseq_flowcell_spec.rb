@@ -25,7 +25,15 @@ describe OseqFlowcell do
       instrument_name: 'Instrument',
       instrument_slot: 5,
       pipeline_id_lims: 'Rapid',
-      requested_data_type: 'basecalls'
+      requested_data_type: 'basecalls',
+      tag_identifier: '1',
+      tag_sequence: 'ACTG',
+      tag_set_id_lims: 'first_tag_set',
+      tag_set_name: 'tag_set_1',
+      tag2_identifier: '2',
+      tag2_sequence: 'GTCA',
+      tag2_set_id_lims: 'second_tag_set',
+      tag2_set_name: 'tag_set_2'
     }
   end
 end
