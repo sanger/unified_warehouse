@@ -168,6 +168,14 @@ CREATE TABLE `oseq_flowcell` (
   `requested_data_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The type of data produced by sequencing, eg. basecalls only',
   `deleted_at` datetime DEFAULT NULL COMMENT 'Timestamp of any flowcell destruction',
   `id_lims` varchar(10) COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
+  `tag_identifier` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Position of the first tag within the tag group',
+  `tag_sequence` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Sequence of the first tag',
+  `tag_set_id_lims` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for the first tag',
+  `tag_set_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'WTSI-wide tag set name for the first tag',
+  `tag2_identifier` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Position of the second tag within the tag group',
+  `tag2_sequence` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Sequence of the second tag',
+  `tag2_set_id_lims` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for the second tag',
+  `tag2_set_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'WTSI-wide tag set name for the second tag',
   PRIMARY KEY (`id_oseq_flowcell_tmp`),
   KEY `fk_oseq_flowcell_to_sample` (`id_sample_tmp`),
   KEY `fk_oseq_flowcell_to_study` (`id_study_tmp`),
@@ -433,7 +441,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-18  9:47:43
+-- Dump completed on 2020-05-18 11:09:26
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
