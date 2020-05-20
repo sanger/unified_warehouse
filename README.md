@@ -63,3 +63,8 @@ Execute the worker to pick up messages in the queue and process them into the da
 
 where `1` is an identifier for the worker, and `start` instructs it to start.
 You can also stop a worker by calling `stop` or restart it with `restart`.
+
+#### Troubleshooting
+
+If you receive an error about a missing output file under `tmp/pid/` it may be that you need to create this directory manually.
+Once the directory above has been inserted at the root of the repository, the error should go away.
