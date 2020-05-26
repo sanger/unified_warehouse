@@ -8,13 +8,11 @@ PID_DIR='tmp/pids'
 function worker_start() {
   echo "Starting Amqp worker"
   bundle exec ./bin/amqp_client start
-  exit 0
 }
 
 function worker_stop() {
-  echo "Starting Amqp worker"
+  echo "Stopping Amqp worker"
   bundle exec ./bin/amqp_client stop
-  exit 0
 }
 
 function worker_restart() {
@@ -23,3 +21,4 @@ function worker_restart() {
 }
 
 worker_${2} $1
+exit 0
