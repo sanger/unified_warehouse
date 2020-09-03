@@ -16,6 +16,10 @@ class AddLighthouseSamples < ActiveRecord::Migration
       t.datetime :last_updated, comment: 'When the corresponding record was most recently updated in the Lighthouse MongoDB.'
       t.datetime :created_at, comment: 'When this record was inserted.' # don't use rails column name?
       t.datetime :updated_at, comment: 'When this record was most recently updated.' # don't use rails column name?
+
+      t.index [:root_sample_id, :rna_id, :result], unique: true # same uniqueness criteria as in MongoDB
+      t.index :mongodb_id, unique: true
+      t.index :date_tested # reporting will often be by date tested, so index for faster queries
     end
   end
 end
