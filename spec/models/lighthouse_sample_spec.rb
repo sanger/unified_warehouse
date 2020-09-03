@@ -72,5 +72,19 @@ RSpec.describe LighthouseSample, type: :model do
 
       expect(errored).to eq(false)
     end
+
+    it "allows you to manually set the Rails timestamp fields" do
+      lh_sample = create :lighthouse_sample, created_at: nil, updated_at: nil
+
+      expect(lh_sample.created_at).not_to eq(nil)
+      expect(lh_sample.updated_at).not_to eq(nil)
+    end
+
+    it "sets the Rails timestamp fields automatically if you don't specify them" do
+      lh_sample = create :lighthouse_sample
+
+      expect(lh_sample.created_at).to eq(DateTime.new(2020, 04, 02, 1, 0, 0))
+      expect(lh_sample.updated_at).to eq(DateTime.new(2020, 04, 02, 1, 0, 0))
+    end
   end
 end
