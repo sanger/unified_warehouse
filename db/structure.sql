@@ -166,8 +166,7 @@ CREATE TABLE `lighthouse_samples` (
   `date_tested_string` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'When the covid-19 test was carried out by the Lighthouse lab',
   `date_tested` datetime DEFAULT NULL COMMENT 'date_tested_string in date format',
   `source` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Lighthouse centre that the sample came from',
-  `lab_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Id of the lab, within the Lighthouse centre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `lab_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Id of the lab, within the Lighthouse centre',
   `created` datetime DEFAULT NULL COMMENT 'When the corresponding record was inserted into the MongoDB',
   `last_updated` datetime DEFAULT NULL COMMENT 'When the corresponding record was last updated in MongoDB',
   `created_at` datetime DEFAULT NULL COMMENT 'When this record was inserted',
@@ -473,7 +472,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-03 14:23:27
+-- Dump completed on 2020-09-03 14:26:11
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
