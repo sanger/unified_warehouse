@@ -25,8 +25,8 @@ FactoryGirl.define do
     date_tested DateTime.new(2020, 04, 01, 1, 0, 0)
     source 'Test Centre'
     lab_id 'TC'
-    created DateTime.new(2020, 04, 02, 1, 0, 0)
-    last_updated DateTime.new(2020, 04, 02, 1, 0, 0)
+    created_at_external DateTime.new(2020, 04, 02, 1, 0, 0)
+    updated_at_external DateTime.new(2020, 04, 02, 1, 0, 0)
     created_at DateTime.new(2020, 04, 02, 1, 0, 0)
     updated_at DateTime.new(2020, 04, 02, 1, 0, 0)
   end

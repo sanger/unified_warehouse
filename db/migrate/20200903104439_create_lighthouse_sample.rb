@@ -12,8 +12,8 @@ class CreateLighthouseSample < ActiveRecord::Migration
       t.datetime :date_tested, comment: 'date_tested_string in date format'
       t.string :source, comment: 'Lighthouse centre that the sample came from'
       t.string :lab_id, comment: 'Id of the lab, within the Lighthouse centre'
-      t.datetime :created, comment: 'When the corresponding record was inserted into the MongoDB'
-      t.datetime :last_updated, comment: 'When the corresponding record was last updated in MongoDB'
+      t.datetime :created_at_external, comment: 'When the corresponding record was inserted into the MongoDB'
+      t.datetime :updated_at_external, comment: 'When the corresponding record was last updated in MongoDB'
       t.datetime :created_at, comment: 'When this record was inserted'
       t.datetime :updated_at, comment: 'When this record was last updated'
 
