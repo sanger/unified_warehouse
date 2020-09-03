@@ -14,8 +14,8 @@ class CreateLighthouseSample < ActiveRecord::Migration
       t.string :lab_id, comment: 'Id of the lab, within the Lighthouse centre'
       t.datetime :created, comment: 'When the corresponding record was inserted into the MongoDB'
       t.datetime :last_updated, comment: 'When the corresponding record was last updated in MongoDB'
-      t.datetime :created_at, comment: 'When this record was inserted' # don't use rails column name?
-      t.datetime :updated_at, comment: 'When this record was last updated' # don't use rails column name?
+      t.datetime :created_at, comment: 'When this record was inserted'
+      t.datetime :updated_at, comment: 'When this record was last updated'
 
       t.index [:root_sample_id, :rna_id, :result], unique: true # same uniqueness criteria as in MongoDB
       t.index :mongodb_id, unique: true
