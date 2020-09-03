@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Table to hold information from the Lighthouse plate maps. Populated by the Lighthouse app.
+# The primary database which it exposes information from is the Lighthouse MongoDB database.
 class CreateLighthouseSample < ActiveRecord::Migration
   def change
     create_table :lighthouse_sample do |t|

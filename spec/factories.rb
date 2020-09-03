@@ -22,12 +22,12 @@ FactoryGirl.define do
     coordinate 'H12'
     result 'Negative'
     date_tested_string '2020-04-01 010000 UTC'
-    date_tested DateTime.new(2020, 04, 01, 1, 0, 0)
+    date_tested Time.new(2020, 4, 1, 1, 0, 0, '+00:00')
     source 'Test Centre'
     lab_id 'TC'
-    created_at_external DateTime.new(2020, 04, 02, 1, 0, 0)
-    updated_at_external DateTime.new(2020, 04, 02, 1, 0, 0)
-    created_at DateTime.new(2020, 04, 02, 1, 0, 0)
-    updated_at DateTime.new(2020, 04, 02, 1, 0, 0)
+    created_at_external Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
+    updated_at_external Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
+    created_at Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
+    updated_at Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
   end
 end
