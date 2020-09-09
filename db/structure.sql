@@ -1,6 +1,6 @@
--- MySQL dump 10.13  Distrib 8.0.19, for osx10.15 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.19, for osx10.14 (x86_64)
 --
--- Host: localhost    Database: unified_warehouse_development
+-- Host: localhost    Database: unified_warehouse_test
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
@@ -44,7 +44,7 @@ CREATE TABLE `bmap_flowcell` (
   KEY `fk_bmap_flowcell_to_study` (`id_study_tmp`),
   CONSTRAINT `fk_bmap_flowcell_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_bmap_flowcell_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,7 @@ CREATE TABLE `flgen_plate` (
   KEY `flgen_plate_study_fk` (`id_study_tmp`),
   CONSTRAINT `flgen_plate_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
   CONSTRAINT `flgen_plate_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=157 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +144,7 @@ CREATE TABLE `iseq_flowcell` (
   KEY `index_iseq_flowcell_legacy_library_id` (`legacy_library_id`),
   CONSTRAINT `iseq_flowcell_sample_fk` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`),
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +181,7 @@ CREATE TABLE `oseq_flowcell` (
   KEY `fk_oseq_flowcell_to_study` (`id_study_tmp`),
   CONSTRAINT `fk_oseq_flowcell_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_oseq_flowcell_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,6 +205,10 @@ CREATE TABLE `pac_bio_run` (
   `tag_sequence` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tag sequence for tag',
   `tag_set_id_lims` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for tag',
   `tag_set_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'WTSI-wide tag set name for tag',
+  `tag2_sequence` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tag sequence for tag 2',
+  `tag2_set_id_lims` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for tag 2',
+  `tag2_set_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'WTSI-wide tag set name for tag 2',
+  `tag2_identifier` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The position of tag2 within the tag group',
   `plate_barcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The human readable barcode for the plate loaded onto the machine',
   `plate_uuid_lims` varchar(36) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The plate uuid',
   `well_label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The well identifier for the plate, A1-H12',
@@ -220,7 +224,7 @@ CREATE TABLE `pac_bio_run` (
   KEY `fk_pac_bio_run_to_study` (`id_study_tmp`),
   CONSTRAINT `fk_pac_bio_run_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_pac_bio_run_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,7 +255,7 @@ CREATE TABLE `qc_result` (
   KEY `lookup_index` (`id_qc_result_lims`,`id_lims`),
   KEY `qc_result_id_library_lims_index` (`id_library_lims`),
   CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,7 +305,7 @@ CREATE TABLE `sample` (
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=990 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -352,7 +356,7 @@ CREATE TABLE `stock_resource` (
   KEY `composition_lookup_index` (`id_stock_resource_lims`,`id_sample_tmp`,`id_lims`),
   CONSTRAINT `fk_stock_resource_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `fk_stock_resource_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=175 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -408,7 +412,7 @@ CREATE TABLE `study` (
   UNIQUE KEY `study_uuid_study_lims_index` (`uuid_study_lims`),
   KEY `study_accession_number_index` (`accession_number`),
   KEY `study_name_index` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=957 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -429,7 +433,7 @@ CREATE TABLE `study_users` (
   PRIMARY KEY (`id_study_users_tmp`),
   KEY `study_users_study_fk` (`id_study_tmp`),
   CONSTRAINT `study_users_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=265 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -441,7 +445,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-18 11:09:26
+-- Dump completed on 2020-09-09 10:08:31
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -537,4 +541,6 @@ INSERT INTO schema_migrations (version) VALUES ('20200131111908');
 INSERT INTO schema_migrations (version) VALUES ('20200512152113');
 
 INSERT INTO schema_migrations (version) VALUES ('20200518083730');
+
+INSERT INTO schema_migrations (version) VALUES ('20200909085557');
 
