@@ -236,6 +236,10 @@ CREATE TABLE `pac_bio_run` (
   `tag_sequence` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tag sequence for tag',
   `tag_set_id_lims` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for tag',
   `tag_set_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'WTSI-wide tag set name for tag',
+  `tag2_sequence` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Tag sequence for tag 2',
+  `tag2_set_id_lims` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'LIMs-specific identifier of the tag set for tag 2',
+  `tag2_set_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'WTSI-wide tag set name for tag 2',
+  `tag2_identifier` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'The position of tag2 within the tag group',
   `plate_barcode` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The human readable barcode for the plate loaded onto the machine',
   `plate_uuid_lims` varchar(36) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The plate uuid',
   `well_label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The well identifier for the plate, A1-H12',
@@ -472,7 +476,8 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-03 15:12:08
+
+-- Dump completed on 2020-09-10 10:12:23
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -570,4 +575,6 @@ INSERT INTO schema_migrations (version) VALUES ('20200512152113');
 INSERT INTO schema_migrations (version) VALUES ('20200518083730');
 
 INSERT INTO schema_migrations (version) VALUES ('20200903104439');
+
+INSERT INTO schema_migrations (version) VALUES ('20200909085557');
 
