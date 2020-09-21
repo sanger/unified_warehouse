@@ -25,8 +25,6 @@ FactoryGirl.define do
     date_tested Time.new(2020, 4, 1, 1, 0, 0, '+00:00')
     source 'Test Centre'
     lab_id 'TC'
-    created_at_external Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
-    updated_at_external Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
     created_at Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
     updated_at Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
   end
