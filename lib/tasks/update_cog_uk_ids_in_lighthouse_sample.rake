@@ -17,6 +17,7 @@ namespace :lighthouse_sample_table do
     # only select positives, as only positives have cog_uk_ids
     LighthouseSample.where(result: 'positive').each do |lh_sample|
       rows_found += 1
+      puts ("On row #{rows_found}") if rows_found % 10_000 == 0
 
       # skip if cog_uk_id already set
       if lh_sample.cog_uk_id.present?
