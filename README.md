@@ -68,3 +68,9 @@ You can also stop a worker by calling `stop` or restart it with `restart`.
 
 If you receive an error about a missing output file under `tmp/pid/` it may be that you need to create this directory manually.
 Once the directory above has been inserted at the root of the repository, the error should go away.
+
+#### How To Section
+
+Cog Uk Ids - These ids are given to positive samples imported through the Lighthouse-UI. This process should automatically record those Ids in the sample table, and also into the lighthouse_sample table.
+To migrate Cog Uk Ids into the lighthouse_sample table manually via SQL, see this Confluence page:
+https://ssg-confluence.internal.sanger.ac.uk/display/PSD/How+to+migrate+Cog+UK+IDs+into+the+lighthouse_sample+table
