@@ -167,12 +167,25 @@ CREATE TABLE `lighthouse_sample` (
   `date_tested` datetime DEFAULT NULL COMMENT 'date_tested_string in date format',
   `source` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Lighthouse centre that the sample came from',
   `lab_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Id of the lab, within the Lighthouse centre',
+  `ch1_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ch1_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ch1_cq` float DEFAULT NULL,
+  `ch2_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ch2_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ch2_cq` float DEFAULT NULL,
+  `ch3_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ch3_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ch3_cq` float DEFAULT NULL,
+  `ch4_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ch4_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ch4_cq` float DEFAULT NULL,
   `created_at` datetime DEFAULT NULL COMMENT 'When this record was inserted',
   `updated_at` datetime DEFAULT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result` (`root_sample_id`,`rna_id`,`result`),
   UNIQUE KEY `index_lighthouse_sample_on_mongodb_id` (`mongodb_id`),
-  KEY `index_lighthouse_sample_on_date_tested` (`date_tested`)
+  KEY `index_lighthouse_sample_on_date_tested` (`date_tested`),
+  KEY `index_lighthouse_sample_on_result` (`result`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -474,7 +487,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-21 16:04:05
+-- Dump completed on 2020-09-29 17:24:35
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -574,4 +587,6 @@ INSERT INTO schema_migrations (version) VALUES ('20200518083730');
 INSERT INTO schema_migrations (version) VALUES ('20200903104439');
 
 INSERT INTO schema_migrations (version) VALUES ('20200909085557');
+
+INSERT INTO schema_migrations (version) VALUES ('20200929142921');
 
