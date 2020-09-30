@@ -184,9 +184,8 @@ CREATE TABLE `lighthouse_sample` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result` (`root_sample_id`,`rna_id`,`result`),
   UNIQUE KEY `index_lighthouse_sample_on_mongodb_id` (`mongodb_id`),
-  KEY `index_lighthouse_sample_on_date_tested` (`date_tested`),
-  KEY `index_lighthouse_sample_on_result` (`result`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  KEY `index_lighthouse_sample_on_date_tested` (`date_tested`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -487,7 +486,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-29 17:24:35
+-- Dump completed on 2020-09-30 10:08:42
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
