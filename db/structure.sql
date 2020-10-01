@@ -169,23 +169,23 @@ CREATE TABLE `lighthouse_sample` (
   `lab_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Id of the lab, within the Lighthouse centre',
   `ch1_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 1',
   `ch1_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 1',
-  `ch1_cq` float DEFAULT NULL COMMENT 'Cq value for channel 1',
+  `ch1_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 1',
   `ch2_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 2',
   `ch2_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 2',
-  `ch2_cq` float DEFAULT NULL COMMENT 'Cq value for channel 2',
+  `ch2_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 2',
   `ch3_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 3',
   `ch3_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 3',
-  `ch3_cq` float DEFAULT NULL COMMENT 'Cq value for channel 3',
+  `ch3_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 3',
   `ch4_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 4',
   `ch4_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 4',
-  `ch4_cq` float DEFAULT NULL COMMENT 'Cq value for channel 4',
+  `ch4_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 4',
   `created_at` datetime DEFAULT NULL COMMENT 'When this record was inserted',
   `updated_at` datetime DEFAULT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result` (`root_sample_id`,`rna_id`,`result`),
   UNIQUE KEY `index_lighthouse_sample_on_mongodb_id` (`mongodb_id`),
   KEY `index_lighthouse_sample_on_date_tested` (`date_tested`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -486,7 +486,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-30 10:08:42
+-- Dump completed on 2020-09-30 17:50:31
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
