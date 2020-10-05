@@ -167,6 +167,18 @@ CREATE TABLE `lighthouse_sample` (
   `date_tested` datetime DEFAULT NULL COMMENT 'date_tested_string in date format',
   `source` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Lighthouse centre that the sample came from',
   `lab_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Id of the lab, within the Lighthouse centre',
+  `ch1_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 1',
+  `ch1_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 1',
+  `ch1_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 1',
+  `ch2_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 2',
+  `ch2_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 2',
+  `ch2_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 2',
+  `ch3_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 3',
+  `ch3_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 3',
+  `ch3_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 3',
+  `ch4_target` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 4',
+  `ch4_result` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 4',
+  `ch4_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 4',
   `created_at` datetime DEFAULT NULL COMMENT 'When this record was inserted',
   `updated_at` datetime DEFAULT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`id`),
@@ -474,7 +486,7 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-09-21 16:04:05
+-- Dump completed on 2020-09-30 17:50:31
 INSERT INTO schema_migrations (version) VALUES ('20141113110635');
 
 INSERT INTO schema_migrations (version) VALUES ('20141113130813');
@@ -574,4 +586,6 @@ INSERT INTO schema_migrations (version) VALUES ('20200518083730');
 INSERT INTO schema_migrations (version) VALUES ('20200903104439');
 
 INSERT INTO schema_migrations (version) VALUES ('20200909085557');
+
+INSERT INTO schema_migrations (version) VALUES ('20200929142921');
 
