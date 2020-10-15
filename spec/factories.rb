@@ -25,6 +25,18 @@ FactoryGirl.define do
     date_tested Time.new(2020, 4, 1, 1, 0, 0, '+00:00')
     source 'Test Centre'
     lab_id 'TC'
+    ch1_target 'ORF1ab'
+    ch1_result 'Positive'
+    ch1_cq 12.46979445
+    ch2_target 'N gene'
+    ch2_result 'Positive'
+    ch2_cq 13.2452244
+    ch3_target 'S gene'
+    ch3_result 'Positive'
+    ch3_cq 13.07034452
+    ch4_target 'MS2'
+    ch4_result 'Positive'
+    ch4_cq 24.98589115
     created_at Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
     updated_at Time.new(2020, 4, 2, 1, 0, 0, '+00:00')
   end
