@@ -1,4 +1,4 @@
-class FlgenPlate < ActiveRecord::Base
+class FlgenPlate < ApplicationRecord
   include ResourceTools
   include NestedResourceTools
 

@@ -1,3 +1,6 @@
+# Provides behaviour to allow records to be associated with multiple users with different roles.
+# For example, the association of owners, managers etc. with a Study, as presented in the
+# study_users table
 module AssociatedWithRoles
   def self.extended(base)
     base.class_eval do
@@ -26,7 +29,7 @@ module AssociatedWithRoles
     private :users_to_maintain
 
     def set_users(role, user_details)
-      users_to_maintain[role.to_s] = (user_details)
+      users_to_maintain[role.to_s] = user_details
     end
     private :set_users
 
@@ -63,7 +66,7 @@ module AssociatedWithRoles
         # alias_attribute(:uuid, "#{association_name}_uuid")
         alias_attribute(:associated_id, "id_#{association_name}_tmp")
 
-        scope :owned_by, lambda { |record| where("id_#{association_name}_tmp" => record.id) }
+        scope :owned_by, ->(record) { where("id_#{association_name}_tmp" => record.id) }
       end
     end
   end

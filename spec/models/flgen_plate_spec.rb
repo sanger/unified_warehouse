@@ -13,9 +13,9 @@ describe FlgenPlate do
     mock_sample; mock_study
   end
 
-  it_behaves_like 'belongs to', [
-    :sample,
-    :study
+  it_behaves_like 'belongs to', %i[
+    sample
+    study
   ], [:wells]
 
   include_examples 'fluidigm json'

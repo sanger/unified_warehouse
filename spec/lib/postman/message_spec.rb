@@ -16,30 +16,30 @@ RSpec.describe Postman::Message, type: :lib do
 
   let(:payload) { %({"sample":{},"lims":"test"}) }
 
-  context "with a valid payload" do
+  context 'with a valid payload' do
     before do
       expect(Payload).to receive(:from_json).with(payload).and_return(payload)
       expect(payload).to receive(:record).and_return(true)
       expect(main_exchange).to receive(:ack).with('delivery_tag')
     end
 
-    it "can be processed" do
+    it 'can be processed' do
       subject.process
     end
   end
 
-  context "with an invalid payload" do
+  context 'with an invalid payload' do
     before do
       expect(Payload).to receive(:from_json).with(payload).and_raise(Payload::InvalidMessage)
       expect(main_exchange).to receive(:nack).with('delivery_tag')
     end
 
-    it "can be processed" do
+    it 'can be processed' do
       subject.process
     end
   end
 
-  context "with a temporarily invalid payload" do
+  context 'with a temporarily invalid payload' do
     context 'with no retries' do
       before do
         expect(Payload).to receive(:from_json).with(payload).and_return(payload)
@@ -48,7 +48,7 @@ RSpec.describe Postman::Message, type: :lib do
         expect(delay_exchange).to receive(:publish).with(payload, routing_key: 'requeue.test', headers: { attempts: 1 })
       end
 
-      it "can be processed" do
+      it 'can be processed' do
         subject.process
       end
     end
@@ -62,7 +62,7 @@ RSpec.describe Postman::Message, type: :lib do
         expect(main_exchange).to receive(:nack).with('delivery_tag')
       end
 
-      it "can be processed" do
+      it 'can be processed' do
         subject.process
       end
     end
@@ -76,7 +76,7 @@ RSpec.describe Postman::Message, type: :lib do
       expect(postman).to receive(:pause!)
     end
 
-    it "can be processed" do
+    it 'can be processed' do
       subject.process
     end
   end

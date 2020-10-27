@@ -4,7 +4,8 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   def find_target(json, graph)
     return json if graph.nil?
     return json[graph.to_s].first if graph.is_a?(Symbol)
-    return json[graph.first.to_s].first if (graph.count == 1 && graph.first.is_a?(Symbol))
+    return json[graph.first.to_s].first if graph.count == 1 && graph.first.is_a?(Symbol)
+
     k, v = graph.first
     find_target(json[k.to_s].first, v)
   end
@@ -12,7 +13,8 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   def find_handler(handler, graph)
     return handler if graph.nil?
     return handler.nested_models[graph] if graph.is_a?(Symbol)
-    return handler.nested_models[graph.first] if (graph.count == 1 && graph.first.is_a?(Symbol))
+    return handler.nested_models[graph.first] if graph.count == 1 && graph.first.is_a?(Symbol)
+
     k, v = graph.first
     find_handler(handler.nested_models[k], v)
   end
@@ -24,7 +26,7 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   let!(:owning_json) { find_target(json, belonging_owned) }
 
   belonging_owners.each do |owner|
-    context "#{owner}" do
+    context owner.to_s do
       let(:owning_handler) { find_handler(json_handler, belonging_owned) }
 
       let(:id)   { owning_json[:"#{owner}_id"] }
@@ -39,7 +41,7 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   end
 
   after(:each) do
-    content = subject.is_a?(Array) ? subject.detect { |json| json.class == owning_handler } : subject
+    content = subject.is_a?(Array) ? subject.detect { |json| json.instance_of?(owning_handler) } : subject
     described_class.send(:create_or_update, content)
   end
 end

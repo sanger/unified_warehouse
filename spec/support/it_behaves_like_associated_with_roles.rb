@@ -24,7 +24,7 @@ shared_examples_for 'associated with roles' do
 
     roles.each do |role, expected|
       found = described_class::User.where(role: role.to_s).map do |user|
-        Hash[[:name, :email, :login].map { |a| [a, user[a]] }]
+        Hash[%i[name email login].map { |a| [a, user[a]] }]
       end
       expect(found).to eq(expected)
     end
@@ -43,7 +43,7 @@ shared_examples_for 'associated with roles' do
     end
 
     context 'where the update is classed current it does' do
-      let(:updated_at) { originally_created_at + (1.5).day }
+      let(:updated_at) { originally_created_at + 1.5.days }
       let(:expected_roles) { updated_roles }
       it_behaves_like 'maintains roles correctly'
     end
@@ -56,7 +56,7 @@ shared_examples_for 'associated with roles' do
   end
 
   context 'for new record' do
-    let(:all_role_names) { [:manager, :follower, :administrator].concat(additional_roles) }
+    let(:all_role_names) { %i[manager follower administrator].concat(additional_roles) }
     let(:roles) { Hash[all_role_names.map { |role| [role, [user_with_role(role)]] }] }
 
     before(:each) do

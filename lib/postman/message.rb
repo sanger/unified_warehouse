@@ -30,30 +30,30 @@ class Postman
     end
 
     def process
-      info "Started message process"
+      info 'Started message process'
       debug payload
 
       begin
         message.record
         main_exchange.ack(delivery_info.delivery_tag)
-      rescue Payload::InvalidMessage => exception
+      rescue Payload::InvalidMessage => e
         # Our message fails to meet our basic requirements, there's little point
         # sending it to the delayed queue, as it will still be invalid next time.
-        deadletter(exception)
-      rescue ActiveRecord::StatementInvalid => exception
-        if database_connection_error?(exception)
+        deadletter(e)
+      rescue ActiveRecord::StatementInvalid => e
+        if database_connection_error?(e)
           # We have some temporary database issues. Requeue the message and pause
           # until the issue is resolved.
-          requeue(exception)
+          requeue(e)
           postman.pause!
         else
-          delay(exception)
+          delay(e)
         end
-      rescue => exception
-        delay(exception)
+      rescue StandardError => e
+        delay(e)
       end
 
-      info "Finished message process"
+      info 'Finished message process'
     end
 
     private

@@ -4,7 +4,7 @@ module CompositeResourceTools
   extend ActiveSupport::Concern
 
   def latest(other)
-    yield(self) if (other.last_updated > last_updated)
+    yield(self) if other.last_updated > last_updated
   end
 
   module ClassMethods
@@ -30,7 +30,7 @@ module CompositeResourceTools
 
         all_records.each do |old_record|
           new_record = key_attributes.delete(composite_key_for(old_record))
-          new_record.present? && !base_resource.deleted? ? old_record.update_attributes!(new_record) : old_record.destroy
+          new_record.present? && !base_resource.deleted? ? old_record.update!(new_record) : old_record.destroy
         end
         return create!(key_attributes.values) unless base_resource.deleted?
       end
@@ -49,7 +49,5 @@ module CompositeResourceTools
     def invalid_message!
       raise InvalidMessage, "Contains two elements with the same composite identifier: combination of #{@composition_keys.join(', ')} should be unique."
     end
-
-    private
   end
 end

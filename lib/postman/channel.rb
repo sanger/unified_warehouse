@@ -1,4 +1,3 @@
-
 require_relative '../postman'
 
 class Postman
@@ -49,7 +48,8 @@ class Postman
     end
 
     def queue
-      raise StandardError, "No queue configured" if @queue_name.nil?
+      raise StandardError, 'No queue configured' if @queue_name.nil?
+
       channel.queue(@queue_name, arguments: queue_arguments)
     end
 
