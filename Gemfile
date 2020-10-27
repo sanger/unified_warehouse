@@ -11,7 +11,6 @@ gem "migration_comments"
 
 group :test, :development do
   gem 'factory_girl_rails'
-  gem 'mocktra', '~> 1.0.2'
   gem 'pry'
   gem 'rspec-rails'
 end
