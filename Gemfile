@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
 # TODO: We pretty much just use active record and active mailer, do we need rails?
-gem "mysql2", "~> 0.4.10"
-gem "rails", "~> 4.1"
+gem "mysql2"#, "~> 0.4.10"
+gem "rails", "~> 5.0"
+gem 'bootsnap'
 
 gem "bunny"
 gem "daemons"
