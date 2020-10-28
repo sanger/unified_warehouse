@@ -1,4 +1,4 @@
-class OseqFlowcell < ActiveRecord::Base
+class OseqFlowcell < ApplicationRecord
   include ResourceTools
   include SingularResourceTools
 

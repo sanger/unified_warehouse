@@ -1,4 +1,4 @@
-class PacBioRun < ActiveRecord::Base
+class PacBioRun < ApplicationRecord
   include ResourceTools
   include NestedResourceTools
 

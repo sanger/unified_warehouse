@@ -1,4 +1,4 @@
-class Flowcell < ActiveRecord::Base
+class Flowcell < ApplicationRecord
   include ResourceTools
   include CompositeResourceTools
 

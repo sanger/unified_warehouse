@@ -1,4 +1,4 @@
-class Sample < ActiveRecord::Base
+class Sample < ApplicationRecord
   include ResourceTools
   include SingularResourceTools
 

@@ -2,7 +2,7 @@
 
 # A Sample extraction activity is generated in the Sample extraction Lims
 # when an activity is finished.
-class SamplesExtractionActivity < ActiveRecord::Base
+class SamplesExtractionActivity < ApplicationRecord
   include ResourceTools
   include NestedResourceTools
 
