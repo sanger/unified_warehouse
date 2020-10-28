@@ -36,7 +36,7 @@ class Payload
 
   def model_class_for(model_class_name)
     candidate_class = model_class_name.classify.safe_constantize
-    unless candidate_class && (candidate_class < ApplicationRecord)
+    unless candidate_class.respond_to?(:create_or_update_from_json)
       raise(InvalidMessage, "Unrecognized model: #{model_class_name}")
     end
 
