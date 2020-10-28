@@ -18,7 +18,7 @@ module ResourceTools::CoreExtensions
     # Determines if this hash is within an acceptable bounds of the keys common with the
     # given hash.  It is assumed that values missing from 'other' are unchanged.
     def within_acceptable_bounds?(other)
-      (self.keys & other.keys).all? do |key|
+      (keys & other.keys).all? do |key|
         self[key].within_acceptable_bounds?(other[key])
       end
     end
@@ -44,10 +44,9 @@ module ResourceTools::CoreExtensions
     end
 
     def to_boolean_from_arguments
-      case
-      when ['true', 'yes'].include?(self.downcase) then true
-      when ['false', 'no'].include?(self.downcase) then false
-      else raise "Cannot convert #{self.inspect} to a boolean safely!"
+      if %w[true yes].include?(downcase) then true
+      elsif %w[false no].include?(downcase) then false
+      else raise "Cannot convert #{inspect} to a boolean safely!"
       end
     end
   end

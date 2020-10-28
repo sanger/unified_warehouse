@@ -15,9 +15,9 @@ describe Flowcell do
 
     it_behaves_like 'ignores JSON fields', []
 
-    it_behaves_like 'belongs to', [
-      :study,
-      :sample
+    it_behaves_like 'belongs to', %i[
+      study
+      sample
     ], { lanes: :samples }
 
     it_behaves_like 'a nested resource'
@@ -45,7 +45,7 @@ describe Flowcell do
       let(:updated_json) do
         updated_json = json
         updated_json['lanes'].first['manual_qc'] = true
-        updated_json['updated_at'] = "2012-03-11 12:22:42"
+        updated_json['updated_at'] = '2012-03-11 12:22:42'
         updated_json
       end
 
@@ -65,7 +65,7 @@ describe Flowcell do
         updated_json = json
         updated_json['lanes'].first['manual_qc'] = true
         updated_json['lanes'].first['samples'].first['tag_index'] = 4
-        updated_json['updated_at'] = "2012-03-11 12:22:42"
+        updated_json['updated_at'] = '2012-03-11 12:22:42'
         updated_json
       end
 
@@ -88,37 +88,37 @@ describe Flowcell do
     let(:json) do
       {
 
-        "flowcell_barcode" => "12345678903",
-        "flowcell_id" => "1123",
-        "pipeline_id_lims" => "Agilent Pulldown",
-        "forward_read_length" => 222,
-        "reverse_read_length" => 222,
+        'flowcell_barcode' => '12345678903',
+        'flowcell_id' => '1123',
+        'pipeline_id_lims' => 'Agilent Pulldown',
+        'forward_read_length' => 222,
+        'reverse_read_length' => 222,
 
-        "updated_at" => "2012-03-11 10:22:42",
+        'updated_at' => '2012-03-11 10:22:42',
 
-        "lanes" => [
+        'lanes' => [
           {
-            "manual_qc" => true,
-            "entity_type" => "library",
-            "position" => 1,
-            "priority" => 1,
-            "id_pool_lims" => "DN324095D A1:H2",
-            "external_release" => true,
+            'manual_qc' => true,
+            'entity_type' => 'library',
+            'position' => 1,
+            'priority' => 1,
+            'id_pool_lims' => 'DN324095D A1:H2',
+            'external_release' => true,
 
-            "samples" => [
+            'samples' => [
               {
-                "tag_index" => 3,
-                "tag_sequence" => "ATAG",
-                "tag_set_id_lims" => "2",
-                "tag_set_name" => "Sanger_168tags - 10 mer tags",
-                "bait_name" => "DDD_V5_plus",
-                "requested_insert_size_from" => 100,
-                "requested_insert_size_to" => 200,
-                "sample_uuid" => "000000-0000-0000-0000-0000000000",
-                "study_uuid" => "000000-0000-0000-0000-0000000001",
-                "cost_code" => "12345",
-                "entity_id_lims" => "12345",
-                "is_r_and_d" => false
+                'tag_index' => 3,
+                'tag_sequence' => 'ATAG',
+                'tag_set_id_lims' => '2',
+                'tag_set_name' => 'Sanger_168tags - 10 mer tags',
+                'bait_name' => 'DDD_V5_plus',
+                'requested_insert_size_from' => 100,
+                'requested_insert_size_to' => 200,
+                'sample_uuid' => '000000-0000-0000-0000-0000000000',
+                'study_uuid' => '000000-0000-0000-0000-0000000001',
+                'cost_code' => '12345',
+                'entity_id_lims' => '12345',
+                'is_r_and_d' => false
               }
             ]
           }
@@ -131,58 +131,58 @@ describe Flowcell do
     end
   end
 
-  context "a message with clashing samples" do
+  context 'a message with clashing samples' do
     let(:expected_identifiers) { 'tag_index, id_flowcell_lims, entity_id_lims, entity_type, position, tag_sequence, tag2_sequence' }
     let(:example_lims) { 'example' }
 
     let(:json) do
       {
 
-        "flowcell_barcode" => "12345678903",
-        "flowcell_id" => "1123",
-        "pipeline_id_lims" => "Agilent Pulldown",
-        "forward_read_length" => 222,
-        "reverse_read_length" => 222,
+        'flowcell_barcode' => '12345678903',
+        'flowcell_id' => '1123',
+        'pipeline_id_lims' => 'Agilent Pulldown',
+        'forward_read_length' => 222,
+        'reverse_read_length' => 222,
 
-        "updated_at" => "2012-03-11 10:22:42",
+        'updated_at' => '2012-03-11 10:22:42',
 
-        "lanes" => [
+        'lanes' => [
           {
-            "manual_qc" => true,
-            "entity_type" => "library",
-            "position" => 1,
-            "priority" => 1,
-            "id_pool_lims" => "DN324095D A1:H2",
-            "external_release" => true,
+            'manual_qc' => true,
+            'entity_type' => 'library',
+            'position' => 1,
+            'priority' => 1,
+            'id_pool_lims' => 'DN324095D A1:H2',
+            'external_release' => true,
 
-            "samples" => [
+            'samples' => [
               {
-                "tag_index" => 3,
-                "tag_sequence" => "ATAG",
-                "tag_set_id_lims" => "2",
-                "tag_set_name" => "Sanger_168tags - 10 mer tags",
-                "bait_name" => "DDD_V5_plus",
-                "requested_insert_size_from" => 100,
-                "requested_insert_size_to" => 200,
-                "sample_uuid" => "000000-0000-0000-0000-0000000000",
-                "study_uuid" => "000000-0000-0000-0000-0000000001",
-                "cost_code" => "12345",
-                "entity_id_lims" => "12345",
-                "is_r_and_d" => false
+                'tag_index' => 3,
+                'tag_sequence' => 'ATAG',
+                'tag_set_id_lims' => '2',
+                'tag_set_name' => 'Sanger_168tags - 10 mer tags',
+                'bait_name' => 'DDD_V5_plus',
+                'requested_insert_size_from' => 100,
+                'requested_insert_size_to' => 200,
+                'sample_uuid' => '000000-0000-0000-0000-0000000000',
+                'study_uuid' => '000000-0000-0000-0000-0000000001',
+                'cost_code' => '12345',
+                'entity_id_lims' => '12345',
+                'is_r_and_d' => false
               },
               {
-                "tag_index" => 3,
-                "tag_sequence" => "ATAG",
-                "tag_set_id_lims" => "2",
-                "tag_set_name" => "Sanger_168tags - 10 mer tags",
-                "bait_name" => "SomethingElse",
-                "requested_insert_size_from" => 400,
-                "requested_insert_size_to" => 500,
-                "sample_uuid" => "000000-0000-0000-0000-0000000000",
-                "study_uuid" => "000000-0000-0000-0000-0000000001",
-                "cost_code" => "12345",
-                "entity_id_lims" => "12345",
-                "is_r_and_d" => false
+                'tag_index' => 3,
+                'tag_sequence' => 'ATAG',
+                'tag_set_id_lims' => '2',
+                'tag_set_name' => 'Sanger_168tags - 10 mer tags',
+                'bait_name' => 'SomethingElse',
+                'requested_insert_size_from' => 400,
+                'requested_insert_size_to' => 500,
+                'sample_uuid' => '000000-0000-0000-0000-0000000000',
+                'study_uuid' => '000000-0000-0000-0000-0000000001',
+                'cost_code' => '12345',
+                'entity_id_lims' => '12345',
+                'is_r_and_d' => false
               }
             ]
           }

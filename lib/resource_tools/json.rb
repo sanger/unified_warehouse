@@ -42,10 +42,10 @@ module ResourceTools::Json
       end
 
       def has_nested_model(name, &block)
-        self.nested_models = Hash.new if self.nested_models.blank?
+        self.nested_models = ({}) if nested_models.blank?
         const_set(:"#{name.to_s.classify}JsonHandler", Class.new(ResourceTools::Json::Handler))
-        self.nested_models[name] = const_get(:"#{name.to_s.classify}JsonHandler")
-        self.nested_models[name].tap { |json_handler| json_handler.instance_eval(&block) if block_given? }
+        nested_models[name] = const_get(:"#{name.to_s.classify}JsonHandler")
+        nested_models[name].tap { |json_handler| json_handler.instance_eval(&block) if block_given? }
       end
 
       def ignore(*attributes)
@@ -58,7 +58,7 @@ module ResourceTools::Json
 
       # JSON attributes can be translated into the attributes on the way in.
       def translate(details)
-        self.translations = Hash[details.map { |k, v| [k.to_s, v.to_s] }].reverse_merge(self.translations)
+        self.translations = Hash[details.map { |k, v| [k.to_s, v.to_s] }].reverse_merge(translations)
       end
 
       def convert_key(key)
@@ -69,9 +69,9 @@ module ResourceTools::Json
         # We're not nested, so just return the standard json
         return new(json_data.reverse_merge(id_lims: lims)) if nested_models.blank?
 
-        Array.new.tap do |collection|
+        [].tap do |collection|
           original = new(json_data.reverse_merge(id_lims: lims))
-          collection << original if self.recorded
+          collection << original if recorded
           each_nested_model(json_data) do |nested, handler|
             collection << handler.collection_from(original.reverse_merge(nested), lims)
           end
@@ -94,23 +94,25 @@ module ResourceTools::Json
       end
 
       def custom_value(name, &block)
-        self.custom_values = Hash.new if self.custom_values.blank?
-        self.custom_values[name] = block
+        self.custom_values = ({}) if custom_values.blank?
+        custom_values[name] = block
       end
     end
 
     def initialize(*args, &block)
       super
-      self.class.custom_values.each do |k, block|
-        self[k] = self.instance_eval(&block)
-      end if self.class.custom_values.present?
+      if self.class.custom_values.present?
+        self.class.custom_values.each do |k, block|
+          self[k] = instance_eval(&block)
+        end
+      end
       convert_booleans
       delete_if { |k, _| ignoreable.include?(k) }
     end
 
     def convert_booleans
       self.stored_as_boolean.each do |key|
-        self[key] = self[key].to_boolean_from_arguments if self.has_key?(key)
+        self[key] = self[key].to_boolean_from_arguments if has_key?(key)
       end
     end
     private :convert_booleans

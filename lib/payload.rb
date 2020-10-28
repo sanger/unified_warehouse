@@ -7,8 +7,8 @@ class Payload
     def from_json(json)
       begin
         parameters = JSON.parse(json)
-      rescue JSON::ParserError => exception
-        raise InvalidMessage, "Message is invalid json: #{exception.message}"
+      rescue JSON::ParserError => e
+        raise InvalidMessage, "Message is invalid json: #{e.message}"
       end
       lims = parameters.delete('lims') || raise(InvalidMessage, 'Message missing lims parameter')
       raise(InvalidMessage, 'Message contains multiple potential models') if parameters.length > 1
@@ -36,7 +36,9 @@ class Payload
 
   def model_class_for(model_class_name)
     candidate_class = model_class_name.classify.safe_constantize
-    raise(InvalidMessage, "Unrecognized model: #{model_class_name}") unless candidate_class && (candidate_class < ApplicationRecord)
+    unless candidate_class && (candidate_class < ApplicationRecord)
+      raise(InvalidMessage, "Unrecognized model: #{model_class_name}")
+    end
 
     candidate_class
   end

@@ -19,9 +19,9 @@ module ResourceTools
 
     # IDs can be alphanumerics, so the column is not set to integer. While MySQL is smart enough to handle the conversion, it
     # slows down the queries significantly (~400ms vs 2). Ruby handles the conversion much more quickly.
-    scope :for_lims,  lambda { |lims| where(id_lims: lims) }
-    scope :with_uuid, lambda { |uuid| where("uuid_#{base.name.underscore}_lims": uuid) }
-    scope :with_id,   lambda { |id|   where(base.base_resource_key => id.to_s) }
+    scope :for_lims,  ->(lims) { where(id_lims: lims) }
+    scope :with_uuid, ->(uuid) { where("uuid_#{base.name.underscore}_lims": uuid) }
+    scope :with_id,   ->(id) {   where(base.base_resource_key => id.to_s) }
 
     def self.base_resource_key
       "id_#{name.underscore}_lims"
@@ -39,7 +39,7 @@ module ResourceTools
   end
 
   def related
-    self.class.for_uuid(self.uuid)
+    self.class.for_uuid(uuid)
   end
 
   # Has this record been deleted remotely
@@ -50,16 +50,18 @@ module ResourceTools
   # Delete the record
   def delete!
     dup.tap do |record|
-      record.uuid, record.deleted_at = self.uuid, Time.now
+      record.uuid = uuid
+      record.deleted_at = Time.now
       record.recorded_at = record.last_updated = record.deleted_at
       record.save!
     end
   end
 
-  IGNOREABLE_ATTRIBUTES = ['dont_use_id', 'recorded_at']
+  IGNOREABLE_ATTRIBUTES = %w[dont_use_id recorded_at].freeze
 
   def updated_values?(object)
-    us, them = self.attributes.stringify_keys, object.attributes.stringify_keys.reverse_slice(IGNOREABLE_ATTRIBUTES)
-    not us.within_acceptable_bounds?(them)
+    us = attributes.stringify_keys
+    them = object.attributes.stringify_keys.reverse_slice(IGNOREABLE_ATTRIBUTES)
+    !us.within_acceptable_bounds?(them)
   end
 end

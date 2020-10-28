@@ -2,7 +2,7 @@ module NestedResourceTools
   extend ActiveSupport::Concern
 
   def latest(other)
-    yield(self) if (other.last_updated > last_updated)
+    yield(self) if other.last_updated > last_updated
   end
 
   module ClassMethods

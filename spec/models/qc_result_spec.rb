@@ -57,7 +57,7 @@ describe QcResult do
     it 'has an index on id_qc_result_lims and :id_lims' do
       expect(
         ActiveRecord::Base.connection.index_exists?(
-          :qc_result, [:id_qc_result_lims, :id_lims], name: 'lookup_index'
+          :qc_result, %i[id_qc_result_lims id_lims], name: 'lookup_index'
         )
       ).to be_truthy
     end

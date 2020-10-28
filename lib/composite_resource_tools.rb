@@ -4,7 +4,7 @@ module CompositeResourceTools
   extend ActiveSupport::Concern
 
   def latest(other)
-    yield(self) if (other.last_updated > last_updated)
+    yield(self) if other.last_updated > last_updated
   end
 
   module ClassMethods
@@ -49,7 +49,5 @@ module CompositeResourceTools
     def invalid_message!
       raise InvalidMessage, "Contains two elements with the same composite identifier: combination of #{@composition_keys.join(', ')} should be unique."
     end
-
-    private
   end
 end

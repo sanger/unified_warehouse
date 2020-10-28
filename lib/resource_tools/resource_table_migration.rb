@@ -1,9 +1,9 @@
 module ResourceTools::ResourceTableMigration
   def each_resource_table
     connection.tables.each do |table|
-      next if table =~ /^current_/ or ['asset_freezers'].include?(table)
+      next if table =~ (/^current_/) || ['asset_freezers'].include?(table)
 
-      yield(table) if ['current_from', 'current_to'].all? { |c| has_column?(table, c) }
+      yield(table) if %w[current_from current_to].all? { |c| has_column?(table, c) }
     end
   end
   private :each_resource_table
@@ -32,7 +32,7 @@ module ResourceTools::ResourceTableMigration
     end
 
     change_table(name, bulk: true) do |t|
-      t.index([:uuid, :current_from, :current_to], name: :uuid_and_current_from_and_current_to_idx, unique: true)
+      t.index(%i[uuid current_from current_to], name: :uuid_and_current_from_and_current_to_idx, unique: true)
     end
     change_table("current_#{name}", bulk: true) do |t|
       t.index([:internal_id], name: :internal_id_idx, unique: true)
@@ -78,7 +78,7 @@ module ResourceTools::ResourceTableMigration
 
     drop_trigger("maintain_current_#{table}_trigger")
     after_trigger(
-      %Q{
+      %{
         BEGIN
           IF NEW.current_to IS NULL OR NEW.deleted_at IS NOT NULL THEN BEGIN
             DELETE FROM #{current_table} WHERE uuid=NEW.uuid;
