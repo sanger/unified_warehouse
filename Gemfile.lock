@@ -221,7 +221,7 @@ DEPENDENCIES
   guard
   guard-bundler
   guard-rspec
-  hashie
+  hashie (~> 4.0)
   migration_comments
   mysql2
   pry
