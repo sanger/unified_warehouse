@@ -28,12 +28,6 @@ module ResourceTools
     end
   end
 
-  def remember_if_we_are_a_new_record
-    @inserted_record = new_record?
-    true
-  end
-  private :remember_if_we_are_a_new_record
-
   def inserted_record?
     @inserted_record
   end
@@ -63,5 +57,11 @@ module ResourceTools
     us = attributes.stringify_keys
     them = object.attributes.stringify_keys.reverse_slice(IGNOREABLE_ATTRIBUTES)
     !us.within_acceptable_bounds?(them)
+  end
+
+  private
+
+  def remember_if_we_are_a_new_record
+    @inserted_record = new_record?
   end
 end
