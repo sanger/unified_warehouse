@@ -1,3 +1,16 @@
+# Use to automatically test associations
+# @example A simple resource
+# ```
+# it_behaves_like 'belongs to', [
+#       :sample # It belongs to as sample
+#     ], nil
+# ```
+# @example A nested resource
+# ```
+# it_behaves_like 'belongs to', [
+#       :sample # It belongs to as sample
+#     ], { lanes: :controls } # The Json keys to follow to get to the relationship
+# ```
 shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
   let!(:json_handler) { described_class.send(:json) }
 
