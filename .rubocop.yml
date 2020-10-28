@@ -10,9 +10,6 @@ Metrics/BlockLength:
     - 'config/environments/development.rb'
 Rails/ApplicationRecord:
   Enabled: false
-# Offense count: 1
-# Configuration parameters: Include.
-# Include: app/**/*.rb, config/**/*.rb, lib/**/*.rb
 Rails/Exit:
   Exclude:
     - 'lib/**/*.rake'
