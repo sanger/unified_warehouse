@@ -8,6 +8,7 @@ module ResourceTools::CoreExtensions
       # [key, value]
       def convert(object)
         return object if object.is_a?(Array)
+
         [object]
       end
     end
@@ -38,6 +39,7 @@ module ResourceTools::CoreExtensions
   module String
     def within_acceptable_bounds?(value)
       return false if value.nil?
+
       self == value.to_s
     end
 
@@ -65,6 +67,7 @@ module ResourceTools::CoreExtensions
 
     def within_acceptable_bounds?(v)
       return false if v.nil?
+
       (self - v).abs < numeric_tolerance
     end
   end

@@ -67,6 +67,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
 
   def model
     return @model if @model.present?
+
     @model = Class.new(ActiveRecord::Base)
     @model.set_table_name(plural_name)
     @model

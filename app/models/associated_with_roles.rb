@@ -1,3 +1,6 @@
+# Provides behaviour to allow records to be associated with multiple users with different roles.
+# For example, the association of owners, managers etc. with a Study, as presented in the
+# study_users table
 module AssociatedWithRoles
   def self.extended(base)
     base.class_eval do

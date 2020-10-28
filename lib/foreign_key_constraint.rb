@@ -23,6 +23,7 @@ module ForeignKeyConstraint
     raise 'Invalid model name' unless /\A[a-z_]+\Z/ === modl
     raise 'Invalid foreign key' unless /\A[a-z_]+\Z/ === fk
     raise 'Invalid association' unless /\A[a-z_]+\Z/ === as
+
     yield(table, modl, as, fk)
   end
 end

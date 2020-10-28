@@ -90,8 +90,7 @@ describe PacBioRun do
         {
           "well_label" => "C1",
           "well_uuid_lims" => "000000-0000-0000-0000-0000000000",
-          "samples" => [
-          ]
+          "samples" => []
         }
       ]
     }

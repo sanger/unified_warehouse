@@ -8,11 +8,11 @@ describe QcResult do
     let(:expected_entries) { 1 }
     let(:json) do
       { 'id_qc_result_lims' => '123',
-        'assay'        => 'qPCR 1.0',
-        'value'        => '5.43',
-        'units'        => 'nM',
-        'cv'           => 2.34,
-        'qc_type'      => 'Molarity',
+        'assay' => 'qPCR 1.0',
+        'value' => '5.43',
+        'units' => 'nM',
+        'cv' => 2.34,
+        'qc_type' => 'Molarity',
         'id_pool_lims' => 'NT10369L',
         'labware_purpose' => 'Stock Plate',
         'date_created' => '2012-03-11 10:22:42',
@@ -34,11 +34,11 @@ describe QcResult do
     let(:expected_entries) { 0 }
     let(:json) do
       { 'id_qc_result_lims' => '123',
-        'assay'        => 'qPCR 1.0',
-        'value'        => '5.43',
-        'units'        => 'nM',
-        'cv'           => 2.34,
-        'qc_type'      => 'Molarity',
+        'assay' => 'qPCR 1.0',
+        'value' => '5.43',
+        'units' => 'nM',
+        'cv' => 2.34,
+        'qc_type' => 'Molarity',
         'id_pool_lims' => 'NT10369L',
         'labware_purpose' => 'Stock Plate',
         'date_created' => '2012-03-11 10:22:42',

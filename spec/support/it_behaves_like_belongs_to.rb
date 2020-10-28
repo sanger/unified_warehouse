@@ -18,6 +18,7 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
     return json if graph.nil?
     return json[graph.to_s].first if graph.is_a?(Symbol)
     return json[graph.first.to_s].first if (graph.count == 1 && graph.first.is_a?(Symbol))
+
     k, v = graph.first
     find_target(json[k.to_s].first, v)
   end
@@ -26,6 +27,7 @@ shared_examples_for 'belongs to' do |belonging_owners, belonging_owned|
     return handler if graph.nil?
     return handler.nested_models[graph] if graph.is_a?(Symbol)
     return handler.nested_models[graph.first] if (graph.count == 1 && graph.first.is_a?(Symbol))
+
     k, v = graph.first
     find_handler(handler.nested_models[k], v)
   end

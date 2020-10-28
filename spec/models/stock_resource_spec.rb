@@ -12,8 +12,7 @@ describe StockResource do
     it_behaves_like 'maps JSON fields', {
     }
 
-    it_behaves_like 'ignores JSON fields', [
-    ]
+    it_behaves_like 'ignores JSON fields', []
 
     it_behaves_like 'belongs to', [
       :sample,
@@ -51,7 +50,7 @@ describe StockResource do
 
         "current_volume" => 1.23,
         "initial_volume" => 4.56,
-        "concentration"  => 23.56,
+        "concentration" => 23.56,
 
         "gel_pass" => "Pass",
         "pico_pass" => "Pass",
@@ -109,7 +108,7 @@ describe StockResource do
 
         "current_volume" => 1.23,
         "initial_volume" => 4.56,
-        "concentration"  => 23.56,
+        "concentration" => 23.56,
 
         "gel_pass" => "Pass",
         "pico_pass" => "Pass",

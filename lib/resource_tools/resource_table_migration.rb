@@ -2,6 +2,7 @@ module ResourceTools::ResourceTableMigration
   def each_resource_table
     connection.tables.each do |table|
       next if table =~ /^current_/ or ['asset_freezers'].include?(table)
+
       yield(table) if ['current_from', 'current_to'].all? { |c| has_column?(table, c) }
     end
   end

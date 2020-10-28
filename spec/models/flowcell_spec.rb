@@ -13,8 +13,7 @@ describe Flowcell do
       flowcell_id: :id_flowcell_lims
     }
 
-    it_behaves_like 'ignores JSON fields', [
-    ]
+    it_behaves_like 'ignores JSON fields', []
 
     it_behaves_like 'belongs to', [
       :study,

@@ -13,6 +13,7 @@ class Payload
       lims = parameters.delete('lims') || raise(InvalidMessage, 'Message missing lims parameter')
       raise(InvalidMessage, 'Message contains multiple potential models') if parameters.length > 1
       raise(InvalidMessage, 'Message is missing main payload') if parameters.length.zero?
+
       new(lims, *parameters.flatten)
     end
   end
@@ -36,6 +37,7 @@ class Payload
   def model_class_for(model_class_name)
     candidate_class = model_class_name.classify.safe_constantize
     raise(InvalidMessage, "Unrecognized model: #{model_class_name}") unless candidate_class && (candidate_class < ApplicationRecord)
+
     candidate_class
   end
 end

@@ -19,7 +19,7 @@ describe Study do
     end
 
     it_behaves_like 'store as boolean', {
-      'contains_human_dna'     => 'Yes',
+      'contains_human_dna' => 'Yes',
       'contaminated_human_dna' => 'No'
     }
   end
