@@ -16,8 +16,8 @@ module UnifiedWarehouse
     config.time_zone          = 'UTC'
     config.encoding           = 'utf-8'
     config.filter_parameters += [:password]
-   # config.assets.enabled     = false
-   # config.assets.version     = '1.0'
+    # config.assets.enabled     = false
+    # config.assets.version     = '1.0'
 
     # We've already agreed a schema with NPG, I'd prefer not to do this but rails
     # isn't the only convention in play here.
