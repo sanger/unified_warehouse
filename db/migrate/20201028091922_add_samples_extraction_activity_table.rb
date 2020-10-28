@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Creates a table for tracking samples eaxtraction lims activities
+# Creates a table for tracking samples extraction lims activities
 class AddSamplesExtractionActivityTable < ActiveRecord::Migration
   def change
     create_table :samples_extraction_activity, primary_key: :id_oseq_flowcell_tmp, options: 'CHARSET=utf8 COLLATE=utf8_unicode_ci' do |t|
