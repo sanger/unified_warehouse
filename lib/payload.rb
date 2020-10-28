@@ -35,7 +35,7 @@ class Payload
 
   def model_class_for(model_class_name)
     candidate_class = model_class_name.classify.safe_constantize
-    raise(InvalidMessage, "Unrecognized model: #{model_class_name}") unless candidate_class && (candidate_class < ActiveRecord::Base)
+    raise(InvalidMessage, "Unrecognized model: #{model_class_name}") unless candidate_class && (candidate_class < ApplicationRecord)
     candidate_class
   end
 end

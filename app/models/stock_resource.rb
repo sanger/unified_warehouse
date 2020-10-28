@@ -1,4 +1,4 @@
-class StockResource < ActiveRecord::Base
+class StockResource < ApplicationRecord
   include ResourceTools
   include CompositeResourceTools
 
