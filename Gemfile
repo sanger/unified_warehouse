@@ -7,7 +7,7 @@ gem 'rails', '~> 5.0'
 
 gem 'bunny'
 gem 'daemons'
-gem 'hashie', '~> 3.3'
+gem 'hashie', '~> 4.0'
 gem 'migration_comments'
 
 group :test, :development do

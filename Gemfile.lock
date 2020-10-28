@@ -83,7 +83,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    hashie (3.3.1)
+    hashie (4.1.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     listen (3.2.1)
@@ -221,7 +221,7 @@ DEPENDENCIES
   guard
   guard-bundler
   guard-rspec
-  hashie (~> 3.3)
+  hashie
   migration_comments
   mysql2
   pry
