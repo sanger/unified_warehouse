@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :sample do
     uuid_sample_lims { '000000-0000-0000-0000-0000000000' }
     id_lims { 'example' }

@@ -11,7 +11,7 @@ gem 'hashie', '~> 4.0'
 gem 'migration_comments'
 
 group :test, :development do
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'pry'
   gem 'rspec-rails'
 end
