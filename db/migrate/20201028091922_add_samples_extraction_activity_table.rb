@@ -3,7 +3,7 @@
 # Creates a table for tracking samples eaxtraction lims activities
 class AddSamplesExtractionActivityTable < ActiveRecord::Migration
   def change
-    create_table :samples_extraction_activity, primary_key: :id_oseq_flowcell_tmp, options: 'CHARSET=utf8 COLLATE=utf8_unicode_ci' do |t|
+    create_table :samples_extraction_activity, primary_key: :id_activity_tmp, options: 'CHARSET=utf8 COLLATE=utf8_unicode_ci' do |t|
       t.string :id_activity_lims, null: false, comment: 'LIMs-specific activity id', index: true
 
       t.column :id_sample_tmp, 'integer unsigned', null: false, comment: 'Sample id, see "sample.id_sample_tmp"'
