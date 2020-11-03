@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Creates a table for tracking samples extraction lims activities
-class AddSamplesExtractionActivityTable < ActiveRecord::Migration
+class AddSamplesExtractionActivityTable < ActiveRecord::Migration[4.2]
   def change
     create_table :samples_extraction_activity, primary_key: :id_activity_tmp, options: 'CHARSET=utf8 COLLATE=utf8_unicode_ci' do |t|
       t.string :id_activity_lims, null: false, comment: 'LIMs-specific activity id', index: true
