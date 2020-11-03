@@ -74,7 +74,16 @@ Rails.application.configure do
   config.amqp.requeue_key                 = "requeue.#{Rails.env}"
   config.amqp.main.queue                  = 'psd.mlwh'
   config.amqp.main.exchange               = 'psd.sequencescape'
-  config.amqp.main.routing_keys           = ['test.key']
+  config.amqp.main.routing_keys           = [
+    # Test binding for development
+    'test.key',
+    # Sequencescape bindings
+    'development.saved.sample.#',
+    'development.saved.study.#',
+    'development.message.#',
+    # Sample Extraction bindings
+    'development.activity.finished.#'
+  ]
   config.amqp.main.deadletter_exchange    = 'deadletters'
 
   config.amqp.delay.queue                  = 'psd.mlwh.delay'
