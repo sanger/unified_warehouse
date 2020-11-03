@@ -333,7 +333,7 @@ CREATE TABLE `samples_extraction_activity` (
   `completed_at` datetime NOT NULL COMMENT 'Timestamp of activity completion',
   `deleted_at` datetime DEFAULT NULL COMMENT 'Timestamp of any activity removal',
   `id_lims` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
-  PRIMARY KEY (`id_oseq_flowcell_tmp`),
+  PRIMARY KEY (`id_activity_tmp`),
   KEY `index_samples_extraction_activity_on_id_activity_lims` (`id_activity_lims`),
   KEY `fk_rails_bbdd0468f0` (`id_sample_tmp`),
   CONSTRAINT `fk_rails_bbdd0468f0` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
