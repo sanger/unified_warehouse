@@ -56,12 +56,17 @@ This will ensure the queue that is generated is compatible with the expectations
 
 ### Execution
 
-Execute the worker to pick up messages in the queue and process them into the database:
+Execute the worker to pick up messages in the queue and process them into the
+database:
 
-    bundle exec ./script/worker 1 start
+    ```bundle exec ./bin/amqp_client start```
 
-where `1` is an identifier for the worker, and `start` instructs it to start.
-You can also stop a worker by calling `stop` or restart it with `restart`.
+where `start` instructs it to start. You can also stop a worker by calling `stop`
+or restart it with `restart`.
+
+To run in non-daemonized mode, which can be useful for debugging:
+
+    ````bundle exec ./bin/amqp_client run```
 
 #### Troubleshooting
 
