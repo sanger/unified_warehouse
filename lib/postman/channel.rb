@@ -54,8 +54,10 @@ class Postman
     end
 
     def queue_arguments
-      config = { 'x-dead-letter-exchange' => @deadletter_exchange }
+      config = {}
+      config['x-dead-letter-exchange'] = @deadletter_exchange
       config['x-message-ttl'] = @ttl if @ttl.present?
+      config['durable'] = true
       config
     end
 
