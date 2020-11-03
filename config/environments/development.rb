@@ -84,7 +84,7 @@ Rails.application.configure do
     # Sample Extraction bindings
     'development.activity.finished.#'
   ]
-  config.amqp.main.deadletter_exchange    = 'deadletters'
+  config.amqp.main.deadletter_exchange = 'deadletters'
 
   config.amqp.delay.queue                  = 'psd.mlwh.delay'
   config.amqp.delay.exchange               = 'psd.sequencescape.delay'

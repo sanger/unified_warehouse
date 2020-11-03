@@ -33,7 +33,6 @@ Rails.application.configure do
   # Store uploaded files on the local file system in a temporary directory
   # config.active_storage.service = :test
 
-
   # config.action_mailer.raise_delivery_errors = false
 
   # config.assets.debug = true

@@ -21,6 +21,7 @@ Rails/CreateTableWithTimestamps:
 AllCops:
   Exclude:
     - 'bin/*'
+    - 'vendor/**/*'
 Rails/ActiveRecordCallbacksOrder: # (new in 2.7)
   Enabled: true
 Rails/AfterCommitOverride: # (new in 2.8)
