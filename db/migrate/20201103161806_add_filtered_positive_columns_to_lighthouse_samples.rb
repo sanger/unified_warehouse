@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Adds the filtered positive columns to the lighthouse_sample table
 class AddFilteredPositiveColumnsToLighthouseSamples < ActiveRecord::Migration
   def change
     change_table :lighthouse_sample, bulk: true do |t|
