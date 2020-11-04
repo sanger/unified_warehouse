@@ -4,6 +4,7 @@
 require 'daemons'
 require 'bunny'
 require './lib/postman'
+require './lib/postman/channel'
 
 APP_PATH = File.expand_path('../config/application', __dir__)
 
