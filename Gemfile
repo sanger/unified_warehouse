@@ -7,22 +7,19 @@ gem 'mysql2'
 # Initially installed with
 # gem 'rails', '~> 6.0'
 # And then extracted the dependencies from the Gemfile.lock
-# I've commented out those we don't need.
+# I've removed those we don't need. If reinstating a dependency try and match
+# the version to those already included.
+# A full list of rails components can be found in the Gemfile:
+# https://github.com/rails/rails/blob/master/rails.gemspec
+#
+# Be aware when adding in new components that they may require an initializer
+# or additional configuration options.
 # RAILS DEPENDENCIES
-# gem 'actioncable', '~> 6.0.3'
-# gem 'actionmailbox', '~> 6.0.3'
-# gem 'actionmailer', '~> 6.0.3'
-# gem 'actionpack', '~> 6.0.3'
-# gem 'actiontext', '~> 6.0.3'
-# gem 'actionview', '~> 6.0.3'
-# gem 'activejob', '~> 6.0.3'
 gem 'activemodel', '~> 6.0.3'
 gem 'activerecord', '~> 6.0.3'
-# gem 'activestorage', '~> 6.0.3'
 gem 'activesupport', '~> 6.0.3'
 gem 'bundler', '>= 1.3.0'
 gem 'railties', '~> 6.0.3'
-# gem 'sprockets-rails', '>= 2.0.0'
 # # RAILS DEPENDENCIES
 
 gem 'bunny'
