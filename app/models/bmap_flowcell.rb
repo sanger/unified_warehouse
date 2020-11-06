@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BmapFlowcell < ActiveRecord::Base
+class BmapFlowcell < ApplicationRecord
   include ResourceTools
   include NestedResourceTools
 

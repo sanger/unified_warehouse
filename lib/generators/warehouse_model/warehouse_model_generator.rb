@@ -5,7 +5,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
     end
 
     def next
-      @value.tap { @value = @value + 1 }
+      @value.tap { @value += 1 }
     end
   end
 
@@ -21,12 +21,12 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
     def to_s
       values = (0..4).map { |v| (@start + v) % 10 }.map(&:to_s)
       counts = [8, 4, 4, 4, 12]
-      values.zip(counts).map { |k, v| "#{k * v}" }.join('-')
+      values.zip(counts).map { |k, v| (k * v).to_s }.join('-')
     end
   end
 
   def banner
-    "Usage: #{$0} #{spec.name} ModelName"
+    "Usage: #{$PROGRAM_NAME} #{spec.name} ModelName"
   end
 
   def uuid_generator
@@ -37,7 +37,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
     @integer_generator ||= Generator.new(1)
   end
 
-  IGNORE_FIELDS = [:dont_use_id, :deleted_at, :recorded_at]
+  IGNORE_FIELDS = %i[dont_use_id deleted_at recorded_at].freeze
 
   def columns
     model.columns.map do |column|
@@ -56,7 +56,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
         when :integer  then integer_generator.next
         when :boolean  then true
         when :datetime then Time.now.utc.strftime('%Y-%m-%d %H:%M:%S')
-        else                column.name.to_s.gsub(/_/, ' ')
+        else                column.name.to_s.tr('_', ' ')
         end
       if column.type.to_sym == :string && column.limit < value.length
         value = value.split(/\s+/).map(&:first).join.slice(0, column.limit)
@@ -67,6 +67,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
 
   def model
     return @model if @model.present?
+
     @model = Class.new(ActiveRecord::Base)
     @model.set_table_name(plural_name)
     @model

@@ -1,4 +1,4 @@
-class Study < ActiveRecord::Base
+class Study < ApplicationRecord
   include ResourceTools
   include SingularResourceTools
   extend AssociatedWithRoles

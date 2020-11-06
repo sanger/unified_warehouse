@@ -19,7 +19,7 @@ class CreateLighthouseSample < ActiveRecord::Migration
       t.datetime :created_at, comment: 'When this record was inserted'
       t.datetime :updated_at, comment: 'When this record was last updated'
 
-      t.index [:root_sample_id, :rna_id, :result], unique: true # same uniqueness criteria as in MongoDB
+      t.index %i[root_sample_id rna_id result], unique: true # same uniqueness criteria as in MongoDB
       t.index :mongodb_id, unique: true
       t.index :date_tested # reporting will often be by date tested, so index for faster queries
     end

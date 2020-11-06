@@ -12,7 +12,7 @@ class AddStockResourcesTable < ActiveRecord::Migration
       t.string :id_lims, limit: 10, null: false, comment: 'LIM system identifier'
 
       t.string :id_stock_resource_lims, limit: 20, null: false, comment: 'Lims specific identifier for the stock'
-      t.string :stock_resource_uuid,        limit: 36,              comment: 'Uuid identifier for the stock'
+      t.string :stock_resource_uuid, limit: 36, comment: 'Uuid identifier for the stock'
 
       t.string :labware_type,            null: false, comment: 'The type of labware containing the stock. eg. Well, Tube'
 

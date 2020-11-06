@@ -1,8 +1,3 @@
--- MySQL dump 10.13  Distrib 8.0.21, for osx10.15 (x86_64)
---
--- Host: localhost    Database: unified_warehouse_development
--- ------------------------------------------------------
--- Server version	8.0.21
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,11 +9,17 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `bmap_flowcell`
---
-
+DROP TABLE IF EXISTS `ar_internal_metadata`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `ar_internal_metadata` (
+  `key` varchar(255) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `created_at` datetime(6) NOT NULL,
+  `updated_at` datetime(6) NOT NULL,
+  PRIMARY KEY (`key`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `bmap_flowcell`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -46,11 +47,6 @@ CREATE TABLE `bmap_flowcell` (
   CONSTRAINT `fk_bmap_flowcell_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `flgen_plate`
---
-
 DROP TABLE IF EXISTS `flgen_plate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -79,11 +75,6 @@ CREATE TABLE `flgen_plate` (
   CONSTRAINT `flgen_plate_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `iseq_flowcell`
---
-
 DROP TABLE IF EXISTS `iseq_flowcell`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -146,11 +137,6 @@ CREATE TABLE `iseq_flowcell` (
   CONSTRAINT `iseq_flowcell_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `lighthouse_sample`
---
-
 DROP TABLE IF EXISTS `lighthouse_sample`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -179,9 +165,9 @@ CREATE TABLE `lighthouse_sample` (
   `ch4_target` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Target for channel 4',
   `ch4_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 4',
   `ch4_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 4',
-  `filtered_positive` tinyint(1) DEFAULT NULL,
-  `filtered_positive_version` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `filtered_positive_timestamp` datetime DEFAULT NULL,
+  `filtered_positive` tinyint(1) DEFAULT NULL COMMENT 'Filtered positive result value',
+  `filtered_positive_version` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Filtered positive version',
+  `filtered_positive_timestamp` datetime DEFAULT NULL COMMENT 'Filtered positive timestamp',
   `created_at` datetime DEFAULT NULL COMMENT 'When this record was inserted',
   `updated_at` datetime DEFAULT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`id`),
@@ -190,11 +176,6 @@ CREATE TABLE `lighthouse_sample` (
   KEY `index_lighthouse_sample_on_date_tested` (`date_tested`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `oseq_flowcell`
---
-
 DROP TABLE IF EXISTS `oseq_flowcell`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -227,11 +208,6 @@ CREATE TABLE `oseq_flowcell` (
   CONSTRAINT `fk_oseq_flowcell_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `pac_bio_run`
---
-
 DROP TABLE IF EXISTS `pac_bio_run`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -270,11 +246,6 @@ CREATE TABLE `pac_bio_run` (
   CONSTRAINT `fk_pac_bio_run_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `qc_result`
---
-
 DROP TABLE IF EXISTS `qc_result`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -301,11 +272,6 @@ CREATE TABLE `qc_result` (
   CONSTRAINT `fk_qc_result_to_sample` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `sample`
---
-
 DROP TABLE IF EXISTS `sample`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -349,13 +315,33 @@ CREATE TABLE `sample` (
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
   KEY `sample_name_index` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49650 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `schema_migrations`
---
-
+DROP TABLE IF EXISTS `samples_extraction_activity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `samples_extraction_activity` (
+  `id_activity_tmp` int NOT NULL AUTO_INCREMENT,
+  `id_activity_lims` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIMs-specific activity id',
+  `id_sample_tmp` int unsigned NOT NULL COMMENT 'Sample id, see "sample.id_sample_tmp"',
+  `activity_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of the activity performed',
+  `instrument` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the instrument used to perform the activity',
+  `kit_barcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'The barcode of the kit used to perform the activity',
+  `kit_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of kit used to perform the activity',
+  `input_barcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'The barcode of the labware (eg. plate or tube) at the begining of the activity',
+  `output_barcode` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'The barcode of the labware (eg. plate or tube)  at the end of the activity',
+  `user` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the user who was most recently associated with the activity',
+  `last_updated` datetime NOT NULL COMMENT 'Timestamp of last change to activity',
+  `recorded_at` datetime NOT NULL COMMENT 'Timestamp of warehouse update',
+  `completed_at` datetime NOT NULL COMMENT 'Timestamp of activity completion',
+  `deleted_at` datetime DEFAULT NULL COMMENT 'Timestamp of any activity removal',
+  `id_lims` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT 'LIM system identifier',
+  PRIMARY KEY (`id_activity_tmp`),
+  KEY `index_samples_extraction_activity_on_id_activity_lims` (`id_activity_lims`),
+  KEY `fk_rails_bbdd0468f0` (`id_sample_tmp`),
+  CONSTRAINT `fk_rails_bbdd0468f0` FOREIGN KEY (`id_sample_tmp`) REFERENCES `sample` (`id_sample_tmp`)
+) ENGINE=InnoDB AUTO_INCREMENT=35657 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `schema_migrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -364,11 +350,6 @@ CREATE TABLE `schema_migrations` (
   UNIQUE KEY `unique_schema_migrations` (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `stock_resource`
---
-
 DROP TABLE IF EXISTS `stock_resource`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -402,11 +383,6 @@ CREATE TABLE `stock_resource` (
   CONSTRAINT `fk_stock_resource_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `study`
---
-
 DROP TABLE IF EXISTS `study`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -458,11 +434,6 @@ CREATE TABLE `study` (
   KEY `study_name_index` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `study_users`
---
-
 DROP TABLE IF EXISTS `study_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -489,108 +460,60 @@ CREATE TABLE `study_users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-03 16:37:13
-INSERT INTO schema_migrations (version) VALUES ('20141113110635');
+INSERT INTO `schema_migrations` (version) VALUES
+('20141113110635'),
+('20141113130813'),
+('20141120101916'),
+('20141120123833'),
+('20150113120636'),
+('20150113134336'),
+('20150113142419'),
+('20150401132814'),
+('20150401145741'),
+('20150401150636'),
+('20150601112933'),
+('20150813094119'),
+('20150813122539'),
+('20150813125229'),
+('20150819120400'),
+('20150827140317'),
+('20150917082634'),
+('20150917100509'),
+('20151110102754'),
+('20151127094701'),
+('20160120155501'),
+('20160420084130'),
+('20160422095926'),
+('20160621125538'),
+('20160810093024'),
+('20160919144230'),
+('20170412135215'),
+('20170427123459'),
+('20170601102958'),
+('20170608082257'),
+('20170717092510'),
+('20170717093707'),
+('20170816121503'),
+('20171005105857'),
+('20180222132523'),
+('20180510132219'),
+('20180511093531'),
+('20180731122912'),
+('20180731142628'),
+('20180821113540'),
+('20181016142505'),
+('20181210145626'),
+('20190118111752'),
+('20190403081352'),
+('20191015143307'),
+('20200131111908'),
+('20200512152113'),
+('20200518083730'),
+('20200903104439'),
+('20200909085557'),
+('20200929142921'),
+('20201028091922'),
+('20201029150039'),
+('20201103161806');
 
-INSERT INTO schema_migrations (version) VALUES ('20141113130813');
-
-INSERT INTO schema_migrations (version) VALUES ('20141120101916');
-
-INSERT INTO schema_migrations (version) VALUES ('20141120123833');
-
-INSERT INTO schema_migrations (version) VALUES ('20150113120636');
-
-INSERT INTO schema_migrations (version) VALUES ('20150113134336');
-
-INSERT INTO schema_migrations (version) VALUES ('20150113142419');
-
-INSERT INTO schema_migrations (version) VALUES ('20150401132814');
-
-INSERT INTO schema_migrations (version) VALUES ('20150401145741');
-
-INSERT INTO schema_migrations (version) VALUES ('20150401150636');
-
-INSERT INTO schema_migrations (version) VALUES ('20150601112933');
-
-INSERT INTO schema_migrations (version) VALUES ('20150813094119');
-
-INSERT INTO schema_migrations (version) VALUES ('20150813122539');
-
-INSERT INTO schema_migrations (version) VALUES ('20150813125229');
-
-INSERT INTO schema_migrations (version) VALUES ('20150819120400');
-
-INSERT INTO schema_migrations (version) VALUES ('20150827140317');
-
-INSERT INTO schema_migrations (version) VALUES ('20150917082634');
-
-INSERT INTO schema_migrations (version) VALUES ('20150917100509');
-
-INSERT INTO schema_migrations (version) VALUES ('20151110102754');
-
-INSERT INTO schema_migrations (version) VALUES ('20151127094701');
-
-INSERT INTO schema_migrations (version) VALUES ('20160120155501');
-
-INSERT INTO schema_migrations (version) VALUES ('20160420084130');
-
-INSERT INTO schema_migrations (version) VALUES ('20160422095926');
-
-INSERT INTO schema_migrations (version) VALUES ('20160621125538');
-
-INSERT INTO schema_migrations (version) VALUES ('20160810093024');
-
-INSERT INTO schema_migrations (version) VALUES ('20160919144230');
-
-INSERT INTO schema_migrations (version) VALUES ('20170412135215');
-
-INSERT INTO schema_migrations (version) VALUES ('20170427123459');
-
-INSERT INTO schema_migrations (version) VALUES ('20170601102958');
-
-INSERT INTO schema_migrations (version) VALUES ('20170608082257');
-
-INSERT INTO schema_migrations (version) VALUES ('20170717092510');
-
-INSERT INTO schema_migrations (version) VALUES ('20170717093707');
-
-INSERT INTO schema_migrations (version) VALUES ('20170816121503');
-
-INSERT INTO schema_migrations (version) VALUES ('20171005105857');
-
-INSERT INTO schema_migrations (version) VALUES ('20180222132523');
-
-INSERT INTO schema_migrations (version) VALUES ('20180510132219');
-
-INSERT INTO schema_migrations (version) VALUES ('20180511093531');
-
-INSERT INTO schema_migrations (version) VALUES ('20180731122912');
-
-INSERT INTO schema_migrations (version) VALUES ('20180731142628');
-
-INSERT INTO schema_migrations (version) VALUES ('20180821113540');
-
-INSERT INTO schema_migrations (version) VALUES ('20181016142505');
-
-INSERT INTO schema_migrations (version) VALUES ('20181210145626');
-
-INSERT INTO schema_migrations (version) VALUES ('20190118111752');
-
-INSERT INTO schema_migrations (version) VALUES ('20190403081352');
-
-INSERT INTO schema_migrations (version) VALUES ('20191015143307');
-
-INSERT INTO schema_migrations (version) VALUES ('20200131111908');
-
-INSERT INTO schema_migrations (version) VALUES ('20200512152113');
-
-INSERT INTO schema_migrations (version) VALUES ('20200518083730');
-
-INSERT INTO schema_migrations (version) VALUES ('20200903104439');
-
-INSERT INTO schema_migrations (version) VALUES ('20200909085557');
-
-INSERT INTO schema_migrations (version) VALUES ('20200929142921');
-
-INSERT INTO schema_migrations (version) VALUES ('20201103161806');
 

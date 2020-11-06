@@ -30,7 +30,7 @@ describe BmapFlowcell do
     mock_study
   end
 
-  it_behaves_like 'belongs to', [:study, :sample], nil
+  it_behaves_like 'belongs to', %i[study sample], nil
 
   it 'saves the correct resource' do
     expect(described_class.create_or_update_from_json(json, example_lims)).to be_truthy

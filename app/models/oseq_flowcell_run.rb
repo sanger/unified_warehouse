@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # OseqFlowcellRun
-class OseqFlowcellRun < ActiveRecord::Base
+class OseqFlowcellRun < ApplicationRecord
   self.table_name = 'oseq_flowcell'
 
   include ResourceTools

@@ -6,8 +6,8 @@ module ResourceTools::Association
 
   module ClassMethods
     def has_associated(association)
-      self.instance_eval %Q{
-        belongs_to :#{association}, :foreign_key => :id_#{association}_tmp
+      instance_eval %{
+        belongs_to :#{association}, :foreign_key => :id_#{association}_tmp, required: false
         attr_accessor :#{association}_id, :#{association}_uuid
 
         before_validation do
