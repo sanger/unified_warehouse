@@ -1,4 +1,3 @@
-
 require_relative '../postman'
 
 class Postman
@@ -49,13 +48,16 @@ class Postman
     end
 
     def queue
-      raise StandardError, "No queue configured" if @queue_name.nil?
+      raise StandardError, 'No queue configured' if @queue_name.nil?
+
       channel.queue(@queue_name, arguments: queue_arguments)
     end
 
     def queue_arguments
-      config = { 'x-dead-letter-exchange' => @deadletter_exchange }
+      config = {}
+      config['x-dead-letter-exchange'] = @deadletter_exchange
       config['x-message-ttl'] = @ttl if @ttl.present?
+      config['durable'] = true
       config
     end
 

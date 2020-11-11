@@ -1,4 +1,4 @@
-class QcResult < ActiveRecord::Base
+class QcResult < ApplicationRecord
   include ResourceTools
   include NestedResourceTools
 

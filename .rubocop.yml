@@ -1,10 +1,7 @@
 inherit_from: .rubocop_todo.yml
-AllCops:
-  # Caution! Setting this to 2.4 can cause issues with
-  # rolling back to jruby 9.1.x.x which only supports 2.3
-  # Its mainly just regex matchers. But we should wait until
-  # we're happy on MRI.
-  TargetRubyVersion: 2.4
+require:
+  - rubocop-rails
+  - rubocop-performance
 Rails:
   Enabled: true
 Metrics/BlockLength:
@@ -13,10 +10,63 @@ Metrics/BlockLength:
     - 'config/environments/development.rb'
 Rails/ApplicationRecord:
   Enabled: false
-# Offense count: 1
-# Configuration parameters: Include.
-# Include: app/**/*.rb, config/**/*.rb, lib/**/*.rb
 Rails/Exit:
   Exclude:
     - 'lib/**/*.rake'
     - 'lib/postman.rb'
+# The default created_at and updated_at timestamps can be a little confusing
+# when we have similar data coming from the remote lims.
+Rails/CreateTableWithTimestamps:
+  Enabled: false
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'vendor/**/*'
+Rails/ActiveRecordCallbacksOrder: # (new in 2.7)
+  Enabled: true
+Rails/AfterCommitOverride: # (new in 2.8)
+  Enabled: true
+Rails/FindById: # (new in 2.7)
+  Enabled: true
+Rails/Inquiry: # (new in 2.7)
+  Enabled: true
+Rails/MailerName: # (new in 2.7)
+  Enabled: true
+Rails/MatchRoute: # (new in 2.7)
+  Enabled: true
+Rails/NegateInclude: # (new in 2.7)
+  Enabled: true
+Rails/Pluck: # (new in 2.7)
+  Enabled: true
+Rails/PluckInWhere: # (new in 2.7)
+  Enabled: true
+Rails/RenderInline: # (new in 2.7)
+  Enabled: true
+Rails/RenderPlainText: # (new in 2.7)
+  Enabled: true
+Rails/ShortI18n: # (new in 2.7)
+  Enabled: true
+Rails/SquishedSQLHeredocs: # (new in 2.8)
+  Enabled: true
+Rails/WhereExists: # (new in 2.7)
+  Enabled: true
+Rails/WhereNot: # (new in 2.8)
+  Enabled: true
+Performance/AncestorsInclude: # (new in 1.7)
+  Enabled: true
+Performance/BigDecimalWithNumericArgument: # (new in 1.7)
+  Enabled: true
+Performance/RedundantSortBlock: # (new in 1.7)
+  Enabled: true
+Performance/RedundantStringChars: # (new in 1.7)
+  Enabled: true
+Performance/ReverseFirst: # (new in 1.7)
+  Enabled: true
+Performance/SortReverse: # (new in 1.7)
+  Enabled: true
+Performance/Squeeze: # (new in 1.7)
+  Enabled: true
+Performance/StringInclude: # (new in 1.7)
+  Enabled: true
+Performance/Sum: # (new in 1.8)
+  Enabled: true

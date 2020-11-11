@@ -20,9 +20,9 @@ class PrepareStudyColumnsForMigrationToBoolean < ActiveRecord::Migration
   end
 
   def fields_to_convert
-    [
-      :contains_human_dna,
-      :contaminated_human_dna
+    %i[
+      contains_human_dna
+      contaminated_human_dna
     ]
   end
 end

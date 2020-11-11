@@ -1,4 +1,4 @@
-class <%= singular_name.classify %> < ActiveRecord::Base
+class <%= singular_name.classify %> < ApplicationRecord
   include ResourceTools
 
   # TODO: Uncomment and modify the following to adjust the behaviour of the JSON translation
