@@ -166,7 +166,7 @@ CREATE TABLE `lighthouse_sample` (
   `ch4_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 4',
   `ch4_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 4',
   `filtered_positive` tinyint(1) DEFAULT NULL COMMENT 'Filtered positive result value',
-  `filtered_positive_version` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Filtered positive version',
+  `filtered_positive_version` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Filtered positive version',
   `filtered_positive_timestamp` datetime DEFAULT NULL COMMENT 'Filtered positive timestamp',
   `created_at` datetime DEFAULT NULL COMMENT 'When this record was inserted',
   `updated_at` datetime DEFAULT NULL COMMENT 'When this record was last updated',
