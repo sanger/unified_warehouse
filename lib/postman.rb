@@ -3,6 +3,7 @@ require 'active_support'
 require 'active_support/core_ext'
 require_relative 'payload'
 require_relative 'postman/state_machine'
+require_relative 'postman/message'
 
 # A postman listens to a rabbitMQ message queues
 # and manages state and reconnection.
@@ -151,6 +152,6 @@ class Postman
   end
 
   def process(delivery_info, metadata, payload)
-    Message.new(self, delivery_info, metadata, payload).process
+    Postman::Message.new(self, delivery_info, metadata, payload).process
   end
 end
