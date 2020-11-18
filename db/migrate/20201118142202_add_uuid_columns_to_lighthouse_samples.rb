@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Adds the uuid columns to the lighthouse_sample table
 class AddUuidColumnsToLighthouseSamples < ActiveRecord::Migration[6.0]
   def change
     change_table :lighthouse_sample, bulk: true do |t|
