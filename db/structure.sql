@@ -168,6 +168,8 @@ CREATE TABLE `lighthouse_sample` (
   `filtered_positive` tinyint(1) DEFAULT NULL COMMENT 'Filtered positive result value',
   `filtered_positive_version` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Filtered positive version',
   `filtered_positive_timestamp` datetime DEFAULT NULL COMMENT 'Filtered positive timestamp',
+  `lh_sample_uuid` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Sample uuid created in crawler',
+  `lh_source_plate_uuid` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Source plate uuid created in crawler',
   `created_at` datetime DEFAULT NULL COMMENT 'When this record was inserted',
   `updated_at` datetime DEFAULT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`id`),
@@ -514,6 +516,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20200929142921'),
 ('20201028091922'),
 ('20201029150039'),
-('20201103161806');
+('20201103161806'),
+('20201118142202');
 
 
