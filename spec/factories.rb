@@ -37,6 +37,11 @@ FactoryBot.define do
     ch4_target { 'MS2' }
     ch4_result { 'Positive' }
     ch4_cq { 24.98589115 }
+    filtered_positive { true }
+    filtered_positive_version { '1.0' }
+    filtered_positive_timestamp { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
+    lh_sample_uuid { 'S00000-0000-0000-0000-0000000001' }
+    lh_source_plate_uuid { 'P00000-0000-0000-0000-0000000001' }
     created_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     updated_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
   end
