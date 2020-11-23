@@ -175,6 +175,7 @@ CREATE TABLE `lighthouse_sample` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result` (`root_sample_id`,`rna_id`,`result`),
   UNIQUE KEY `index_lighthouse_sample_on_mongodb_id` (`mongodb_id`),
+  UNIQUE KEY `index_lighthouse_sample_on_lh_sample_uuid` (`lh_sample_uuid`),
   KEY `index_lighthouse_sample_on_date_tested` (`date_tested`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
