@@ -67,7 +67,7 @@ RSpec.describe LighthouseSample, type: :model do
 
       errored = false
       begin
-        create :lighthouse_sample, root_sample_id: 'new', rna_id: 'new', result: 'new', mongodb_id: 'new'
+        create :lighthouse_sample, root_sample_id: 'new', rna_id: 'new', result: 'new', mongodb_id: 'new', lh_sample_uuid: 'new'
       rescue StandardError
         errored = true
       end
