@@ -19,7 +19,7 @@ RSpec.describe Payload, type: :lib do
 
     describe '#lims' do
       subject { message_from_json.lims }
-      it { is_expected.to eq("example") }
+      it { is_expected.to eq('example') }
     end
 
     describe '#model_class' do

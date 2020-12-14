@@ -14,9 +14,9 @@ describe OseqFlowcellRun do
 
   it_behaves_like 'a nested resource'
 
-  it_behaves_like 'belongs to', [
-    :study,
-    :sample
+  it_behaves_like 'belongs to', %i[
+    study
+    sample
   ], flowcells: :samples
 
   let(:json) do

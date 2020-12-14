@@ -12,19 +12,18 @@ This application is a denormalised warehouse for multiple LIMS.
 1. Install the relevant ruby is installed - have a look in the `.ruby-version` file
 1. Install bundler the version of bundler used to create the `Gemfile.lock`:
 
-       gem install bundler -v $(tail -1 Gemfile.lock)
+       `gem install bundler -v $(tail -1 Gemfile.lock)`
 
-1. Install the relevant gems using bundler:
+1. Run the setup process:
 
-       bundle install
+       `bin/setup`
 
 ### Database preparation
 
-Before you can use the system in any capacity, you must first prepare the database:
+Before you can use the system in any capacity, you must first prepare the database.
+This should be handled by `bin/setup` above, but if not:
 
-1. `bundle exec rake db:create`
-1. `bundle exec rake db:structure:load`
-1. `bundle exec rake db:seed`
+1. `bundle exec rake db:setup`
 
 ### Running tests
 
@@ -57,12 +56,17 @@ This will ensure the queue that is generated is compatible with the expectations
 
 ### Execution
 
-Execute the worker to pick up messages in the queue and process them into the database:
+Execute the worker to pick up messages in the queue and process them into the
+database:
 
-    bundle exec ./script/worker 1 start
+    ```bundle exec ./bin/amqp_client start```
 
-where `1` is an identifier for the worker, and `start` instructs it to start.
-You can also stop a worker by calling `stop` or restart it with `restart`.
+where `start` instructs it to start. You can also stop a worker by calling `stop`
+or restart it with `restart`.
+
+To run in non-daemonized mode, which can be useful for debugging:
+
+    ````bundle exec ./bin/amqp_client run```
 
 #### Troubleshooting
 

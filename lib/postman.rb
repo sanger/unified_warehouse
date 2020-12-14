@@ -3,6 +3,7 @@ require 'active_support'
 require 'active_support/core_ext'
 require_relative 'payload'
 require_relative 'postman/state_machine'
+require_relative 'postman/message'
 
 # A postman listens to a rabbitMQ message queues
 # and manages state and reconnection.
@@ -47,7 +48,7 @@ class Postman
     control_loop while alive?
     # And we leave the application
     info "Stopped #{@consumer_tag}"
-    info "Goodbye!"
+    info 'Goodbye!'
   ensure
     @client.close
   end
@@ -59,6 +60,7 @@ class Postman
 
   def pause!
     return unless running?
+
     unsubscribe!
     @recovery_attempts = 0
     @recover_at = Time.current
@@ -75,8 +77,8 @@ class Postman
   # kill things a little quicker as this will mostly happen in
   # development.
   def trap_signals
-    Signal.trap("TERM") { stop! }
-    Signal.trap("INT") { manual_stop! }
+    Signal.trap('TERM') { stop! }
+    Signal.trap('INT') { manual_stop! }
   end
 
   # The control loop. Checks the state of the process every three seconds
@@ -100,7 +102,8 @@ class Postman
   # 3. However, as our main thread is locked, we don't have anywhere else to handle the shutdown from
   # 4. There doesn't seem to be much gained from spinning up the control loop in its own thread
   def subscribe!
-    raise StandardError, "Consumer already exists" unless @consumer.nil?
+    raise StandardError, 'Consumer already exists' unless @consumer.nil?
+
     @consumer ||= @main_exchange.subscribe(@consumer_tag) do |delivery_info, metadata, payload|
       process(delivery_info, metadata, payload)
     end
@@ -115,6 +118,7 @@ class Postman
   # Rest for database recovery and restore the consumer.
   def attempt_recovery
     return unless recovery_due?
+
     warn "Attempting recovery of database connection: #{@recovery_attempts}"
     if recovered?
       running!
@@ -144,10 +148,10 @@ class Postman
   def manual_stop!
     exit 1 if stopping?
     stop!
-    STDOUT.puts "Press Ctrl-C again to stop immediately."
+    STDOUT.puts 'Press Ctrl-C again to stop immediately.'
   end
 
   def process(delivery_info, metadata, payload)
-    Message.new(self, delivery_info, metadata, payload).process
+    Postman::Message.new(self, delivery_info, metadata, payload).process
   end
 end

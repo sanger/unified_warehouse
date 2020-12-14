@@ -4,6 +4,7 @@
 require 'daemons'
 require 'bunny'
 require './lib/postman'
+require './lib/postman/channel'
 
 APP_PATH = File.expand_path('../config/application', __dir__)
 
@@ -27,6 +28,7 @@ class AmqpClient
     end
 
     def start!
+      make_pid_dir
       worker_count.times do |i|
         daemon(@instance || i)
       end
@@ -63,6 +65,14 @@ class AmqpClient
           requeue_key: Rails.application.config.amqp.requeue_key
         ).run!
       end
+    end
+
+    private
+
+    def make_pid_dir
+      Dir.mkdir(@pid_dir) unless Dir.exist?(@pid_dir)
+    rescue Errno::EEXIST
+      # Race condition, another process has created the directory.
     end
   end
 
