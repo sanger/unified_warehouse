@@ -166,7 +166,7 @@ CREATE TABLE `lighthouse_sample` (
   `ch4_result` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Result for channel 4',
   `ch4_cq` decimal(11,8) DEFAULT NULL COMMENT 'Cq value for channel 4',
   `filtered_positive` tinyint(1) DEFAULT NULL COMMENT 'Filtered positive result value',
-  `filtered_positive_version` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Filtered positive version',
+  `filtered_positive_version` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Filtered positive version',
   `filtered_positive_timestamp` datetime DEFAULT NULL COMMENT 'Filtered positive timestamp',
   `lh_sample_uuid` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Sample uuid created in crawler',
   `lh_source_plate_uuid` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Source plate uuid created in crawler',
@@ -317,7 +317,9 @@ CREATE TABLE `sample` (
   UNIQUE KEY `index_sample_on_id_sample_lims_and_id_lims` (`id_sample_lims`,`id_lims`),
   UNIQUE KEY `sample_uuid_sample_lims_index` (`uuid_sample_lims`),
   KEY `sample_accession_number_index` (`accession_number`),
-  KEY `sample_name_index` (`name`)
+  KEY `sample_name_index` (`name`),
+  KEY `index_sample_on_supplier_name` (`supplier_name`),
+  KEY `index_sample_on_sanger_sample_id` (`sanger_sample_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49650 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `samples_extraction_activity`;
@@ -518,6 +520,5 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201028091922'),
 ('20201029150039'),
 ('20201103161806'),
+('20201112100120'),
 ('20201118142202');
-
-
