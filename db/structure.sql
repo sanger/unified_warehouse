@@ -47,6 +47,18 @@ CREATE TABLE `bmap_flowcell` (
   CONSTRAINT `fk_bmap_flowcell_to_study` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `cherrypicked_samples`;
+/*!50001 DROP VIEW IF EXISTS `cherrypicked_samples`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `cherrypicked_samples` AS SELECT 
+ 1 AS `description`,
+ 1 AS `plate_barcode`,
+ 1 AS `phenotype`,
+ 1 AS `coordinate`,
+ 1 AS `created`,
+ 1 AS `event_type`*/;
+SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `flgen_plate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -168,8 +180,8 @@ CREATE TABLE `lighthouse_sample` (
   `filtered_positive` tinyint(1) DEFAULT NULL COMMENT 'Filtered positive result value',
   `filtered_positive_version` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Filtered positive version',
   `filtered_positive_timestamp` datetime DEFAULT NULL COMMENT 'Filtered positive timestamp',
-  `lh_sample_uuid` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Sample uuid created in crawler',
-  `lh_source_plate_uuid` varchar(36) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Source plate uuid created in crawler',
+  `lh_sample_uuid` varchar(36) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Sample uuid created in crawler',
+  `lh_source_plate_uuid` varchar(36) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'Source plate uuid created in crawler',
   `created_at` datetime DEFAULT NULL COMMENT 'When this record was inserted',
   `updated_at` datetime DEFAULT NULL COMMENT 'When this record was last updated',
   PRIMARY KEY (`id`),
@@ -177,7 +189,7 @@ CREATE TABLE `lighthouse_sample` (
   UNIQUE KEY `index_lighthouse_sample_on_mongodb_id` (`mongodb_id`),
   UNIQUE KEY `index_lighthouse_sample_on_lh_sample_uuid` (`lh_sample_uuid`),
   KEY `index_lighthouse_sample_on_date_tested` (`date_tested`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `oseq_flowcell`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -455,6 +467,19 @@ CREATE TABLE `study_users` (
   CONSTRAINT `study_users_study_fk` FOREIGN KEY (`id_study_tmp`) REFERENCES `study` (`id_study_tmp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50001 DROP VIEW IF EXISTS `cherrypicked_samples`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `cherrypicked_samples` AS select `cp_sample`.`description` AS `description`,`cp_sample`.`plate_barcode` AS `plate_barcode`,`cp_sample`.`phenotype` AS `phenotype`,`cp_sample`.`coordinate` AS `coordinate`,`cp_sample`.`created` AS `created`,`cp_sample`.`event_type` AS `event_type` from (select `mlwh_sample`.`description` AS `description`,`mlwh_stock_resource`.`labware_human_barcode` AS `plate_barcode`,`mlwh_sample`.`phenotype` AS `phenotype`,`mlwh_stock_resource`.`labware_coordinate` AS `coordinate`,`mlwh_sample`.`created` AS `created`,`mlwh_events_event_types`.`key` AS `event_type` from (((((`sample` `mlwh_sample` join `stock_resource` `mlwh_stock_resource` on((`mlwh_sample`.`id_sample_tmp` = `mlwh_stock_resource`.`id_sample_tmp`))) join `event_warehouse_test`.`subjects` `mlwh_events_subjects` on((`mlwh_events_subjects`.`friendly_name` = `mlwh_sample`.`sanger_sample_id`))) join `event_warehouse_test`.`roles` `mlwh_events_roles` on((`mlwh_events_roles`.`subject_id` = `mlwh_events_subjects`.`id`))) join `event_warehouse_test`.`events` `mlwh_events_events` on((`mlwh_events_roles`.`event_id` = `mlwh_events_events`.`id`))) join `event_warehouse_test`.`event_types` `mlwh_events_event_types` on((`mlwh_events_events`.`event_type_id` = `mlwh_events_event_types`.`id`))) union select `mlwh_sample`.`description` AS `description`,`mlwh_lh_sample`.`plate_barcode` AS `plate_barcode`,`mlwh_sample`.`phenotype` AS `phenotype`,`mlwh_lh_sample`.`coordinate` AS `coordinate`,`mlwh_sample`.`created` AS `created`,`mlwh_events_event_types`.`key` AS `event_type` from (((((`sample` `mlwh_sample` join `lighthouse_sample` `mlwh_lh_sample` on((`mlwh_sample`.`uuid_sample_lims` = `mlwh_lh_sample`.`lh_sample_uuid`))) join `event_warehouse_test`.`subjects` `mlwh_events_subjects` on((`mlwh_events_subjects`.`uuid` = unhex(replace(`mlwh_lh_sample`.`lh_sample_uuid`,'-',''))))) join `event_warehouse_test`.`roles` `mlwh_events_roles` on((`mlwh_events_roles`.`subject_id` = `mlwh_events_subjects`.`id`))) join `event_warehouse_test`.`events` `mlwh_events_events` on((`mlwh_events_events`.`id` = `mlwh_events_roles`.`event_id`))) join `event_warehouse_test`.`event_types` `mlwh_events_event_types` on((`mlwh_events_event_types`.`id` = `mlwh_events_events`.`event_type_id`)))) `cp_sample` group by `cp_sample`.`description`,`cp_sample`.`plate_barcode`,`cp_sample`.`phenotype`,`cp_sample`.`coordinate`,`cp_sample`.`created`,`cp_sample`.`event_type` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -521,4 +546,7 @@ INSERT INTO `schema_migrations` (version) VALUES
 ('20201029150039'),
 ('20201103161806'),
 ('20201112100120'),
-('20201118142202');
+('20201118142202'),
+('20210115115653');
+
+
