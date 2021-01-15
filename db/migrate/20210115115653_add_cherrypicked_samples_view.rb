@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
+# Creates a view of all cherrypicked samples
 class AddCherrypickedSamplesView < ActiveRecord::Migration[6.0]
   def up
     event_wh_db = Rails.application.config.event_wh_db
-    execute <<-SQL
+    execute <<-SQL.squish
       CREATE VIEW cherrypicked_samples AS
       SELECT description, plate_barcode, phenotype, coordinate, created, event_type FROM (
         SELECT mlwh_sample.description, mlwh_stock_resource.labware_human_barcode AS "plate_barcode", mlwh_sample.phenotype,
@@ -27,7 +30,7 @@ class AddCherrypickedSamplesView < ActiveRecord::Migration[6.0]
   end
 
   def down
-    execute <<-SQL
+    execute <<-SQL.squish
       DROP VIEW IF EXISTS cherrypicked_samples
     SQL
   end

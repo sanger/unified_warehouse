@@ -101,5 +101,5 @@ Rails.application.configure do
   config.amqp.deadletter.empty_queue_disconnect_interval = 30
 
   # Event warehouse configuration
-  config.event_wh_db = "event_warehouse_test"
+  config.event_wh_db = 'event_warehouse_test'
 end
