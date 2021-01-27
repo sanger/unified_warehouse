@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/emrojo/views_schema.git
+  revision: 1dd0c7d5ba0aaa748ed6e6c0c205e4e6f2ed20ee
+  branch: main
+  specs:
+    views_schema (1.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -185,6 +192,7 @@ DEPENDENCIES
   rubocop
   rubocop-performance
   rubocop-rails
+  views_schema!
 
 BUNDLED WITH
    2.1.4
