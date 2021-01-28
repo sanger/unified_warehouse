@@ -44,6 +44,7 @@ jobs:
           bundle exec rubocop
       - name: Initialize Event warehouse testing database
         run: >-
+          docker pull ${EVENT_WAREHOUSE_IMAGE}
           docker run --network host --env DB_HOST=127.0.0.1 
           ${EVENT_WAREHOUSE_IMAGE}
           bundle exec rake db:setup
