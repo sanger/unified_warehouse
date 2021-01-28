@@ -1,0 +1,69 @@
+name: CI docker
+
+on:
+  push:
+    branches:
+      - develop
+      - master
+      - GPL-769-cherrypicked-samples-view-revisited
+    paths-ignore:
+      - "README.md"
+    tags:
+      - uat-*
+      - release-*
+      - v*
+env:
+  IMAGE_NAME: ${{ github.repository }}/${{ github.event.repository.name }}
+  EVENT_WAREHOUSE_IMAGE: docker.pkg.github.com/sanger/event_warehouse/event_warehouse:gpl769_test_cp_view
+
+jobs:
+  build_and_test_job:
+    runs-on: ubuntu-18.04
+    env:
+      DBHOST: 127.0.0.1 # If we use localhost, rails tries to use a socket
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: null
+          MYSQL_DATABASE: unified_warehouse_test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: >-
+          docker build .
+          --file Dockerfile
+          --tag docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/}
+      - name: Run Rubocop against the image
+        run: >-
+          docker run --network host --env DBHOST=127.0.0.1
+          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          bundle exec rubocop
+      - name: Initialize Event warehouse testing database
+        run: >-
+          docker run --network host --env DB_HOST=127.0.0.1 
+          ${EVENT_WAREHOUSE_IMAGE}
+          bundle exec rake db:setup
+      - name: Initialize Unified warehouse testing database
+        run: >-
+          docker run --network host --env DBHOST=127.0.0.1
+          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          bundle exec rake db:setup
+      - name: Run tests against the image
+        run: >-
+          docker run --network host --env DBHOST=127.0.0.1
+          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          bundle exec rspec
+      - name: Login to registry
+        run: >-
+          docker login
+          -u ${{ github.actor }}
+          -p ${{ secrets.GITHUB_TOKEN }}
+          docker.pkg.github.com
+      - name: Publish image with image tag being either develop/master/<tag_name>
+        run: >-
+          docker push
+          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/}
