@@ -48,10 +48,12 @@ jobs:
           -u ${{ github.actor }}
           -p ${{ secrets.GITHUB_TOKEN }}
           docker.pkg.github.com
+      - name: Pull Event warehouse image
+        run: >- 
+          docker pull ${EVENT_WAREHOUSE_IMAGE}
       - name: Initialize Event warehouse testing database
         run: >-
-          docker pull ${EVENT_WAREHOUSE_IMAGE} ; 
-          docker run --network host --env DB_HOST=127.0.0.1 
+          docker run --network host --env DBHOST=127.0.0.1 
           ${EVENT_WAREHOUSE_IMAGE}
           bundle exec rake db:setup
       - name: Initialize Unified warehouse testing database
