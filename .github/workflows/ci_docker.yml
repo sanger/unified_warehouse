@@ -56,7 +56,7 @@ jobs:
           docker run --network host --env DBHOST=127.0.0.1 --env RAILS_ENV=test
           -v ${GITHUB_WORKSPACE}/spec/data/test_event_wh_seed.rb:/code/db/seed.rb
           ${EVENT_WAREHOUSE_IMAGE}
-          bundle exec rake db:setup
+          bundle exec rake db:setup db:seed
       - name: Initialize Unified warehouse testing database
         run: >-
           docker run --network host --env DBHOST=127.0.0.1 --env RAILS_ENV=test
