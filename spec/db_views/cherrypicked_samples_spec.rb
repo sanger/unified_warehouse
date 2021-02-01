@@ -10,16 +10,16 @@ RSpec.describe 'cherrypicked_samples_view' do
   let(:sample_1_id) { 1 }
   let(:sample_2_id) { 2 }
   let(:study) { create :study }
-  let(:beckman_sample1) do
+  let!(:beckman_sample1) do
     create(:sample, id_sample_tmp: sample_1_id, sanger_sample_id: 'MY_SANGER_SAMPLE_ID_1',
                     uuid_sample_lims: '00000000-1111-2222-3333-888888888888')
   end
-  let(:lh_sample1) { create(:lighthouse_sample, lh_sample_uuid: beckman_sample1.uuid_sample_lims) }
-  let(:tecan_sample2) do
+  let!(:lh_sample1) { create(:lighthouse_sample, lh_sample_uuid: beckman_sample1.uuid_sample_lims) }
+  let!(:tecan_sample2) do
     create(:sample, id_sample_tmp: sample_2_id, sanger_sample_id: 'MY_SANGER_SAMPLE_ID_2',
                     uuid_sample_lims: '00000000-1111-2222-3333-999999999999')
   end
-  let(:stock_resource_sample2) do
+  let!(:stock_resource_sample2) do
     create(:stock_resource, id_sample_tmp: sample_2_id,
                             stock_resource_uuid: tecan_sample2.uuid_sample_lims, id_study_tmp: study.id)
   end
