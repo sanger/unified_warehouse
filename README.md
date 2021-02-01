@@ -51,6 +51,10 @@ and run the tests:
 
 1. Go back to the unified warehouse folder
 
+1. Create the dependent views
+
+   bundle exec rake db:views:schema:load
+
 1. Run the integration tests:
 
    bundle exec rspec --tag integration
