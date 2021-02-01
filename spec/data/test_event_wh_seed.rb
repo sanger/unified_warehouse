@@ -11,7 +11,7 @@ BECKMAN_RECORD = {
         "role_type": 'source',
         "subject_type": 'sample',
         "friendly_name": 'MY_SANGER_SAMPLE_ID_1',
-        "uuid": "00000000-1111-2222-3333-888888888888"
+        "uuid": '00000000-1111-2222-3333-888888888888'
       }
     ],
     "metadata": {
@@ -31,7 +31,7 @@ CHERRYPICK_RECORD = {
         "role_type": 'source',
         "subject_type": 'sample',
         "friendly_name": 'MY_SANGER_SAMPLE_ID_2',
-        "uuid": "00000000-1111-2222-3333-999999999999"
+        "uuid": '00000000-1111-2222-3333-999999999999'
       }
     ],
     "metadata": {
