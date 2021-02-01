@@ -13,6 +13,16 @@ FactoryBot.define do
     last_updated { '2012-03-11 10:22:42' }
   end
 
+  factory :stock_resource do
+    created { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
+    last_updated { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
+    id_lims { 'example' }
+    id_stock_resource_lims { '12345' }
+    labware_type { 'well' }
+    labware_machine_barcode { 'AF12345' }
+    labware_human_barcode { 'AF12345' }
+  end
+
   factory :lighthouse_sample do
     mongodb_id { '5f3a91045019939dc1ac317b' }
     root_sample_id { 'ABC00000001' }

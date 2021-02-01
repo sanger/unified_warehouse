@@ -7,8 +7,13 @@ RSpec.describe 'cherrypicked_samples_view' do
   # This is a little useful for testing the uuids (although oddly we need to reload to get the correct behaviour)
   # but as the actual interface will be with the SQL directly, we don't actually care about the details of what
   # comes back from
-  let(:sample1) { create(:sample, sanger_sample_id: 'MY_SANGER_SAMPLE_ID_1', uuid: '00000000-1111-2222-3333-888888888888') }
-  let(:sample2) { create(:sample, sanger_sample_id: 'MY_SANGER_SAMPLE_ID_2', uuid: '00000000-1111-2222-3333-999999999999') }
+  let!(:study) { create :study }
+  let!(:beckman_sample1) { create(:sample, sanger_sample_id: 'MY_SANGER_SAMPLE_ID_1', uuid_sample_lims: '00000000-1111-2222-3333-888888888888') }
+  let!(:lh_sample1) { create(:lighthouse_sample, lh_sample_uuid: beckman_sample1.uuid_sample_lims) }
+  let!(:tecan_sample2) { create(:sample, sanger_sample_id: 'MY_SANGER_SAMPLE_ID_2', uuid_sample_lims: '00000000-1111-2222-3333-999999999999') }
+  let!(:stock_resource_sample2) do
+    create(:stock_resource, id_sample_tmp: tecan_sample2.id, stock_resource_uuid: tecan_sample2.uuid_sample_lims, id_study_tmp: study.id)
+  end
   let(:results) do
     ApplicationRecord.connection.execute('SELECT * FROM cherrypicked_samples')
   end
@@ -19,8 +24,7 @@ RSpec.describe 'cherrypicked_samples_view' do
 
   it 'has the expected columns' do
     expect(results.fields).to eq %w[
-      wh_event_id event_uuid_bin event_uuid event_type occured_at user_identifier
-      role_type subject_type subject_friendly_name subject_uuid subject_uuid_bin
+      root_sample_id plate_barcode phenotype coordinate created
     ]
   end
 end
