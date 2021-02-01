@@ -2,7 +2,7 @@
 
 BECKMAN_RECORD = {
   "event": {
-    "uuid": '00000000-1111-2222-3333-444444444444',
+    "uuid": '00000000-1111-2222-3333-111111111111',
     "event_type": 'lh_beckman_cp_destination_created',
     "occured_at": '2020-03-11 10:22:42',
     "user_identifier": 'postmaster@example.com',
@@ -11,7 +11,7 @@ BECKMAN_RECORD = {
         "role_type": 'source',
         "subject_type": 'sample',
         "friendly_name": 'MY_SANGER_SAMPLE_ID_1',
-        "uuid": sample_uuid_1
+        "uuid": "00000000-1111-2222-3333-888888888888"
       }
     ],
     "metadata": {
@@ -22,7 +22,7 @@ BECKMAN_RECORD = {
 
 CHERRYPICK_RECORD = {
   "event": {
-    "uuid": '00000000-1111-2222-3333-444444444444',
+    "uuid": '00000000-1111-2222-3333-222222222222',
     "event_type": 'cherrypick_layout_set',
     "occured_at": '2020-03-11 10:22:42',
     "user_identifier": 'postmaster@example.com',
@@ -31,7 +31,7 @@ CHERRYPICK_RECORD = {
         "role_type": 'source',
         "subject_type": 'sample',
         "friendly_name": 'MY_SANGER_SAMPLE_ID_2',
-        "uuid": sample_uuid_2
+        "uuid": "00000000-1111-2222-3333-999999999999"
       }
     ],
     "metadata": {
