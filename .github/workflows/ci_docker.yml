@@ -42,6 +42,16 @@ jobs:
           docker run --network host --env DBHOST=127.0.0.1
           docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
           bundle exec rubocop
+      - name: Initialize Unified warehouse testing database
+        run: >-
+          docker run --network host --env DBHOST=127.0.0.1 --env RAILS_ENV=test
+          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          bundle exec rake db:setup
+      - name: Run tests against the image
+        run: >-
+          docker run --network host --env DBHOST=127.0.0.1
+          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          bundle exec rspec
       - name: Login to registry
         run: >-
           docker login
@@ -63,16 +73,11 @@ jobs:
           -v ${GITHUB_WORKSPACE}/spec/data/test_event_wh_seed.rb:/code/db/test_event_wh_seed.rb
           ${EVENT_WAREHOUSE_IMAGE}
           bundle exec rails runner /code/db/test_event_wh_seed.rb
-      - name: Initialize Unified warehouse testing database
-        run: >-
-          docker run --network host --env DBHOST=127.0.0.1 --env RAILS_ENV=test
-          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
-          bundle exec rake db:setup
-      - name: Run tests against the image
+      - name: Run integration tests
         run: >-
           docker run --network host --env DBHOST=127.0.0.1
           docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
-          bundle exec rspec
+          bundle exec rspec --tag integration
       - name: Publish image with image tag being either develop/master/<tag_name>
         run: >-
           docker push

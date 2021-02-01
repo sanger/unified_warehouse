@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe 'cherrypicked_samples_view' do
+RSpec.describe 'cherrypicked_samples_view', :integration do
   # @note We use before_type_cast in a few places here, as the raw view SQL query doesn't cast its values.
   # This is a little useful for testing the uuids (although oddly we need to reload to get the correct behaviour)
   # but as the actual interface will be with the SQL directly, we don't actually care about the details of what
