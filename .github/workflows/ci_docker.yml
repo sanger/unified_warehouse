@@ -5,6 +5,7 @@ on:
     branches:
       - develop
       - master
+      - GPL-769-cherrypicked-samples-view-revisited
     paths-ignore:
       - "README.md"
     tags:
