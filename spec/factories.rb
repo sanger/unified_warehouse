@@ -2,8 +2,12 @@ FactoryBot.define do
   factory :sample do
     uuid_sample_lims { '000000-0000-0000-0000-0000000000' }
     id_lims { 'example' }
-    id_sample_lims { '12345' }
+    sequence(:id_sample_lims)
     last_updated { '2012-03-11 10:22:42' }
+
+    trait :with_uuid_sample_lims do
+      sequence(:uuid_sample_lims) { SecureRandom.uuid }
+    end
   end
 
   factory :study do
@@ -11,13 +15,20 @@ FactoryBot.define do
     id_lims { 'example' }
     id_study_lims { '12345' }
     last_updated { '2012-03-11 10:22:42' }
+
+    trait :with_uuid_study_lims do
+      sequence(:uuid_study_lims) { SecureRandom.uuid }
+      sequence(:id_study_lims)
+    end
   end
 
   factory :stock_resource do
+    id_sample_tmp { create(:sample, :with_uuid_sample_lims).id_sample_tmp }
+    id_study_tmp { create(:study, :with_uuid_study_lims).id_study_tmp }
     created { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     last_updated { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     id_lims { 'example' }
-    id_stock_resource_lims { '12345' }
+    sequence(:id_stock_resource_lims)
     labware_type { 'well' }
     labware_machine_barcode { 'AF12345' }
     labware_human_barcode { 'AF12345' }
