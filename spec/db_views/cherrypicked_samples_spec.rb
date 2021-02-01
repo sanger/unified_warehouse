@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe 'cherrypicked_samples_view' do
   # @note We use before_type_cast in a few places here, as the raw view SQL query doesn't cast its values.
