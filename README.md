@@ -25,6 +25,13 @@ This should be handled by `bin/setup` above, but if not:
 
 1. `bundle exec rake db:setup`
 
+#### (Optional) Create the views
+
+This project provides with the view ```cherrypicked_samples``` that links data with
+the event warehouse. To create the view you need to run the command:
+
+1. `bundle exec rake db:views:schema:load`
+
 ### Running tests
 
 Ensure the test suite is running and passing:
