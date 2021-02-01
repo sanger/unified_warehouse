@@ -31,6 +31,30 @@ Ensure the test suite is running and passing:
 
     bundle exec rspec
 
+### Running integration tests
+
+#### Event warehouse integration
+
+By default the integration tests are disabled as they require to have the events warehouse
+database to be configured with a specific set of testing data. To set up the events warehouse
+and run the tests:
+
+1. Go to the event warehouse project folder
+
+1. Setup the testing database:
+   
+   bundle exec rake db:setup
+
+1. Load the specific set of seeds for it:
+
+   RAILS_ENV=test bundle exec rails runner spec/data/integration/seed_for_unified_wh.rb
+
+1. Go back to the unified warehouse folder
+
+1. Run the integration tests:
+
+   bundle exec rspec --tag integration
+
 ### Preparing to run locally with Traction Service
 
 RabbitMQ is essential for this process, so if you haven't already, install it using:
