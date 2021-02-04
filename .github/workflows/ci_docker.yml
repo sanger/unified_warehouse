@@ -14,7 +14,6 @@ on:
       - v*
 env:
   IMAGE_NAME: ${{ github.repository }}/${{ github.event.repository.name }}
-  EVENT_WAREHOUSE_IMAGE: docker.pkg.github.com/sanger/event_warehouse/event_warehouse:gpl769_test_cp_view
 
 jobs:
   build_and_test_job:
@@ -30,6 +29,11 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
           MYSQL_ROOT_PASSWORD: null
           MYSQL_DATABASE: unified_warehouse_test
+      ewh:
+        image: docker.pkg.github.com/sanger/event_warehouse/event_warehouse:gpl769_test_cp_view
+        env:
+          INTEGRATION_TEST_SETUP: true
+          RAILS_ENV: test
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
@@ -46,42 +50,23 @@ jobs:
         run: >-
           docker run --network host --env DBHOST=127.0.0.1 --env RAILS_ENV=test
           docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
-          bundle exec rake db:setup
+          bundle exec rake db:setup db:views:schema:load
       - name: Run tests against the image
         run: >-
           docker run --network host --env DBHOST=127.0.0.1
           docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
           bundle exec rspec
+      - name: Run integration tests
+        run: >-
+          docker run --network host --env DBHOST=127.0.0.1
+          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          bundle exec rspec --tag integration
       - name: Login to registry
         run: >-
           docker login
           -u ${{ github.actor }}
           -p ${{ secrets.GITHUB_TOKEN }}
           docker.pkg.github.com
-      - name: Pull Event warehouse image
-        run: >- 
-          docker pull ${EVENT_WAREHOUSE_IMAGE}
-      - name: Initialize Event warehouse testing database
-        run: >-
-          docker run --network host --env DBHOST=127.0.0.1 --env RAILS_ENV=test
-          -v ${GITHUB_WORKSPACE}/spec/data/test_event_wh_seed.rb:/code/db/seed.rb
-          ${EVENT_WAREHOUSE_IMAGE}
-          bundle exec rake db:setup db:seed
-      - name: Seed Event warehouse testing database
-        run: >-
-          docker run --network host --env DBHOST=127.0.0.1 --env RAILS_ENV=test
-          ${EVENT_WAREHOUSE_IMAGE}
-          bundle exec rails runner /code/spec/data/integration/seed_for_unified_wh.rb
-      - name: Create the views
-        run: >-
-          docker run --network host --env DBHOST=127.0.0.1 --env RAILS_ENV=test
-          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
-          bundle exec rake db:views:schema:load
-      - name: Run integration tests
-        run: >-
-          docker run --network host --env DBHOST=127.0.0.1
-          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
-          bundle exec rspec --tag integration
       - name: Publish image with image tag being either develop/master/<tag_name>
         run: >-
           docker push
