@@ -4,4 +4,5 @@ if test -z "${INTEGRATION_TEST_SETUP}" ; then
 else
   echo "Setting up for integration tests"
   RAILS_ENV=test bundle exec rake db:reset
+  RAILS_ENV=test bundle exec rake db:views:schema:load
 fi
