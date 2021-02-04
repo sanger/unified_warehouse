@@ -31,6 +31,9 @@ jobs:
           MYSQL_DATABASE: unified_warehouse_test
       ewh:
         image: docker.pkg.github.com/sanger/event_warehouse/event_warehouse:gpl769_test_cp_view
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
         env:
           INTEGRATION_TEST_SETUP: true
           RAILS_ENV: test
