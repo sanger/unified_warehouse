@@ -33,7 +33,7 @@ RSpec.describe 'cherrypicked_samples_view', :integration do
 
   it 'has the expected columns' do
     expect(results.fields).to eq %w[
-      root_sample_id plate_barcode phenotype coordinate created
+      root_sample_id plate_barcode phenotype coordinate created robot_type
     ]
   end
 end
