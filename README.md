@@ -38,29 +38,27 @@ Ensure the test suite is running and passing:
 
     bundle exec rspec
 
-### Running integration tests
+### Integration tests
 
-#### Integration Tests setup
-
+#### Setup
 1. Initialize the integration tests setup for events warehouse (please check the 
 Integration Tests setup section at <https://github.com/sanger/event_warehouse/>) 
 
 1. Reset the database
-
 ```
     bundle exec rake db:reset
 ```
 
 1. Create the dependent views
-
 ```
     bundle exec rake db:views:schema:load
 ```
 
+#### Running the integration tests
 1. Run the integration tests:
-
+```
    bundle exec rspec --tag integration
-
+```
 
 ### Preparing to run locally with Traction Service
 
