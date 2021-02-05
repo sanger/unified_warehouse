@@ -1,6 +1,5 @@
 FROM ruby:2.7
 RUN apt-get update -qq && apt-get install -y
-RUN apt-get -y install git vim
 
 RUN gem install bundler
 
