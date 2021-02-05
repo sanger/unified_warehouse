@@ -63,7 +63,7 @@ Rails.application.configure do
 
   # Configure the main AMQP consumer
 
-  config.amqp.server.host                 = "#{ENV.fetch('RMQHOST','localhost')}"
+  config.amqp.server.host                 = ENV.fetch('RMQHOST', 'localhost').to_s
   config.amqp.server.username             = 'guest'
   config.amqp.server.password             = 'guest'
   config.amqp.server.port                 = 5672
@@ -93,7 +93,7 @@ Rails.application.configure do
   config.amqp.delay.deadletter_exchange    = 'psd.sequencescape'
 
   # Configure the deadletter AMQP consumer
-  config.amqp.deadletter.url                             = "amqp://guest:guest@#{ENV.fetch('RMQHOST','localhost')}:5672"
+  config.amqp.deadletter.url                             = "amqp://guest:guest@#{ENV.fetch('RMQHOST', 'localhost')}:5672"
   config.amqp.deadletter.queue                           = 'deadletters'
   config.amqp.deadletter.prefetch                        = 50
   config.amqp.deadletter.requeue                         = true

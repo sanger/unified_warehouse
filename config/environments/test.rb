@@ -54,7 +54,7 @@ Rails.application.configure do
   config.numeric_tolerance = 0.05
 
   # Configure the AMQP consumer
-  config.amqp.url                    = "amqp://#{ENV.fetch('RMQHOST','localhost')}:5672/"
+  config.amqp.url                    = "amqp://#{ENV.fetch('RMQHOST', 'localhost')}:5672/"
   config.amqp.queue                  = 'queue'
   config.amqp.prefetch               = 50
   config.amqp.requeue                = true
