@@ -27,7 +27,7 @@ gem 'daemons'
 gem 'hashie', '~> 4.0'
 gem 'migration_comments'
 
-gem 'views_schema', github: 'emrojo/views_schema', branch: 'main'
+gem 'views_schema', github: 'sanger/views_schema'
 
 group :test, :development do
   gem 'factory_bot_rails'
