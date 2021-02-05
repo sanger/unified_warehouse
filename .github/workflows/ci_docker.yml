@@ -45,6 +45,7 @@ jobs:
           DBHOST: mysql
           RMQHOST: rmq
           INTEGRATION_TEST_SETUP: true
+          INTEGRATION_TEST_SEED: '/code/spec/data/integration/seed_for_unified_wh.rb'
           RAILS_ENV: test
     steps:
       - uses: actions/checkout@v2
