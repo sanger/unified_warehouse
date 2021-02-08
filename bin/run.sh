@@ -18,7 +18,7 @@ set -Eeuxo pipefail
 if test "${INTEGRATION_TEST_SETUP:-}" = "true" ; then
   if test "${RAILS_ENV:-}" = "test"; then
     echo "Setting up for integration tests"
-    RAILS_ENV=test bundle exec rake db:reset db:views:schema:load
+    bundle exec rake db:reset db:views:schema:load
   else
     echo "You are providing the flag INTEGRATION_TEST_SETUP, but RAILS_ENV"
     echo "is different from test, which it is a dangerous operation."
