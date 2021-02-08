@@ -1,0 +1,4 @@
+# Run the tests with color
+--color
+# Skip all tests tagged with "integration"
+--tag ~integration
