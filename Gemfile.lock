@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/sanger/views_schema.git
-  revision: 35695251c3701613078eaee16f6876e0e8a3ff0d
+  revision: 24052e03547e22de2ab7433a74ce84be8fb541ee
   specs:
     views_schema (1.0.0)
 
