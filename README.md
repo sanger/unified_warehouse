@@ -56,6 +56,14 @@ Integration Tests setup section at <https://github.com/sanger/event_warehouse/>)
     bundle exec rake db:views:schema:load
 ```
 
+These actions can also be performed automatically if you run the Docker container of the service
+and pass the environment variables:
+```
+RAILS_ENV="test"
+INTEGRATION_TEST_SETUP="true"
+```
+
+
 #### Running the integration tests
 4. Run the integration tests:
 ```
