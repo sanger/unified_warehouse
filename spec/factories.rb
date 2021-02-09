@@ -63,6 +63,8 @@ FactoryBot.define do
     filtered_positive_timestamp { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     lh_sample_uuid { 'S00000-0000-0000-0000-0000000001' }
     lh_source_plate_uuid { 'P00000-0000-0000-0000-0000000001' }
+    must_sequence { false }
+    preferentially_sequence { false }
     created_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     updated_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
   end

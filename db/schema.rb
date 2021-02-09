@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_15_115653) do
+ActiveRecord::Schema.define(version: 2021_02_09_151531) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -139,6 +139,8 @@ ActiveRecord::Schema.define(version: 2021_01_15_115653) do
     t.string "lh_source_plate_uuid", limit: 36, comment: "Source plate uuid created in crawler"
     t.datetime "created_at", comment: "When this record was inserted"
     t.datetime "updated_at", comment: "When this record was last updated"
+    t.boolean "must_sequence", comment: "PAM provided value whether sample is of high importance"
+    t.boolean "preferentially_sequence", comment: "PAM provided value whether sample is important"
     t.index ["date_tested"], name: "index_lighthouse_sample_on_date_tested"
     t.index ["lh_sample_uuid"], name: "index_lighthouse_sample_on_lh_sample_uuid", unique: true
     t.index ["mongodb_id"], name: "index_lighthouse_sample_on_mongodb_id", unique: true
