@@ -10,7 +10,7 @@ class AddCherrypickedSamplesView < ActiveRecord::Migration[6.0]
       'cherrypicked_samples',
       <<~SQL.squish
         SELECT mlwh_sample.description AS "root_sample_id", mlwh_stock_resource.labware_human_barcode AS "plate_barcode",
-        mlwh_sample.phenotype AS "phenotype", mlwh_stock_resource.labware_coordinate AS "coordinate",#{' '}
+        mlwh_sample.phenotype AS "phenotype", mlwh_stock_resource.labware_coordinate AS "coordinate",
         mlwh_sample.created AS "created", "Tecan" as "robot_type"
         FROM #{mlwh_wh_db}.sample AS mlwh_sample
         JOIN #{mlwh_wh_db}.stock_resource AS mlwh_stock_resource ON (mlwh_sample.id_sample_tmp = mlwh_stock_resource.id_sample_tmp)
