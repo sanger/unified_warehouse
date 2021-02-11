@@ -200,6 +200,7 @@ DEPENDENCIES
   rubocop
   rubocop-performance
   rubocop-rails
+  simplecov
   views_schema!
 
 BUNDLED WITH
