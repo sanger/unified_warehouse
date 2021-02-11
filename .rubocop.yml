@@ -22,6 +22,8 @@ AllCops:
   Exclude:
     - 'bin/*'
     - 'vendor/**/*'
+    - db/schema.rb
+    - db/views_schema.rb
 Rails/ActiveRecordCallbacksOrder: # (new in 2.7)
   Enabled: true
 Rails/AfterCommitOverride: # (new in 2.8)

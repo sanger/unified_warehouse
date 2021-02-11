@@ -22,14 +22,53 @@ This application is a denormalised warehouse for multiple LIMS.
 
 Before you can use the system in any capacity, you must first prepare the database.
 This should be handled by `bin/setup` above, but if not:
+```
+    bundle exec rake db:setup
+```
 
-1. `bundle exec rake db:setup`
+#### (Optional) Create the views
+
+This project provides with the view ```cherrypicked_samples``` that links data with
+the event warehouse. To create the view you need to run the command:
+```
+    bundle exec rake db:views:schema:load
+```
 
 ### Running tests
 
 Ensure the test suite is running and passing:
-
+```
     bundle exec rspec
+```
+### Integration tests
+
+#### Setup
+1. Initialize the integration tests setup for events warehouse (please check the 
+Integration Tests setup section at <https://github.com/sanger/event_warehouse/>) 
+
+2. Reset the database
+```
+    bundle exec rake db:reset
+```
+
+3. Create the dependent views
+```
+    bundle exec rake db:views:schema:load
+```
+
+These actions can also be performed automatically if you run the Docker container of the service
+and pass the environment variables:
+```
+RAILS_ENV="test"
+INTEGRATION_TEST_SETUP="true"
+```
+
+
+#### Running the integration tests
+4. Run the integration tests:
+```
+   bundle exec rspec --tag integration
+```
 
 ### Preparing to run locally with Traction Service
 
