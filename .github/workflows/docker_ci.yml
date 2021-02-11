@@ -36,7 +36,7 @@ jobs:
           RABBITMQ_DEFAULT_USER: guest
           RABBITMQ_DEFAULT_PASS: guest
       ewh:
-        image: docker.pkg.github.com/sanger/event_warehouse/event_warehouse:master
+        image: docker.pkg.github.com/sanger/event_warehouse/event_warehouse:gpl769_allow_development
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
           RMQHOST: rmq
           INTEGRATION_TEST_SETUP: true
           INTEGRATION_TEST_SEED: '/code/spec/data/integration/seed_for_unified_wh.rb'
-          RAILS_ENV: test
+          RAILS_ENV: development
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
