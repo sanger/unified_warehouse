@@ -24,7 +24,7 @@ class AddCherrypickedSamplesView < ActiveRecord::Migration[6.0]
         mlwh_sample.phenotype AS "phenotype", mlwh_lh_sample.coordinate AS "coordinate", mlwh_sample.created AS "created",
         "Beckman" as "robot_type"
         FROM #{mlwh_wh_db}.sample as mlwh_sample
-        JOIN #{mlwh_wh_db}.lighthouse_sample AS mlwh_lh_sample ON (mlwh_sample.uuid_sample_lims = CONVERT(mlwh_lh_sample.lh_sample_uuid USING UTF8MB4))
+        JOIN #{mlwh_wh_db}.lighthouse_sample AS mlwh_lh_sample ON (mlwh_sample.uuid_sample_lims = mlwh_lh_sample.lh_sample_uuid)
         JOIN #{event_wh_db}.subjects AS mlwh_events_subjects ON (mlwh_events_subjects.uuid = UNHEX(REPLACE(mlwh_lh_sample.lh_sample_uuid, '-', '')))
         JOIN #{event_wh_db}.roles AS mlwh_events_roles ON (mlwh_events_roles.subject_id = mlwh_events_subjects.id)
         JOIN #{event_wh_db}.events AS mlwh_events_events ON (mlwh_events_events.id = mlwh_events_roles.event_id)
