@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 #
 # Change charset of lighthouse_sample to use utf8 instead of latin1
 #
