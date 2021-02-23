@@ -139,6 +139,8 @@ ActiveRecord::Schema.define(version: 2021_02_10_231042) do
     t.string "lh_source_plate_uuid", limit: 36, comment: "Source plate uuid created in crawler"
     t.datetime "created_at", comment: "When this record was inserted"
     t.datetime "updated_at", comment: "When this record was last updated"
+    t.boolean "must_sequence", comment: "PAM provided value whether sample is of high importance"
+    t.boolean "preferentially_sequence", comment: "PAM provided value whether sample is important"
     t.index ["date_tested"], name: "index_lighthouse_sample_on_date_tested"
     t.index ["lh_sample_uuid"], name: "index_lighthouse_sample_on_lh_sample_uuid", unique: true
     t.index ["mongodb_id"], name: "index_lighthouse_sample_on_mongodb_id", unique: true

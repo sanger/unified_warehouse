@@ -88,5 +88,27 @@ RSpec.describe LighthouseSample, type: :model do
       expect(lh_sample.created_at).to eq(Time.new(2020, 4, 2, 1, 0, 0, '+00:00'))
       expect(lh_sample.updated_at).to eq(Time.new(2020, 4, 2, 1, 0, 0, '+00:00'))
     end
+
+    describe 'must_sequence' do
+      it 'inserts with a value for must_sequence' do
+        lh_sample = create :lighthouse_sample, must_sequence: true
+        expect(lh_sample.must_sequence).to eq true
+      end
+
+      it 'is nullable' do
+        lh_sample = create :lighthouse_sample, must_sequence: nil
+        expect(lh_sample).to be_valid
+      end
+    end
+
+    it 'inserts with a value for preferentially_sequence' do
+      lh_sample = create :lighthouse_sample, preferentially_sequence: true
+      expect(lh_sample.preferentially_sequence).to eq true
+    end
+
+    it 'is nullable' do
+      lh_sample = create :lighthouse_sample, preferentially_sequence: nil
+      expect(lh_sample).to be_valid
+    end
   end
 end
