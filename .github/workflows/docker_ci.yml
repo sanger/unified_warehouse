@@ -45,7 +45,7 @@ jobs:
           RMQHOST: rmq
           INTEGRATION_TEST_SETUP: true
           INTEGRATION_TEST_SEED: '/code/spec/data/integration/seed_for_unified_wh.rb'
-          RAILS_ENV: test
+          RAILS_ENV: development
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
