@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Adds the CT channel columns to the lighthouse_sample table
-class AddCtColumnsToLighthouseSamples < ActiveRecord::Migration
+class AddCtColumnsToLighthouseSamples < ActiveRecord::Migration[4.2]
   def change
     change_table :lighthouse_sample, bulk: true do |t|
       t.string  :ch1_target, null: true, comment: 'Target for channel 1', after: :lab_id
