@@ -37,7 +37,8 @@ FactoryBot.define do
   factory :lighthouse_sample do
     mongodb_id { '5f3a91045019939dc1ac317b' }
     root_sample_id { 'ABC00000001' }
-    cog_uk_id { 'PREFIX-12AB34' }
+    # cog_uk_id { 'PREFIX-12AB34' }
+    sequence (:cog_uk_id) { |n| "PREFIX-#{n}"}
     rna_id { 'PR-rna-00000001_H12' }
     plate_barcode { 'PR-rna-00000001' }
     coordinate { 'H12' }
