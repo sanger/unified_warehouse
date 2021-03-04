@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 2021_03_03_102638) do
     t.datetime "updated_at", comment: "When this record was last updated"
     t.boolean "must_sequence", comment: "PAM provided value whether sample is of high importance"
     t.boolean "preferentially_sequence", comment: "PAM provided value whether sample is important"
-    t.index ["cog_uk_id"], name: "index_lighthouse_sample_on_cog_uk_id"
+    t.index ["cog_uk_id"], name: "index_lighthouse_sample_on_cog_uk_id", unique: true
     t.index ["date_tested"], name: "index_lighthouse_sample_on_date_tested"
     t.index ["filtered_positive"], name: "index_lighthouse_sample_on_filtered_positive"
     t.index ["lh_sample_uuid"], name: "index_lighthouse_sample_on_lh_sample_uuid", unique: true
