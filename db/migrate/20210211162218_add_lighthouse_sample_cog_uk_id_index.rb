@@ -5,7 +5,7 @@
 class AddLighthouseSampleCogUkIdIndex < ActiveRecord::Migration[6.0]
   def change
     change_table :lighthouse_sample, bulk: true do |t|
-      t.index :cog_uk_id
+      t.index :cog_uk_id, unique: true
     end
   end
 end
