@@ -66,5 +66,7 @@ Rails.application.configure do
 
   # Added for rails 4
   config.eager_load = false
-  config.event_wh_db = 'event_warehouse_test'
+  # Event warehouse configuration
+  config.view_schema_mlwh_db = 'unified_warehouse_test'
+  config.view_schema_ewh_db = 'event_warehouse_test'
 end
