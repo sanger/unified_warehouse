@@ -37,7 +37,7 @@ FactoryBot.define do
   factory :lighthouse_sample do
     mongodb_id { '5f3a91045019939dc1ac317b' }
     root_sample_id { 'ABC00000001' }
-    cog_uk_id { 'PREFIX-12AB34' }
+    sequence(:cog_uk_id) { |n| "PREFIX-#{n}" }
     rna_id { 'PR-rna-00000001_H12' }
     plate_barcode { 'PR-rna-00000001' }
     coordinate { 'H12' }
@@ -63,6 +63,8 @@ FactoryBot.define do
     filtered_positive_timestamp { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     lh_sample_uuid { 'S00000-0000-0000-0000-0000000001' }
     lh_source_plate_uuid { 'P00000-0000-0000-0000-0000000001' }
+    must_sequence { false }
+    preferentially_sequence { false }
     created_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     updated_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
   end
