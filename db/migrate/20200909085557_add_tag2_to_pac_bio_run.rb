@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Add tag2 information to the pac_bio_run table so we can do dual indexing
-class AddTag2ToPacBioRun < ActiveRecord::Migration
+class AddTag2ToPacBioRun < ActiveRecord::Migration[4.2]
   def change
     change_table :pac_bio_run, bulk: true do |t|
       t.string   'tag2_sequence',    limit: 30,  comment: 'Tag sequence for tag 2', after: :tag_set_name
