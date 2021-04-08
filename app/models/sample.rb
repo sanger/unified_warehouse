@@ -5,12 +5,8 @@ class Sample < ApplicationRecord
   json do
     ignore(
       :new_name_format,
-      :gc_content,
       :sample_manifest_id,
-      :supplier_plate_id,
-      :dna_source,
       :sample_tubes,
-      :volume,
       :empty_supplier_sample_name,
       :updated_by_manifest
     )
