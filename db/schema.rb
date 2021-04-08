@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_03_102638) do
+ActiveRecord::Schema.define(version: 2021_04_08_094808) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -259,6 +259,32 @@ ActiveRecord::Schema.define(version: 2021_03_03_102638) do
     t.string "phenotype", comment: "The phenotype of the sample as described in Sequencescape"
     t.string "developmental_stage", comment: "Developmental Stage"
     t.string "control_type"
+    t.string "sibling"
+    t.boolean "is_resubmitted"
+    t.string "date_of_sample_collection"
+    t.string "date_of_sample_extraction"
+    t.string "extraction_method"
+    t.string "purified"
+    t.string "purification_method"
+    t.string "customer_measured_concentration"
+    t.string "concentration_determined_by"
+    t.string "sample_type"
+    t.string "storage_conditions"
+    t.string "genotype"
+    t.string "age"
+    t.string "cell_type"
+    t.string "disease_state"
+    t.string "compound"
+    t.string "dose"
+    t.string "immunoprecipitate"
+    t.string "growth_condition"
+    t.string "organism_part"
+    t.string "time_point"
+    t.string "disease"
+    t.string "subject"
+    t.string "treatment"
+    t.datetime "date_of_consent_withdrawn"
+    t.string "marked_as_consent_withdrawn_by"
     t.index ["accession_number"], name: "sample_accession_number_index"
     t.index ["id_sample_lims", "id_lims"], name: "index_sample_on_id_sample_lims_and_id_lims", unique: true
     t.index ["name"], name: "sample_name_index"
