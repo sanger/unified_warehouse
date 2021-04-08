@@ -259,6 +259,7 @@ ActiveRecord::Schema.define(version: 2021_04_08_094808) do
     t.string "phenotype", comment: "The phenotype of the sample as described in Sequencescape"
     t.string "developmental_stage", comment: "Developmental Stage"
     t.string "control_type"
+    t.string "customer_measured_volume"
     t.string "sibling"
     t.boolean "is_resubmitted"
     t.string "date_of_sample_collection"

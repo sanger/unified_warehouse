@@ -6,6 +6,7 @@
 class AddSampleFields < ActiveRecord::Migration[6.0]
   def up
     change_table :sample, bulk: true do |t|
+      t.string :customer_measured_volume, null: true
       t.string :sibling, null: true
       t.boolean :is_resubmitted, null: true
       t.string :date_of_sample_collection, null: true
@@ -37,6 +38,7 @@ class AddSampleFields < ActiveRecord::Migration[6.0]
 
   def down
     change_table :sample, bulk: true do |t|
+      t.remove :customer_measured_volume
       t.remove :sibling
       t.remove :is_resubmitted
       t.remove :date_of_sample_collection
