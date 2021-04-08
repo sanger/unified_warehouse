@@ -285,6 +285,9 @@ ActiveRecord::Schema.define(version: 2021_04_08_094808) do
     t.string "treatment"
     t.datetime "date_of_consent_withdrawn"
     t.string "marked_as_consent_withdrawn_by"
+    t.string "customer_measured_volume"
+    t.string "gc_content"
+    t.string "dna_source"
     t.index ["accession_number"], name: "sample_accession_number_index"
     t.index ["id_sample_lims", "id_lims"], name: "index_sample_on_id_sample_lims_and_id_lims", unique: true
     t.index ["name"], name: "sample_name_index"
