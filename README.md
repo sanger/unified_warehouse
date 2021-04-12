@@ -2,21 +2,33 @@
 
 [![Build Status](https://travis-ci.org/sanger/unified_warehouse.svg?branch=develop)](https://travis-ci.org/sanger/unified_warehouse)
 
-This application is a denormalised warehouse for multiple LIMS.
+A denormalised warehouse for multiple LIMS.
 
 ## Usage (Development)
+
+### Requirement
+
+1. MySQL is required and usually installed with homebrew:
+
+    brew install mysql
 
 ### Installation
 
 1. Clone the git repository
-1. Install the relevant ruby is installed - have a look in the `.ruby-version` file
+1. Install the relevant ruby from `.ruby-version`
 1. Install bundler the version of bundler used to create the `Gemfile.lock`:
 
-       `gem install bundler -v $(tail -1 Gemfile.lock)`
+       gem install bundler -v $(tail -1 Gemfile.lock)
 
 1. Run the setup process:
 
-       `bin/setup`
+       bin/setup
+
+__NB__: If getting an error while installing the `mysql2` gem, try:
+
+    bundle config build.mysql2 --with-opt-dir=$(brew --prefix openssl)
+
+and try runnning `bundle install` again.
 
 ### Database preparation
 
@@ -43,8 +55,8 @@ Ensure the test suite is running and passing:
 ### Integration tests
 
 #### Setup
-1. Initialize the integration tests setup for events warehouse (please check the 
-Integration Tests setup section at <https://github.com/sanger/event_warehouse/>) 
+1. Initialize the integration tests setup for events warehouse (please check the
+Integration Tests setup section at <https://github.com/sanger/event_warehouse/>)
 
 2. Reset the database
 ```
@@ -98,14 +110,14 @@ This will ensure the queue that is generated is compatible with the expectations
 Execute the worker to pick up messages in the queue and process them into the
 database:
 
-    ```bundle exec ./bin/amqp_client start```
+    bundle exec ./bin/amqp_client start
 
 where `start` instructs it to start. You can also stop a worker by calling `stop`
 or restart it with `restart`.
 
 To run in non-daemonized mode, which can be useful for debugging:
 
-    ````bundle exec ./bin/amqp_client run```
+    bundle exec ./bin/amqp_client run
 
 #### Troubleshooting
 
