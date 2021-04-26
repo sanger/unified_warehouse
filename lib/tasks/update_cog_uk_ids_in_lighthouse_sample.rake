@@ -12,13 +12,13 @@ namespace :lighthouse_sample_table do
     rows_sample_had_no_supplier_name = 0
     rows_updated = 0
 
-    STDOUT.puts('Updating lighthouse sample table with cog uk ids')
+    $stdout.puts('Updating lighthouse sample table with cog uk ids')
 
     # Select all lighthouse samples
     LighthouseSample.all.each do |lh_sample|
-      STDOUT.puts 'Starting looping through the lighthouse samples' if rows_found.zero?
+      $stdout.puts 'Starting looping through the lighthouse samples' if rows_found.zero?
       rows_found += 1
-      STDOUT.puts "On row #{rows_found}" if (rows_found % 100).zero?
+      $stdout.puts "On row #{rows_found}" if (rows_found % 100).zero?
 
       # skip if cog_uk_id already set
       if lh_sample.cog_uk_id.present?
@@ -36,7 +36,7 @@ namespace :lighthouse_sample_table do
       ).first
 
       if samp.present?
-         # supplier name may be "" or " ", so need this check
+        # supplier name may be "" or " ", so need this check
         if samp.supplier_name.blank?
           rows_sample_had_no_supplier_name += 1
           next
@@ -50,12 +50,12 @@ namespace :lighthouse_sample_table do
       end
     end
 
-    STDOUT.puts('Done')
-    STDOUT.puts("Total rows found: #{rows_found}")
-    STDOUT.puts("Rows where cog uk id already set: #{rows_already_set}")
-    STDOUT.puts("Rows where supplier name not present on Sample: #{rows_sample_had_no_supplier_name}")
-    STDOUT.puts("Rows where no Sample was found: #{rows_no_sample_found}")
-    STDOUT.puts("Rows updated with Cog Uk ID: #{rows_updated}")
+    $stdout.puts('Done')
+    $stdout.puts("Total rows found: #{rows_found}")
+    $stdout.puts("Rows where cog uk id already set: #{rows_already_set}")
+    $stdout.puts("Rows where supplier name not present on Sample: #{rows_sample_had_no_supplier_name}")
+    $stdout.puts("Rows where no Sample was found: #{rows_no_sample_found}")
+    $stdout.puts("Rows updated with Cog Uk ID: #{rows_updated}")
   end
 end
 # rubocop:enable Metrics/BlockLength
