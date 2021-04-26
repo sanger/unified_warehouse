@@ -54,7 +54,7 @@ namespace :lighthouse_sample_table do
     STDOUT.puts("Total rows found: #{rows_found}")
     STDOUT.puts("Rows where cog uk id already set: #{rows_already_set}")
     STDOUT.puts("Rows where supplier name not present on Sample: #{rows_sample_had_no_supplier_name}")
-    STDOUT.puts("Rows where no Sample was foundd: #{rows_no_sample_found}")
+    STDOUT.puts("Rows where no Sample was found: #{rows_no_sample_found}")
     STDOUT.puts("Rows updated with Cog Uk ID: #{rows_updated}")
   end
 end
