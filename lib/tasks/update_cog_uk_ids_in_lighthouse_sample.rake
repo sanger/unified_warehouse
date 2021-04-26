@@ -9,14 +9,14 @@ namespace :lighthouse_sample_table do
     rows_found = 0
     rows_already_set = 0
     rows_no_sample_found = 0
-    rows_sample_had_no_cog_uk_id = 0
+    rows_sample_had_no_supplier_name = 0
     rows_updated = 0
 
     STDOUT.puts('Updating lighthouse sample table with cog uk ids')
 
-    # only select positives, as only positives have cog_uk_ids
-    LighthouseSample.where(result: 'positive').each do |lh_sample|
-      STDOUT.puts 'Starting looping through the positives' if rows_found.zero?
+    # Select all lighthouse samples
+    LighthouseSample.all.each do |lh_sample|
+      STDOUT.puts 'Starting looping through the lighthouse samples' if rows_found.zero?
       rows_found += 1
       STDOUT.puts "On row #{rows_found}" if (rows_found % 100).zero?
 
@@ -26,22 +26,19 @@ namespace :lighthouse_sample_table do
         next
       end
 
-      # fetch cog_uk_id from sample where root_sample_id and result match, and
-      # joining via stock_resource to match on plate_barcode and coordinate
-      joins_sql = 'INNER JOIN stock_resource ON sample.id_sample_tmp = stock_resource.id_sample_tmp '\
-      "AND stock_resource.labware_human_barcode = '#{lh_sample.plate_barcode}' "\
-      "AND stock_resource.labware_coordinate = '#{lh_sample.coordinate}'"
+      joins_sql = 'INNER JOIN lighthouse_sample ON sample.uuid_sample_lims = lighthouse_sample.lh_sample_uuid '\
+      "AND lighthouse_sample.lh_sample_uuid = '#{lh_sample.lh_sample_uuid}'"
 
-      samp = Sample.joins(joins_sql).where(
+      samp = Sample.joins(joins_sql).where.not(
         sample: {
-          description: lh_sample.root_sample_id,
-          phenotype: lh_sample.result
+          supplier_name: nil
         }
       ).first
 
       if samp.present?
+         # supplier name may be "" or " ", so need this check
         if samp.supplier_name.blank?
-          rows_sample_had_no_cog_uk_id += 1
+          rows_sample_had_no_supplier_name += 1
           next
         end
 
@@ -54,9 +51,10 @@ namespace :lighthouse_sample_table do
     end
 
     STDOUT.puts('Done')
-    STDOUT.puts("Total rows for positives found: #{rows_found}")
+    STDOUT.puts("Total rows found: #{rows_found}")
     STDOUT.puts("Rows where cog uk id already set: #{rows_already_set}")
-    STDOUT.puts("Rows where cog uk id not present on Sample: #{rows_sample_had_no_cog_uk_id}")
+    STDOUT.puts("Rows where supplier name not present on Sample: #{rows_sample_had_no_supplier_name}")
+    STDOUT.puts("Rows where no Sample was foundd: #{rows_no_sample_found}")
     STDOUT.puts("Rows updated with Cog Uk ID: #{rows_updated}")
   end
 end
