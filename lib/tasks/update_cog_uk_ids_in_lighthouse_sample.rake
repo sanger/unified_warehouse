@@ -4,7 +4,7 @@
 namespace :lighthouse_sample_table do
   desc 'Update lighthouse_sample with cog uk ids from sample'
 
-  # For each positive Lighthouse Sample row, set the Cog UK ID from the matching Sample
+  # For each Lighthouse Sample row, set the Cog UK ID from the matching Sample
   task update_lighthouse_sample_cog_uk_ids: :environment do
     rows_found = 0
     rows_already_set = 0
@@ -14,9 +14,9 @@ namespace :lighthouse_sample_table do
 
     STDOUT.puts('Updating lighthouse sample table with cog uk ids')
 
-    # only select positives, as only positives have cog_uk_ids
-    LighthouseSample.where(result: 'positive').each do |lh_sample|
-      STDOUT.puts 'Starting looping through the positives' if rows_found.zero?
+    # Select all lighthouse samples, as is probably only positives, but not necessarily
+    LighthouseSample.all.each do |lh_sample|
+      STDOUT.puts 'Starting looping through all lighthouse samples' if rows_found.zero?
       rows_found += 1
       STDOUT.puts "On row #{rows_found}" if (rows_found % 100).zero?
 
@@ -26,16 +26,20 @@ namespace :lighthouse_sample_table do
         next
       end
 
-      # fetch cog_uk_id from sample where root_sample_id and result match, and
-      # joining via stock_resource to match on plate_barcode and coordinate
-      joins_sql = 'INNER JOIN stock_resource ON sample.id_sample_tmp = stock_resource.id_sample_tmp '\
-      "AND stock_resource.labware_human_barcode = '#{lh_sample.plate_barcode}' "\
-      "AND stock_resource.labware_coordinate = '#{lh_sample.coordinate}'"
+      # select from sample
+      # inner join lighthouse_sample on lighthouse_sample.lh_sample_uuid=sample.uuid_sample_lims
+      # where lighthouse_sample.cog_uk_id is null and sample.supplier_name is not null;
+
+      # fetch cog_uk_id from sample where uuid_sample_lims matches lighthouse_sample.lh_sample_uuid
+      joins_sql = 'INNER JOIN lighthouse_sample ON lighthouse_sample.lh_sample_uuid = sample.uuid_sample_lims'
 
       samp = Sample.joins(joins_sql).where(
+        lighthouse_sample: {
+          cog_uk_id: nil
+        }
+      ).where.not(
         sample: {
-          description: lh_sample.root_sample_id,
-          phenotype: lh_sample.result
+          supplier_name: nil
         }
       ).first
 
