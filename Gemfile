@@ -22,6 +22,8 @@ gem 'bundler', '>= 1.3.0'
 gem 'railties', '~> 6.0.3'
 # # RAILS DEPENDENCIES
 
+gem 'sanger_warren', '0.3.0.pre.rc1'
+
 gem 'bunny'
 gem 'daemons'
 gem 'hashie', '~> 4.0'

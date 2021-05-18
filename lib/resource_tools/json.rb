@@ -1,7 +1,46 @@
+# frozen_string_literal: true
+
+# Include in an ActiveRecord::Base object to handle JSON parsing and translation.
+#
+# @example Including a basic parser
+#   class MyClass < ApplicationRecord
+#     include ResourceTools
+#
+#     json do
+#       translate(
+#         side_walk: :pavement,
+#         trunk: :boot
+#       )
+#     end
+#   end
+#
+# The example above will create a new subclass of `ResourceTools::Json::Handler`
+# called `MyClass::JsonHandler`. This can be accessed via the class method
+# {ResourceTools::Json::json}
+#
+# The JsonHandler will automatically take parsed json (ie. covered to a Hash)
+# and will:
+# - convert each key to a string
+# - perform any translations specified via {ResourceTools::Json::Handler::translate}
+#
+# @example Invoking the Handler
+#   MyClass.create_or_update_from_json(parsed_json, 'Lims')
+#
+# This will extract the translated attributes from parsed_json and pass them
+# into the create_or_update method.
 module ResourceTools::Json
   extend ActiveSupport::Concern
 
   module ClassMethods
+    #
+    # Translates the provided json_data with the appropriate
+    # {ResourceTools::Json::Handler} and passes into create_or_update
+    #
+    # @param json_data [Hash] parse JSON data
+    # @param lims [String] Identifier for the originating lims
+    #
+    # @return [ApplicationRecord] An Active Record object built from the provided json
+    #
     def create_or_update_from_json(json_data, lims)
       ActiveRecord::Base.transaction do
         create_or_update(json.collection_from(json_data, lims))

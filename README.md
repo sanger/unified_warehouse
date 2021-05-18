@@ -9,103 +9,114 @@ This application is a denormalised warehouse for multiple LIMS.
 ### Installation
 
 1. Clone the git repository
-1. Install the relevant ruby is installed - have a look in the `.ruby-version` file
-1. Install bundler the version of bundler used to create the `Gemfile.lock`:
+2. Install the relevant ruby is installed
 
-       `gem install bundler -v $(tail -1 Gemfile.lock)`
+   ```bash Example using rbenv
+   rbenv install
+   ```
 
-1. Run the setup process:
+3. Install bundler the version of bundler used to create the `Gemfile.lock`:
 
-       `bin/setup`
+   ```bash
+   gem install bundler -v $(tail -1 Gemfile.lock)
+   ```
 
-### Database preparation
+4. Run the setup process:
+
+   ```bash
+   bin/setup
+   ```
+
+#### Database preparation
 
 Before you can use the system in any capacity, you must first prepare the database.
 This should be handled by `bin/setup` above, but if not:
-```
-    bundle exec rake db:setup
+
+```bash
+bundle exec rake db:setup
 ```
 
 #### (Optional) Create the views
 
-This project provides with the view ```cherrypicked_samples``` that links data with
+This project provides with the view `cherrypicked_samples` that links data with
 the event warehouse. To create the view you need to run the command:
-```
-    bundle exec rake db:views:schema:load
+
+```bash
+bundle exec rake db:views:schema:load
 ```
 
 ### Running tests
 
 Ensure the test suite is running and passing:
+
+```bash
+bundle exec rspec
 ```
-    bundle exec rspec
-```
+
 ### Integration tests
 
 #### Setup
-1. Initialize the integration tests setup for events warehouse (please check the 
-Integration Tests setup section at <https://github.com/sanger/event_warehouse/>) 
+
+1. Initialize the integration tests setup for events warehouse (please check the
+   Integration Tests setup section at <https://github.com/sanger/event_warehouse/>)
 
 2. Reset the database
-```
-    bundle exec rake db:reset
-```
+
+   ```bash
+   bundle exec rake db:reset
+   ```
 
 3. Create the dependent views
-```
-    bundle exec rake db:views:schema:load
-```
+
+   ```bash
+   bundle exec rake db:views:schema:load
+   ```
 
 These actions can also be performed automatically if you run the Docker container of the service
 and pass the environment variables:
-```
+
+```bash
 RAILS_ENV="test"
 INTEGRATION_TEST_SETUP="true"
 ```
 
-
 #### Running the integration tests
-4. Run the integration tests:
-```
+
+1. Run the integration tests:
+
+   ```bash
    bundle exec rspec --tag integration
-```
-
-### Preparing to run locally with Traction Service
-
-RabbitMQ is essential for this process, so if you haven't already, install it using:
-
-    brew install rabbitmq
-    brew services start rabbitmq
-
-You can now view the instance running at [http://localhost:15672/](http://localhost:15672/).
-
-Ensure that you update the `config/environments/development.rb` file in this repository with the exchange name and queue name that are in the `bunny.yml` file for Traction Service.
-The keys to modify here are `config.amqp.main.queue` and `config.amqp.main.exchange`.
-When the unified warehouse is first run, it will look for an exchange and queue of these names and create them if they don't exist.
-However, it is also note worthy that the queue is not set up correctly to work with Traction Service since the queue is not set to `durable = true` and has additional header keys for `x-dead-letter-exchange` and `x-message-ttl` which Traction Service isn't expecting.
-To fix this replace the line in `lib/postman/channel.rb` that reads:
-
-    channel.queue(@queue_name, arguments: queue_arguments)
-
-so that it instead reads:
-
-    channel.queue(@queue_name, durable: true)
-
-This will ensure the queue that is generated is compatible with the expectations of Traction Service.
+   ```
 
 ### Execution
 
 Execute the worker to pick up messages in the queue and process them into the
 database:
 
-    ```bundle exec ./bin/amqp_client start```
+```bash
+bundle exec warren consumer start
+```
 
-where `start` instructs it to start. You can also stop a worker by calling `stop`
-or restart it with `restart`.
+The consumer will run in the foreground, logging to the console. You can stop ti with Ctrl-C.
 
-To run in non-daemonized mode, which can be useful for debugging:
+### Preparing to run locally with Traction Service
 
-    ````bundle exec ./bin/amqp_client run```
+RabbitMQ is essential for this process, so if you haven't already, install it using:
+
+```bash
+brew install rabbitmq
+brew services start rabbitmq
+```
+
+You can now view the instance running at [http://localhost:15672/](http://localhost:15672/).
+
+You may wish to start the warren consumers with:
+
+```bash
+bundle exec warren consumers start --path='config/warren_traction_dev.yml'
+```
+
+This will adjust the configuration options to be compatible with those suggested in the traction setup.
 
 #### Troubleshooting
 
