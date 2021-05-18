@@ -54,6 +54,12 @@ module ResourceTools::Json
     private :json
   end
 
+  # @todo Consider switch to ActiveSupport::HashWithIndifferentAccess
+  # We've remove our Hashie::Mash dependency in the event warehouse, where
+  # ActiveSupport::HashWithIndifferentAccess was a near drop-in replacement.
+  # Here however we have additional use of converting method calls into key
+  # lookups. It should be possible to replace these with explicit method
+  # definitions, but this fell outside the scope of a simple refactor.
   class Handler < Hashie::Mash
     class_attribute :translations
     self.translations = {}
@@ -97,7 +103,9 @@ module ResourceTools::Json
 
       # JSON attributes can be translated into the attributes on the way in.
       def translate(details)
-        self.translations = Hash[details.map { |k, v| [k.to_s, v.to_s] }].reverse_merge(translations)
+        self.translations = details.stringify_keys
+                                   .transform_values(&:to_s)
+                                   .reverse_merge(translations)
       end
 
       def convert_key(key)
