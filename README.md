@@ -99,6 +99,9 @@ bundle exec warren consumer start
 
 The consumer will run in the foreground, logging to the console. You can stop ti with Ctrl-C.
 
+For more warren actions, either use `bundle exec warren help` or see the
+[warren documentation](https://rubydoc.info/gems/sanger_warren)
+
 ### Preparing to run locally with Traction Service
 
 RabbitMQ is essential for this process, so if you haven't already, install it using:
@@ -113,11 +116,22 @@ You can now view the instance running at [http://localhost:15672/](http://localh
 You may wish to start the warren consumers with:
 
 ```bash
-bundle exec warren consumers start --path='config/warren_traction_dev.yml'
+bundle exec warren consumers start --path='config/warren_traction_service_dev.yml'
 ```
 
 This will adjust the configuration options to be compatible with those suggested in the traction setup.
 
+Also see [managing custom configs](#manage-custom-configs)
+
+### Mange Custom Configs
+
+It is possible to run the consumers with a custom configuration, eg.
+
+```bash
+bundle exec warren consumers start --path='config/my_customized_config.local.yml'
+```
+
+The `.gitignore` file will automatically prevent these configurations from being committed.
 #### Troubleshooting
 
 If you receive an error about a missing output file under `tmp/pid/` it may be that you need to create this directory manually.

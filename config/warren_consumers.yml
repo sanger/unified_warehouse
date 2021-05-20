@@ -2,7 +2,7 @@
 MultiLimsWarehouseConsumer:
   desc: Default consumer for the warehouse
   queue:
-    name: psd.mlwh.production
+    name: psd.mlwh.multi-lims-warehouse-consumer
     options:
       :durable: true
       :arguments:
@@ -63,5 +63,5 @@ MultiLimsWarehouseConsumer:
           :arguments:
             x-dead-letter-exchange: ''
             x-message-ttl: 30000
-            x-dead-letter-routing-key: psd.mlwh.production
+            x-dead-letter-routing-key: psd.mlwh.multi-lims-warehouse-consumer
       options: {}
