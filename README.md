@@ -113,7 +113,7 @@ You can now view the instance running at [http://localhost:15672/](http://localh
 You may wish to start the warren consumers with:
 
 ```bash
-bundle exec warren consumers start --path='config/warren_traction_dev.yml'
+bundle exec warren consumer start --path='config/warren_traction_dev.yml'
 ```
 
 This will adjust the configuration options to be compatible with those suggested in the traction setup.
