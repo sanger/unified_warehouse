@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # We hardly use any of the features of Rails, so lets just load what we need
 # Initially installed with
 # gem 'rails', '~> 6.0'
