@@ -8,7 +8,6 @@ mysql: &MYSQL
   host: <%= ENV.fetch('DBHOST','127.0.0.1') %>
   port: <%= ENV.fetch('DBPORT','3306') %>
 
-
 development:
   <<: *MYSQL
   database: unified_warehouse_development

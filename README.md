@@ -2,73 +2,81 @@
 
 [![Build Status](https://travis-ci.org/sanger/unified_warehouse.svg?branch=develop)](https://travis-ci.org/sanger/unified_warehouse)
 
-This application is a denormalised warehouse for multiple LIMS.
+A denormalised warehouse for multiple LIMS.
 
 ## Usage (Development)
+
+### Requirement
+
+1. MySQL (currently 5.7) is required and usually installed with homebrew:
+
+        brew install mysql@5.7
+        brew link mysql@5.7 --force
 
 ### Installation
 
 1. Clone the git repository
-1. Install the relevant ruby is installed - have a look in the `.ruby-version` file
-1. Install bundler the version of bundler used to create the `Gemfile.lock`:
+1. Install the relevant ruby from `.ruby-version`
+1. Install bundler:
 
-       `gem install bundler -v $(tail -1 Gemfile.lock)`
+       gem install bundler
 
 1. Run the setup process:
 
-       `bin/setup`
+       bin/setup
+
+__NB__: If getting an error while installing the `mysql2` gem, try:
+
+    bundle config build.mysql2 --with-opt-dir=$(brew --prefix openssl)
+
+and try runnning `bundle install` again.
 
 ### Database preparation
 
 Before you can use the system in any capacity, you must first prepare the database.
 This should be handled by `bin/setup` above, but if not:
-```
+
     bundle exec rake db:setup
-```
 
 #### (Optional) Create the views
 
-This project provides with the view ```cherrypicked_samples``` that links data with
+This project provides the view `cherrypicked_samples` that links data with
 the event warehouse. To create the view you need to run the command:
-```
+
     bundle exec rake db:views:schema:load
-```
 
 ### Running tests
 
 Ensure the test suite is running and passing:
-```
+
     bundle exec rspec
-```
+
 ### Integration tests
 
 #### Setup
-1. Initialize the integration tests setup for events warehouse (please check the 
-Integration Tests setup section at <https://github.com/sanger/event_warehouse/>) 
+
+1. Initialize the integration tests setup for events warehouse (please check the
+Integration Tests setup section at <https://github.com/sanger/event_warehouse/#integration-tests-setup>)
 
 2. Reset the database
-```
-    bundle exec rake db:reset
-```
+
+       bundle exec rake db:reset
 
 3. Create the dependent views
-```
-    bundle exec rake db:views:schema:load
-```
+
+       bundle exec rake db:views:schema:load
 
 These actions can also be performed automatically if you run the Docker container of the service
 and pass the environment variables:
-```
-RAILS_ENV="test"
-INTEGRATION_TEST_SETUP="true"
-```
 
+    RAILS_ENV="test"
+    INTEGRATION_TEST_SETUP="true"
 
 #### Running the integration tests
+
 4. Run the integration tests:
-```
-   bundle exec rspec --tag integration
-```
+
+        bundle exec rspec --tag integration
 
 ### Preparing to run locally with Traction Service
 
@@ -98,14 +106,14 @@ This will ensure the queue that is generated is compatible with the expectations
 Execute the worker to pick up messages in the queue and process them into the
 database:
 
-    ```bundle exec ./bin/amqp_client start```
+    bundle exec ./bin/amqp_client start
 
 where `start` instructs it to start. You can also stop a worker by calling `stop`
 or restart it with `restart`.
 
 To run in non-daemonized mode, which can be useful for debugging:
 
-    ````bundle exec ./bin/amqp_client run```
+    bundle exec ./bin/amqp_client run
 
 #### Troubleshooting
 
@@ -114,6 +122,6 @@ Once the directory above has been inserted at the root of the repository, the er
 
 #### How To Section
 
-Cog Uk Ids - These ids are given to positive samples imported through the Lighthouse-UI. This process should automatically record those Ids in the sample table, and also into the lighthouse_sample table.
-To migrate Cog Uk Ids into the lighthouse_sample table manually via SQL, see this Confluence page:
+COG-UK Ids - These ids are given to positive samples imported through the Lighthouse-UI. This process should automatically record those Ids in the sample table, and also into the lighthouse_sample table.
+To migrate COG-UK Ids into the lighthouse_sample table manually via SQL, see this Confluence page:
 https://ssg-confluence.internal.sanger.ac.uk/display/PSD/How+to+migrate+Cog+UK+IDs+into+the+lighthouse_sample+table
