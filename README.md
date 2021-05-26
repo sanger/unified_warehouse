@@ -40,7 +40,7 @@ This should be handled by `bin/setup` above, but if not:
 
 #### (Optional) Create the views
 
-This project provides with the view `cherrypicked_samples` that links data with
+This project provides the view `cherrypicked_samples` that links data with
 the event warehouse. To create the view you need to run the command:
 
     bundle exec rake db:views:schema:load
@@ -56,7 +56,7 @@ Ensure the test suite is running and passing:
 #### Setup
 
 1. Initialize the integration tests setup for events warehouse (please check the
-Integration Tests setup section at <https://github.com/sanger/event_warehouse/>)
+Integration Tests setup section at <https://github.com/sanger/event_warehouse/#integration-tests-setup>)
 
 2. Reset the database
 
@@ -76,7 +76,7 @@ and pass the environment variables:
 
 4. Run the integration tests:
 
-   bundle exec rspec --tag integration
+        bundle exec rspec --tag integration
 
 ### Preparing to run locally with Traction Service
 
