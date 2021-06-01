@@ -19,12 +19,13 @@ gem 'bundler', '>= 1.3.0'
 gem 'railties', '~> 6.0.3'
 # # RAILS DEPENDENCIES
 
+gem 'sanger_warren', '0.3.0.pre.rc1'
+
 gem 'bootsnap', '~> 1.7', '>= 1.7.3', require: false
-gem 'bunny', '~> 2.17'
-gem 'daemons', '~> 1.3', '>= 1.3.1'
 gem 'hashie', '~> 4.1'
 gem 'migration_comments', '~> 0.4.1'
 gem 'mysql2', '~> 0.5.3'
+
 gem 'views_schema', github: 'sanger/views_schema'
 
 group :test, :development do

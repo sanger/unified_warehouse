@@ -17,10 +17,10 @@ module ResourceTools
     # we're probably not capturing all of the right messages.
     before_save :remember_if_we_are_a_new_record
 
-    # IDs can be alphanumerics, so the column is not set to integer. While MySQL is smart enough to handle the conversion, it
-    # slows down the queries significantly (~400ms vs 2). Ruby handles the conversion much more quickly.
     scope :for_lims,  ->(lims) { where(id_lims: lims) }
     scope :with_uuid, ->(uuid) { where("uuid_#{base.name.underscore}_lims": uuid) }
+    # IDs can be alphanumerics, so the column is not set to integer. While MySQL is smart enough to handle the conversion, it
+    # slows down the queries significantly (~400ms vs 2). Ruby handles the conversion much more quickly.
     scope :with_id,   ->(id) {   where(base.base_resource_key => id.to_s) }
 
     def self.base_resource_key
