@@ -41,7 +41,7 @@ This should be handled by `bin/setup` above, but if not:
 
 #### (Optional) Create the views
 
-This project provides with the view `cherrypicked_samples` that links data with
+This project provides the view `cherrypicked_samples` that links data with
 the event warehouse. To create the view you need to run the command:
 
     bundle exec rake db:views:schema:load
