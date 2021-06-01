@@ -24,7 +24,7 @@ A denormalised warehouse for multiple LIMS.
 
 3.  Run the setup process:
 
-    bin/setup
+        bin/setup
 
 **NB**: If getting an error while installing the `mysql2` gem, try:
 
@@ -61,11 +61,11 @@ Ensure the test suite is running and passing:
 
 2. Reset the database
 
-   bundle exec rake db:reset
+       bundle exec rake db:reset
 
 3. Create the dependent views
 
-   bundle exec rake db:views:schema:load
+        bundle exec rake db:views:schema:load
 
 These actions can also be performed automatically if you run the Docker container of the service
 and pass the environment variables:
