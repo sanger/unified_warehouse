@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'bootsnap'
-gem 'mysql2'
-
 # We hardly use any of the features of Rails, so lets just load what we need
 # Initially installed with
 # gem 'rails', '~> 6.0'
@@ -24,8 +21,10 @@ gem 'railties', '~> 6.0.3'
 
 gem 'sanger_warren', '0.3.0.pre.rc1'
 
-gem 'hashie', '~> 4.0'
-gem 'migration_comments'
+gem 'bootsnap', '~> 1.7', '>= 1.7.3', require: false
+gem 'hashie', '~> 4.1'
+gem 'migration_comments', '~> 0.4.1'
+gem 'mysql2', '~> 0.5.3'
 
 gem 'views_schema', github: 'sanger/views_schema'
 
