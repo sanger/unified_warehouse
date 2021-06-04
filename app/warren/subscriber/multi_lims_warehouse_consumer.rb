@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require './lib/payload'
 module Warren
   module Subscriber
     # Warren powered MultiLimsWarehouseConsumer consumers
