@@ -13,7 +13,6 @@ Rails/ApplicationRecord:
 Rails/Exit:
   Exclude:
     - 'lib/**/*.rake'
-    - 'lib/postman.rb'
 # The default created_at and updated_at timestamps can be a little confusing
 # when we have similar data coming from the remote lims.
 Rails/CreateTableWithTimestamps:

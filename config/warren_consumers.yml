@@ -1,0 +1,67 @@
+---
+MultiLimsWarehouseConsumer:
+  desc: Default consumer for the warehouse
+  queue:
+    name: psd.mlwh.multi-lims-warehouse-consumer
+    options:
+      :durable: true
+      :arguments:
+        x-dead-letter-exchange: psd.multi-lims-warehouse-consumer.dead-letters
+    bindings:
+    - exchange:
+        name: psd.sequencescape
+        options:
+          :type: topic
+          :durable: true
+      options:
+        :routing_key: "%{routing_key_prefix}.activity.finished.#"
+    - exchange:
+        name: psd.sequencescape
+        options:
+          :type: topic
+          :durable: true
+      options:
+        :routing_key: "%{routing_key_prefix}.message.#"
+    - exchange:
+        name: psd.sequencescape
+        options:
+          :type: topic
+          :durable: true
+      options:
+        :routing_key: "%{routing_key_prefix}.saved.sample.#"
+    - exchange:
+        name: psd.sequencescape
+        options:
+          :type: topic
+          :durable: true
+      options:
+        :routing_key: "%{routing_key_prefix}.saved.study.#"
+  subscribed_class: Warren::Subscriber::MultiLimsWarehouseConsumer
+  dead_letters:
+    name: psd.multi-lims-warehouse-consumer.dead-letters
+    options:
+      :durable: true
+      :arguments: {}
+    bindings:
+    - exchange:
+        name: psd.multi-lims-warehouse-consumer.dead-letters
+        options:
+          :type: fanout
+          :durable: true
+      options: {}
+  delay:
+    exchange:
+      name: psd.multi-lims-warehouse-consumer.delay
+      options:
+        :type: fanout
+        :durable: true
+    bindings:
+    - queue:
+        name: psd.multi-lims-warehouse-consumer.delay
+        options:
+          :durable: true
+          :arguments:
+            x-dead-letter-exchange: ''
+            x-message-ttl: 30000
+            x-dead-letter-routing-key: psd.mlwh.multi-lims-warehouse-consumer
+      options: {}

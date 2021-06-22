@@ -27,12 +27,6 @@ module UnifiedWarehouse
     # If you want to enable structure.sql again, uncomment this line:
     # config.active_record.schema_format = :sql
 
-    # We're going to need a specialised configuration for our AMQP consumer
-    config.amqp                       = ActiveSupport::Configurable::Configuration.new
-    config.amqp.server                = ActiveSupport::Configurable::Configuration.new
-    config.amqp.main                  = ActiveSupport::Configurable::Configuration.new
-    config.amqp.delay                 = ActiveSupport::Configurable::Configuration.new
-    config.amqp.main.deadletter       = ActiveSupport::Configurable::Configuration.new
-    config.amqp.deadletter            = ActiveSupport::Configurable::Configuration.new
+    config.autoload_paths += ["#{config.root}/app"]
   end
 end
