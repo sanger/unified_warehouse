@@ -12,13 +12,16 @@ source 'https://rubygems.org'
 # Be aware when adding in new components that they may require an initializer
 # or additional configuration options.
 # RAILS DEPENDENCIES
-gem 'activemodel', '~> 6.0.3'
-gem 'activerecord', '~> 6.0.3'
-gem 'activesupport', '~> 6.0.3'
-gem 'bundler', '>= 1.3.0'
-gem 'railties', '~> 6.0.3'
-# # RAILS DEPENDENCIES
+rails_version = '~> 6.0.3'
+gem 'activemodel', rails_version
+gem 'activerecord', rails_version
+gem 'activesupport', rails_version
+gem 'railties', rails_version
+gem 'actionpack', rails_version
 
+gem 'bundler', '>= 1.3.0'
+# # RAILS DEPENDENCIES
+gem 'puma'
 gem 'sanger_warren', '0.3.0'
 
 gem 'bootsnap', '~> 1.7', '>= 1.7.3', require: false
@@ -27,6 +30,8 @@ gem 'migration_comments', '~> 0.4.1'
 gem 'mysql2', '~> 0.5.3'
 
 gem 'views_schema', github: 'sanger/views_schema'
+
+gem 'jsonapi.rb'
 
 group :test, :development do
   gem 'factory_bot_rails'
