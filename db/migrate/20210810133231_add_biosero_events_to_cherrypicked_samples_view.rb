@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
+# Updates view of all cherrypicked samples with Biosero events
 class AddBioseroEventsToCherrypickedSamplesView < ActiveRecord::Migration[6.0]
+  # rubocop:disable Metrics/MethodLength
   def up
     event_wh_db = Rails.application.config.event_wh_db
     mlwh_wh_db = Rails.configuration.database_configuration[Rails.env]['database']
 
-    ViewsSchema.create_view(
+    ViewsSchema.update_view(
       'cherrypicked_samples',
       <<~SQL.squish
         SELECT mlwh_sample.description AS "root_sample_id", mlwh_stock_resource.labware_human_barcode AS "plate_barcode",
@@ -35,11 +39,10 @@ class AddBioseroEventsToCherrypickedSamplesView < ActiveRecord::Migration[6.0]
       SQL
     )
   end
+  # rubocop:enable Metrics/MethodLength
 
   def down
-    ViewsSchema.drop_view('cherrypicked_samples')
-    
-    ViewsSchema.create_view(
+    ViewsSchema.update_view(
       'cherrypicked_samples',
       <<~SQL.squish
         SELECT mlwh_sample.description AS "root_sample_id", mlwh_stock_resource.labware_human_barcode AS "plate_barcode",
