@@ -3,8 +3,8 @@
 # Updates view of all cherrypicked samples with Biosero events
 class AddBioseroEventsToCherrypickedSamplesView < ActiveRecord::Migration[6.0]
   def up
-    event_wh_db = '`' + Rails.application.config.event_wh_db + '`'
-    mlwh_wh_db = '`' + Rails.configuration.database_configuration[Rails.env]['database'] + '`'
+    event_wh_db = Rails.application.config.event_wh_db
+    mlwh_wh_db = Rails.configuration.database_configuration[Rails.env]['database']
 
     ViewsSchema.update_view(
       'cherrypicked_samples',
