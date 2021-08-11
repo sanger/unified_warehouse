@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Add indexes for lighthouse samples to assist in ETL failures where
-# the database statements are taking too long to run.
+# Add indexes for lighthouse samples to assist in Cotrack product ETL failures
+# where the database queries are taking too long to run.
 class AddIndexesOnLighthouseSamples < ActiveRecord::Migration[6.0]
   def up
     change_table :lighthouse_sample, bulk: true do |t|
