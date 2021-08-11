@@ -4,12 +4,16 @@
 # the database statements are taking too long to run.
 class AddIndexesOnLighthouseSamples < ActiveRecord::Migration[6.0]
   def up
-    add_index :lighthouse_sample, :rna_id
-    add_index :lighthouse_sample, [:plate_barcode, :created_at]
+    change_table :lighthouse_sample, bulk: true do |t|
+      t.index :rna_id
+      t.index %i[plate_barcode created_at]
+    end
   end
 
   def down
-    remove_index :lighthouse_sample, :rna_id
-    remove_index :lighthouse_sample, [:plate_barcode, :created_at]
+    change_table :lighthouse_sample, bulk: true do |t|
+      t.remove_index :rna_id
+      t.remove_index %i[plate_barcode created_at]
+    end
   end
 end
