@@ -38,7 +38,6 @@ RSpec.describe 'cherrypicked_samples_view', :integration do
                     uuid_sample_lims: '00000000-1111-2222-4444-888888888888')
   end
 
-
   let!(:lh_sample1) { create(:lighthouse_sample, lh_sample_uuid: beckman_sample1.uuid_sample_lims) }
   let!(:lh_sample2) { create(:lighthouse_sample, lh_sample_uuid: biosero_sample1.uuid_sample_lims) }
   let!(:lh_sample3) { create(:lighthouse_sample, lh_sample_uuid: biosero_sample2.uuid_sample_lims) }

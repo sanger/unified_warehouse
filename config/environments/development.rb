@@ -63,8 +63,7 @@ Rails.application.configure do
 
   # Event warehouse configuration
   config.event_wh_db = 'event_warehouse_development'
-  
+
   config.view_schema_mlwh_db = 'unified_warehouse_development'
   config.view_schema_ewh_db = 'event_warehouse_development'
-
 end

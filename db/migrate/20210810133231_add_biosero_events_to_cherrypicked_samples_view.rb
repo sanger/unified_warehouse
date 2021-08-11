@@ -2,6 +2,7 @@
 
 # Updates view of all cherrypicked samples with Biosero events
 class AddBioseroEventsToCherrypickedSamplesView < ActiveRecord::Migration[6.0]
+  # rubocop:disable Metrics/MethodLength
   def up
     event_wh_db = Rails.application.config.event_wh_db
     mlwh_wh_db = Rails.configuration.database_configuration[Rails.env]['database']
@@ -36,6 +37,7 @@ class AddBioseroEventsToCherrypickedSamplesView < ActiveRecord::Migration[6.0]
       SQL
     )
   end
+  # rubocop:enable Metrics/MethodLength
 
   def down
     event_wh_db = Rails.application.config.event_wh_db
