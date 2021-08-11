@@ -48,30 +48,31 @@ jobs:
           RAILS_ENV: development
     steps:
       - uses: actions/checkout@v2
+      - uses: nelonoel/branch-name@v1.0.1
       - name: Build the Docker image
         run: >-
           docker build .
           --file Dockerfile
-          --tag docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/}
+          --tag docker.pkg.github.com/${IMAGE_NAME}:${BRANCH_NAME}
       - name: Run Rubocop against the image
         run: >-
           docker run --network host --env DBHOST=$LOCALHOST
-          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          docker.pkg.github.com/${IMAGE_NAME}:${BRANCH_NAME}
           bundle exec rubocop
       - name: Initialize Unified warehouse testing database
         run: >-
           docker run --network host --env DBHOST=$LOCALHOST --env RAILS_ENV=test
-          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          docker.pkg.github.com/${IMAGE_NAME}:${BRANCH_NAME}
           bundle exec rake db:setup db:views:schema:load
       - name: Run tests against the image
         run: >-
           docker run --network host --env DBHOST=$LOCALHOST
-          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          docker.pkg.github.com/${IMAGE_NAME}:${BRANCH_NAME}
           bundle exec rspec
       - name: Run integration tests
         run: >-
           docker run --network host --env DBHOST=$LOCALHOST
-          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/} 
+          docker.pkg.github.com/${IMAGE_NAME}:${BRANCH_NAME}
           bundle exec rspec --tag integration
       - name: Login to registry
         run: >-
@@ -82,4 +83,4 @@ jobs:
       - name: Publish image with image tag being either develop/master/<tag_name>
         run: >-
           docker push
-          docker.pkg.github.com/${IMAGE_NAME}:${GITHUB_REF##*/}
+          docker.pkg.github.com/${IMAGE_NAME}:${BRANCH_NAME}
