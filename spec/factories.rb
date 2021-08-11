@@ -35,17 +35,12 @@ FactoryBot.define do
   end
 
   factory :lighthouse_sample do
-    # mongodb_id { '5f3a91045019939dc1ac317b' }
     sequence(:mongodb_id) { |n| "5f3a91045019939dc1ac317#{n}" }
-    # root_sample_id { 'ABC00000001' }
     sequence(:root_sample_id) { |n| "ABC0000000#{n}" }
     sequence(:cog_uk_id) { |n| "PREFIX-#{n}" }
     rna_id { 'PR-rna-00000001_H12' }
-    # plate_barcode { "PR-rna-00000001" }
-    # coordinate { "H12" }
     sequence(:plate_barcode) { |n| "PR-rna-0000000#{n}" }
     sequence(:coordinate) { |n| "A#{n}" }
-    # coordinate { 'H12' }
     result { 'Negative' }
     date_tested_string { '2020-04-01 010000 UTC' }
     date_tested { Time.new(2020, 4, 1, 1, 0, 0, '+00:00') }
