@@ -29,7 +29,10 @@ class AddBioseroEventsToCherrypickedSamplesView < ActiveRecord::Migration[6.0]
         JOIN #{event_wh_db}.roles AS mlwh_events_roles ON (mlwh_events_roles.subject_id = mlwh_events_subjects.id)
         JOIN #{event_wh_db}.events AS mlwh_events_events ON (mlwh_events_events.id = mlwh_events_roles.event_id)
         JOIN #{event_wh_db}.event_types AS mlwh_events_event_types ON (mlwh_events_event_types.id = mlwh_events_events.event_type_id)
-        WHERE mlwh_events_event_types.key IN ('lh_beckman_cp_destination_created', 'lh_biosero_cp_destination_plate_completed', 'lh_biosero_cp_destination_plate_partial_completed')
+        WHERE mlwh_events_event_types.key IN (
+          'lh_beckman_cp_destination_created', 'lh_biosero_cp_destination_plate_completed', 'lh_biosero_cp_destination_plate_partial_completed',
+          'lh_biosero_cp_error_recovered_destination_plate_completed','lh_biosero_cp_error_recovered_destination_plate_partial_completed'
+        )
       SQL
     )
   end
