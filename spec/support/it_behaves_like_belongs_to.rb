@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use to automatically test associations
 # @example A simple resource
 # ```

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'maps JSON fields' do |mapped_attributes|
   let!(:json_handler) { described_class.send(:json) }
 

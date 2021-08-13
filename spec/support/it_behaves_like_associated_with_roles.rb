@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'maintains roles correctly' do
   after(:each) do
     described_class.create_or_update_from_json(timestamped_json.merge(updated_roles).merge(updated_at: updated_at), 'example')
@@ -31,7 +33,7 @@ shared_examples_for 'associated with roles' do
   end
 
   let(:additional_roles) { [] }
-  let(:originally_created_at) { Time.parse('2012-Mar-16 15:06') }
+  let(:originally_created_at) { Time.zone.parse('2012-Mar-16 15:06') }
   let(:timestamped_json) { json.merge(created_at: originally_created_at, updated_at: originally_created_at + 1.day) }
 
   context 'for an existing record' do
