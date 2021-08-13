@@ -25,8 +25,9 @@ shared_examples_for 'associated with roles' do
     expect(described_class::User.count).to eq(roles.values.flatten.size)
 
     roles.each do |role, expected|
+      keys = %i[name email login]
       found = described_class::User.where(role: role.to_s).map do |user|
-        %i[name email login].map { |a| [a, user[a]] }.to_h
+        keys.map { |a| [a, user[a]] }.to_h
       end
       expect(found).to eq(expected)
     end

@@ -23,7 +23,6 @@ AllCops:
     - 'vendor/**/*'
     - db/schema.rb
     - db/views_schema.rb
-    - 'spec/**/*'
 
 Style/DocumentDynamicEvalDefinition:
   Enabled: false

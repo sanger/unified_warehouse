@@ -12,7 +12,8 @@ describe PacBioRun do
   let!(:mock_study)  { create(:study)  }
 
   before(:each) do
-    mock_sample; mock_study
+    mock_sample
+    mock_study
   end
 
   it_behaves_like 'maps JSON fields', {

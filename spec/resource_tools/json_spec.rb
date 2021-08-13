@@ -2,12 +2,12 @@
 
 require 'spec_helper'
 
-describe ResourceTools::Json::Handler do
-  class Json < ResourceTools::Json::Handler
-    ignore('ignored')
-    translate('key' => 'translated')
-  end
+class Json < ResourceTools::Json::Handler
+  ignore('ignored')
+  translate('key' => 'translated')
+end
 
+describe ResourceTools::Json::Handler do
   context 'supports translations' do
     subject { Json.new }
 
