@@ -49,7 +49,7 @@ module ResourceTools::Json
 
     def json(&block)
       const_set(:JsonHandler, Class.new(ResourceTools::Json::Handler)) unless const_defined?(:JsonHandler)
-      const_get(:JsonHandler).tap { |json_handler| json_handler.instance_eval(&block) if block_given? }
+      const_get(:JsonHandler).tap { |json_handler| json_handler.instance_eval(&block) if block }
     end
     private :json
   end
@@ -90,7 +90,7 @@ module ResourceTools::Json
         self.nested_models = ({}) if nested_models.blank?
         const_set(:"#{name.to_s.classify}JsonHandler", Class.new(ResourceTools::Json::Handler))
         nested_models[name] = const_get(:"#{name.to_s.classify}JsonHandler")
-        nested_models[name].tap { |json_handler| json_handler.instance_eval(&block) if block_given? }
+        nested_models[name].tap { |json_handler| json_handler.instance_eval(&block) if block }
       end
 
       def ignore(*attributes)

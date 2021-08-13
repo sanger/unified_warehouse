@@ -15,8 +15,7 @@ class PacBioRun < ApplicationRecord
         :samples
       )
 
-      has_nested_model(:samples) do
-      end
+      has_nested_model(:samples)
     end
 
     translate(

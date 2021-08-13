@@ -1,8 +1,7 @@
 module ResourceTools::Association
   extend ActiveSupport::Concern
 
-  included do
-  end
+  included
 
   module ClassMethods
     def has_associated(association)

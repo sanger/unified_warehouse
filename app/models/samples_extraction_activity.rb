@@ -15,8 +15,7 @@ class SamplesExtractionActivity < ActiveRecord::Base
   has_associated(:sample)
 
   json do
-    has_nested_model(:samples) do
-    end
+    has_nested_model(:samples)
 
     ignore(
       :samples
