@@ -8,23 +8,23 @@ A denormalised warehouse for multiple LIMS.
 
 ### Requirement
 
-1.  MySQL (currently 5.7) is required and usually installed with homebrew:
+1. MySQL (currently 5.7) is required and usually installed with homebrew:
 
-        brew install mysql@5.7
-        brew link mysql@5.7 --force
+       brew install mysql@5.7
+       brew link mysql@5.7 --force
 
 ### Installation
 
-1.  Clone the git repository
-2.  Install the relevant ruby from `.ruby-version`
+1. Clone the git repository
+2. Install the relevant ruby from `.ruby-version`
 
     Rbenv will read .ruby-version automatically
 
-         rbenv install
+       rbenv install
 
-3.  Run the setup process:
+3. Run the setup process:
 
-        bin/setup
+       bin/setup
 
 **NB**: If getting an error while installing the `mysql2` gem, try:
 
@@ -65,7 +65,7 @@ Ensure the test suite is running and passing:
 
 3. Create the dependent views
 
-        bundle exec rake db:views:schema:load
+       bundle exec rake db:views:schema:load
 
 These actions can also be performed automatically if you run the Docker container of the service
 and pass the environment variables:
@@ -75,7 +75,7 @@ and pass the environment variables:
 
 #### Running the integration tests
 
-1.  Run the integration tests:
+1. Run the integration tests:
 
         bundle exec rspec --tag integration
 
@@ -124,5 +124,4 @@ Once the directory above has been inserted at the root of the repository, the er
 #### How To Section
 
 COG-UK Ids - These ids are given to positive samples imported through the Lighthouse-UI. This process should automatically record those Ids in the sample table, and also into the lighthouse_sample table.
-To migrate COG-UK Ids into the lighthouse_sample table manually via SQL, see this Confluence page:
-https://ssg-confluence.internal.sanger.ac.uk/display/PSD/How+to+migrate+Cog+UK+IDs+into+the+lighthouse_sample+table
+To migrate COG-UK Ids into the lighthouse_sample table manually via SQL, see [this Confluence page](https://ssg-confluence.internal.sanger.ac.uk/display/PSD/How+to+migrate+Cog+UK+IDs+into+the+lighthouse_sample+table).
