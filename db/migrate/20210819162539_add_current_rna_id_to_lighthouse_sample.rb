@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Migration to include new columns
 class AddCurrentRnaIdToLighthouseSample < ActiveRecord::Migration[6.0]
   def change
     change_table :lighthouse_sample, bulk: true do |t|
