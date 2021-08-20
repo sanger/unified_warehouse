@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_13_155214) do
+ActiveRecord::Schema.define(version: 2021_08_19_162539) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -141,14 +141,19 @@ ActiveRecord::Schema.define(version: 2021_08_13_155214) do
     t.datetime "updated_at", comment: "When this record was last updated"
     t.boolean "must_sequence", comment: "PAM provided value whether sample is of high importance"
     t.boolean "preferentially_sequence", comment: "PAM provided value whether sample is important"
+    t.string "current_rna_id", comment: "Current rna_id value for this sample"
+    t.boolean "is_current", default: false, null: false, comment: "Identifies if this sample has the most up to date information for the same rna_id"
     t.index ["cog_uk_id"], name: "index_lighthouse_sample_on_cog_uk_id", unique: true
+    t.index ["current_rna_id"], name: "index_lighthouse_sample_on_current_rna_id", unique: true
     t.index ["date_tested"], name: "index_lighthouse_sample_on_date_tested"
     t.index ["filtered_positive"], name: "index_lighthouse_sample_on_filtered_positive"
+    t.index ["is_current"], name: "index_lighthouse_sample_on_is_current"
     t.index ["lh_sample_uuid"], name: "index_lighthouse_sample_on_lh_sample_uuid", unique: true
     t.index ["mongodb_id"], name: "index_lighthouse_sample_on_mongodb_id", unique: true
     t.index ["plate_barcode", "created_at"], name: "index_lighthouse_sample_on_plate_barcode_and_created_at"
     t.index ["result"], name: "index_lighthouse_sample_on_result"
     t.index ["rna_id"], name: "index_lighthouse_sample_on_rna_id"
+    t.index ["rna_id"], name: "rna_id_index"
     t.index ["root_sample_id", "rna_id", "result"], name: "index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result", unique: true
   end
 
