@@ -9,7 +9,7 @@ class AddCurrentRnaIdToLighthouseSample < ActiveRecord::Migration[6.0]
       t.boolean :is_current, null: false, default: false, comment: 'Identifies if this sample has the most up to date information for the same rna_id'
       t.index %i[is_current], unique: false # same uniqueness criteria as in MongoDB
 
-      t.virtual :current_rna_id, type: :string, as: "if((is_current = 1),rna_id,NULL)", stored: true
+      t.virtual :current_rna_id, type: :string, as: 'if((is_current = 1),rna_id,NULL)', stored: true
       t.index %i[current_rna_id], unique: true # same uniqueness criteria as in MongoDB
     end
 
