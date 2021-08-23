@@ -141,8 +141,8 @@ ActiveRecord::Schema.define(version: 2021_08_19_162539) do
     t.datetime "updated_at", comment: "When this record was last updated"
     t.boolean "must_sequence", comment: "PAM provided value whether sample is of high importance"
     t.boolean "preferentially_sequence", comment: "PAM provided value whether sample is important"
-    t.string "current_rna_id", comment: "Current rna_id value for this sample"
     t.boolean "is_current", default: false, null: false, comment: "Identifies if this sample has the most up to date information for the same rna_id"
+    t.virtual "current_rna_id", type: :string, as: "if((`is_current` = 1),`rna_id`,NULL)", stored: true
     t.index ["cog_uk_id"], name: "index_lighthouse_sample_on_cog_uk_id", unique: true
     t.index ["current_rna_id"], name: "index_lighthouse_sample_on_current_rna_id", unique: true
     t.index ["date_tested"], name: "index_lighthouse_sample_on_date_tested"
