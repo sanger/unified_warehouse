@@ -4,25 +4,14 @@
 # reconstructed values from existing data.
 class AddCurrentRnaIdToLighthouseSample < ActiveRecord::Migration[6.0]
   def self.up
-    # Add a column for boolean value indicating the current RNA ID for a sample.
+    # Add a columns for boolean is_current and current RNA ID.
     change_table :lighthouse_sample, bulk: true do |t|
       t.boolean :is_current, null: false, default: false, comment: 'Identifies if this sample has the most up to date information for the same rna_id'
       t.index %i[is_current], unique: false # same uniqueness criteria as in MongoDB
+
+      t.virtual :current_rna_id, type: :string, as: "if((is_current = 1),rna_id,NULL)", stored: true
+      t.index %i[current_rna_id], unique: true # same uniqueness criteria as in MongoDB
     end
-
-    # Add a generated column for the current RNA ID.
-    execute %{
-      ALTER TABLE lighthouse_sample
-      ADD COLUMN current_rna_id VARCHAR(255)
-      GENERATED ALWAYS AS (IF(is_current = 1, rna_id, NULL))
-      STORED;
-    }
-
-    # Add an index for the generated column
-    execute %{
-      CREATE UNIQUE INDEX index_lighthouse_sample_on_current_rna_id
-      ON lighthouse_sample (current_rna_id);
-    }
 
     # Infer and populate historic values for is_current.
     execute %{
@@ -47,17 +36,11 @@ class AddCurrentRnaIdToLighthouseSample < ActiveRecord::Migration[6.0]
   end
 
   def self.down
-    # Drop the index for current RNA ID.
-    execute %{
-      DROP INDEX index_lighthouse_sample_on_current_rna_id
-      ON lighthouse_sample;
-    }
-
-    # Drop the generated column for current RNA ID.
-    execute %{
-      ALTER TABLE lighthouse_sample
-      DROP COLUMN current_rna_id;
-    }
+    # Drop index and column for current_rna_id.
+    change_table :lighthouse_sample, bulk: true do |t|
+      t.remove_index %i[current_rna_id]
+      t.remove :current_rna_id
+    end
 
     # Drop index and column for is_current.
     change_table :lighthouse_sample, bulk: true do |t|
