@@ -4,7 +4,7 @@
 # reconstructed values from existing data.
 class AddCurrentRnaIdToLighthouseSample < ActiveRecord::Migration[6.0]
   def self.up
-    # Add a columns for boolean is_current and current RNA ID.
+    # Add columns for boolean is_current and current RNA ID.
     change_table :lighthouse_sample, bulk: true do |t|
       t.boolean :is_current, null: false, default: false, comment: 'Identifies if this sample has the most up to date information for the same rna_id'
       t.index %i[is_current], unique: false # same uniqueness criteria as in MongoDB
