@@ -9,6 +9,8 @@ class AddCurrentRnaIdToLighthouseSample < ActiveRecord::Migration[6.0]
       t.boolean :is_current, null: false, default: false, comment: 'Identifies if this sample has the most up to date information for the same rna_id'
       t.index %i[is_current], unique: false # same uniqueness criteria as in MongoDB
 
+      # current_rna_id is a function of rna_id and is_current, so create it as a virtual column
+      # This way no users of this table need to concern themselves with keeping this column in sync with the others
       t.virtual :current_rna_id, type: :string, as: 'if((is_current = 1),rna_id,NULL)', stored: true
       t.index %i[current_rna_id], unique: true # same uniqueness criteria as in MongoDB
     end
