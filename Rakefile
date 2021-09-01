@@ -5,4 +5,4 @@ require File.expand_path('config/application', __dir__)
 
 UnifiedWarehouse::Application.load_tasks
 
-task spec: 'db:setup'
+task spec: 'db:reset'

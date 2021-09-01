@@ -11,6 +11,5 @@ class BmapFlowcell < ApplicationRecord
     'id_flowcell_lims'
   end
 
-  json do
-  end
+  json
 end

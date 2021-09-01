@@ -20,11 +20,8 @@ class Flowcell < ApplicationRecord
         controls.present? && controls.count > 0
       end
 
-      has_nested_model(:controls) do
-      end
-
-      has_nested_model(:samples) do
-      end
+      has_nested_model(:controls)
+      has_nested_model(:samples)
     end
 
     ignore(

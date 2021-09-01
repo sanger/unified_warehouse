@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'maintains roles correctly' do
   after(:each) do
     described_class.create_or_update_from_json(timestamped_json.merge(updated_roles).merge(updated_at: updated_at), 'example')
@@ -23,15 +25,16 @@ shared_examples_for 'associated with roles' do
     expect(described_class::User.count).to eq(roles.values.flatten.size)
 
     roles.each do |role, expected|
+      keys = %i[name email login]
       found = described_class::User.where(role: role.to_s).map do |user|
-        Hash[%i[name email login].map { |a| [a, user[a]] }]
+        keys.map { |a| [a, user[a]] }.to_h
       end
       expect(found).to eq(expected)
     end
   end
 
   let(:additional_roles) { [] }
-  let(:originally_created_at) { Time.parse('2012-Mar-16 15:06') }
+  let(:originally_created_at) { Time.zone.parse('2012-Mar-16 15:06') }
   let(:timestamped_json) { json.merge(created_at: originally_created_at, updated_at: originally_created_at + 1.day) }
 
   context 'for an existing record' do
@@ -57,7 +60,7 @@ shared_examples_for 'associated with roles' do
 
   context 'for new record' do
     let(:all_role_names) { %i[manager follower administrator].concat(additional_roles) }
-    let(:roles) { Hash[all_role_names.map { |role| [role, [user_with_role(role)]] }] }
+    let(:roles) { all_role_names.map { |role| [role, [user_with_role(role)]] }.to_h }
 
     before(:each) do
       described_class.create_or_update_from_json(timestamped_json.merge(roles), 'example')

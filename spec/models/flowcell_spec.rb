@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Flowcell do
@@ -5,7 +7,8 @@ describe Flowcell do
   let!(:mock_study)  { create(:study)  }
 
   before(:each) do
-    mock_sample; mock_study
+    mock_sample
+    mock_study
   end
 
   shared_examples_for 'a flowcell' do

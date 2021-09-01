@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe StockResource do
@@ -5,7 +7,8 @@ describe StockResource do
   let!(:mock_study)  { create(:study)  }
 
   before(:each) do
-    mock_sample; mock_study
+    mock_sample
+    mock_study
   end
 
   shared_examples_for 'a stock resource' do
