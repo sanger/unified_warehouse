@@ -11,11 +11,11 @@ class AddCurrentRnaIdToLighthouseSample < ActiveRecord::Migration[6.0]
 
     # Infer and populate historic values for is_current.
     execute %{
-      UPDATE lhs_short SET is_current = true
+      UPDATE lighthouse_sample SET is_current = true
       WHERE id IN (
         SELECT a.max_id FROM (
           SELECT rna_id, max(id) AS max_id
-            FROM lhs_short
+            FROM lighthouse_sample
             GROUP BY rna_id
         ) AS a
       );
