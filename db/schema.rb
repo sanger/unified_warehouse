@@ -147,7 +147,6 @@ ActiveRecord::Schema.define(version: 2021_08_19_162539) do
     t.index ["current_rna_id"], name: "index_lighthouse_sample_on_current_rna_id", unique: true
     t.index ["date_tested"], name: "index_lighthouse_sample_on_date_tested"
     t.index ["filtered_positive"], name: "index_lighthouse_sample_on_filtered_positive"
-    t.index ["is_current"], name: "index_lighthouse_sample_on_is_current"
     t.index ["lh_sample_uuid"], name: "index_lighthouse_sample_on_lh_sample_uuid", unique: true
     t.index ["mongodb_id"], name: "index_lighthouse_sample_on_mongodb_id", unique: true
     t.index ["plate_barcode", "created_at"], name: "index_lighthouse_sample_on_plate_barcode_and_created_at"
