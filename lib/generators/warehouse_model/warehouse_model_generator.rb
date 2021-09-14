@@ -40,7 +40,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
   IGNORE_FIELDS = %i[dont_use_id deleted_at recorded_at].freeze
 
   def columns
-    model.columns.map do |column|
+    model.columns.filter_map do |column|
       next if IGNORE_FIELDS.include?(column.name.to_sym)
 
       name =
@@ -62,7 +62,7 @@ class WarehouseModelGenerator < Rails::Generator::NamedBase
         value = value.split(/\s+/).map(&:first).join.slice(0, column.limit)
       end
       [name, value]
-    end.compact
+    end
   end
 
   def model

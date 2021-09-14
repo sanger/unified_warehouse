@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'has multiple rows' do
   it 'leaves the system with multiple rows' do
     expect(described_class.count).to eq(expected_entries)
@@ -17,7 +19,7 @@ shared_examples_for 'has multiple rows' do
 end
 
 shared_examples_for 'a nested resource' do
-  let(:originally_created_at) { Time.parse('2012-Mar-16 12:06') }
+  let(:originally_created_at) { Time.zone.parse('2012-Mar-16 12:06') }
   let(:timestamped_json) { json.merge('updated_at' => originally_created_at) }
   let(:modified_at) { originally_created_at + 1.day }
   let(:checked_time_now) { Time.parse('2012-Mar-26 13:20').utc }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe FlgenPlate do
@@ -10,7 +12,8 @@ describe FlgenPlate do
   let!(:mock_study)  { create(:study)  }
 
   before(:each) do
-    mock_sample; mock_study
+    mock_sample
+    mock_study
   end
 
   it_behaves_like 'belongs to', %i[

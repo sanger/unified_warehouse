@@ -15,8 +15,7 @@ class StockResource < ApplicationRecord
       human_barcode: :labware_human_barcode
     )
 
-    has_nested_model(:samples) do
-    end
+    has_nested_model(:samples)
 
     ignore(:samples)
   end
