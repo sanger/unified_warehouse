@@ -86,7 +86,7 @@ database:
 
         bundle exec warren consumer start
 
-The consumer will run in the foreground, logging to the console. You can stop ti with Ctrl-C.
+The consumer will run in the foreground, logging to the console. You can stop it with Ctrl-C.
 
 For more warren actions, either use `bundle exec warren help` or see the
 [warren documentation](https://rubydoc.info/gems/sanger_warren)
@@ -108,7 +108,7 @@ This will adjust the configuration options to be compatible with those suggested
 
 Also see [managing custom configs](#manage-custom-configs)
 
-### Mange Custom Configs
+### Manage Custom Configs
 
 It is possible to run the consumers with a custom configuration, eg.
 
