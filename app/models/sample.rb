@@ -3,7 +3,7 @@ class Sample < ApplicationRecord
   include SingularResourceTools
 
   # Set up directional many-to-many associations from this Sample to compound Samples.
-  # This indicates that this Sample is a component in a pool of other Samples respresented by the compound Sample.
+  # This indicates that this Sample is a component in a pool of other component Samples represented by each compound Sample.
   has_many(
     :joins_as_component_sample,
     class_name: 'SampleCompoundComponent',
