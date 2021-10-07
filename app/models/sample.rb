@@ -6,12 +6,12 @@ class Sample < ApplicationRecord
   has_many(
     :joins_as_component_sample,
     class_name: 'SampleCompoundComponent',
+    dependent: :destroy,
     foreign_key: :component_sample_id,
     inverse_of: :component_sample
   )
   has_many(
     :compound_samples,
-    dependent: :destroy,
     source: :compound_sample,
     through: :joins_as_component_sample
   )
@@ -20,12 +20,12 @@ class Sample < ApplicationRecord
   has_many(
     :joins_as_compound_sample,
     class_name: 'SampleCompoundComponent',
+    dependent: :destroy,
     foreign_key: :compound_sample_id,
     inverse_of: :compound_sample
   )
   has_many(
     :component_samples,
-    dependent: :destroy,
     source: :component_sample,
     through: :joins_as_compound_sample
   )
