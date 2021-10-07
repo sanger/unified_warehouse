@@ -88,6 +88,8 @@ describe Sample do
       # the association will change during tests depending on which variables you
       # access first.
       compound_sample.component_samples = [component_sample]
+      compound_sample.reload
+      component_sample.reload
     end
 
     it 'makes the association between samples' do

@@ -7,7 +7,7 @@ class Sample < ApplicationRecord
     :joins_as_component_sample,
     class_name: 'SampleCompoundComponent',
     dependent: :destroy,
-    foreign_key: :component_sample_id,
+    foreign_key: :component_id_sample_tmp,
     inverse_of: :component_sample
   )
   has_many(
@@ -21,7 +21,7 @@ class Sample < ApplicationRecord
     :joins_as_compound_sample,
     class_name: 'SampleCompoundComponent',
     dependent: :destroy,
-    foreign_key: :compound_sample_id,
+    foreign_key: :compound_id_sample_tmp,
     inverse_of: :compound_sample
   )
   has_many(
