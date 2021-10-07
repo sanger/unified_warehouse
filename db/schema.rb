@@ -211,6 +211,13 @@ ActiveRecord::Schema.define(version: 2021_10_06_145030) do
     t.index ["id_study_tmp"], name: "fk_pac_bio_run_to_study"
   end
 
+  create_table "psd_sample_compounds_components", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "A join table owned by PSD to associate compound samples with their component samples.", force: :cascade do |t|
+    t.integer "compound_id_sample_tmp", null: false, comment: "The warehouse ID of the compound sample in the association."
+    t.integer "component_id_sample_tmp", null: false, comment: "The warehouse ID of the component sample in the association."
+    t.datetime "last_updated", null: false, comment: "Timestamp of last update."
+    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update."
+  end
+
   create_table "qc_result", primary_key: "id_qc_result_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "id_sample_tmp", null: false, unsigned: true
     t.string "id_qc_result_lims", limit: 20, null: false, comment: "LIMS-specific qc_result identifier"
@@ -300,13 +307,6 @@ ActiveRecord::Schema.define(version: 2021_10_06_145030) do
     t.index ["sanger_sample_id"], name: "index_sample_on_sanger_sample_id"
     t.index ["supplier_name"], name: "index_sample_on_supplier_name"
     t.index ["uuid_sample_lims"], name: "sample_uuid_sample_lims_index", unique: true
-  end
-
-  create_table "sample_compounds_components", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "compound_sample_id", null: false
-    t.integer "component_sample_id", null: false
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
   end
 
   create_table "samples_extraction_activity", primary_key: "id_activity_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
