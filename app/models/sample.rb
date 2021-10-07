@@ -2,7 +2,8 @@ class Sample < ApplicationRecord
   include ResourceTools
   include SingularResourceTools
 
-  # Create relationships with samples that contain this Sample via SampleCompoundComponent.
+  # Set up directional many-to-many associations from this Sample to compound Samples.
+  # This indicates that this Sample is a component in a pool of other Samples respresented by the compound Sample.
   has_many(
     :joins_as_component_sample,
     class_name: 'SampleCompoundComponent',
@@ -10,13 +11,10 @@ class Sample < ApplicationRecord
     foreign_key: :component_id_sample_tmp,
     inverse_of: :component_sample
   )
-  has_many(
-    :compound_samples,
-    source: :compound_sample,
-    through: :joins_as_component_sample
-  )
+  has_many :compound_samples, through: :joins_as_component_sample
 
-  # Create relationships with samples that are contained by this Sample via SampleCompoundComponent.
+  # Set up directional many-to-many associations from this Sample to component Samples.
+  # This indicates that this Sample represents a pool of those component Samples.
   has_many(
     :joins_as_compound_sample,
     class_name: 'SampleCompoundComponent',
@@ -24,11 +22,7 @@ class Sample < ApplicationRecord
     foreign_key: :compound_id_sample_tmp,
     inverse_of: :compound_sample
   )
-  has_many(
-    :component_samples,
-    source: :component_sample,
-    through: :joins_as_compound_sample
-  )
+  has_many :component_samples, through: :joins_as_compound_sample
 
   json do
     ignore(
