@@ -5,20 +5,30 @@ class Sample < ApplicationRecord
   # Create relationships with samples that contain this Sample via SampleCompoundComponent.
   has_many(
     :joins_as_component_sample,
+    class_name: 'SampleCompoundComponent',
     foreign_key: :component_sample_id,
-    inverse_of: :component_sample,
-    class_name: 'SampleCompoundComponent'
+    inverse_of: :component_sample
   )
-  has_many :compound_samples, through: :joins_as_component_sample, source: :compound_sample
+  has_many(
+    :compound_samples,
+    dependent: :destroy,
+    source: :compound_sample,
+    through: :joins_as_component_sample
+  )
 
   # Create relationships with samples that are contained by this Sample via SampleCompoundComponent.
   has_many(
     :joins_as_compound_sample,
+    class_name: 'SampleCompoundComponent',
     foreign_key: :compound_sample_id,
-    inverse_of: :compound_sample,
-    class_name: 'SampleCompoundComponent'
+    inverse_of: :compound_sample
   )
-  has_many :component_samples, through: :joins_as_compound_sample, source: :component_sample
+  has_many(
+    :component_samples,
+    dependent: :destroy,
+    source: :component_sample,
+    through: :joins_as_compound_sample
+  )
 
   json do
     ignore(

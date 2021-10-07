@@ -10,12 +10,10 @@ class SampleCompoundComponent < ApplicationRecord
   belongs_to :compound_sample, class_name: 'Sample'
   belongs_to :component_sample, class_name: 'Sample'
 
-  private_class_method
   def self.timestamp_attributes_for_create
     super << 'recorded_at'
   end
 
-  private_class_method
   def self.timestamp_attributes_for_update
     super << 'last_updated'
   end
