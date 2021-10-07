@@ -12,8 +12,6 @@ class Sample < ApplicationRecord
   has_many :compound_samples, through: :joins_as_component_sample, source: :compound_sample
 
   # Create relationships with samples that are contained by this Sample via SampleCompoundComponent.
-  # Samples that are contained by this Sample should not themselves contain more Samples.
-  # This is validated in the SampleCompoundComponent model.
   has_many(
     :joins_as_compound_sample,
     foreign_key: :compound_sample_id,
