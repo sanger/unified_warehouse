@@ -102,7 +102,7 @@ You can now view the instance running at [http://localhost:15672/](http://localh
 
 You may wish to start the warren consumers with:
 
-    bundle exec warren consumers start --path='config/warren_traction_service_dev.yml'
+    bundle exec warren consumer start --path='config/warren_traction_service_dev.yml'
 
 This will adjust the configuration options to be compatible with those suggested in the traction setup.
 
@@ -112,7 +112,7 @@ Also see [managing custom configs](#manage-custom-configs)
 
 It is possible to run the consumers with a custom configuration, eg.
 
-    bundle exec warren consumers start --path='config/my_customized_config.local.yml'
+    bundle exec warren consumer start --path='config/my_customized_config.local.yml'
 
 The `.gitignore` file will automatically prevent these configurations from being committed.
 
