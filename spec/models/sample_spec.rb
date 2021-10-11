@@ -62,26 +62,43 @@ describe Sample do
     end
   end
 
-  context 'compound samples' do
-    let!(:compound_sample) do
-      create(
-        :sample,
-        id_lims: 'id1',
-        id_sample_lims: 'id2',
-        last_updated: '2021-02-03',
-        uuid_sample_lims: '012345-6789-UUID-0001'
-      )
+  context 'compound samples via JSON' do
+    let(:example_lims) { 'example' }
+    let(:component_sample) { create(:sample, uuid_sample_lims: '012345-6789-UUID-0002') }
+    let(:json) do
+      {
+        updated_at: '2012-03-11 10:22:42',
+        created_at: '2012-03-11 10:22:42',
+        uuid: '012345-6789-UUID-0001',
+        id: 12345,
+        name: 'compound_sample',
+        component_sample_uuids: [{ 'uuid': component_sample[:uuid_sample_lims] }]
+      }
     end
 
-    let!(:component_sample) do
-      create(
-        :sample,
-        id_lims: 'id3',
-        id_sample_lims: 'id4',
-        last_updated: '2021-04-05',
-        uuid_sample_lims: '012345-6789-UUID-0002'
-      )
+    it 'sets up the association between compound and component sample' do
+      described_class.create_or_update_from_json(json, example_lims)
+
+      expect(Sample.count).to be 2
+      expect(SampleCompoundComponent.count).to be 1
+
+      compound_sample = Sample.find_by(name: 'compound_sample')
+      expect(compound_sample.component_samples).to match_array [component_sample]
+      expect(component_sample.compound_samples).to match_array [compound_sample]
     end
+
+    it 'raises ActiveRecord::RecordNotFound when the component sample UUID cannot be found' do
+      modified_json = json.merge({ component_sample_uuids: [{ 'uuid': 'MADE_UP_UUID' }] })
+
+      expect do
+        described_class.create_or_update_from_json(modified_json, example_lims)
+      end.to raise_error ActiveRecord::RecordNotFound, "No sample with uuid 'MADE_UP_UUID'"
+    end
+
+
+  context 'compound samples directly in Rails' do
+    let!(:compound_sample) { create(:sample, uuid_sample_lims: '012345-6789-UUID-0001') }
+    let!(:component_sample) { create(:sample, uuid_sample_lims: '012345-6789-UUID-0002') }
 
     before(:each) do
       # let variables are lazily loaded, so set up the association here otherwise
