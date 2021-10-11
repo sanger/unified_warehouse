@@ -63,7 +63,7 @@ describe Sample do
   end
 
   context 'compound samples' do
-    let(:compound_sample) do
+    let!(:compound_sample) do
       create(
         :sample,
         id_lims: 'id1',
@@ -73,7 +73,7 @@ describe Sample do
       )
     end
 
-    let(:component_sample) do
+    let!(:component_sample) do
       create(
         :sample,
         id_lims: 'id3',
@@ -83,7 +83,7 @@ describe Sample do
       )
     end
 
-    before do
+    before(:each) do
       # let variables are lazily loaded, so set up the association here otherwise
       # the association will change during tests depending on which variables you
       # access first.
