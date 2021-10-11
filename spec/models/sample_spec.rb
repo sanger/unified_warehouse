@@ -63,12 +63,14 @@ describe Sample do
   end
 
   context 'compound samples via JSON' do
+    let(:originally_created_at) { Time.zone.parse('2012-Mar-16 12:06') }
+    let(:modified_at) { originally_created_at + 1.day }
     let(:example_lims) { 'example' }
     let(:component_sample) { create(:sample, uuid_sample_lims: '012345-6789-UUID-0002') }
     let(:json) do
       {
-        updated_at: '2012-03-11 10:22:42',
-        created_at: '2012-03-11 10:22:42',
+        updated_at: originally_created_at,
+        created_at: originally_created_at,
         uuid: '012345-6789-UUID-0001',
         id: 12_345,
         name: 'compound_sample',
@@ -93,6 +95,45 @@ describe Sample do
       expect do
         described_class.create_or_update_from_json(modified_json, example_lims)
       end.to raise_error ActiveRecord::RecordNotFound, "No sample with uuid 'MADE_UP_UUID'"
+    end
+
+    context 'compound sample already has a component sample' do
+      let!(:other_component) { create(:sample, uuid_sample_lims: '012345-6789-UUID-9999') }
+      let!(:compound_sample) do
+        create(
+          :sample,
+          uuid_sample_lims: json[:uuid],
+          id_sample_lims: json[:id],
+          name: json[:name]
+        )
+      end
+
+      before(:each) do
+        compound_sample.component_samples = [other_component]
+        compound_sample.reload
+        component_sample.reload
+      end
+
+      it 'can update the association between compound and component sample' do
+        # Sanity check
+        expect(compound_sample.component_samples).to match_array [other_component]
+        expect(other_component.compound_samples).to match_array [compound_sample]
+        expect(component_sample.compound_samples).to be_empty
+
+        updated_json = json.merge(updated_at: modified_at)
+        described_class.create_or_update_from_json(updated_json, example_lims)
+
+        expect(Sample.count).to be 3
+        expect(SampleCompoundComponent.count).to be 1
+
+        compound_sample.reload
+        component_sample.reload
+        other_component.reload
+
+        expect(compound_sample.component_samples).to match_array [component_sample]
+        expect(component_sample.compound_samples).to match_array [compound_sample]
+        expect(other_component.compound_samples).to be_empty
+      end
     end
   end
 
