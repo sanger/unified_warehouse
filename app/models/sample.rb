@@ -1,3 +1,5 @@
+# Samples received from each of the LIMs systems. These may also be compound samples
+# which represent other component samples as a set that have been pooled together.
 class Sample < ApplicationRecord
   include ResourceTools
   include SingularResourceTools

@@ -70,9 +70,9 @@ describe Sample do
         updated_at: '2012-03-11 10:22:42',
         created_at: '2012-03-11 10:22:42',
         uuid: '012345-6789-UUID-0001',
-        id: 12345,
+        id: 12_345,
         name: 'compound_sample',
-        component_sample_uuids: [{ 'uuid': component_sample[:uuid_sample_lims] }]
+        component_sample_uuids: [{ uuid: component_sample[:uuid_sample_lims] }]
       }
     end
 
@@ -88,7 +88,7 @@ describe Sample do
     end
 
     it 'raises ActiveRecord::RecordNotFound when the component sample UUID cannot be found' do
-      modified_json = json.merge({ component_sample_uuids: [{ 'uuid': 'MADE_UP_UUID' }] })
+      modified_json = json.merge({ component_sample_uuids: [{ uuid: 'MADE_UP_UUID' }] })
 
       expect do
         described_class.create_or_update_from_json(modified_json, example_lims)
