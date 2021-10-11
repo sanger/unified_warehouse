@@ -94,7 +94,6 @@ describe Sample do
         described_class.create_or_update_from_json(modified_json, example_lims)
       end.to raise_error ActiveRecord::RecordNotFound, "No sample with uuid 'MADE_UP_UUID'"
     end
-
   end
 
   context 'compound samples directly in Rails' do
