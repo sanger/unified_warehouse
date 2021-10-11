@@ -95,6 +95,7 @@ describe Sample do
       end.to raise_error ActiveRecord::RecordNotFound, "No sample with uuid 'MADE_UP_UUID'"
     end
 
+  end
 
   context 'compound samples directly in Rails' do
     let!(:compound_sample) { create(:sample, uuid_sample_lims: '012345-6789-UUID-0001') }
