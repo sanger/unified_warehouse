@@ -24,6 +24,19 @@ class Sample < ApplicationRecord
   )
   has_many :component_samples, through: :joins_as_compound_sample
 
+  attr_accessor :component_sample_uuids
+
+  before_validation do
+    unless component_sample_uuids.nil?
+      discovered_component_samples = component_sample_uuids.map do |uuid_hash|
+        uuid = uuid_hash['uuid_sample_lims']
+        Sample.with_uuid(uuid).first || raise(ActiveRecord::RecordNotFound, "No sample with uuid '#{uuid}'")
+      end
+    end
+
+    self.component_samples = discovered_component_samples || []
+  end
+
   json do
     ignore(
       :new_name_format,
