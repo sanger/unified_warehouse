@@ -29,14 +29,15 @@ class Sample < ApplicationRecord
   attr_accessor :component_sample_uuids
 
   before_validation do
-    unless component_sample_uuids.nil?
-      discovered_component_samples = component_sample_uuids.map do |uuid_hash|
-        uuid = uuid_hash['uuid_sample_lims']
-        Sample.with_uuid(uuid).first || raise(ActiveRecord::RecordNotFound, "No sample with uuid '#{uuid}'")
+    self.component_samples =
+      if component_sample_uuids.nil?
+        []
+      else
+        component_sample_uuids.map do |uuid_hash|
+          uuid = uuid_hash['uuid_sample_lims']
+          Sample.with_uuid(uuid).first || raise(ActiveRecord::RecordNotFound, "No sample with uuid '#{uuid}'")
+        end
       end
-    end
-
-    self.component_samples = discovered_component_samples || []
   end
 
   json do
