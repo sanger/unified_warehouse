@@ -1,3 +1,5 @@
+# Samples received from each of the LIMS systems. These may also be compound samples
+# which represent other component samples as a set that have been pooled together.
 class Sample < ApplicationRecord
   include ResourceTools
   include SingularResourceTools
@@ -23,6 +25,20 @@ class Sample < ApplicationRecord
     inverse_of: :compound_sample
   )
   has_many :component_samples, through: :joins_as_compound_sample
+
+  attr_accessor :component_sample_uuids
+
+  before_validation do
+    self.component_samples =
+      if component_sample_uuids.nil?
+        []
+      else
+        component_sample_uuids.map do |uuid_hash|
+          uuid = uuid_hash['uuid_sample_lims']
+          Sample.with_uuid(uuid).first || raise(ActiveRecord::RecordNotFound, "No sample with uuid '#{uuid}'")
+        end
+      end
+  end
 
   json do
     ignore(
