@@ -1,7 +1,0 @@
-fileignoreconfig:
-- filename: Gemfile.lock
-  checksum: 519b40e61e9b0fabc8d151b95dd7d6461d8e4a2567fbcfb511e2755ee67e2389
-- filename: db/migrate/20211005132015_update_cherrypicked_samples_view.rb
-  checksum: 2dde7bf5d630b9e11f30b5bb6dd2d99e35937fd2475078fd9a28c11ed7afbece
-- filename: db/schema.rb
-  checksum: d9035a134fda2c78bd7bf32e1af994feca953bca3d34b2de3af6f881644ac7ab

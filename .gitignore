@@ -19,3 +19,6 @@ coverage
 
 # Allow custom config files if desired
 *.local.yml
+
+# Ignore .talismanrc
+.talismanrc
