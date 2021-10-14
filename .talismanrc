@@ -1,3 +1,0 @@
-fileignoreconfig:
-- filename: db/schema.rb
-  ignore_detectors: [filename]

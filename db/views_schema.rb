@@ -1,4 +1,3 @@
-# This is an automatically generated file by rake:db:views:dump_schema
 mlwh_wh_db = Rails.configuration.view_schema_mlwh_db
 event_wh_db = Rails.configuration.view_schema_ewh_db
 
