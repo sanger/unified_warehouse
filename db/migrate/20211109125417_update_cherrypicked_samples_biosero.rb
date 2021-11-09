@@ -2,7 +2,7 @@
 
 # Enable again Biosero events in view
 class UpdateCherrypickedSamplesBiosero < ActiveRecord::Migration[6.0]
-  def self.definition
+  def definition
     event_wh_db = Rails.application.config.event_wh_db
     mlwh_wh_db = Rails.configuration.database_configuration[Rails.env]['database']
 
