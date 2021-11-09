@@ -7,9 +7,12 @@ class UpdateCherrypickedSamplesBiosero < ActiveRecord::Migration[6.0]
     mlwh_wh_db = Rails.configuration.database_configuration[Rails.env]['database']
 
     <<~SQL.squish
-      SELECT mlwh_sample.description AS 'root_sample_id', mlwh_stock_resource.labware_human_barcode AS 'plate_barcode',
-      mlwh_sample.phenotype AS 'phenotype', mlwh_stock_resource.labware_coordinate AS 'coordinate',
-      mlwh_sample.created AS 'created', 'Tecan' as 'robot_type'
+      SELECT mlwh_sample.description AS 'root_sample_id',
+      mlwh_stock_resource.labware_human_barcode AS 'plate_barcode',
+      mlwh_sample.phenotype AS 'phenotype',
+      mlwh_stock_resource.labware_coordinate AS 'coordinate',
+      mlwh_sample.created AS 'created',
+      'Tecan' as 'robot_type'
       FROM #{mlwh_wh_db}.`sample` AS mlwh_sample
       JOIN #{mlwh_wh_db}.stock_resource AS mlwh_stock_resource ON (mlwh_sample.id_sample_tmp = mlwh_stock_resource.id_sample_tmp)
       JOIN #{event_wh_db}.subjects mlwh_events_subjects ON (mlwh_events_subjects.friendly_name = mlwh_sample.sanger_sample_id)
@@ -18,8 +21,11 @@ class UpdateCherrypickedSamplesBiosero < ActiveRecord::Migration[6.0]
       JOIN #{event_wh_db}.event_types mlwh_events_event_types ON (mlwh_events_events.event_type_id = mlwh_events_event_types.id)
       WHERE mlwh_events_event_types.key = 'cherrypick_layout_set'
       UNION
-      SELECT mlwh_sample.description AS 'root_sample_id', mlwh_lh_sample.plate_barcode AS 'plate_barcode',
-      mlwh_sample.phenotype AS 'phenotype', mlwh_lh_sample.coordinate AS 'coordinate', mlwh_sample.created AS 'created',
+      SELECT mlwh_sample.description AS 'root_sample_id',
+      mlwh_lh_sample.plate_barcode AS 'plate_barcode',
+      mlwh_sample.phenotype AS 'phenotype',
+      mlwh_lh_sample.coordinate AS 'coordinate',
+      mlwh_sample.created AS 'created',
       IF(mlwh_events_event_types.key="lh_beckman_cp_destination_created","Beckman","Biosero") AS 'robot_type'
       FROM #{mlwh_wh_db}.sample as mlwh_sample
       JOIN #{mlwh_wh_db}.lighthouse_sample AS mlwh_lh_sample ON (mlwh_sample.uuid_sample_lims = mlwh_lh_sample.lh_sample_uuid)
