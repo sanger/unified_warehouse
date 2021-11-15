@@ -1,0 +1,15 @@
+---
+MultiLimsWarehouseConsumer:
+  desc: Configuration compatible with traction development settings
+  queue:
+    name: psd.traction.to-warehouse
+    options:
+      :durable: true
+    bindings:
+    - exchange:
+        name: bunny.examples.exchange
+        options:
+          :type: topic
+          :durable: true
+      options:
+        :routing_key: "#"

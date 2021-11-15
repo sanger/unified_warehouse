@@ -1,9 +1,6 @@
 module ResourceTools::Association
   extend ActiveSupport::Concern
 
-  included do
-  end
-
   module ClassMethods
     def has_associated(association)
       instance_eval %{

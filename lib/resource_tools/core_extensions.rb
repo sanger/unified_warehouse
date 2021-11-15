@@ -85,18 +85,35 @@ module ResourceTools::CoreExtensions
 end
 
 # Extend the core classes with the behaviour we need
-class Array; include ResourceTools::CoreExtensions::Array; end
+class Array
+  include ResourceTools::CoreExtensions::Array
+end
 
-class Hash; include ResourceTools::CoreExtensions::Hash; end
+class Hash
+  include ResourceTools::CoreExtensions::Hash
+end
 
-class Object; include ResourceTools::CoreExtensions::Object; end
+class Object
+  include ResourceTools::CoreExtensions::Object
+end
 
-class String; include ResourceTools::CoreExtensions::String; end
+class String
+  include ResourceTools::CoreExtensions::String
+end
 
-class Numeric; include ResourceTools::CoreExtensions::Numeric; end
+class Numeric
+  include ResourceTools::CoreExtensions::Numeric
+end
 
-class NilClass; include ResourceTools::CoreExtensions::NilClass; include ResourceTools::CoreExtensions::SelfReferencingBoolean; end
+class NilClass
+  include ResourceTools::CoreExtensions::NilClass
+  include ResourceTools::CoreExtensions::SelfReferencingBoolean
+end
 
-class TrueClass; include ResourceTools::CoreExtensions::SelfReferencingBoolean; end
+class TrueClass
+  include ResourceTools::CoreExtensions::SelfReferencingBoolean
+end
 
-class FalseClass; include ResourceTools::CoreExtensions::SelfReferencingBoolean; end
+class FalseClass
+  include ResourceTools::CoreExtensions::SelfReferencingBoolean
+end

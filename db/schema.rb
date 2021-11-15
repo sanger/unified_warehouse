@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_08_094808) do
+ActiveRecord::Schema.define(version: 2021_10_06_145030) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -141,11 +141,17 @@ ActiveRecord::Schema.define(version: 2021_04_08_094808) do
     t.datetime "updated_at", comment: "When this record was last updated"
     t.boolean "must_sequence", comment: "PAM provided value whether sample is of high importance"
     t.boolean "preferentially_sequence", comment: "PAM provided value whether sample is important"
+    t.boolean "is_current", default: false, null: false, comment: "Identifies if this sample has the most up to date information for the same rna_id"
+    t.virtual "current_rna_id", type: :string, as: "if((`is_current` = 1),`rna_id`,NULL)", stored: true
     t.index ["cog_uk_id"], name: "index_lighthouse_sample_on_cog_uk_id", unique: true
+    t.index ["current_rna_id"], name: "index_lighthouse_sample_on_current_rna_id", unique: true
     t.index ["date_tested"], name: "index_lighthouse_sample_on_date_tested"
     t.index ["filtered_positive"], name: "index_lighthouse_sample_on_filtered_positive"
     t.index ["lh_sample_uuid"], name: "index_lighthouse_sample_on_lh_sample_uuid", unique: true
     t.index ["mongodb_id"], name: "index_lighthouse_sample_on_mongodb_id", unique: true
+    t.index ["plate_barcode", "created_at"], name: "index_lighthouse_sample_on_plate_barcode_and_created_at"
+    t.index ["result"], name: "index_lighthouse_sample_on_result"
+    t.index ["rna_id"], name: "index_lighthouse_sample_on_rna_id"
     t.index ["root_sample_id", "rna_id", "result"], name: "index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result", unique: true
   end
 
@@ -203,6 +209,13 @@ ActiveRecord::Schema.define(version: 2021_04_08_094808) do
     t.string "pac_bio_run_name", comment: "Name of the run"
     t.index ["id_sample_tmp"], name: "fk_pac_bio_run_to_sample"
     t.index ["id_study_tmp"], name: "fk_pac_bio_run_to_study"
+  end
+
+  create_table "psd_sample_compounds_components", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "A join table owned by PSD to associate compound samples with their component samples.", force: :cascade do |t|
+    t.integer "compound_id_sample_tmp", null: false, comment: "The warehouse ID of the compound sample in the association."
+    t.integer "component_id_sample_tmp", null: false, comment: "The warehouse ID of the component sample in the association."
+    t.datetime "last_updated", null: false, comment: "Timestamp of last update."
+    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update."
   end
 
   create_table "qc_result", primary_key: "id_qc_result_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|

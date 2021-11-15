@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'it is ignored' do
   subject { described_class.create_or_update_from_json }
 

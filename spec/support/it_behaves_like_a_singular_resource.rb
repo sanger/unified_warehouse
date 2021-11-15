@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples_for 'has only one row' do
   it 'leaves the system with only one row' do
     expect(described_class.count).to eq(1)
@@ -19,7 +21,7 @@ shared_examples_for 'has only one row' do
 end
 
 shared_examples_for 'a singular resource' do |undeletable: true|
-  let(:originally_created_at) { Time.parse('2012-Mar-16 12:06') }
+  let(:originally_created_at) { Time.zone.parse('2012-Mar-16 12:06') }
   let(:timestamped_json) { json.merge('created_at' => originally_created_at, 'updated_at' => originally_created_at) }
   let(:modified_at) { originally_created_at + 1.day }
   let(:checked_time_now) { Time.parse('2012-Mar-26 13:20').utc }

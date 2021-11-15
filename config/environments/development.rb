@@ -61,45 +61,9 @@ Rails.application.configure do
   # Configure the numeric tolerance
   config.numeric_tolerance = 0.05
 
-  # Configure the main AMQP consumer
-
-  config.amqp.server.host                 = ENV.fetch('RMQHOST', 'localhost').to_s
-  config.amqp.server.username             = 'guest'
-  config.amqp.server.password             = 'guest'
-  config.amqp.server.port                 = 5672
-  config.amqp.server.heartbeat            = 30
-
-  config.amqp.max_retries                 = 20
-
-  config.amqp.requeue_key                 = "requeue.#{Rails.env}"
-  config.amqp.main.queue                  = 'psd.mlwh'
-  config.amqp.main.exchange               = 'psd.sequencescape'
-  config.amqp.main.routing_keys           = [
-    # Test binding for development
-    'test.key',
-    # Sequencescape bindings
-    'development.saved.sample.#',
-    'development.saved.study.#',
-    'development.message.#',
-    # Sample Extraction bindings
-    'development.activity.finished.#'
-  ]
-  config.amqp.main.deadletter_exchange = 'deadletters'
-
-  config.amqp.delay.queue                  = 'psd.mlwh.delay'
-  config.amqp.delay.exchange               = 'psd.sequencescape.delay'
-  config.amqp.delay.routing_keys           = []
-  config.amqp.delay.ttl                    = 30 * 1000
-  config.amqp.delay.deadletter_exchange    = 'psd.sequencescape'
-
-  # Configure the deadletter AMQP consumer
-  config.amqp.deadletter.url                             = "amqp://guest:guest@#{ENV.fetch('RMQHOST', 'localhost')}:5672"
-  config.amqp.deadletter.queue                           = 'deadletters'
-  config.amqp.deadletter.prefetch                        = 50
-  config.amqp.deadletter.requeue                         = true
-  config.amqp.deadletter.reconnect_interval              = 10
-  config.amqp.deadletter.empty_queue_disconnect_interval = 30
-
   # Event warehouse configuration
   config.event_wh_db = 'event_warehouse_development'
+
+  config.view_schema_mlwh_db = 'unified_warehouse_development'
+  config.view_schema_ewh_db = 'event_warehouse_development'
 end

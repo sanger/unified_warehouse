@@ -22,7 +22,7 @@ module CompositeResourceTools
       all_records = for_lims(lims).with_id(id_x_lims)
 
       all_records.first.latest(base_resource) do |_record|
-        key_attributes = Hash[attributes.map { |a| [composite_key_for(a), a.to_hash] }]
+        key_attributes = attributes.map { |a| [composite_key_for(a), a.to_hash] }.to_h
 
         # If the hash length is different from the original attributes length, then our composite key
         # is not unique. Reject the message so that the problem can be addressed.
@@ -43,7 +43,7 @@ module CompositeResourceTools
     end
 
     def composite_key_for(record)
-      @composition_keys.map { |k| record.send(k).to_s }
+      @composition_keys.map { |k| record[k].to_s }
     end
 
     def invalid_message!
