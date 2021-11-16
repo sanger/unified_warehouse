@@ -9,7 +9,7 @@ development:
   # it is provided for convenience when broadcast mode is enabled.
   # The provided settings are the default options of RabbitMQ
   # DO NOT commit sensitive information in this file. Instead you may
-  # use the WARREN_CONNECTION_URI environmental variable
+  # use the WARREN_CONNECTION_URI environment variable
   config:
     server:
       host: localhost
@@ -28,6 +28,6 @@ test:
   type: test
   config:
     routing_key_prefix: test
-# You are encouraged to use the WARREN_CONNECTION_URI environmental
+# You are encouraged to use the WARREN_CONNECTION_URI environment
 # variable to configure your production environment. Under no
 # circumstances should you commit sensitive information in the file.
