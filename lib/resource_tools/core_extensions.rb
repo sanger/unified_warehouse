@@ -46,7 +46,8 @@ module ResourceTools::CoreExtensions
     def to_boolean_from_arguments
       if %w[true yes].include?(downcase) then true
       elsif %w[false no].include?(downcase) then false
-      else raise "Cannot convert #{inspect} to a boolean safely!"
+      else
+        raise "Cannot convert #{inspect} to a boolean safely!"
       end
     end
   end

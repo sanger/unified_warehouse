@@ -18,6 +18,7 @@ Rails/Exit:
 Rails/CreateTableWithTimestamps:
   Enabled: false
 AllCops:
+  NewCops: enable
   Exclude:
     - 'bin/*'
     - 'vendor/**/*'
