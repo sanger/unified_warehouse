@@ -52,7 +52,8 @@ describe PacBioRun do
               'tag2_identifier' => '1',
               'tag2_sequence' => 'GTCA',
               'tag2_set_id_lims' => '2',
-              'tag2_set_name' => 'tag_set_2'
+              'tag2_set_name' => 'tag_set_2',
+              'pipeline_id_lims' => 'IsoSeq'
             },
             {
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
