@@ -22,7 +22,7 @@ gem 'railties', '~> 6.0.3'
 gem 'sanger_warren'
 
 gem 'bootsnap', '~> 1.7', '>= 1.7.3', require: false
-gem 'hashie', '~> 4.1'
+gem 'hashie', '~> 5.0'
 gem 'migration_comments', '~> 0.4.1'
 gem 'mysql2', '~> 0.5.3'
 
