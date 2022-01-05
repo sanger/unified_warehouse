@@ -22,7 +22,7 @@ module CompositeResourceTools
       all_records = for_lims(lims).with_id(id_x_lims)
 
       all_records.first.latest(base_resource) do |_record|
-        key_attributes = attributes.map { |a| [composite_key_for(a), a.to_hash] }.to_h
+        key_attributes = attributes.to_h { |a| [composite_key_for(a), a.to_hash] }
 
         # If the hash length is different from the original attributes length, then our composite key
         # is not unique. Reject the message so that the problem can be addressed.

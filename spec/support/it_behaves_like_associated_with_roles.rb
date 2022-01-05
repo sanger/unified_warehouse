@@ -27,7 +27,7 @@ shared_examples_for 'associated with roles' do
     roles.each do |role, expected|
       keys = %i[name email login]
       found = described_class::User.where(role: role.to_s).map do |user|
-        keys.map { |a| [a, user[a]] }.to_h
+        keys.index_with { |a| user[a] }
       end
       expect(found).to eq(expected)
     end
@@ -60,7 +60,7 @@ shared_examples_for 'associated with roles' do
 
   context 'for new record' do
     let(:all_role_names) { %i[manager follower administrator].concat(additional_roles) }
-    let(:roles) { all_role_names.map { |role| [role, [user_with_role(role)]] }.to_h }
+    let(:roles) { all_role_names.index_with { |role| [user_with_role(role)] } }
 
     before(:each) do
       described_class.create_or_update_from_json(timestamped_json.merge(roles), 'example')
