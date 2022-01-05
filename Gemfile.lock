@@ -82,8 +82,6 @@ GEM
       nokogiri (>= 1.5.9)
     lumberjack (1.2.8)
     method_source (1.0.0)
-    migration_comments (0.4.1)
-      activerecord (>= 4.2.0)
     mini_portile2 (2.6.1)
     minitest (5.15.0)
     msgpack (1.4.2)
@@ -204,7 +202,6 @@ DEPENDENCIES
   guard-bundler
   guard-rspec
   hashie (~> 5.0)
-  migration_comments (~> 0.4.1)
   mysql2 (~> 0.5.3)
   pry
   railties (~> 6.0.3)
