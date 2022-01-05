@@ -4,7 +4,7 @@
 class AddPipelineIdLimsToPacBioRunTable < ActiveRecord::Migration[6.0]
   def change
     change_table :pac_bio_run, bulk: true do |t|
-      t.string :pipeline_id_lims, null: true, default: nil, limit: 60, comment: 'LIMs-specific pipeline identifier that unambiguously defines library type'
+      t.string :pipeline_id_lims, null: true, default: nil, limit: 60, comment: 'LIMS-specific pipeline identifier that unambiguously defines library type (eg. Sequel-v1, IsoSeq-v1)'
     end
   end
 end
