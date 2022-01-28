@@ -107,15 +107,10 @@ module Deployed
   COMMIT = REPO_DATA.revision.presence || 'unknown_revision'
   ABBREV_COMMIT = REPO_DATA.revision_short.presence || 'unknown_revision'
 
-  VERSION_STRING = "#{APP_NAME} #{VERSION_ID} [#{ENVIRONMENT}]"
-  VERSION_COMMIT = "#{BRANCH}@#{ABBREV_COMMIT}"
+  VERSION_STRING = "#{APP_NAME} #{VERSION_ID} [#{ENVIRONMENT}]".freeze
+  VERSION_COMMIT = "#{BRANCH}@#{ABBREV_COMMIT}".freeze
   REPO_URL       = REPO_DATA.release_url.presence || '#'
   HOSTNAME       = Socket.gethostname
 
-  require 'ostruct'
-  DETAILS = OpenStruct.new(
-    name: nil,
-    version: VERSION_ID,
-    environment: ENVIRONMENT
-  )
+  DETAILS = { version: VERSION_ID, environment: ENVIRONMENT }.freeze
 end
