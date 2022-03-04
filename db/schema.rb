@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_21_170427) do
+ActiveRecord::Schema.define(version: 2022_03_02_143137) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -207,7 +207,10 @@ ActiveRecord::Schema.define(version: 2021_12_21_170427) do
     t.integer "pac_bio_library_tube_legacy_id", comment: "Legacy library_id for backwards compatibility."
     t.datetime "library_created_at", comment: "Timestamp of library creation"
     t.string "pac_bio_run_name", comment: "Name of the run"
+    t.virtual "comparable_tag_identifier", type: :integer, as: "ifnull(`tag_identifier`,-(1))"
+    t.virtual "comparable_tag2_identifier", type: :integer, as: "ifnull(`tag2_identifier`,-(1))"
     t.string "pipeline_id_lims", limit: 60, comment: "LIMS-specific pipeline identifier that unambiguously defines library type (eg. Sequel-v1, IsoSeq-v1)"
+    t.index ["id_pac_bio_run_lims", "well_label", "comparable_tag_identifier", "comparable_tag2_identifier"], name: "unique_pac_bio_entry", unique: true
     t.index ["id_sample_tmp"], name: "fk_pac_bio_run_to_sample"
     t.index ["id_study_tmp"], name: "fk_pac_bio_run_to_study"
   end
