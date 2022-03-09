@@ -38,7 +38,12 @@ shared_examples_for 'a nested resource' do
 
       before(:each) do
         described_class.create_or_update_from_json(timestamped_json.merge('updated_at' => modified_at), example_lims)
-        described_class.create_or_update_from_json(timestamped_json.merge('updated_at' => modified_at), second_lims)
+        if defined?(json2)
+          timestamped_json2 = json2.merge('updated_at' => originally_created_at)
+          described_class.create_or_update_from_json(timestamped_json2.merge('updated_at' => modified_at), second_lims)
+        else
+          described_class.create_or_update_from_json(timestamped_json.merge('updated_at' => modified_at), second_lims)
+        end
       end
 
       it 'creates multiple records' do
