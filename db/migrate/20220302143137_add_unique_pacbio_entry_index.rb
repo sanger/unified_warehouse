@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Adds uniqueness constraint check on run, well, tag and tag2
 class AddUniquePacbioEntryIndex < ActiveRecord::Migration[6.0]
   def change
     add_index :pac_bio_run,
