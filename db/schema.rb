@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 2022_03_02_143137) do
     t.string "pipeline_id_lims", limit: 60, comment: "LIMS-specific pipeline identifier that unambiguously defines library type (eg. Sequel-v1, IsoSeq-v1)"
     t.virtual "comparable_tag_identifier", type: :string, as: "ifnull(`tag_identifier`,-(1))"
     t.virtual "comparable_tag2_identifier", type: :string, as: "ifnull(`tag2_identifier`,-(1))"
-    t.index ["id_pac_bio_run_lims", "well_label", "comparable_tag_identifier", "comparable_tag2_identifier"], name: "unique_pac_bio_entry", unique: true
+    t.index ["id_lims", "id_pac_bio_run_lims", "well_label", "comparable_tag_identifier", "comparable_tag2_identifier"], name: "unique_pac_bio_entry", unique: true
     t.index ["id_sample_tmp"], name: "fk_pac_bio_run_to_sample"
     t.index ["id_study_tmp"], name: "fk_pac_bio_run_to_study"
   end
