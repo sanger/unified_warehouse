@@ -25,10 +25,6 @@ describe PacBioRun do
     study
   ], { wells: :samples }
 
-  let(:json2) do
-    json.merge('pac_bio_run_id' => '112233')
-  end
-
   let(:json) do
     {
       'pac_bio_run_id' => '12345',
