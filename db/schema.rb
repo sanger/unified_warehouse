@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_143137) do
+ActiveRecord::Schema.define(version: 2022_04_22_101440) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2022_03_02_143137) do
     t.boolean "is_r_and_d", default: false, comment: "A boolean flag derived from cost code, flags RandD"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.integer "priority", limit: 2, default: 1, comment: "Priority", unsigned: true
-    t.boolean "manual_qc", comment: "Manual QC decision, NULL for unknown"
+    t.boolean "manual_qc", comment: "Legacy QC decision value set per lane which may be used for per-lane billing: iseq_product_metrics.qc is likely to contain the per product QC summary of use to most downstream users"
     t.boolean "external_release", comment: "Defaults to manual qc value; can be changed by the user later"
     t.string "flowcell_barcode", limit: 15, comment: "Manufacturer flowcell barcode or other identifier"
     t.string "reagent_kit_barcode", limit: 30, comment: "The barcode for the reagent kit or cartridge"
