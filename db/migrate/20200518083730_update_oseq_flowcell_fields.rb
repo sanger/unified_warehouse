@@ -5,7 +5,6 @@
 # Added for the Heron project
 class UpdateOseqFlowcellFields < ActiveRecord::Migration
   # Disable the cop as realistically we're never going to update historical migrations
-  # rubocop:disable Rails/ReversibleMigration
   def change
     change_table :oseq_flowcell, bulk: true do
       # Remove non-null constraints from columns
@@ -23,5 +22,4 @@ class UpdateOseqFlowcellFields < ActiveRecord::Migration
       add_column :oseq_flowcell, :tag2_set_name, :string, null: true, comment: 'WTSI-wide tag set name for the second tag'
     end
   end
-  # rubocop:enable Rails/ReversibleMigration
 end
