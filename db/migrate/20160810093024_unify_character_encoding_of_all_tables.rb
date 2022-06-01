@@ -2,7 +2,7 @@ class UnifyCharacterEncodingOfAllTables < ActiveRecord::Migration
   # SQL provided by David Harper
 
   def up
-    psd_only = ENV['PSD_ONLY']
+    psd_only = ENV.fetch('PSD_ONLY', nil)
     say 'Updating PSD tables only' if psd_only
 
     say 'Updating database defaults'
@@ -36,7 +36,7 @@ class UnifyCharacterEncodingOfAllTables < ActiveRecord::Migration
   end
 
   def down
-    psd_only = ENV['PSD_ONLY']
+    psd_only = ENV.fetch('PSD_ONLY', nil)
     say 'Restoring PSD tables only' if psd_only
 
     say 'Restoring database defaults'
