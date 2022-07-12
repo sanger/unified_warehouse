@@ -12,11 +12,11 @@ source 'https://rubygems.org'
 # Be aware when adding in new components that they may require an initializer
 # or additional configuration options.
 # RAILS DEPENDENCIES
-gem 'activemodel', '~> 6.0.3'
-gem 'activerecord', '~> 6.0.3'
-gem 'activesupport', '~> 6.0.3'
+gem 'activemodel', '~> 7.0.3'
+gem 'activerecord', '~> 7.0.3'
+gem 'activesupport', '~> 7.0.3'
 gem 'bundler', '>= 1.3.0'
-gem 'railties', '~> 6.0.3'
+gem 'railties', '~> 7.0.3'
 # # RAILS DEPENDENCIES
 
 gem 'sanger_warren'
