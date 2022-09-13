@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_22_101440) do
+ActiveRecord::Schema.define(version: 2022_09_13_103447) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -153,6 +153,17 @@ ActiveRecord::Schema.define(version: 2022_04_22_101440) do
     t.index ["result"], name: "index_lighthouse_sample_on_result"
     t.index ["rna_id"], name: "index_lighthouse_sample_on_rna_id"
     t.index ["root_sample_id", "rna_id", "result"], name: "index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result", unique: true
+  end
+
+  create_table "long_read_qc_result", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "labware_barcode", null: false
+    t.string "sample_id", null: false
+    t.string "assay_type", null: false
+    t.string "key", null: false
+    t.string "units"
+    t.string "value", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "oseq_flowcell", primary_key: "id_oseq_flowcell_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
