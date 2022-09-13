@@ -1,0 +1,2 @@
+class LongReadQcResult < ApplicationRecord
+end
