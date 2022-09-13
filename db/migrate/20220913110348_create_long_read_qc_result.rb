@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Created long_read_qc_result table to query QC data from the extraction process
 class CreateLongReadQcResult < ActiveRecord::Migration[6.0]
   def change
     create_table :long_read_qc_result do |t|
