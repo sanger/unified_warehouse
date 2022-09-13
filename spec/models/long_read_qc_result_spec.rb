@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe LighthouseSample, type: :model do
+RSpec.describe LongReadQcResult, type: :model do
   describe '#create' do
     it 'errors without a labware_barcode' do
       errored = false
