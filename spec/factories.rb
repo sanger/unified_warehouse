@@ -8,7 +8,7 @@ FactoryBot.define do
     key { 'key1' }
     value { 'val1' }
     created { Time.new(2022, 9, 13, 1, 0, 0, '+00:00') }
-    updated_at { Time.new(2022, 9, 13, 1, 0, 0, '+00:00') }
+    last_updated { Time.new(2022, 9, 13, 1, 0, 0, '+00:00') }
   end
 
   factory :sample do
