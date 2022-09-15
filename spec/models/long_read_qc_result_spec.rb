@@ -3,67 +3,26 @@
 require 'spec_helper'
 
 RSpec.describe LongReadQcResult, type: :model do
-  describe '#create' do
-    it 'errors without a labware_barcode' do
-      errored = false
-      begin
-        create :long_read_qc_result, labware_barcode: nil
-      rescue StandardError
-        errored = true
-      end
-      expect(errored).to eq(true)
+  let(:example_lims) { 'example' }
+
+  context 'create_or_update_from_json' do
+    let(:json) do
+      {
+        'labware_barcode' => 'barcode placeholder',
+        'sample_id' => '1b67b801-4f9a-4c99-8923-9d0a683a8af8',
+        'assay_type' => 'dummy',
+        'assay_type_key' => 'abc',
+        'value' => '112',
+        'id_lims' => 'dummy',
+        'id_long_read_qc_result_lims' => 'abc',
+        'created' => '2022-09-13T09:38:32+00:00',
+        'last_updated' => '2022-09-14T09:12:41+01:00',
+        'recorded_at' => '2022-09-15T09:12:41+01:00'
+      }
     end
 
-    it 'errors without a sample_id' do
-      errored = false
-      begin
-        create :long_read_qc_result, sample_id: nil
-      rescue StandardError
-        errored = true
-      end
-      expect(errored).to eq(true)
-    end
-
-    it 'errors without a assay_type' do
-      errored = false
-      begin
-        create :long_read_qc_result, assay_type: nil
-      rescue StandardError
-        errored = true
-      end
-      expect(errored).to eq(true)
-    end
-
-    it 'errors without a key' do
-      errored = false
-      begin
-        create :long_read_qc_result, key: nil
-      rescue StandardError
-        errored = true
-      end
-      expect(errored).to eq(true)
-    end
-
-    it 'errors without a value' do
-      errored = false
-      begin
-        create :long_read_qc_result, value: nil
-      rescue StandardError
-        errored = true
-      end
-      expect(errored).to eq(true)
-    end
-
-    describe 'units' do
-      it 'inserts with a value for units' do
-        qc_result = create :long_read_qc_result, units: 'unit1'
-        expect(qc_result.units).to be_truthy
-      end
-
-      it 'is nullable' do
-        qc_result = create :long_read_qc_result, units: nil
-        expect(qc_result.units).to be_nil
-      end
+    it 'saves the correct resource' do
+      expect(described_class.create_or_update_from_json(json, example_lims)).to be_truthy
     end
   end
 end
