@@ -36,7 +36,7 @@ class UnifyCharacterEncodingOfAllTables < ActiveRecord::Migration
   end
 
   def down
-    psd_only = ENV.fetch('PSD_ONLY', nil)
+    psd_only = ENV['PSD_ONLY'] # rubocop:disable Style/FetchEnvVar
     say 'Restoring PSD tables only' if psd_only
 
     say 'Restoring database defaults'
