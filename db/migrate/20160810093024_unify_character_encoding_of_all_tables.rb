@@ -2,7 +2,7 @@ class UnifyCharacterEncodingOfAllTables < ActiveRecord::Migration
   # SQL provided by David Harper
 
   def up
-    psd_only = ENV.fetch('PSD_ONLY', nil)
+    psd_only = ENV['PSD_ONLY'] # rubocop:disable Style/FetchEnvVar
     say 'Updating PSD tables only' if psd_only
 
     say 'Updating database defaults'
