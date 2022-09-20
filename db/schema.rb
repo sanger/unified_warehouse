@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_22_101440) do
+ActiveRecord::Schema.define(version: 2022_09_15_141751) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -153,6 +153,20 @@ ActiveRecord::Schema.define(version: 2022_04_22_101440) do
     t.index ["result"], name: "index_lighthouse_sample_on_result"
     t.index ["rna_id"], name: "index_lighthouse_sample_on_rna_id"
     t.index ["root_sample_id", "rna_id", "result"], name: "index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result", unique: true
+  end
+
+  create_table "long_read_qc_result", primary_key: "id_long_read_qc_result_tmp", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.string "labware_barcode", null: false, comment: "Barcode of the labware that was the source for the QC tests."
+    t.string "sample_id", null: false, comment: "External identifier for the sample(s)."
+    t.string "assay_type", null: false, comment: "Type of the QC test."
+    t.string "assay_type_key", null: false, comment: "Unique identifier of the QC test."
+    t.string "units", comment: "Unit of the value for example mg,ng etc"
+    t.string "value", null: false, comment: "QC result value"
+    t.string "id_lims", comment: "Identifier of the LIMS where QC was published from"
+    t.string "id_long_read_qc_result_lims", comment: "LIMS specific id for QC result"
+    t.datetime "created", comment: "The date the qc_result was first created in LIMS"
+    t.datetime "last_updated", comment: "The date the qc_result was last updated in LIMS."
+    t.datetime "recorded_at", comment: "Timestamp of the latest warehouse update."
   end
 
   create_table "oseq_flowcell", primary_key: "id_oseq_flowcell_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
