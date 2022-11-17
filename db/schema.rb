@@ -167,8 +167,8 @@ ActiveRecord::Schema.define(version: 2022_11_17_151338) do
     t.datetime "created", comment: "The date the qc_result was first created in LIMS"
     t.datetime "last_updated", comment: "The date the qc_result was last updated in LIMS."
     t.datetime "recorded_at", comment: "Timestamp of the latest warehouse update."
-    t.string "qc_status", comment: "Status of QC decision for example pass, fail etc"
-    t.string "qc_status_decision_by", comment: "Who made the QC status decision for example ToL, Long Read"
+    t.string "qc_status", comment: "Status of the QC decision eg pass, fail etc"
+    t.string "qc_status_decision_by", comment: "Who made the QC status decision eg ToL, Long Read"
   end
 
   create_table "oseq_flowcell", primary_key: "id_oseq_flowcell_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci", force: :cascade do |t|
