@@ -17,7 +17,9 @@ RSpec.describe LongReadQcResult, type: :model do
         'id_long_read_qc_result_lims' => 'abc',
         'created' => '2022-09-13T09:38:32+00:00',
         'last_updated' => '2022-09-14T09:12:41+01:00',
-        'recorded_at' => '2022-09-15T09:12:41+01:00'
+        'recorded_at' => '2022-09-15T09:12:41+01:00',
+        'qc_status' => 'pass',
+        'qc_status_decision_by' => 'tol'
       }
     end
 
