@@ -9,6 +9,8 @@ FactoryBot.define do
     value { 'val1' }
     created { Time.new(2022, 9, 13, 1, 0, 0, '+00:00') }
     last_updated { Time.new(2022, 9, 13, 1, 0, 0, '+00:00') }
+    qc_status { 'pass' }
+    qc_status_decision_by { 'tol' }
   end
 
   factory :sample do
