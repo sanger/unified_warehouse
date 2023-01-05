@@ -169,12 +169,6 @@ ActiveRecord::Schema.define(version: 2022_12_19_133237) do
     t.datetime "recorded_at", comment: "Timestamp of the latest warehouse update."
     t.string "qc_status", comment: "Status of the QC decision eg pass, fail etc"
     t.string "qc_status_decision_by", comment: "Who made the QC status decision eg ToL, Long Read"
-    t.string "flowcell_id", comment: "The id of the flowcell. Supplied with the flowcell. Format FAVnnnn"
-    t.string "tag_sequence", limit: 30, comment: "Tag sequence for tag"
-    t.string "tag_set_name", comment: "WTSI wide tag set name for tag"
-    t.string "library_tube_uuid", limit: 36, comment: "The uuid for the originating library tube"
-    t.string "library_tube_barcode", comment: "The barcode for the originating library tube"
-    t.string "run_uuid", limit: 36, comment: "The uuid of the run"
   end
 
   create_table "oseq_flowcell", primary_key: "id_oseq_flowcell_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
@@ -198,6 +192,10 @@ ActiveRecord::Schema.define(version: 2022_12_19_133237) do
     t.string "tag2_sequence", comment: "Sequence of the second tag"
     t.string "tag2_set_id_lims", comment: "LIMs-specific identifier of the tag set for the second tag"
     t.string "tag2_set_name", comment: "WTSI-wide tag set name for the second tag"
+    t.string "flowcell_id", comment: "The id of the flowcell. Supplied with the flowcell. Format FAVnnnn"
+    t.string "library_tube_uuid", limit: 36, comment: "The uuid for the originating library tube"
+    t.string "library_tube_barcode", comment: "The barcode for the originating library tube"
+    t.string "run_uuid", limit: 36, comment: "The uuid of the run"
     t.index ["id_sample_tmp"], name: "fk_oseq_flowcell_to_sample"
     t.index ["id_study_tmp"], name: "fk_oseq_flowcell_to_study"
   end

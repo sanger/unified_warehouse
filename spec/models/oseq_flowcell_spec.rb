@@ -35,7 +35,11 @@ describe OseqFlowcell do
       tag2_identifier: '2',
       tag2_sequence: 'GTCA',
       tag2_set_id_lims: 'second_tag_set',
-      tag2_set_name: 'tag_set_2'
+      tag2_set_name: 'tag_set_2',
+      flowcell_id: 'FAV1234',
+      library_tube_uuid: '1accf7cb-2ee8-4528-8c0a-408b94cfb1de',
+      library_tube_barcode: 'TRAC1234567',
+      run_uuid: 'd14beaef-05f5-4e76-a9b8-20b656ca7ad1'
     }
   end
 end
