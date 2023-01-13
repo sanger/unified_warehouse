@@ -10,6 +10,7 @@ class AddFieldsToOseqFlowcell < ActiveRecord::Migration[6.0]
       t.string :library_tube_uuid, limit: 36, comment: 'The uuid for the originating library tube'
       t.string :library_tube_barcode, comment: 'The barcode for the originating library tube'
       t.string :run_uuid, limit: 36, comment: 'The uuid of the run'
+      t.string :run_id, comment: 'Run identifier assigned by MinKNOW'
     end
   end
 end
