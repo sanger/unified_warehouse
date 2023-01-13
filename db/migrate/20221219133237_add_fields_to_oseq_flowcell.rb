@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-# These fields need to be added to support multiplexing
-# TODO: confirm with NPG which fields they need
+# Extra fields needed as required by NPG
 class AddFieldsToOseqFlowcell < ActiveRecord::Migration[6.0]
   def change
     change_table :oseq_flowcell, bulk: true do |t|
