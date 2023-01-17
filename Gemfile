@@ -13,7 +13,7 @@ source 'https://rubygems.org'
 # or additional configuration options.
 # RAILS DEPENDENCIES
 gem 'activemodel', '~> 6.0.3'
-gem 'activerecord', '~> 6.0.3'
+gem 'activerecord', '~> 6.0.5'
 gem 'activesupport', '~> 6.0.3'
 gem 'bundler', '>= 1.3.0'
 gem 'railties', '~> 6.0.3'
