@@ -29,6 +29,14 @@ A denormalised warehouse for multiple LIMS.
 **NB**: If getting an error while installing the `mysql2` gem, try:
 
     bundle config build.mysql2 --with-opt-dir=$(brew --prefix openssl)
+    
+if that doesn't work, try:
+
+       gem install mysql2 -- \
+        --with-mysql-lib=/Users/your_user/homebrew/Cellar/mysql/your_version/lib \
+        --with-mysql-dir=/Users/your_user/homebrew/Cellar/mysql/your_version  \
+        --with-mysql-config=/Users/your_user/homebrew/Cellar/mysql/your_version/bin/mysql_config \
+        --with-mysql-include=/Users/your_user/homebrew/Cellar/mysql/your_version/include
 
 and try runnning `bundle install` again.
 

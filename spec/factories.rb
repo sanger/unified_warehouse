@@ -1,6 +1,18 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+  factory :long_read_qc_result do
+    labware_barcode { '123456' }
+    sample_id { 'sample123' }
+    assay_type { 'example' }
+    assay_type_key { 'key1' }
+    value { 'val1' }
+    created { Time.new(2022, 9, 13, 1, 0, 0, '+00:00') }
+    last_updated { Time.new(2022, 9, 13, 1, 0, 0, '+00:00') }
+    qc_status { 'pass' }
+    qc_status_decision_by { 'tol' }
+  end
+
   factory :sample do
     uuid_sample_lims { '000000-0000-0000-0000-0000000000' }
     id_lims { 'example' }
