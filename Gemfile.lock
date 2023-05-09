@@ -86,7 +86,7 @@ GEM
     minitest (5.18.0)
     msgpack (1.5.2)
     multi_json (1.15.0)
-    mysql2 (0.5.4)
+    mysql2 (0.5.5)
     nenv (0.3.0)
     nokogiri (1.14.2)
       mini_portile2 (~> 2.8.0)
