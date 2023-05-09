@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_19_133237) do
+ActiveRecord::Schema.define(version: 2023_05_04_152820) do
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
@@ -231,6 +231,7 @@ ActiveRecord::Schema.define(version: 2022_12_19_133237) do
     t.string "pipeline_id_lims", limit: 60, comment: "LIMS-specific pipeline identifier that unambiguously defines library type (eg. Sequel-v1, IsoSeq-v1)"
     t.virtual "comparable_tag_identifier", type: :string, as: "ifnull(`tag_identifier`,-(1))"
     t.virtual "comparable_tag2_identifier", type: :string, as: "ifnull(`tag2_identifier`,-(1))"
+    t.integer "plate_number", comment: "The number of the plate that goes onto the sequencing machine. Necessary as an identifier for multi-plate support."
     t.index ["id_lims", "id_pac_bio_run_lims", "well_label", "comparable_tag_identifier", "comparable_tag2_identifier"], name: "unique_pac_bio_entry", unique: true
     t.index ["id_sample_tmp"], name: "fk_pac_bio_run_to_sample"
     t.index ["id_study_tmp"], name: "fk_pac_bio_run_to_study"
