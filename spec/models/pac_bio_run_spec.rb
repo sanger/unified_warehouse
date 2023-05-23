@@ -30,8 +30,7 @@ describe PacBioRun do
       'pac_bio_run_id' => '12345',
       'pac_bio_run_name' => '12345',
       'pac_bio_run_uuid' => '000000-0000-0000-0000-0000000005',
-      # Plate_barcode is no longer a required field
-      # 'plate_barcode' => 'DN12345T',
+      'plate_barcode' => 'DN12345T',
       'plate_uuid_lims' => '000000-0000-0000-0000-0000000000',
       'last_updated' => '2012-03-11 10:22:42',
       'wells' => [
