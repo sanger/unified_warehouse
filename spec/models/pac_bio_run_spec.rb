@@ -30,7 +30,8 @@ describe PacBioRun do
       'pac_bio_run_id' => '12345',
       'pac_bio_run_name' => '12345',
       'pac_bio_run_uuid' => '000000-0000-0000-0000-0000000005',
-      'plate_barcode' => 'DN12345T',
+      # Plate_barcode is no longer a required field
+      # 'plate_barcode' => 'DN12345T',
       'plate_uuid_lims' => '000000-0000-0000-0000-0000000000',
       'last_updated' => '2012-03-11 10:22:42',
       'wells' => [
@@ -42,6 +43,7 @@ describe PacBioRun do
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'pac_bio_library_tube_id_lims' => '12345',
               'pac_bio_library_tube_uuid' => '000000-0000-0000-0000-0000000000',
+              'pac_bio_library_tube_barcode' => 'TRAC-2-123',
               'pac_bio_library_tube_name' => 'example',
               'tag_identifier' => 3,
               'tag_sequence' => 'ATAG',
@@ -60,6 +62,7 @@ describe PacBioRun do
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'pac_bio_library_tube_id_lims' => '12345',
               'pac_bio_library_tube_uuid' => '000000-0000-0000-0000-0000000000',
+              'pac_bio_library_tube_barcode' => 'TRAC-2-1234',
               'pac_bio_library_tube_name' => 'example',
               'tag_identifier' => 4,
               'tag_sequence' => 'TACG',
@@ -83,6 +86,7 @@ describe PacBioRun do
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'pac_bio_library_tube_id_lims' => '12345',
               'pac_bio_library_tube_uuid' => '000000-0000-0000-0000-0000000000',
+              'pac_bio_library_tube_barcode' => 'TRAC-2-12345',
               'pac_bio_library_tube_name' => 'example',
               'tag_identifier' => 3,
               'tag_sequence' => 'ATAG',
