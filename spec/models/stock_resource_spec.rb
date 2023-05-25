@@ -12,8 +12,7 @@ describe StockResource do
   end
 
   shared_examples_for 'a stock resource' do
-    it_behaves_like 'maps JSON fields', {
-    }
+    it_behaves_like 'maps JSON fields', {}
 
     it_behaves_like 'ignores JSON fields', []
 

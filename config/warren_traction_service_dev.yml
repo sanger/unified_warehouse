@@ -13,3 +13,16 @@ MultiLimsWarehouseConsumer:
           :durable: true
       options:
         :routing_key: "#"
+  subscribed_class: Warren::Subscriber::MultiLimsWarehouseConsumer
+  dead_letters:
+    name: psd.multi-lims-warehouse-consumer.dead-letters
+    options:
+      :durable: true
+      :arguments: {}
+    bindings:
+    - exchange:
+        name: psd.multi-lims-warehouse-consumer.dead-letters
+        options:
+          :type: fanout
+          :durable: true
+      options: {}

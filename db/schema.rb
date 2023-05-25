@@ -218,7 +218,7 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.string "tag2_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set for tag 2"
     t.string "tag2_set_name", limit: 100, comment: "WTSI-wide tag set name for tag 2"
     t.string "tag2_identifier", limit: 30, comment: "The position of tag2 within the tag group"
-    t.string "plate_barcode", null: false, comment: "The human readable barcode for the plate loaded onto the machine"
+    t.string "plate_barcode", comment: "The human readable barcode for the plate loaded onto the machine"
     t.string "plate_uuid_lims", limit: 36, null: false, comment: "The plate uuid"
     t.string "well_label", null: false, comment: "The well identifier for the plate, A1-H12"
     t.string "well_uuid_lims", limit: 36, null: false, comment: "The well uuid"
@@ -232,6 +232,7 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.virtual "comparable_tag_identifier", type: :string, as: "ifnull(`tag_identifier`,-(1))"
     t.virtual "comparable_tag2_identifier", type: :string, as: "ifnull(`tag2_identifier`,-(1))"
     t.integer "plate_number", comment: "The number of the plate that goes onto the sequencing machine. Necessary as an identifier for multi-plate support."
+    t.string "pac_bio_library_tube_barcode", comment: "The barcode of the originating library tube"
     t.index ["id_lims", "id_pac_bio_run_lims", "well_label", "comparable_tag_identifier", "comparable_tag2_identifier"], name: "unique_pac_bio_entry", unique: true
     t.index ["id_sample_tmp"], name: "fk_pac_bio_run_to_sample"
     t.index ["id_study_tmp"], name: "fk_pac_bio_run_to_study"

@@ -1,3 +1,4 @@
+# Represents a PacBio Sequencing Run typically received from Traction LIMS
 class PacBioRun < ApplicationRecord
   include ResourceTools
   include NestedResourceTools

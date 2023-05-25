@@ -86,7 +86,7 @@ shared_examples_for 'a nested resource' do
 
         it 'keeps the original rows' do
           expect(current_records.count).to eq(expected_entries)
-          expect(current_records.map { |cr| cr['last_updated'] }).to all eq(modified_at)
+          expect(current_records.pluck('last_updated')).to all eq(modified_at)
         end
       end
 
