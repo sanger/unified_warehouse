@@ -1,3 +1,4 @@
+# Study
 class Study < ApplicationRecord
   include ResourceTools
   include SingularResourceTools

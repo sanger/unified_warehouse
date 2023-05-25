@@ -1,3 +1,4 @@
+# QcResult
 class QcResult < ApplicationRecord
   include ResourceTools
   include NestedResourceTools

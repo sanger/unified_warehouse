@@ -1,3 +1,4 @@
+# StockResource
 class StockResource < ApplicationRecord
   include ResourceTools
   include CompositeResourceTools
