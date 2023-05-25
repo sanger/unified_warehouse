@@ -69,11 +69,11 @@ describe FalseClass do
 end
 
 describe Object do
-  subject { ::Object.new }
+  subject { Object.new }
 
   context '#within_acceptable_bounds?' do
     it 'returns false if the object is not equal' do
-      expect(subject.within_acceptable_bounds?(::Object.new)).to be false
+      expect(subject.within_acceptable_bounds?(Object.new)).to be false
     end
 
     it 'returns true if the object is equal' do
@@ -99,7 +99,7 @@ describe String do
     end
 
     it 'returns true if the value is equal when converted to a string' do
-      object = ::Object.new.tap do |object|
+      object = Object.new.tap do |object|
         def object.to_s
           'value'
         end
@@ -167,11 +167,11 @@ end
 describe Array do
   context '#convert' do
     it 'converts a single hash to an array of 1' do
-      expect(::Array.convert({ example: 'example' })).to eq([{ example: 'example' }])
+      expect(Array.convert({ example: 'example' })).to eq([{ example: 'example' }])
     end
 
     it 'does not modify an array of hashes' do
-      expect(::Array.convert([{ example: 'example' }, { example: 'example' }])).to eq([{ example: 'example' }, { example: 'example' }])
+      expect(Array.convert([{ example: 'example' }, { example: 'example' }])).to eq([{ example: 'example' }, { example: 'example' }])
     end
   end
 end
