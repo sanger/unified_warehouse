@@ -13,10 +13,8 @@ end
 module UnifiedWarehouse
   class Application < Rails::Application
     config.load_defaults 6.1
-    config.autoload_paths += ["#{config.root}/app"]
-    config.autoload_paths += ["#{config.root}/lib"]
-    config.eager_load_paths += ["#{config.root}/app"]
-    config.eager_load_paths += ["#{config.root}/lib"]
+    config.autoload_paths += ["#{config.root}/app", "#{config.root}/lib"]
+    config.eager_load_paths += ["#{config.root}/app", "#{config.root}/lib"]
     config.time_zone          = 'UTC'
     config.encoding           = 'utf-8'
     config.filter_parameters += [:password]
