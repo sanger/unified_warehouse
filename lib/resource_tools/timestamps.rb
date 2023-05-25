@@ -11,7 +11,7 @@ module ResourceTools::Timestamps
 
   module ClassMethods
     def correct_current_time
-      default_timezone == :utc ? Time.now.utc : Time.now
+      ActiveRecord.default_timezone == :utc ? Time.now.utc : Time.now
     end
 
     def checked_time_now
