@@ -2,7 +2,7 @@
 
 require 'open3'
 
-module Deployed
+module DeployedVersion
   class RepoData
     def tag
       @tag ||= git_tag || read_file('TAG').strip.presence
