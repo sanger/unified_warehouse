@@ -24,6 +24,7 @@ AllCops:
     - 'vendor/**/*'
     - db/schema.rb
     - db/views_schema.rb
+  SuggestExtensions: false
 
 Style/DocumentDynamicEvalDefinition:
   Enabled: false

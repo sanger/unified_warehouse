@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_23_132939) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_05_23_132939) do
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
     t.string "experiment_name", null: false, comment: "The name of the experiment, eg. The lims generated run id"
@@ -32,13 +31,13 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.index ["id_study_tmp"], name: "fk_bmap_flowcell_to_study"
   end
 
-  create_table "flgen_plate", primary_key: "id_flgen_plate_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+  create_table "flgen_plate", primary_key: "id_flgen_plate_tmp", id: { type: :integer, unsigned: true }, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
     t.string "cost_code", limit: 20, null: false, comment: "Valid WTSI cost code"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.integer "plate_barcode", null: false, comment: "Manufacturer (Fluidigm) chip barcode", unsigned: true
     t.string "plate_barcode_lims", limit: 128, comment: "LIMs-specific plate barcode"
     t.string "plate_uuid_lims", limit: 36, comment: "LIMs-specific plate uuid"
@@ -53,9 +52,9 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.index ["id_study_tmp"], name: "flgen_plate_study_fk"
   end
 
-  create_table "iseq_flowcell", primary_key: "id_iseq_flowcell_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
+  create_table "iseq_flowcell", primary_key: "id_iseq_flowcell_tmp", id: { type: :integer, unsigned: true }, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
     t.string "cost_code", limit: 20, comment: "Valid WTSI cost code"
@@ -117,7 +116,7 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.string "coordinate", comment: "Well position from plate sample arrived in, from rna_id"
     t.string "result", null: false, comment: "Covid-19 test result from the Lighthouse lab"
     t.string "date_tested_string", comment: "When the covid-19 test was carried out by the Lighthouse lab"
-    t.datetime "date_tested", comment: "date_tested_string in date format"
+    t.datetime "date_tested", precision: nil, comment: "date_tested_string in date format"
     t.string "source", comment: "Lighthouse centre that the sample came from"
     t.string "lab_id", comment: "Id of the lab, within the Lighthouse centre"
     t.string "ch1_target", comment: "Target for channel 1"
@@ -134,11 +133,11 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.decimal "ch4_cq", precision: 11, scale: 8, comment: "Cq value for channel 4"
     t.boolean "filtered_positive", comment: "Filtered positive result value"
     t.string "filtered_positive_version", comment: "Filtered positive version"
-    t.datetime "filtered_positive_timestamp", comment: "Filtered positive timestamp"
+    t.datetime "filtered_positive_timestamp", precision: nil, comment: "Filtered positive timestamp"
     t.string "lh_sample_uuid", limit: 36, comment: "Sample uuid created in crawler"
     t.string "lh_source_plate_uuid", limit: 36, comment: "Source plate uuid created in crawler"
-    t.datetime "created_at", comment: "When this record was inserted"
-    t.datetime "updated_at", comment: "When this record was last updated"
+    t.datetime "created_at", precision: nil, comment: "When this record was inserted"
+    t.datetime "updated_at", precision: nil, comment: "When this record was last updated"
     t.boolean "must_sequence", comment: "PAM provided value whether sample is of high importance"
     t.boolean "preferentially_sequence", comment: "PAM provided value whether sample is important"
     t.boolean "is_current", default: false, null: false, comment: "Identifies if this sample has the most up to date information for the same rna_id"
@@ -164,17 +163,17 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.string "value", null: false, comment: "QC result value"
     t.string "id_lims", comment: "Identifier of the LIMS where QC was published from"
     t.string "id_long_read_qc_result_lims", comment: "LIMS specific id for QC result"
-    t.datetime "created", comment: "The date the qc_result was first created in LIMS"
-    t.datetime "last_updated", comment: "The date the qc_result was last updated in LIMS."
-    t.datetime "recorded_at", comment: "Timestamp of the latest warehouse update."
+    t.datetime "created", precision: nil, comment: "The date the qc_result was first created in LIMS"
+    t.datetime "last_updated", precision: nil, comment: "The date the qc_result was last updated in LIMS."
+    t.datetime "recorded_at", precision: nil, comment: "Timestamp of the latest warehouse update."
     t.string "qc_status", comment: "Status of the QC decision eg pass, fail etc"
     t.string "qc_status_decision_by", comment: "Who made the QC status decision eg ToL, Long Read"
   end
 
-  create_table "oseq_flowcell", primary_key: "id_oseq_flowcell_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+  create_table "oseq_flowcell", primary_key: "id_oseq_flowcell_tmp", id: { type: :integer, unsigned: true }, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "id_flowcell_lims", null: false, comment: "LIMs-specific flowcell id"
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
     t.string "experiment_name", null: false, comment: "The name of the experiment, eg. The lims generated run id"
@@ -182,7 +181,7 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.integer "instrument_slot", null: false, comment: "The numeric identifier of the slot on which the sample was run"
     t.string "pipeline_id_lims", comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
     t.string "requested_data_type", comment: "The type of data produced by sequencing, eg. basecalls only"
-    t.datetime "deleted_at", comment: "Timestamp of any flowcell destruction"
+    t.datetime "deleted_at", precision: nil, comment: "Timestamp of any flowcell destruction"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier"
     t.string "tag_identifier", comment: "Position of the first tag within the tag group"
     t.string "tag_sequence", comment: "Sequence of the first tag"
@@ -202,8 +201,8 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
   end
 
   create_table "pac_bio_run", primary_key: "id_pac_bio_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Sample id, see \"study.id_study_tmp\"", unsigned: true
     t.string "id_pac_bio_run_lims", limit: 20, null: false, comment: "Lims specific identifier for the pacbio run"
@@ -226,7 +225,7 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.string "pac_bio_library_tube_uuid", null: false, comment: "The uuid for the originating library tube"
     t.string "pac_bio_library_tube_name", null: false, comment: "The name of the originating library tube"
     t.integer "pac_bio_library_tube_legacy_id", comment: "Legacy library_id for backwards compatibility."
-    t.datetime "library_created_at", comment: "Timestamp of library creation"
+    t.datetime "library_created_at", precision: nil, comment: "Timestamp of library creation"
     t.string "pac_bio_run_name", comment: "Name of the run"
     t.string "pipeline_id_lims", limit: 60, comment: "LIMS-specific pipeline identifier that unambiguously defines library type (eg. Sequel-v1, IsoSeq-v1)"
     t.virtual "comparable_tag_identifier", type: :string, as: "ifnull(`tag_identifier`,-(1))"
@@ -241,8 +240,8 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
   create_table "psd_sample_compounds_components", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", comment: "A join table owned by PSD to associate compound samples with their component samples.", force: :cascade do |t|
     t.integer "compound_id_sample_tmp", null: false, comment: "The warehouse ID of the compound sample in the association."
     t.integer "component_id_sample_tmp", null: false, comment: "The warehouse ID of the component sample in the association."
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update."
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update."
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update."
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update."
   end
 
   create_table "qc_result", primary_key: "id_qc_result_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
@@ -257,22 +256,22 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.string "units", null: false, comment: "Mesurement unit"
     t.float "cv", comment: "Coefficient of variance"
     t.string "qc_type", null: false, comment: "Type of mesurement"
-    t.datetime "date_created", null: false, comment: "The date the qc_result was first created in SS"
-    t.datetime "last_updated", null: false, comment: "The date the qc_result was last updated in SS"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
+    t.datetime "date_created", precision: nil, null: false, comment: "The date the qc_result was first created in SS"
+    t.datetime "last_updated", precision: nil, null: false, comment: "The date the qc_result was last updated in SS"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.index ["id_library_lims"], name: "qc_result_id_library_lims_index"
     t.index ["id_qc_result_lims", "id_lims"], name: "lookup_index"
     t.index ["id_sample_tmp"], name: "fk_qc_result_to_sample"
   end
 
-  create_table "sample", primary_key: "id_sample_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+  create_table "sample", primary_key: "id_sample_tmp", id: { type: :integer, unsigned: true }, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.string "uuid_sample_lims", limit: 36, comment: "LIMS-specific sample uuid"
     t.string "id_sample_lims", limit: 20, null: false, comment: "LIMS-specific sample identifier"
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
-    t.datetime "deleted_at", comment: "Timestamp of sample deletion"
-    t.datetime "created", comment: "Timestamp of sample creation"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
+    t.datetime "deleted_at", precision: nil, comment: "Timestamp of sample deletion"
+    t.datetime "created", precision: nil, comment: "Timestamp of sample creation"
     t.string "name"
     t.string "reference_genome"
     t.string "organism"
@@ -323,7 +322,7 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.string "disease"
     t.string "subject"
     t.string "treatment"
-    t.datetime "date_of_consent_withdrawn"
+    t.datetime "date_of_consent_withdrawn", precision: nil
     t.string "marked_as_consent_withdrawn_by"
     t.string "customer_measured_volume"
     t.string "gc_content"
@@ -346,20 +345,20 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.string "input_barcode", null: false, comment: "The barcode of the labware (eg. plate or tube) at the begining of the activity"
     t.string "output_barcode", null: false, comment: "The barcode of the labware (eg. plate or tube)  at the end of the activity"
     t.string "user", null: false, comment: "The name of the user who was most recently associated with the activity"
-    t.datetime "last_updated", null: false, comment: "Timestamp of last change to activity"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
-    t.datetime "completed_at", null: false, comment: "Timestamp of activity completion"
-    t.datetime "deleted_at", comment: "Timestamp of any activity removal"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last change to activity"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
+    t.datetime "completed_at", precision: nil, null: false, comment: "Timestamp of activity completion"
+    t.datetime "deleted_at", precision: nil, comment: "Timestamp of any activity removal"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier"
     t.index ["id_activity_lims"], name: "index_samples_extraction_activity_on_id_activity_lims"
     t.index ["id_sample_tmp"], name: "fk_rails_bbdd0468f0"
   end
 
   create_table "stock_resource", primary_key: "id_stock_resource_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
-    t.datetime "created", null: false, comment: "Timestamp of initial registration of stock in LIMS"
-    t.datetime "deleted_at", comment: "Timestamp of initial registration of deletion in parent LIMS. NULL if not deleted."
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
+    t.datetime "created", precision: nil, null: false, comment: "Timestamp of initial registration of stock in LIMS"
+    t.datetime "deleted_at", precision: nil, comment: "Timestamp of initial registration of deletion in parent LIMS. NULL if not deleted."
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Sample id, see \"study.id_study_tmp\"", unsigned: true
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier"
@@ -381,14 +380,14 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.index ["id_study_tmp"], name: "fk_stock_resource_to_study"
   end
 
-  create_table "study", primary_key: "id_study_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+  create_table "study", primary_key: "id_study_tmp", id: { type: :integer, unsigned: true }, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. GCLP-CLARITY, SEQSCAPE"
     t.string "uuid_study_lims", limit: 36, comment: "LIMS-specific study uuid"
     t.string "id_study_lims", limit: 20, null: false, comment: "LIMS-specific study identifier"
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
-    t.datetime "deleted_at", comment: "Timestamp of study deletion"
-    t.datetime "created", comment: "Timestamp of study creation"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
+    t.datetime "deleted_at", precision: nil, comment: "Timestamp of study deletion"
+    t.datetime "created", precision: nil, comment: "Timestamp of study creation"
     t.string "name"
     t.string "reference_genome"
     t.boolean "ethically_approved"
@@ -427,9 +426,9 @@ ActiveRecord::Schema.define(version: 2023_05_23_132939) do
     t.index ["uuid_study_lims"], name: "study_uuid_study_lims_index", unique: true
   end
 
-  create_table "study_users", primary_key: "id_study_users_tmp", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+  create_table "study_users", primary_key: "id_study_users_tmp", id: { type: :integer, unsigned: true }, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.string "role"
     t.string "login"
     t.string "email"
