@@ -12,7 +12,7 @@ class Payload
       end
       lims = parameters.delete('lims') || raise(InvalidMessage, 'Message missing lims parameter')
       raise(InvalidMessage, 'Message contains multiple potential models') if parameters.length > 1
-      raise(InvalidMessage, 'Message is missing main payload') if parameters.length.zero?
+      raise(InvalidMessage, 'Message is missing main payload') if parameters.empty?
 
       new(lims, *parameters.flatten)
     end

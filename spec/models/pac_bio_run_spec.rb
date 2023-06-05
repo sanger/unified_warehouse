@@ -42,6 +42,7 @@ describe PacBioRun do
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'pac_bio_library_tube_id_lims' => '12345',
               'pac_bio_library_tube_uuid' => '000000-0000-0000-0000-0000000000',
+              'pac_bio_library_tube_barcode' => 'TRAC-2-123',
               'pac_bio_library_tube_name' => 'example',
               'tag_identifier' => 3,
               'tag_sequence' => 'ATAG',
@@ -53,12 +54,14 @@ describe PacBioRun do
               'tag2_sequence' => 'GTCA',
               'tag2_set_id_lims' => '2',
               'tag2_set_name' => 'tag_set_2',
-              'pipeline_id_lims' => 'IsoSeq'
+              'pipeline_id_lims' => 'IsoSeq',
+              'plate_number' => 1
             },
             {
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'pac_bio_library_tube_id_lims' => '12345',
               'pac_bio_library_tube_uuid' => '000000-0000-0000-0000-0000000000',
+              'pac_bio_library_tube_barcode' => 'TRAC-2-1234',
               'pac_bio_library_tube_name' => 'example',
               'tag_identifier' => 4,
               'tag_sequence' => 'TACG',
@@ -69,7 +72,8 @@ describe PacBioRun do
               'tag2_identifier' => '1',
               'tag2_sequence' => 'GTCA',
               'tag2_set_id_lims' => '2',
-              'tag2_set_name' => 'tag_set_2'
+              'tag2_set_name' => 'tag_set_2',
+              'plate_number' => 2
             }
           ]
         },
@@ -81,6 +85,7 @@ describe PacBioRun do
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'pac_bio_library_tube_id_lims' => '12345',
               'pac_bio_library_tube_uuid' => '000000-0000-0000-0000-0000000000',
+              'pac_bio_library_tube_barcode' => 'TRAC-2-12345',
               'pac_bio_library_tube_name' => 'example',
               'tag_identifier' => 3,
               'tag_sequence' => 'ATAG',

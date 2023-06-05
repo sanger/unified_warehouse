@@ -1,4 +1,4 @@
-class WarehouseModelGenerator < Rails::Generator::NamedBase
+class WarehouseModelGenerator < Rails::Generators::NamedBase
   class Generator
     def initialize(value)
       @value = value

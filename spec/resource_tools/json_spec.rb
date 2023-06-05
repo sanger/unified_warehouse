@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# Json
 class Json < ResourceTools::Json::Handler
   ignore('ignored')
   translate('key' => 'translated')

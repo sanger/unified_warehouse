@@ -2,7 +2,7 @@
 
 require 'open3'
 
-module Deployed
+module DeployedVersion
   class RepoData
     def tag
       @tag ||= git_tag || read_file('TAG').strip.presence
@@ -84,7 +84,7 @@ module Deployed
     end
 
     def read_file(filename)
-      File.open(Rails.root.join(filename), 'r', &:readline)
+      Rails.root.join(filename).open('r', &:readline)
     rescue Errno::ENOENT, EOFError
       ''
     end
