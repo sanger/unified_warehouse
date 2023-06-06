@@ -17,7 +17,6 @@ class CreateLabwareLocation < ActiveRecord::Migration[7.0]
       t.timestamps
 
       t.index :location_barcode
-      t.index :full_location_address
     end
   end
 end
