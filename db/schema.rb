@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_04_095528) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_07_095528) do
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
