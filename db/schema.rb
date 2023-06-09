@@ -107,6 +107,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_095528) do
     t.index ["legacy_library_id"], name: "index_iseq_flowcell_legacy_library_id"
   end
 
+  create_table "labware_location", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.string "labware_barcode", null: false, comment: "Barcode on the stored labware"
+    t.string "location_barcode", null: false, comment: "Barcode associated with storage location"
+    t.string "full_location_address", null: false, comment: "Fully qualifed address of the nested location"
+    t.integer "coordinate_position", comment: "Coordinate position of labware in storage location"
+    t.integer "coordinate_row", comment: "Coordinate row of labware in storage location"
+    t.integer "coordinate_column", comment: "Coordinate column of labware in storage location"
+    t.string "lims_id", null: false, comment: "ID of the storage system this data comes from"
+    t.string "stored_by", null: false, comment: "Username of the person who placed the item there"
+    t.datetime "stored_at", null: false, comment: "Datetime the item was stored at this location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_barcode"], name: "index_labware_location_on_location_barcode"
+  end
+
   create_table "lighthouse_sample", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "mongodb_id", comment: "Auto-generated id from MongoDB"
     t.string "root_sample_id", null: false, comment: "Id for this sample provided by the Lighthouse lab"
