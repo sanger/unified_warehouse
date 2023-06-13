@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_05_152453) do
     t.datetime "stored_at", null: false, comment: "Datetime the item was stored at this location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["labware_barcode"], name: "index_labware_location_on_labware_barcode", unique: true
     t.index ["location_barcode"], name: "index_labware_location_on_location_barcode"
   end
 
