@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_23_132939) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_05_152453) do
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
@@ -105,6 +105,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_23_132939) do
     t.index ["id_sample_tmp"], name: "iseq_flowcell_sample_fk"
     t.index ["id_study_tmp"], name: "iseq_flowcell_study_fk"
     t.index ["legacy_library_id"], name: "index_iseq_flowcell_legacy_library_id"
+  end
+
+  create_table "labware_location", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.string "labware_barcode", null: false, comment: "Barcode on the stored labware"
+    t.string "location_barcode", null: false, comment: "Barcode associated with storage location"
+    t.string "full_location_address", null: false, comment: "Fully qualifed address of the nested location"
+    t.integer "coordinate_position", comment: "Coordinate position of labware in storage location"
+    t.integer "coordinate_row", comment: "Coordinate row of labware in storage location"
+    t.integer "coordinate_column", comment: "Coordinate column of labware in storage location"
+    t.string "lims_id", null: false, comment: "ID of the storage system this data comes from"
+    t.string "stored_by", null: false, comment: "Username of the person who placed the item there"
+    t.datetime "stored_at", null: false, comment: "Datetime the item was stored at this location"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["labware_barcode"], name: "index_labware_location_on_labware_barcode", unique: true
+    t.index ["location_barcode"], name: "index_labware_location_on_location_barcode"
   end
 
   create_table "lighthouse_sample", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
