@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_04_101316) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_20_131714) do
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
@@ -186,6 +186,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_04_101316) do
     t.datetime "recorded_at", precision: nil, comment: "Timestamp of the latest warehouse update."
     t.string "qc_status", comment: "Status of the QC decision eg pass, fail etc"
     t.string "qc_status_decision_by", comment: "Who made the QC status decision eg ToL, Long Read"
+    t.string "priority_level", comment: "Priority level eg Medium, High etc"
+    t.string "date_required_by", comment: "Date required by eg tol, etc"
+    t.string "reason_for_priority", comment: "Reason for priority"
   end
 
   create_table "oseq_flowcell", primary_key: "id_oseq_flowcell_tmp", id: { type: :integer, unsigned: true }, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
