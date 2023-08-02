@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-# Updates all sequncescape pac bio runs to have the plate number 1
+# Updates all sequencescape pac_bio_run entries to have the plate number 1
 
 namespace :pac_bio_run_table do
-  desc 'Update pac_bio_run_name plate_number column with the value 1 for sequencescape plates'
+  desc 'Update pac_bio_run plate_number column with the value 1 for sequencescape plates'
 
   task update_pac_bio_run_sequencescape_plate_numbers: :environment do
     PacBioRun.all.each do |run|
