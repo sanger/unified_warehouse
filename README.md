@@ -8,10 +8,10 @@ A denormalised warehouse for multiple LIMS.
 
 ### Requirement
 
-1. MySQL (currently 5.7) is required and usually installed with homebrew:
+1. MySQL (currently 8.0) is required and usually installed with homebrew:
 
-       brew install mysql@5.7
-       brew link mysql@5.7 --force
+       brew install mysql@8.0
+       brew link mysql@8.0 --force
 
 ### Installation
 
