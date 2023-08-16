@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_16_092204) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_16_100140) do
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
@@ -186,6 +186,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_092204) do
     t.datetime "recorded_at", precision: nil, comment: "Timestamp of the latest warehouse update."
     t.string "qc_status", comment: "Status of the QC decision eg pass, fail etc"
     t.string "qc_status_decision_by", comment: "Who made the QC status decision eg ToL, Long Read"
+    t.index ["assay_type_key"], name: "index_long_read_qc_result_on_assay_type_key"
     t.index ["sample_id"], name: "index_long_read_qc_result_on_sample_id"
   end
 
