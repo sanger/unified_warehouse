@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_16_100140) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_21_100520) do
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
@@ -172,7 +172,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_16_100140) do
     t.index ["root_sample_id", "rna_id", "result"], name: "index_lighthouse_sample_on_root_sample_id_and_rna_id_and_result", unique: true
   end
 
-  create_table "long_read_qc_result", primary_key: "id_long_read_qc_result_tmp", charset: "utf8mb3", force: :cascade do |t|
+  create_table "long_read_qc_result", primary_key: "id_long_read_qc_result_tmp", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "labware_barcode", null: false, comment: "Barcode of the labware that was the source for the QC tests."
     t.string "sample_id", null: false, comment: "External identifier for the sample(s)."
     t.string "assay_type", null: false, comment: "Type of the QC test."
