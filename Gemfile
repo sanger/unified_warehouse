@@ -14,7 +14,7 @@ source 'https://rubygems.org'
 # RAILS DEPENDENCIES
 gem 'activemodel', '~> 7.0.4'
 gem 'activerecord', '~> 7.0.4'
-gem 'activesupport', '~> 7.0.4'
+gem 'activesupport', '~> 7.0.7'
 gem 'bundler', '>= 1.3.0'
 gem 'railties', '~> 7.0.4'
 # # RAILS DEPENDENCIES
