@@ -347,6 +347,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_100520) do
     t.string "customer_measured_volume"
     t.string "gc_content"
     t.string "dna_source"
+    t.string "priority_level", comment: "Priority level eg Medium, High etc"
     t.index ["accession_number"], name: "sample_accession_number_index"
     t.index ["id_sample_lims", "id_lims"], name: "index_sample_on_id_sample_lims_and_id_lims", unique: true
     t.index ["name"], name: "sample_name_index"
