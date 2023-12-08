@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_21_100520) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_07_143456) do
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_21_100520) do
     t.datetime "stored_at", null: false, comment: "Datetime the item was stored at this location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "location_name", null: false, comment: "Name of location where labware is stored"
     t.index ["labware_barcode"], name: "index_labware_location_on_labware_barcode", unique: true
     t.index ["location_barcode"], name: "index_labware_location_on_location_barcode"
   end
