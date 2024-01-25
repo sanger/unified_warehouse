@@ -146,11 +146,11 @@ module ResourceTools::Json
       end
     end
 
-    def initialize(*args, &block)
+    def initialize(...)
       super
       if self.class.custom_values.present?
-        self.class.custom_values.each do |k, block|
-          self[k] = instance_eval(&block)
+        self.class.custom_values.each_key do |k|
+          self[k] = instance_eval(...)
         end
       end
       convert_booleans
