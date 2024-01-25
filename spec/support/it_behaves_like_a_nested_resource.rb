@@ -6,13 +6,13 @@ shared_examples_for 'has multiple rows' do
   end
 
   it 'ensures that the all rows are current' do
-    described_class.all.each do |row|
+    described_class.find_each do |row|
       expect(row.last_updated).to eq(most_recent_time)
     end
   end
 
   it 'ensures the row is marked with recorded time' do
-    described_class.all.each do |row|
+    described_class.find_each do |row|
       expect(row.recorded_at).to eq(recorded_time)
     end
   end
