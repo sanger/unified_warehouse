@@ -146,6 +146,7 @@ module ResourceTools::Json
       end
     end
 
+    # rubocop:disable Naming/BlockForwarding
     def initialize(*args, &block)
       super
       if self.class.custom_values.present?
@@ -156,6 +157,7 @@ module ResourceTools::Json
       convert_booleans
       delete_if { |k, _| ignoreable.include?(k) }
     end
+    # rubocop:enable Naming/BlockForwarding
 
     def convert_booleans
       self.stored_as_boolean.each do |key|
