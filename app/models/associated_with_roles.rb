@@ -19,7 +19,7 @@ module AssociatedWithRoles
   end
 
   def has_role(name)
-    define_method("#{name}=") { |users| set_users(name, users) }
+    define_method(:"#{name}=") { |users| set_users(name, users) }
   end
 
   module InstanceMethods
@@ -43,7 +43,7 @@ module AssociatedWithRoles
       users.create!(
         users_to_maintain.map do |role, user_details|
           user_details.map do |details|
-            details.reverse_merge(role: role.to_s, associated_id: id, last_updated: last_updated)
+            details.reverse_merge(role: role.to_s, associated_id: id, last_updated:)
           end
         end
       )
