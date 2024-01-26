@@ -14,7 +14,7 @@ class AddLibraryTubeBarcodeToPacbioRun < ActiveRecord::Migration[6.1]
       t.remove :pac_bio_library_tube_barcode
     end
     # Here we add a placeholder value in case any plate barcodes were added as null since the migration
-    PacBioRun.where(plate_barcode: nil).each do |run|
+    PacBioRun.where(plate_barcode: nil).find_each do |run|
       run.plate_barcode = 'plate_barcode placeholder'
       run.save
     end
