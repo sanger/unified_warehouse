@@ -19,7 +19,7 @@ module AssociatedWithRoles
   end
 
   def has_role(name)
-    define_method("#{name}=") { |users| set_users(name, users) }
+    define_method(:"#{name}=") { |users| set_users(name, users) }
   end
 
   module InstanceMethods
