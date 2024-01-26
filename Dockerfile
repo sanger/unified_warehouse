@@ -1,6 +1,6 @@
 FROM ruby:3.1.2
 
-RUN gem install bundler -v 2.4.22
+RUN gem install bundler
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
