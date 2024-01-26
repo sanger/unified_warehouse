@@ -2,7 +2,7 @@
 
 shared_examples_for 'maintains roles correctly' do
   after(:each) do
-    described_class.create_or_update_from_json(timestamped_json.merge(updated_roles).merge(updated_at: updated_at), 'example')
+    described_class.create_or_update_from_json(timestamped_json.merge(updated_roles).merge(updated_at:), 'example')
     users_fit_exactly(expected_roles)
   end
 
