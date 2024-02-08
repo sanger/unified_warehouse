@@ -186,7 +186,7 @@ namespace :pac_bio_run_table do
     9993
   ]
   task remove_duplicate_pac_bio_runs: :environment do
-    PacBioRun.where(id_pac_bio_run_lims: list_of_runs).each do |pac_bio_run|
+    PacBioRun.where(id_pac_bio_run_lims: list_of_runs).find_each do |pac_bio_run|
       puts "Going to remove #{pac_bio_run.id_pac_bio_run_lims}"
       puts pac_bio_run.attributes
       pac_bio_run.delete

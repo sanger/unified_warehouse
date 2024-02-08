@@ -39,7 +39,7 @@ describe Flowcell do
     include_examples 'full flowcell json'
 
     it 'flags all entries as spiked' do
-      Flowcell.all.each { |fc| expect(fc.spiked).to be_true }
+      Flowcell.find_each { |fc| expect(fc.spiked).to be_true }
     end
 
     context 'when update with identical tag indexes' do
@@ -130,7 +130,7 @@ describe Flowcell do
     end
 
     it 'flags all entries as not-spiked' do
-      Flowcell.all.each { |fc| expect(fc.spiked).to be_false }
+      Flowcell.find_each { |fc| expect(fc.spiked).to be_false }
     end
   end
 
