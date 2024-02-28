@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_28_140011) do
     t.string "reagent_kit_barcode", limit: 30, comment: "The barcode for the reagent kit or cartridge"
     t.string "id_flowcell_lims", limit: 20, null: false, comment: "LIMs-specific flowcell id, batch_id for Sequencescape"
     t.integer "position", limit: 2, null: false, comment: "Flowcell lane number", unsigned: true
-    t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_control, library_indexed, library_indexed_spike."
+    t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_control, library_indexed, library_indexed_spike"
     t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
     t.integer "tag_index", limit: 2, comment: "Tag index, NULL if lane is not a pool", unsigned: true
     t.string "tag_sequence", limit: 30, comment: "Tag sequence"
