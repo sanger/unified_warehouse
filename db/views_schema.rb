@@ -2,8 +2,8 @@ mlwh_wh_db = Rails.configuration.view_schema_mlwh_db
 event_wh_db = Rails.configuration.view_schema_ewh_db
 
 ViewsSchema.update_view(
-  'cherrypicked_samples',
-  <<~SQL.squish
+    'cherrypicked_samples',
+    <<~SQL.squish
     SELECT mlwh_sample.description AS 'root_sample_id', mlwh_stock_resource.labware_human_barcode AS 'plate_barcode',
     mlwh_sample.phenotype AS 'phenotype', mlwh_stock_resource.labware_coordinate AS 'coordinate',
     mlwh_sample.created AS 'created', 'Tecan' as 'robot_type'
