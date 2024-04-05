@@ -13,7 +13,7 @@
 ActiveRecord::Schema[7.0].define(version: 2024_04_04_142248) do
   create_table "aliquot", charset: "utf8mb3", id: :integer, force: :cascade do |t|
     t.string "lims_source", null: false, comment: "The LIMS system that the aliquot was created in"
-    t.string "lims_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
+    t.string "lims_uuid", null: false, comment: "UUID of the LIMS system"
     t.string "aliquot_type", null: false, comment: "The type of the aliquot"
     t.string "source_type", null: false, comment: "The type of the source of the aliquot"
     t.string "source_barcode", null: false, comment: "The barcode of the source of the aliquot"
