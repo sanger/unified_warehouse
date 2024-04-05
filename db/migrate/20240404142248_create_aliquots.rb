@@ -14,6 +14,6 @@ class CreateAliquots < ActiveRecord::Migration[7.0]
   end
 
   def down
-    drop_table :aliquots
+    drop_table :aliquot
   end
 end
