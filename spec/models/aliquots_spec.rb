@@ -5,7 +5,7 @@ require 'spec_helper'
 describe Aliquot, type: :model do
   context 'create aliquots' do
     it 'saves correct aliquot' do
-      expect(described_class.create(lims_source: 'library',
+      expect(described_class.create(lims_source: 'traction',
                                     lims_uuid: '000000-0000-0000-0000-0000000002',
                                     aliquot_type: 'derivative',
                                     source_type: 'library',
