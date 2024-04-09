@@ -85,7 +85,7 @@ FactoryBot.define do
 
   factory :aliquot do
     sequence(:id) { |n| n }
-    lims_source { 'traction' }
+    id_lims { 'traction' }
     lims_uuid { '000000-0000-0000-0000-0000000002' }
     aliquot_type { 'derivative' }
     source_type { 'library' }
@@ -94,5 +94,9 @@ FactoryBot.define do
     used_by_type { 'pool' }
     used_by_barcode { 'pool-barcode' }
     volume { 24.98589115 }
+    concentration { 12.46979445 }
+    last_updated { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
+    recorded_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
+    created_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
   end
 end
