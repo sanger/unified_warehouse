@@ -97,6 +97,6 @@ FactoryBot.define do
     concentration { 12.46979445 }
     last_updated { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     recorded_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
-    created_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
+    created { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
   end
 end
