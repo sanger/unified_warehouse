@@ -9,4 +9,8 @@ class Aliquot < ApplicationRecord
   def self.base_resource_key
     'id_lims'
   end
+
+  json do
+    ignore :uuid
+  end
 end
