@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 describe Aliquot, skip: 'Awaiting proper implementation' do
-
   let!(:mock_sample) { create :aliquot }
   let(:example_lims) { 'example' }
 
