@@ -5,7 +5,8 @@ require 'spec_helper'
 describe Aliquot do
   context 'aliquots' do
     let(:json) do
-      { 'id_lims' => 'example',
+      { 'id' => 1,
+        'id_lims' => 'example',
         'aliquot_type' => 'DNA',
         'volume' => 5.43,
         'concentration' => 2.34,
