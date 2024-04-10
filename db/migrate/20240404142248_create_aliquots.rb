@@ -10,11 +10,11 @@ class CreateAliquots < ActiveRecord::Migration[7.0]
       t.string :used_by_type, null: false, comment: 'The type of the entity that the aliquot is used by'
       t.string :used_by_barcode, null: false, comment: 'The barcode of the entity that the aliquot is used by'
       t.decimal :volume, precision: 10, scale: 2, null: false, comment: 'The volume of the aliquot'
-      t.decimal :concentration, precision: 10, scale: 2, null: false, comment: 'The concentration of the aliquot'
-      t.datetime :last_updated, precision: nil, null: false, comment: "Timestamp of last update"
-      t.datetime :recorded_at, precision: nil, null: false, comment: "Timestamp of warehouse update"
-      t.datetime :deleted_at, precision: nil, comment: "Timestamp of sample deletion"
-      t.datetime :created, precision: nil, comment: "Timestamp of sample creation"
+      t.decimal :concentration, precision: 10, scale: 2, comment: 'The concentration of the aliquot'
+      t.datetime :created, null: false, comment: 'The date and time that the aliquot was created'
+      t.datetime :last_updated, null: false, comment: 'The date and time that the aliquot was last updated'
+      t.datetime :deleted_at, comment: 'The date and time that the aliquot was deleted'
+      t.datetime :recorded_at, comment: 'The date and time that the aliquot was recorded'
     end
   end
 
