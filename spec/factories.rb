@@ -82,4 +82,20 @@ FactoryBot.define do
     created_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
     updated_at { Time.new(2020, 4, 2, 1, 0, 0, '+00:00') }
   end
+
+  factory :aliquot do
+    sequence(:id) { |n| n }
+    id_lims { 'example' }
+    lims_uuid { '000000-0000-0000-0000-0000000002' }
+    aliquot_type { 'derivative' }
+    source_type { 'library' }
+    source_barcode { 'PR-rna-00000001_H12' }
+    sample_name { 'aliquot-sample' }
+    used_by_type { 'pool' }
+    used_by_barcode { 'pool-barcode' }
+    volume { 24.98589115 }
+    concentration { 12.46979445 }
+    created { Time.new(2012, 3, 11, 10, 20, 8, '+00:00') }
+    last_updated { Time.new(2012, 3, 11, 10, 20, 8, '+00:00') }
+  end
 end
