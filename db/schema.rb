@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_28_140011) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_04_142248) do
+  create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
+    t.string "lims_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
+    t.string "aliquot_type", null: false, comment: "The type of the aliquot"
+    t.string "source_type", null: false, comment: "The type of the source of the aliquot"
+    t.string "source_barcode", null: false, comment: "The barcode of the source of the aliquot"
+    t.string "sample_name", null: false, comment: "The name of the sample that the aliquot was created from"
+    t.string "used_by_type", null: false, comment: "The type of the entity that the aliquot is used by"
+    t.string "used_by_barcode", null: false, comment: "The barcode of the entity that the aliquot is used by"
+    t.decimal "volume", precision: 10, scale: 2, null: false, comment: "The volume of the aliquot (uL)"
+    t.decimal "concentration", precision: 10, scale: 2, comment: "The concentration of the aliquot (ng/ul)"
+    t.datetime "created", null: false, comment: "The date and time that the aliquot was created"
+    t.datetime "last_updated", null: false, comment: "The date and time that the aliquot was last updated"
+    t.datetime "deleted_at", comment: "The date and time that the aliquot was deleted"
+    t.datetime "recorded_at", comment: "The date and time that the aliquot was recorded"
+  end
+
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
