@@ -15,8 +15,7 @@ describe Aliquot do
         'sample_name' => 'aliquot-sample',
         'used_by_type' => 'pool',
         'used_by_barcode' => 'pool-barcode',
-        'last_updated' => '2012-03-11 10:20:08',
-        'created' => '2012-03-11 10:20:08' }
+        'last_updated' => '2012-03-11 10:20:08' }
     end
     it_behaves_like 'a singular resource'
   end

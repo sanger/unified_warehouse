@@ -14,5 +14,7 @@ class Aliquot < ApplicationRecord
     translate(
       uuid: :lims_uuid
     )
+
+    ignore :created
   end
 end

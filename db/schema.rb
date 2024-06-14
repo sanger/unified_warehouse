@@ -22,7 +22,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_14_135209) do
     t.string "used_by_barcode", null: false, comment: "The barcode of the entity that the aliquot is used by"
     t.decimal "volume", precision: 10, scale: 2, null: false, comment: "The volume of the aliquot (uL)"
     t.decimal "concentration", precision: 10, scale: 2, comment: "The concentration of the aliquot (ng/ul)"
-    t.datetime "created", null: false, comment: "The date and time that the aliquot was created"
     t.datetime "last_updated", null: false, comment: "The date and time that the aliquot was last updated"
     t.datetime "deleted_at", comment: "The date and time that the aliquot was deleted"
     t.datetime "recorded_at", comment: "The date and time that the aliquot was recorded"
