@@ -95,7 +95,8 @@ FactoryBot.define do
     used_by_barcode { 'pool-barcode' }
     volume { 24.98589115 }
     concentration { 12.46979445 }
-    created { Time.new(2012, 3, 11, 10, 20, 8, '+00:00') }
     last_updated { Time.new(2012, 3, 11, 10, 20, 8, '+00:00') }
+    created_at { Time.new(2012, 3, 11, 10, 20, 8, '+00:00') }
+    recorded_at { Time.new(2012, 3, 11, 10, 20, 8, '+00:00') }
   end
 end
