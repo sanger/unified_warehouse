@@ -23,8 +23,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_14_135209) do
     t.decimal "volume", precision: 10, scale: 2, null: false, comment: "The volume of the aliquot (uL)"
     t.decimal "concentration", precision: 10, scale: 2, comment: "The concentration of the aliquot (ng/ul)"
     t.datetime "last_updated", null: false, comment: "The date and time that the aliquot was last updated"
-    t.datetime "deleted_at", comment: "The date and time that the aliquot was deleted"
-    t.datetime "recorded_at", comment: "The date and time that the aliquot was recorded"
+    t.datetime "recorded_at", null: false, comment: "The date and time that the aliquot was recorded"
+    t.datetime "created_at", null: false, comment: "The date and time that this record was created"
   end
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|

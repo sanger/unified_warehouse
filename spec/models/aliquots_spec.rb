@@ -4,6 +4,8 @@ require 'spec_helper'
 
 describe Aliquot do
   context 'aliquots' do
+    let(:example_lims) { 'example' }
+
     let(:json) do
       { 'id_lims' => 'example',
         'aliquot_type' => 'DNA',
@@ -15,8 +17,13 @@ describe Aliquot do
         'sample_name' => 'aliquot-sample',
         'used_by_type' => 'pool',
         'used_by_barcode' => 'pool-barcode',
-        'last_updated' => '2012-03-11 10:20:08' }
+        'last_updated' => '2012-03-11 10:20:08',
+        'recorded_at' => '2012-03-11 10:20:08',
+        'created_at' => '2012-03-11 10:20:08' }
     end
-    it_behaves_like 'a singular resource'
+
+    it 'saves the correct resource' do
+      expect(described_class.create_or_update_from_json(json, example_lims)).to be_truthy
+    end
   end
 end
