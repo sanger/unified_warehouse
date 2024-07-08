@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_14_135209) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_08_081135) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "lims_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -25,6 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_14_135209) do
     t.datetime "last_updated", null: false, comment: "The date and time that the aliquot was last updated"
     t.datetime "recorded_at", null: false, comment: "The date and time that the aliquot was recorded"
     t.datetime "created_at", null: false, comment: "The date and time that this record was created"
+    t.integer "insert_size", comment: "The size of the insert in base pairs"
   end
 
   create_table "bmap_flowcell", primary_key: "id_bmap_flowcell_tmp", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|

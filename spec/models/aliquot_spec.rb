@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Aliquot do
-  context 'aliquots' do
+  context 'aliquot' do
     let(:example_lims) { 'example' }
 
     let(:json) do
@@ -11,6 +11,7 @@ describe Aliquot do
         'aliquot_type' => 'DNA',
         'volume' => 5.43,
         'concentration' => 2.34,
+        'insert_size' => 100,
         'lims_uuid' => '000000-0000-0000-0000-0000000002',
         'source_type' => 'library',
         'source_barcode' => 'PR-rna-00000001_H12',
