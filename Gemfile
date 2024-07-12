@@ -19,7 +19,9 @@ gem 'bundler', '>= 1.3.0'
 gem 'railties', '~> 7.0.4'
 # # RAILS DEPENDENCIES
 
-gem 'sanger_warren'
+gem 'sanger_warren', '~> 0.4.1'
+gem 'bunny', '>= 2.22.0'
+gem 'rbtree', '~> 0.4.5'
 
 gem 'bootsnap', '~> 1.7', '>= 1.7.3', require: false
 gem 'hashie', '~> 5.0'
