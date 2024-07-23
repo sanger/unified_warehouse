@@ -12,7 +12,7 @@ describe Aliquot do
         'volume' => 5.43,
         'concentration' => 2.34,
         'insert_size' => 100,
-        'id_aliquot_lims' => '000000-0000-0000-0000-0000000002',
+        'id_aliquot_lims' => '2',
         'source_type' => 'library',
         'source_barcode' => 'PR-rna-00000001_H12',
         'sample_name' => 'aliquot-sample',

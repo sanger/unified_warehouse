@@ -86,7 +86,7 @@ FactoryBot.define do
   factory :aliquot do
     sequence(:id) { |n| n }
     id_lims { 'example' }
-    id_aliquot_lims { '000000-0000-0000-0000-0000000002' }
+    id_aliquot_lims { '2' }
     aliquot_type { 'derivative' }
     source_type { 'library' }
     source_barcode { 'PR-rna-00000001_H12' }
