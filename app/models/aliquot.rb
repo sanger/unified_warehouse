@@ -7,13 +7,13 @@ class Aliquot < ApplicationRecord
   include SingularResourceTools
 
   def self.base_resource_key
-    'lims_uuid'
+    'id_aliquot_lims'
   end
 
   json do
-    translate(
-      uuid: :lims_uuid
-    )
+    # translate(
+    #   uuid: :lims_uuid
+    # )
 
     ignore :created
   end
