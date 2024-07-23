@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_23_102607) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_23_110742) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
-    t.string "id_aliquot_lims", null: false, comment: "The UUID of the aliquot in the LIMS system"
+    t.string "id_aliquot_lims", null: false, comment: "The ID of the aliquot in the LIMS system"
     t.string "aliquot_type", null: false, comment: "The type of the aliquot"
     t.string "source_type", null: false, comment: "The type of the source of the aliquot"
     t.string "source_barcode", null: false, comment: "The barcode of the source of the aliquot"
