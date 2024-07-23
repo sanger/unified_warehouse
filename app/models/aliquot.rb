@@ -11,10 +11,6 @@ class Aliquot < ApplicationRecord
   end
 
   json do
-    # translate(
-    #   uuid: :lims_uuid
-    # )
-
     ignore :created
   end
 end
