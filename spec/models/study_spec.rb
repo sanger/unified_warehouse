@@ -65,7 +65,8 @@ describe Study do
         'hmdmc_number' => 'H12345; H67890; And then a comment',
         'data_destination' => 'standard',
         's3_email_list' => 'aa1@sanger.ac.uk;aa2@sanger.ac.uk',
-        'data_deletion_period' => '3 months'
+        'data_deletion_period' => '3 months',
+        'contaminated_human_data_access_group' => 'contaminated human data'
       }
     end
 
