@@ -57,7 +57,8 @@ describe Sample do
         'updated_by_manifest' => true,
         'donor_id' => '11111111-2222-3333-4444-555555555556',
         'developmental_stage' => 'Larval: Day 5 ZFS:0000037',
-        'control_type' => 'positive'
+        'control_type' => 'positive',
+        'retention_instruction' => 'return_to_customer_after_2_years'
       }
     end
   end
@@ -74,7 +75,8 @@ describe Sample do
         uuid: '012345-6789-UUID-0001',
         id: 12_345,
         name: 'compound_sample',
-        component_sample_uuids: [{ uuid: component_sample[:uuid_sample_lims] }]
+        component_sample_uuids: [{ uuid: component_sample[:uuid_sample_lims] }],
+        retention_instruction: 'return_to_customer_after_2_years'
       }
     end
 
