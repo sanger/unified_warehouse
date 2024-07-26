@@ -4,6 +4,8 @@ class Sample < ApplicationRecord
   include ResourceTools
   include SingularResourceTools
 
+  enum retention_instruction: { destroy_after_2_years: 0, return_to_customer_after_2_years: 1, long_term_storage: 2 }
+
   # Set up directional many-to-many associations from this Sample to compound Samples.
   # This indicates that this Sample is a component in a pool of other component Samples represented by each compound Sample.
   has_many(
