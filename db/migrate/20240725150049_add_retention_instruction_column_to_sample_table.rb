@@ -1,6 +1,6 @@
 class AddRetentionInstructionColumnToSampleTable < ActiveRecord::Migration[7.0]
   def up
-    add_column :sample, :retention_instruction, :integer
+    add_column :sample, :retention_instruction, :string
   end
 
   def down

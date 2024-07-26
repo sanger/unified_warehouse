@@ -366,7 +366,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_25_150049) do
     t.string "gc_content"
     t.string "dna_source"
     t.string "priority_level", comment: "Priority level eg Medium, High etc"
-    t.integer "retention_instruction"
+    t.string "retention_instruction"
     t.index ["accession_number"], name: "sample_accession_number_index"
     t.index ["id_sample_lims", "id_lims"], name: "index_sample_on_id_sample_lims_and_id_lims", unique: true
     t.index ["name"], name: "sample_name_index"
