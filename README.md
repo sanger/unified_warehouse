@@ -16,15 +16,13 @@ A denormalised warehouse for multiple LIMS.
 ### Installation
 
 1. Clone the git repository
-2. Install the relevant ruby from `.ruby-version`
+2. Install the relevant ruby from `.ruby-version`  
+    Rbenv will read .ruby-version automatically   
+   `rbenv install`
 
-    Rbenv will read .ruby-version automatically
-
-       rbenv install
-
-3. Run the setup process:
-
-       bin/setup
+3. Run the setup process:  
+    3.1. Set up your MySQL root password inside the file config/database.yml  
+    3.2. Run `bin/setup ` 
 
 **NB**: If getting an error while installing the `mysql2` gem, try:
 
