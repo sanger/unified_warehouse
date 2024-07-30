@@ -18,6 +18,7 @@ FactoryBot.define do
     id_lims { 'example' }
     sequence(:id_sample_lims)
     last_updated { '2012-03-11 10:22:42' }
+    retention_instruction { 'return_to_customer_after_2_years' }
 
     trait :with_uuid_sample_lims do
       sequence(:uuid_sample_lims) { SecureRandom.uuid }
