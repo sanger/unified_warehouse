@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_30_074446) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_26_144332) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -366,7 +366,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_30_074446) do
     t.string "gc_content"
     t.string "dna_source"
     t.string "priority_level", comment: "Priority level eg Medium, High etc"
-    t.string "retention_instruction"
     t.index ["accession_number"], name: "sample_accession_number_index"
     t.index ["id_sample_lims", "id_lims"], name: "index_sample_on_id_sample_lims_and_id_lims", unique: true
     t.index ["name"], name: "sample_name_index"
