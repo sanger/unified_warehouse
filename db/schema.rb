@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_26_144332) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_08_094727) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -460,6 +460,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_26_144332) do
     t.string "s3_email_list"
     t.string "data_deletion_period"
     t.string "contaminated_human_data_access_group"
+    t.string "program"
     t.index ["accession_number"], name: "study_accession_number_index"
     t.index ["id_lims", "id_study_lims"], name: "study_id_lims_id_study_lims_index", unique: true
     t.index ["name"], name: "study_name_index"
