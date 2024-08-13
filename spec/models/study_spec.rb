@@ -67,7 +67,7 @@ describe Study do
         's3_email_list' => 'aa1@sanger.ac.uk;aa2@sanger.ac.uk',
         'data_deletion_period' => '3 months',
         'contaminated_human_data_access_group' => 'contaminated human data',
-        'program' => 'Cancer Genetics and Genomics'
+        'programme' => 'Cancer Genetics and Genomics'
       }
     end
 
