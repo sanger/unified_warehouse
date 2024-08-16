@@ -66,7 +66,8 @@ describe Study do
         'data_destination' => 'standard',
         's3_email_list' => 'aa1@sanger.ac.uk;aa2@sanger.ac.uk',
         'data_deletion_period' => '3 months',
-        'contaminated_human_data_access_group' => 'contaminated human data'
+        'contaminated_human_data_access_group' => 'contaminated human data',
+        'programme' => 'Cancer Genetics and Genomics'
       }
     end
 
