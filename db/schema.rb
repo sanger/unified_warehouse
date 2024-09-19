@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_08_14_125331) do
+ActiveRecord::Schema[7.0].define(version: 2024_09_19_134424) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -305,7 +305,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_14_125331) do
   create_table "sample", primary_key: "id_sample_tmp", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.string "uuid_sample_lims", limit: 36, comment: "LIMS-specific sample uuid"
-    t.string "id_sample_lims", limit: 20, null: false, comment: "LIMS-specific sample identifier"
+    t.string "id_sample_lims", null: false, comment: "LIMS-specific sample identifier"
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.datetime "deleted_at", precision: nil, comment: "Timestamp of sample deletion"
@@ -463,7 +463,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_08_14_125331) do
     t.string "programme"
     t.index ["accession_number"], name: "study_accession_number_index"
     t.index ["id_lims", "id_study_lims"], name: "study_id_lims_id_study_lims_index", unique: true
-    t.index ["id_study_lims"], name: "index_study_on_id_study_lims", unique: false
+    t.index ["id_study_lims"], name: "index_study_on_id_study_lims"
     t.index ["name"], name: "study_name_index"
     t.index ["uuid_study_lims"], name: "study_uuid_study_lims_index", unique: true
   end
