@@ -28,7 +28,7 @@ describe Sample do
 
     let(:json) do
       {
-        'id' => 1,
+        'id' => '1' * 255.to_i,
         'name' => 'name',
         'reference_genome' => 'reference genome',
         'organism' => 'organism',
