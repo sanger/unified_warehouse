@@ -11,6 +11,10 @@ RSpec.describe 'RakeTasks' do
     let!(:non_traction_sample) { create(:sample, id_lims: 'Other', name: 'SampleName2', id_sample_lims: 'OldValue2', uuid_sample_lims: SecureRandom.uuid) }
     let!(:existing_sample) { create(:sample, id_lims: 'Traction', name: 'SampleName1', id_sample_lims: 'OldValue2', uuid_sample_lims: SecureRandom.uuid) }
 
+    before do
+      Rake::Task['sample_table:update_id_sample_lims'].reenable
+    end
+
     it 'updates id_sample_lims to the value of the name column for traction samples' do
       expect { Rake::Task['sample_table:update_id_sample_lims'].invoke }.to change { traction_sample.reload.id_sample_lims }.from('OldValue1').to('SampleName1').and output(
         /Updating id_sample_lims for sample #{traction_sample.id} to SampleName1/
