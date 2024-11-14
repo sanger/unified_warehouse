@@ -30,7 +30,7 @@ Take the example below.
 }
 ```
 
-If the message above is consumed by `unified_warehouse`, it will create a new record in `aliquot` table with the values set to the given attributes. If an exception occur, it will dead-letter the message. For message serialization logic, please follow [lib/payload.rb](https://github.com/sanger/unified_warehouse/blob/beea89418cc1987c426e7967b7c13ff9218b51fb/lib/payload.rb#L31-L33).
+If the message above is consumed by `unified_warehouse`, it will create a new record in `aliquot` table with the values set to the given attributes. If an exception occur, it will dead-letter the message. For message serialization logic, please follow [`lib/payload.rb`](https://github.com/sanger/unified_warehouse/blob/beea89418cc1987c426e7967b7c13ff9218b51fb/lib/payload.rb#L31-L33).
 
 ## Usage (Development)
 
