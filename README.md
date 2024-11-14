@@ -4,6 +4,34 @@
 
 A denormalised warehouse for multiple LIMS.
 
+Populating a table in the warehouse is done asynchronously. This project is a Railtie application that facilitate asynchronous database population through a message queue. This application listens to a message queue, consumes the message, converts the message into a database model, and persists in the corresponding table. 
+
+Take the example below.
+
+```json
+{
+    "lims": "traction",
+    "aliquot": {
+        "id_lims": "LIMS123456",
+        "lims_uuid": "550e8400-e29b-41d4-a716-446655440000",
+        "aliquot_type": "DNA",
+        "source_type": "Blood",
+        "source_barcode": "SRC123456",
+        "sample_name": "SampleA",
+        "used_by_type": "Research",
+        "used_by_barcode": "USR123456",
+        "volume": 50,
+        "concentration": 200,
+        "last_updated": "2024-07-09T10:15:30Z",
+        "recorded_at": "2024-07-09T09:00:00Z",
+        "created_at": "2024-07-08T08:00:00Z",
+        "insert_size": 350
+    }
+}
+```
+
+If the message above is consumed by `unified_warehouse`, it will create a new record in `aliquot` table with the values set to the given attributes. If an exception occur, it will dead-letter the message. For message serialization logic, please follow [`lib/payload.rb`](https://github.com/sanger/unified_warehouse/blob/beea89418cc1987c426e7967b7c13ff9218b51fb/lib/payload.rb#L31-L33).
+
 ## Usage (Development)
 
 ### Requirement
