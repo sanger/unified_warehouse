@@ -30,7 +30,7 @@ Take the example below.
 }
 ```
 
-If the message above is consumed by `unified_warehouse`, it will create a new record in `aliquot` table with the values set to the given attributes.
+If the message above is consumed by `unified_warehouse`, it will create a new record in `aliquot` table with the values set to the given attributes. If an exception occur, it will dead-letter the message.
 
 ## Usage (Development)
 
