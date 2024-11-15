@@ -47,7 +47,7 @@ jobs:
           INTEGRATION_TEST_SEED: '/code/spec/data/integration/seed_for_unified_wh.rb'
           RAILS_ENV: test
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: nelonoel/branch-name@v1.0.1
       - name: Build the Docker image
         run: >-
