@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_19_134424) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_03_134455) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -304,7 +304,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_19_134424) do
 
   create_table "sample", primary_key: "id_sample_tmp", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
-    t.string "uuid_sample_lims", limit: 36, comment: "LIMS-specific sample uuid"
+    t.string "uuid_sample_lims", limit: 36, null: false, comment: "LIMS-specific sample uuid"
     t.string "id_sample_lims", null: false, comment: "LIMS-specific sample identifier"
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
@@ -367,7 +367,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_19_134424) do
     t.string "dna_source"
     t.string "priority_level", comment: "Priority level eg Medium, High etc"
     t.index ["accession_number"], name: "sample_accession_number_index"
+    t.index ["id_lims", "id_sample_lims"], name: "index_sample_on_id_lims_and_id_sample_lims", unique: true
+    t.index ["id_lims"], name: "index_sample_on_id_lims"
     t.index ["id_sample_lims", "id_lims"], name: "index_sample_on_id_sample_lims_and_id_lims", unique: true
+    t.index ["id_sample_lims"], name: "index_sample_on_id_sample_lims"
     t.index ["name"], name: "sample_name_index"
     t.index ["sanger_sample_id"], name: "index_sample_on_sanger_sample_id"
     t.index ["supplier_name"], name: "index_sample_on_supplier_name"

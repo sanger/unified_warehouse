@@ -24,42 +24,46 @@ describe Sample do
   end
 
   context 'without uuid' do
-    it_behaves_like 'a sample resource'
-
-    let(:json) do
-      {
-        'id' => '1' * 255.to_i,
-        'name' => 'name',
-        'reference_genome' => 'reference genome',
-        'organism' => 'organism',
-        'consent_withdrawn' => true,
-        'accession_number' => 'accession number',
-        'common_name' => 'common name',
-        'description' => 'description',
-        'taxon_id' => 'taxon id',
-        'father' => 'father',
-        'mother' => 'mother',
-        'replicate' => 'replicate',
-        'ethnicity' => 'ethnicity',
-        'gender' => 'gender',
-        'cohort' => 'cohort',
-        'country_of_origin' => 'country of origin',
-        'geographical_region' => 'geographical region',
-        'updated_at' => '2012-03-11 10:22:42',
-        'created_at' => '2012-03-11 10:22:42',
-        'sanger_sample_id' => 'sanger sample id',
-        'control' => true,
-        'empty_supplier_sample_name' => true,
-        'supplier_name' => 'supplier name',
-        'public_name' => 'public name',
-        'sample_visibility' => 'sample visibility',
-        'strain' => 'strain',
-        'updated_by_manifest' => true,
-        'donor_id' => '11111111-2222-3333-4444-555555555556',
-        'developmental_stage' => 'Larval: Day 5 ZFS:0000037',
-        'control_type' => 'positive'
-      }
+    it 'should raiser an error if uuid is null' do
+      expect { create(:sample, uuid_sample_lims: nil) }.to raise_error ActiveRecord::NotNullViolation
     end
+
+    # it_behaves_like 'a sample resource'
+
+    # let(:json) do
+    #   {
+    #     'id' => '1' * 255.to_i,
+    #     'name' => 'name',
+    #     'reference_genome' => 'reference genome',
+    #     'organism' => 'organism',
+    #     'consent_withdrawn' => true,
+    #     'accession_number' => 'accession number',
+    #     'common_name' => 'common name',
+    #     'description' => 'description',
+    #     'taxon_id' => 'taxon id',
+    #     'father' => 'father',
+    #     'mother' => 'mother',
+    #     'replicate' => 'replicate',
+    #     'ethnicity' => 'ethnicity',
+    #     'gender' => 'gender',
+    #     'cohort' => 'cohort',
+    #     'country_of_origin' => 'country of origin',
+    #     'geographical_region' => 'geographical region',
+    #     'updated_at' => '2012-03-11 10:22:42',
+    #     'created_at' => '2012-03-11 10:22:42',
+    #     'sanger_sample_id' => 'sanger sample id',
+    #     'control' => true,
+    #     'empty_supplier_sample_name' => true,
+    #     'supplier_name' => 'supplier name',
+    #     'public_name' => 'public name',
+    #     'sample_visibility' => 'sample visibility',
+    #     'strain' => 'strain',
+    #     'updated_by_manifest' => true,
+    #     'donor_id' => '11111111-2222-3333-4444-555555555556',
+    #     'developmental_stage' => 'Larval: Day 5 ZFS:0000037',
+    #     'control_type' => 'positive'
+    #   }
+    # end
   end
 
   context 'compound samples via JSON' do
