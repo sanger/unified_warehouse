@@ -7,6 +7,8 @@
 module SingularResourceVersionedTools
   extend ActiveSupport::Concern
 
+  EXCLUDED_ATTRIBUTES = %w[id created_at updated_at last_updated recorded_at].freeze
+
   # Checks if the attributes of the given record have changed and if the given record is more recent.
   # If both conditions are met, yields the given record for further processing.
   #
@@ -22,7 +24,7 @@ module SingularResourceVersionedTools
   # @param other [ActiveRecord::Base] The record to compare with.
   # @return [Boolean] Returns true if the attributes have changed, false otherwise.
   def attributes_changed?(other)
-    attributes.except('id', 'created_at', 'last_updated', 'recorded_at') != other.attributes.except('id', 'created_at', 'last_updated', 'recorded_at')
+    attributes.except(*EXCLUDED_ATTRIBUTES) != other.attributes.except(*EXCLUDED_ATTRIBUTES)
   end
 
   # This module is used to create or update a record
