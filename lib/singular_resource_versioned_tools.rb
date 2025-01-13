@@ -16,7 +16,6 @@ module SingularResourceVersionedTools
   # @yield [ActiveRecord::Base] Yields the given record if it is the latest and has changed.
   # @return [ActiveRecord::Base] Returns the current record if the given record is not the latest or has not changed.
   def latest?(other)
-    binding.pry
     attributes_changed?(other) && (other.last_updated > last_updated)
   end
 
@@ -25,16 +24,14 @@ module SingularResourceVersionedTools
   # @param other [ActiveRecord::Base] The record to compare with.
   # @return [Boolean] Returns true if the attributes have changed, false otherwise.
   def attributes_changed?(other)
-    binding.pry
     attributes.except(*EXCLUDED_ATTRIBUTES) != other.attributes.except(*EXCLUDED_ATTRIBUTES)
   end
 
   # This module is used to create or update a record
   module ClassMethods
-    # Creates or updates a record based on the given attributes.
+    # Creates a record based on the given attributes.
     # If an existing record with the same base resource key is found, it checks if the new record is the latest
     # and if any attributes have changed. If both conditions are met, it creates a new record to maintain an audit trail.
-    # Otherwise, it updates the existing record.
     #
     # @param attributes [Hash] The attributes of the record to create or update.
     # @return [ActiveRecord::Base] Returns the created or updated record.
@@ -43,12 +40,10 @@ module SingularResourceVersionedTools
 
       existing_record = for_lims(attributes.id_lims).with_id(attributes[base_resource_key]).order(last_updated: :desc)
                                                     .first
-
-      binding.pry
-
       return unless existing_record.nil? || existing_record.latest?(new_record)
 
-      new_record.save!
+      new_atts = Array.convert(attributes).map(&:to_hash)
+      create!(new_atts)
     end
     private :create_or_update
   end
