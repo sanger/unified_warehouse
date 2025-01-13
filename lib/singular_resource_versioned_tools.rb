@@ -10,11 +10,13 @@ module SingularResourceVersionedTools
   EXCLUDED_ATTRIBUTES = %w[id created_at updated_at last_updated recorded_at].freeze
 
   # Checks if the attributes of the given record have changed and if the given record is more recent.
-  # If both conditions are met, yields the given record for further processing.
+  # If both conditions are met, returns true. Otherwise, returns false.
   #
   # @param other [ActiveRecord::Base] The record to compare with.
-  # @yield [ActiveRecord::Base] Yields the given record if it is the latest and has changed.
-  # @return [ActiveRecord::Base] Returns the current record if the given record is not the latest or has not changed.
+  # @return [Boolean] Returns true if the given record is the latest and has changed, false otherwise.
+  #
+  # Note: This method is used to ensure that only the most recent and changed records are processed,
+  # maintaining an audit trail of updates.
   def latest?(other)
     attributes_changed?(other) && (other.last_updated > last_updated)
   end
