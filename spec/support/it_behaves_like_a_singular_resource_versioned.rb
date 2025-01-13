@@ -96,14 +96,14 @@ shared_examples_for 'a singular resource versioned' do
           described_class.create_or_update_from_json(timestamped_json.merge('last_updated' => modified_at + 1.hour), example_lims)
         end
 
-        it 'creates a new record with the updated fields' do
+        it 'does not create a new record' do
           expect(current_records.count).to eq(1)
           expect(current_records.last['last_updated']).to eq(modified_at)
         end
       end
 
       context 'when ignored fields change' do
-        ResourceTools::IGNOREABLE_ATTRIBUTES.each do |attribute|
+        SingularResourceVersionedTools::EXCLUDED_ATTRIBUTES.each do |attribute|
           next if attribute.to_s == 'dont_use_id' # Protected by mass-assignment!
 
           let(:most_recent_time) { modified_at }

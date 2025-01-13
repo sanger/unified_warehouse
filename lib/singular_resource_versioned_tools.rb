@@ -15,8 +15,8 @@ module SingularResourceVersionedTools
   # @param other [ActiveRecord::Base] The record to compare with.
   # @yield [ActiveRecord::Base] Yields the given record if it is the latest and has changed.
   # @return [ActiveRecord::Base] Returns the current record if the given record is not the latest or has not changed.
-  def latest(other)
-    attributes_changed?(other) && (other.last_updated > last_updated) ? yield(other) : self
+  def latest?(other)
+    attributes_changed?(other) && (other.last_updated > last_updated)
   end
 
   # Compares the attributes of the current record with the given record, excluding 'id', 'created_at', and 'updated_at'.
@@ -39,23 +39,12 @@ module SingularResourceVersionedTools
     def create_or_update(attributes)
       new_record = new(attributes.to_hash)
 
-      # byebug
       existing_record = for_lims(attributes.id_lims).with_id(attributes[base_resource_key]).order(last_updated: :desc)
                                                     .first
 
-      # byebug
-      if existing_record.nil?
-        # byebug
-        # No existing record found, save the new record
-        new_record.save!
-      else
-        existing_record.latest(new_record) do |record|
-          # byebug
-          record.update(attributes.to_hash) if record.present?
-          record ||= new_record
-          record.save!
-        end
-      end
+      return unless existing_record.nil? || existing_record.latest?(new_record)
+
+      new_record.save!
     end
     private :create_or_update
   end
