@@ -16,6 +16,7 @@ module SingularResourceVersionedTools
   # @yield [ActiveRecord::Base] Yields the given record if it is the latest and has changed.
   # @return [ActiveRecord::Base] Returns the current record if the given record is not the latest or has not changed.
   def latest?(other)
+    binding.pry
     attributes_changed?(other) && (other.last_updated > last_updated)
   end
 
@@ -24,6 +25,7 @@ module SingularResourceVersionedTools
   # @param other [ActiveRecord::Base] The record to compare with.
   # @return [Boolean] Returns true if the attributes have changed, false otherwise.
   def attributes_changed?(other)
+    binding.pry
     attributes.except(*EXCLUDED_ATTRIBUTES) != other.attributes.except(*EXCLUDED_ATTRIBUTES)
   end
 
@@ -41,6 +43,8 @@ module SingularResourceVersionedTools
 
       existing_record = for_lims(attributes.id_lims).with_id(attributes[base_resource_key]).order(last_updated: :desc)
                                                     .first
+
+      binding.pry
 
       return unless existing_record.nil? || existing_record.latest?(new_record)
 
