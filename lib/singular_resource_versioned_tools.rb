@@ -31,10 +31,9 @@ module SingularResourceVersionedTools
 
   # This module is used to create or update a record
   module ClassMethods
-    # Creates or updates a record based on the given attributes.
+    # Creates a record based on the given attributes.
     # If an existing record with the same base resource key is found, it checks if the new record is the latest
     # and if any attributes have changed. If both conditions are met, it creates a new record to maintain an audit trail.
-    # Otherwise, it updates the existing record.
     #
     # @param attributes [Hash] The attributes of the record to create or update.
     # @return [ActiveRecord::Base] Returns the created or updated record.
@@ -43,10 +42,10 @@ module SingularResourceVersionedTools
 
       existing_record = for_lims(attributes.id_lims).with_id(attributes[base_resource_key]).order(last_updated: :desc)
                                                     .first
-
       return unless existing_record.nil? || existing_record.latest?(new_record)
 
-      new_record.save!
+      new_atts = Array.convert(attributes).map(&:to_hash)
+      create!(new_atts)
     end
     private :create_or_update
   end
