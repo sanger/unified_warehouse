@@ -44,8 +44,7 @@ module SingularResourceVersionedTools
                                                     .first
       return unless existing_record.nil? || existing_record.latest?(new_record)
 
-      new_atts = Array.convert(attributes).map(&:to_hash)
-      create!(new_atts)
+      create!(attributes.to_hash)
     end
     private :create_or_update
   end
