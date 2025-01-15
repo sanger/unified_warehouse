@@ -35,8 +35,8 @@ module SingularResourceVersionedTools
     # If an existing record with the same base resource key is found, it checks if the new record is the latest
     # and if any attributes have changed. If both conditions are met, it creates a new record to maintain an audit trail.
     #
-    # @param attributes [Hash] The attributes of the record to create or update.
-    # @return [ActiveRecord::Base] Returns the created or updated record.
+    # @param attributes [Hash] The attributes of the record to create or update which is an instance of Aliquot::JsonHandler.
+    # @return [ActiveRecord::Base] Returns the created record.
     def create_or_update(attributes)
       new_record = new(attributes.to_hash)
 
