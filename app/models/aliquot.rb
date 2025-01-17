@@ -4,7 +4,7 @@
 # This model is used to store aliquot data
 class Aliquot < ApplicationRecord
   include ResourceTools
-  include SingularResourceTools
+  include SingularResourceVersionedTools
 
   def self.base_resource_key
     'aliquot_uuid'
