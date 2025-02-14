@@ -20,7 +20,6 @@ module UnifiedWarehouse
     config.filter_parameters += [:password]
     # config.assets.enabled     = false
     # config.assets.version     = '1.0'
-    config.active_record.legacy_connection_handling = false
 
     # We've already agreed a schema with NPG, I'd prefer not to do this but rails
     # isn't the only convention in play here.
