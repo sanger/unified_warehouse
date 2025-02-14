@@ -46,7 +46,8 @@ describe OseqFlowcellRun do
               'tag2_set_name' => 'tag_set_2',
               'library_tube_uuid' => '1accf7cb-2ee8-4528-8c0a-408b94cfb1de',
               'library_tube_barcode' => 'TRAC1234567',
-              run_id: 'abcdefghijklmnop1234567890qrst'
+              run_id: 'abcdefghijklmnop1234567890qrst',
+              rebascalling_process: 'rebasecalling_process'
             },
             {
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
@@ -61,7 +62,8 @@ describe OseqFlowcellRun do
               'tag2_set_name' => 'tag_set_2',
               'library_tube_uuid' => '1accf7cb-2ee8-4528-8c0a-408b94cfb1de',
               'library_tube_barcode' => 'TRAC1234567',
-              run_id: 'abcdefghijklmnop1234567890qrst'
+              run_id: 'abcdefghijklmnop1234567890qrst',
+              rebascalling_process: 'rebasecalling_process'
             }
           ]
         },
