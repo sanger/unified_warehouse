@@ -40,7 +40,7 @@ describe OseqFlowcell do
       library_tube_uuid: '1accf7cb-2ee8-4528-8c0a-408b94cfb1de',
       library_tube_barcode: 'TRAC1234567',
       run_uuid: 'd14beaef-05f5-4e76-a9b8-20b656ca7ad1',
-      rebascalling_process: 'rebasecalling_process'
+      rebasecalling_process: 'rebasecalling_process'
     }
   end
 end

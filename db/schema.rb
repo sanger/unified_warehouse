@@ -234,7 +234,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_14_131920) do
     t.string "library_tube_barcode", comment: "The barcode for the originating library tube"
     t.string "run_uuid", limit: 36, comment: "The uuid of the run"
     t.string "run_id", comment: "Run identifier assigned by MinKNOW"
-    t.string "rebascalling_process", limit: 50
+    t.string "rebasecalling_process", limit: 50
     t.index ["id_sample_tmp"], name: "fk_oseq_flowcell_to_sample"
     t.index ["id_study_tmp"], name: "fk_oseq_flowcell_to_study"
   end
