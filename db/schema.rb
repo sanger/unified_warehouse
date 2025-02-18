@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_01_10_153629) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_14_131920) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -234,6 +234,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_01_10_153629) do
     t.string "library_tube_barcode", comment: "The barcode for the originating library tube"
     t.string "run_uuid", limit: 36, comment: "The uuid of the run"
     t.string "run_id", comment: "Run identifier assigned by MinKNOW"
+    t.string "rebasecalling_process", limit: 50, comment: "Settings required for modified basecalling"
     t.index ["id_sample_tmp"], name: "fk_oseq_flowcell_to_sample"
     t.index ["id_study_tmp"], name: "fk_oseq_flowcell_to_study"
   end
