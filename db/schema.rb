@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_12_11_144506) do
+ActiveRecord::Schema[7.0].define(version: 2025_02_24_110314) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -234,6 +234,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_11_144506) do
     t.string "library_tube_barcode", comment: "The barcode for the originating library tube"
     t.string "run_uuid", limit: 36, comment: "The uuid of the run"
     t.string "run_id", comment: "Run identifier assigned by MinKNOW"
+    t.string "rebasecalling_process", limit: 50, comment: "Settings required for modified basecalling"
     t.index ["id_sample_tmp"], name: "fk_oseq_flowcell_to_sample"
     t.index ["id_study_tmp"], name: "fk_oseq_flowcell_to_study"
   end
@@ -366,7 +367,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_11_144506) do
     t.string "gc_content"
     t.string "dna_source"
     t.string "priority_level", comment: "Priority level eg Medium, High etc"
-    t.string "huMFre_code", limit: 16
     t.index ["accession_number"], name: "sample_accession_number_index"
     t.index ["id_lims", "id_sample_lims"], name: "index_sample_on_id_lims_and_id_sample_lims", unique: true
     t.index ["id_lims"], name: "index_sample_on_id_lims"
@@ -465,6 +465,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_12_11_144506) do
     t.string "data_deletion_period"
     t.string "contaminated_human_data_access_group"
     t.string "programme"
+    t.string "ebi_library_strategy"
+    t.string "ebi_library_source"
+    t.string "ebi_library_selection"
     t.index ["accession_number"], name: "study_accession_number_index"
     t.index ["id_lims", "id_study_lims"], name: "study_id_lims_id_study_lims_index", unique: true
     t.index ["id_study_lims"], name: "index_study_on_id_study_lims"
