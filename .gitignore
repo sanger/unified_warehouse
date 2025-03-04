@@ -27,4 +27,4 @@ coverage
 
 # credentials
 config/credentials.yml.enc
-/config/master.key
+config/master.key

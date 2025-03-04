@@ -2,7 +2,6 @@ inherit_from: .rubocop_todo.yml
 
 plugins:
   - rubocop-rails
-require:
   - rubocop-performance
 Rails:
   Enabled: true
