@@ -12,7 +12,7 @@ end
 
 module UnifiedWarehouse
   class Application < Rails::Application
-    config.load_defaults 6.1
+    config.load_defaults 7.1
     config.autoload_paths += ["#{config.root}/app", "#{config.root}/lib"]
     config.eager_load_paths += ["#{config.root}/app", "#{config.root}/lib"]
     config.time_zone          = 'UTC'
@@ -20,7 +20,6 @@ module UnifiedWarehouse
     config.filter_parameters += [:password]
     # config.assets.enabled     = false
     # config.assets.version     = '1.0'
-    config.active_record.legacy_connection_handling = false
 
     # We've already agreed a schema with NPG, I'd prefer not to do this but rails
     # isn't the only convention in play here.
