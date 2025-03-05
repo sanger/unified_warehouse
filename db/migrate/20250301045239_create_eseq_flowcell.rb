@@ -2,7 +2,7 @@ class CreateEseqFlowcell < ActiveRecord::Migration[7.0]
   def change
     create_table :eseq_flowcell, id: false, options: 'CHARSET=utf8 COLLATE=utf8_unicode_ci' do |t|
       t.column :id_eseq_flowcell_tmp, 'integer unsigned auto_increment', primary_key: true, comment: 'Internal to this database, id value can change'
-      t.string :id_flowcell_lims, limit: 255, null: false, comment: 'LIMs-specific flowcell id', index: true
+      t.string :id_flowcell_lims, limit: 255, null: false, comment: 'LIMs-specific flowcell id, batch_id for Sequencescape', index: true
       t.string :run_name, limit: 80, null: false, comment: 'Run name as given to the instrument'
       t.datetime :last_updated, null: false, comment: 'Timestamp of last update'
       t.datetime :recorded_at, null: false, comment: 'Timestamp of warehouse update'
