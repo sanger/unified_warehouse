@@ -1,6 +1,7 @@
 mysql: &MYSQL
   adapter: mysql2
   encoding: utf8
+  collation: utf8_unicode_ci
   reconnect: true
   pool: 5
   username: root
