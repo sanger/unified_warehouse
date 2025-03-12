@@ -153,6 +153,7 @@ shared_examples 'large eseq flowcell json' do
           'controls' => [
             {
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
+              'study_uuid' => '000000-0000-0000-0000-0000000001',
               'tag_index' => 168,
               'entity_type' => 'library_indexed_spike',
               'tag_sequence' => 'TAGA',

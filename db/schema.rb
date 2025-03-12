@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_01_045239) do
     t.datetime "last_updated", null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
-    t.integer "id_study_tmp", comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
+    t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.integer "lane", limit: 2, null: false, comment: "Flowcell lane number, 1 or 2", unsigned: true
     t.string "entity_type", limit: 30, null: false, comment: "Library type: library_indexed, library_indexed_spike"

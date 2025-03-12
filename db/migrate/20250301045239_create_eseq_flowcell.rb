@@ -7,7 +7,7 @@ class CreateEseqFlowcell < ActiveRecord::Migration[7.0]
       t.datetime :last_updated, null: false, comment: 'Timestamp of last update'
       t.datetime :recorded_at, null: false, comment: 'Timestamp of warehouse update'
       t.column :id_sample_tmp, 'integer unsigned', null: false, comment: 'Sample id, see "sample.id_sample_tmp"'
-      t.column :id_study_tmp, 'integer unsigned', null: true, comment: 'Study id, see "study.id_study_tmp"'
+      t.column :id_study_tmp, 'integer unsigned', null: false, comment: 'Study id, see "study.id_study_tmp"'
       t.string :id_lims, limit: 10, null: false, comment: 'LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE', index: true
       t.column :lane, 'smallint unsigned', null: false, comment: 'Flowcell lane number, 1 or 2'
       t.string :entity_type, limit: 30, null: false, comment: 'Library type: library_indexed, library_indexed_spike'
