@@ -23,7 +23,7 @@ class CreateEseqFlowcell < ActiveRecord::Migration[7.0]
 
     end
 
-    add_foreign_key :eseq_flowcell, :sample, column: :id_sample_tmp, primary_key: :id_sample_tmp
-    add_foreign_key :eseq_flowcell, :study, column: :id_study_tmp, primary_key: :id_study_tmp
+    add_foreign_key :eseq_flowcell, :sample, column: :id_sample_tmp, primary_key: :id_sample_tmp, name: 'eseq_flowcell_sample_fk'
+    add_foreign_key :eseq_flowcell, :study, column: :id_study_tmp, primary_key: :id_study_tmp, name: 'eseq_flowcell_study_fk'
   end
 end

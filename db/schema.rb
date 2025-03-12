@@ -71,8 +71,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_01_045239) do
     t.index ["id_library_lims"], name: "index_eseq_flowcell_on_id_library_lims"
     t.index ["id_lims"], name: "index_eseq_flowcell_on_id_lims"
     t.index ["id_pool_lims"], name: "index_eseq_flowcell_on_id_pool_lims"
-    t.index ["id_sample_tmp"], name: "fk_rails_7cb8189a63"
-    t.index ["id_study_tmp"], name: "fk_rails_77f4f7fc30"
+    t.index ["id_sample_tmp"], name: "eseq_flowcell_sample_fk"
+    t.index ["id_study_tmp"], name: "eseq_flowcell_study_fk"
   end
 
   create_table "flgen_plate", primary_key: "id_flgen_plate_tmp", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -514,8 +514,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_01_045239) do
 
   add_foreign_key "bmap_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_bmap_flowcell_to_sample"
   add_foreign_key "bmap_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_bmap_flowcell_to_study"
-  add_foreign_key "eseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp"
-  add_foreign_key "eseq_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp"
+  add_foreign_key "eseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "eseq_flowcell_sample_fk"
+  add_foreign_key "eseq_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "eseq_flowcell_study_fk"
   add_foreign_key "flgen_plate", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "flgen_plate_sample_fk"
   add_foreign_key "flgen_plate", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "flgen_plate_study_fk"
   add_foreign_key "iseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "iseq_flowcell_sample_fk"
