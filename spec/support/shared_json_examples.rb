@@ -99,6 +99,111 @@ shared_examples 'full flowcell json' do
   end
 end
 
+# The following JSON for EseqFlowcell contains a nested controls section and
+# optional fields, similar to the Iseq Flowcell JSON.
+shared_examples 'large eseq flowcell json' do
+  let(:json) do
+    {
+
+      'flowcell_barcode' => '12345678903',
+      'flowcell_id' => 1123,
+      'forward_read_length' => 222,
+      'reverse_read_length' => 222,
+      'run_name' => 'Run Name',
+      'updated_at' => '2012-03-11 10:22:42',
+
+      'lanes' => [
+        {
+          'manual_qc' => false,
+          'position' => 1,
+          'priority' => 1,
+          'id_pool_lims' => 'NT1234567X',
+          'external_release' => true,
+          'purpose' => 'standard',
+          'spiked_phix_barcode' => 'NT12345Q',
+          'spiked_phix_percentage' => '30',
+          'workflow' => 'Standard',
+          'loading_concentration' => '20',
+
+          'samples' => [
+            {
+              'tag_index' => 3,
+              'tag_sequence' => 'ATAG',
+              'tag_set_id_lims' => '2',
+              'tag_set_name' => 'Sanger_168tags - 10 mer tags',
+              'tag_identifier' => 1,
+              'tag2_sequence' => 'GGGG',
+              'tag2_set_id_lims' => '1',
+              'tag2_set_name' => 'Tag 2 Set 1',
+              'tag2_identifier' => 1,
+              'pipeline_id_lims' => 'Agilent Pulldown',
+              'entity_type' => 'library_indexed',
+              'bait_name' => 'DDD_V5_plus',
+              'requested_insert_size_from' => 100,
+              'requested_insert_size_to' => 200,
+              'sample_uuid' => '000000-0000-0000-0000-0000000000',
+              'study_uuid' => '000000-0000-0000-0000-0000000001',
+              'cost_code' => '12345',
+              'entity_id_lims' => 12_345,
+              'is_r_and_d' => false,
+              'primer_panel' => 'PrimerPanel1',
+              'id_library_lims' => 'SQPP-1234-X:A1'
+            }
+          ],
+          'controls' => [
+            {
+              'sample_uuid' => '000000-0000-0000-0000-0000000000',
+              'study_uuid' => '000000-0000-0000-0000-0000000001',
+              'tag_index' => 168,
+              'entity_type' => 'library_indexed_spike',
+              'tag_sequence' => 'TAGA',
+              'tag_set_id_lims' => '2',
+              'entity_id_lims' => '12345',
+              'tag_set_name' => 'Sanger_168tags - 10 mer tags',
+              'id_library_lims' => 'NT1234567C'
+            }
+          ]
+        }
+      ]
+    }
+  end
+end
+
+# The following JSON for EseqFlowcell contains only the samples section and no
+# optional fields.
+shared_examples 'small eseq flowcell json' do
+  let(:json) do
+    {
+      'flowcell_id' => 1123,
+      'run_name' => 'Run Name',
+      'updated_at' => '2012-03-11 10:22:42',
+
+      'lanes' => [
+        {
+          'position' => 1,
+          'id_pool_lims' => 'NT1234567X',
+
+          'samples' => [
+            {
+              'tag_sequence' => 'ATAG',
+              'tag2_sequence' => 'GGGG',
+              'pipeline_id_lims' => 'Agilent Pulldown',
+              'entity_type' => 'library_indexed',
+              'bait_name' => 'DDD_V5_plus',
+              'requested_insert_size_from' => 100,
+              'requested_insert_size_to' => 200,
+              'sample_uuid' => '000000-0000-0000-0000-0000000000',
+              'study_uuid' => '000000-0000-0000-0000-0000000001',
+              'primer_panel' => 'PrimerPanel1',
+              'id_library_lims' => 'SQPP-1234-X:A1'
+            }
+          ]
+        }
+      ]
+    }
+  end
+end
+
 shared_examples 'sample json' do
   let(:json) do
     {

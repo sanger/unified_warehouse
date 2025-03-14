@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_24_110314) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_01_045239) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -46,6 +46,33 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_24_110314) do
     t.index ["id_library_lims"], name: "index_bmap_flowcell_on_id_library_lims"
     t.index ["id_sample_tmp"], name: "fk_bmap_flowcell_to_sample"
     t.index ["id_study_tmp"], name: "fk_bmap_flowcell_to_study"
+  end
+
+  create_table "eseq_flowcell", primary_key: "id_eseq_flowcell_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.string "id_flowcell_lims", null: false, comment: "LIMs-specific flowcell id, batch_id for Sequencescape"
+    t.string "run_name", limit: 80, null: false, comment: "Run name as given to the instrument"
+    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
+    t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
+    t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
+    t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
+    t.integer "lane", limit: 2, null: false, comment: "Flowcell lane number, 1 or 2", unsigned: true
+    t.string "entity_type", limit: 30, null: false, comment: "Library type: library_indexed, library_indexed_spike"
+    t.string "tag_sequence", limit: 30, comment: "Tag sequence"
+    t.string "tag2_sequence", limit: 30, comment: "Tag sequence for tag 2"
+    t.string "pipeline_id_lims", limit: 60, comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
+    t.string "bait_name", limit: 50, comment: "WTSI-wide name that uniquely identifies a bait set"
+    t.integer "requested_insert_size_from", comment: "Requested insert size min value", unsigned: true
+    t.integer "requested_insert_size_to", comment: "Requested insert size max value", unsigned: true
+    t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool"
+    t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"
+    t.string "primer_panel", comment: "Primer Panel name"
+    t.index ["id_flowcell_lims"], name: "index_eseq_flowcell_on_id_flowcell_lims"
+    t.index ["id_library_lims"], name: "index_eseq_flowcell_on_id_library_lims"
+    t.index ["id_lims"], name: "index_eseq_flowcell_on_id_lims"
+    t.index ["id_pool_lims"], name: "index_eseq_flowcell_on_id_pool_lims"
+    t.index ["id_sample_tmp"], name: "eseq_flowcell_sample_fk"
+    t.index ["id_study_tmp"], name: "eseq_flowcell_study_fk"
   end
 
   create_table "flgen_plate", primary_key: "id_flgen_plate_tmp", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -487,6 +514,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_24_110314) do
 
   add_foreign_key "bmap_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_bmap_flowcell_to_sample"
   add_foreign_key "bmap_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_bmap_flowcell_to_study"
+  add_foreign_key "eseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "eseq_flowcell_sample_fk"
+  add_foreign_key "eseq_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "eseq_flowcell_study_fk"
   add_foreign_key "flgen_plate", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "flgen_plate_sample_fk"
   add_foreign_key "flgen_plate", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "flgen_plate_study_fk"
   add_foreign_key "iseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "iseq_flowcell_sample_fk"
