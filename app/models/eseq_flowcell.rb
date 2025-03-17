@@ -25,7 +25,8 @@ class EseqFlowcell < ApplicationRecord
     :tag_index,
     :id_flowcell_lims,
     :entity_id_lims,
-    :entity_type, :lane,
+    :entity_type,
+    :lane,
     :tag_sequence,
     :tag2_sequence
   )
