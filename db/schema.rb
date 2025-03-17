@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_17_153015) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_17_153757) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -51,8 +51,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_17_153015) do
   create_table "eseq_flowcell", primary_key: "id_eseq_flowcell_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_flowcell_lims", null: false, comment: "LIMs-specific flowcell id, batch_id for Sequencescape"
     t.string "run_name", limit: 80, null: false, comment: "Run name as given to the instrument"
-    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"

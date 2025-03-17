@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This migration adds entity_id_lims, is_spiked and tag related columns to the
 # existing eseq_flowcell table to make it similar to the iseq_flowcell table.
 class AddEseqFlowcellTagColumns < ActiveRecord::Migration[7.1]
