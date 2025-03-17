@@ -20,10 +20,8 @@ class EseqFlowcell < ApplicationRecord
   has_associated(:sample) # association using id_sample_tmp foreign key
 
   # We expand the flowcell message into multiple rows. The following keys are
-  # used to identify the rows. Note that iseq flowcell model has additional keys
-  # here such as tag_index, but we do not include them in eseq flowcell because
-  # we do not have columns for them in the eseq_flowcell table.
-  has_composition_keys(:id_flowcell_lims, :entity_type, :lane, :tag_sequence, :tag2_sequence)
+  # used to identify the rows.
+  has_composition_keys(:tag_index, :id_flowcell_lims, :entity_id_lims, :entity_type, :lane, :tag_sequence, :tag2_sequence)
 
   json do # rubocop:disable Metrics/BlockLength
     has_nested_model(:lanes) do # The message has nested lanes section.
