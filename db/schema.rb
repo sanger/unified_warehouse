@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_17_141219) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_17_153015) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -76,6 +76,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_17_141219) do
     t.string "tag2_set_name", limit: 100, comment: "WTSI-wide tag set name for tag 2"
     t.string "tag2_identifier", limit: 30, comment: "The position of tag2 within the tag group"
     t.boolean "is_spiked", default: false, null: false, comment: "Boolean flag indicating presence of a spike"
+    t.index ["id_flowcell_lims", "lane", "tag_index", "id_lims"], name: "index_eseq_flowcell_id_flowcell_lims_position_tag_index_id_lims", unique: true
     t.index ["id_flowcell_lims"], name: "index_eseq_flowcell_on_id_flowcell_lims"
     t.index ["id_library_lims"], name: "index_eseq_flowcell_on_id_library_lims"
     t.index ["id_lims"], name: "index_eseq_flowcell_on_id_lims"
