@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_01_045239) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_17_141219) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -67,6 +67,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_01_045239) do
     t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool"
     t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"
     t.string "primer_panel", comment: "Primer Panel name"
+    t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
+    t.integer "tag_index", limit: 2, comment: "Tag index, NULL if lane is not a pool", unsigned: true
+    t.string "tag_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set"
+    t.string "tag_set_name", limit: 100, comment: "WTSI-wide tag set name"
+    t.string "tag_identifier", limit: 30, comment: "The position of tag within the tag group"
+    t.string "tag2_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set for tag 2"
+    t.string "tag2_set_name", limit: 100, comment: "WTSI-wide tag set name for tag 2"
+    t.string "tag2_identifier", limit: 30, comment: "The position of tag2 within the tag group"
+    t.boolean "is_spiked", default: false, null: false, comment: "Boolean flag indicating presence of a spike"
     t.index ["id_flowcell_lims"], name: "index_eseq_flowcell_on_id_flowcell_lims"
     t.index ["id_library_lims"], name: "index_eseq_flowcell_on_id_library_lims"
     t.index ["id_lims"], name: "index_eseq_flowcell_on_id_lims"
