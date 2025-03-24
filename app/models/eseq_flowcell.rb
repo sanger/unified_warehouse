@@ -35,10 +35,6 @@ class EseqFlowcell < ApplicationRecord
     has_nested_model(:lanes) do # The message has nested lanes section.
       ignore(:samples, :controls) # These keys are not mapped to columns.
 
-      custom_value(:is_spiked) do
-        controls.present? && controls.count.positive?
-      end
-
       has_nested_model(:samples)  # The message has nested samples section.
       has_nested_model(:controls) # The message has nested controls section.
     end
