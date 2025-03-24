@@ -12,7 +12,7 @@ end
 
 module UnifiedWarehouse
   class Application < Rails::Application
-    config.load_defaults 7.1
+    config.load_defaults 7.2
     config.autoload_paths += ["#{config.root}/app", "#{config.root}/lib"]
     config.eager_load_paths += ["#{config.root}/app", "#{config.root}/lib"]
     config.time_zone          = 'UTC'
