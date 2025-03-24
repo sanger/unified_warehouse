@@ -24,3 +24,7 @@ coverage
 .talismanrc
 
 .idea
+
+# credentials
+config/credentials.yml.enc
+config/master.key
