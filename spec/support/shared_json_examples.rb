@@ -185,15 +185,8 @@ shared_examples 'small eseq flowcell json' do
 
           'samples' => [
             {
-              'tag_index' => 3,
               'tag_sequence' => 'ATAG',
-              'tag_set_id_lims' => '2',
-              'tag_set_name' => 'Sanger_168tags - 10 mer tags',
-              'tag_identifier' => 1,
               'tag2_sequence' => 'GGGG',
-              'tag2_set_id_lims' => '1',
-              'tag2_set_name' => 'Tag 2 Set 1',
-              'tag2_identifier' => 1,
               'pipeline_id_lims' => 'Agilent Pulldown',
               'entity_type' => 'library_indexed',
               'bait_name' => 'DDD_V5_plus',
@@ -201,7 +194,6 @@ shared_examples 'small eseq flowcell json' do
               'requested_insert_size_to' => 200,
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'study_uuid' => '000000-0000-0000-0000-0000000001',
-              'entity_id_lims' => 12_345,
               'primer_panel' => 'PrimerPanel1',
               'id_library_lims' => 'SQPP-1234-X:A1'
             }
