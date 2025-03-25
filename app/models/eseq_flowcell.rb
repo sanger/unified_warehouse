@@ -67,7 +67,8 @@ class EseqFlowcell < ApplicationRecord
     )
     # We translate the fields from the message to the columns of the table.
     # Note that the 'position' column of the iseq_flowcell table is named as
-    # 'lane' in the eseq_flowcell table.
+    # 'lane' in the eseq_flowcell table. If the mapping is done on the
+    # Sequencescape side, we need to update the translation accordingly.
     translate(flowcell_id: :id_flowcell_lims, position: :lane)
   end
 end
