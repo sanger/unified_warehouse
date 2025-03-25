@@ -22,16 +22,13 @@ class EseqFlowcell < ApplicationRecord
   # We expand the flowcell message into multiple rows. The following keys are
   # used to identify the rows.
   has_composition_keys(
-    :tag_index,
     :id_flowcell_lims,
-    :entity_id_lims,
-    :entity_type,
     :lane,
     :tag_sequence,
     :tag2_sequence
   )
 
-  json do
+  json do # rubocop:disable Metrics/BlockLength
     has_nested_model(:lanes) do # The message has nested lanes section.
       ignore(:samples, :controls) # These keys are not mapped to columns.
 
@@ -57,8 +54,16 @@ class EseqFlowcell < ApplicationRecord
       :flowcell_barcode,
       :forward_read_length,
       :reverse_read_length,
+      :tag_set_id_lims,
+      :tag_set_name,
+      :tag_identifier,
+      :tag2_set_id_lims,
+      :tag2_set_name,
+      :tag2_identifier,
       :cost_code,
-      :is_r_and_d
+      :is_r_and_d,
+      :tag_index,
+      :entity_id_lims
     )
     # We translate the fields from the message to the columns of the table.
     # Note that the 'position' column of the iseq_flowcell table is named as
