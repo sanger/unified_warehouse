@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_24_172139) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_01_045239) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -51,8 +51,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_24_172139) do
   create_table "eseq_flowcell", primary_key: "id_eseq_flowcell_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_flowcell_lims", null: false, comment: "LIMs-specific flowcell id, batch_id for Sequencescape"
     t.string "run_name", limit: 80, null: false, comment: "Run name as given to the instrument"
-    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
-    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
+    t.datetime "last_updated", null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
@@ -67,15 +67,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_24_172139) do
     t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool"
     t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"
     t.string "primer_panel", comment: "Primer Panel name"
-    t.integer "tag_index", limit: 2, comment: "Tag index, NULL if lane is not a pool", unsigned: true
-    t.string "entity_id_lims", comment: "Most specific LIMs identifier associated with this lane or plex or spike"
     t.index ["id_flowcell_lims"], name: "index_eseq_flowcell_on_id_flowcell_lims"
     t.index ["id_library_lims"], name: "index_eseq_flowcell_on_id_library_lims"
+    t.index ["id_lims"], name: "id_lims"
     t.index ["id_lims"], name: "index_eseq_flowcell_on_id_lims"
     t.index ["id_pool_lims"], name: "index_eseq_flowcell_on_id_pool_lims"
     t.index ["id_sample_tmp"], name: "eseq_flowcell_sample_fk"
     t.index ["id_study_tmp"], name: "eseq_flowcell_study_fk"
-    t.index ["tag_index", "id_flowcell_lims", "entity_id_lims", "entity_type", "lane", "tag_sequence", "tag2_sequence"], name: "index_eseq_flowcell_composition_keys", unique: true
   end
 
   create_table "flgen_plate", primary_key: "id_flgen_plate_tmp", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
