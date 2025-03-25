@@ -110,8 +110,7 @@ describe EseqFlowcell do
 
   context 'a message with clashing samples' do
     let(:expected_identifiers) do
-      'tag_index, id_flowcell_lims, entity_id_lims, entity_type, lane, ' \
-        'tag_sequence, tag2_sequence'
+      'id_flowcell_lims, lane, tag_sequence, tag2_sequence'
     end
     let(:example_lims) { 'example' }
 
