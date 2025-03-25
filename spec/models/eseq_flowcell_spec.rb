@@ -25,8 +25,16 @@ describe EseqFlowcell do
       flowcell_barcode
       forward_read_length
       reverse_read_length
+      tag_set_id_lims
+      tag_set_name
+      tag_identifier
+      tag2_set_id_lims
+      tag2_set_name
+      tag2_identifier
       cost_code
       is_r_and_d
+      tag_index
+      entity_id_lims
     ]
 
     it_behaves_like 'belongs to', %i[study sample], { lanes: :samples }
