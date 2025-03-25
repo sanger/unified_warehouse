@@ -109,7 +109,6 @@ shared_examples 'large eseq flowcell json' do
       'flowcell_id' => 1123,
       'forward_read_length' => 222,
       'reverse_read_length' => 222,
-      'run_name' => 'Run Name',
       'updated_at' => '2012-03-11 10:22:42',
 
       'lanes' => [
@@ -175,7 +174,6 @@ shared_examples 'small eseq flowcell json' do
   let(:json) do
     {
       'flowcell_id' => 1123,
-      'run_name' => 'Run Name',
       'updated_at' => '2012-03-11 10:22:42',
 
       'lanes' => [

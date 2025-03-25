@@ -20,7 +20,6 @@ class CreateEseqFlowcell < ActiveRecord::Migration[7.0]
       t.string :id_pool_lims, limit: 20, null: false, comment: 'Most specific LIMs identifier associated with the pool', index: true
       t.string :id_library_lims, limit: 255, null: true, comment: 'Earliest LIMs identifier associated with library creation', index: true
       t.string :primer_panel, limit: 255, null: true, comment: 'Primer Panel name'
-
     end
 
     add_foreign_key :eseq_flowcell, :sample, column: :id_sample_tmp, primary_key: :id_sample_tmp, name: 'eseq_flowcell_sample_fk'
