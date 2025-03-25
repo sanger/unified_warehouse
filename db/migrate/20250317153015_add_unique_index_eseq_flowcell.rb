@@ -4,10 +4,7 @@
 class AddUniqueIndexEseqFlowcell < ActiveRecord::Migration[7.1]
   def change
     add_index :eseq_flowcell, %i[
-      tag_index
       id_flowcell_lims
-      entity_id_lims
-      entity_type
       lane
       tag_sequence
       tag2_sequence
