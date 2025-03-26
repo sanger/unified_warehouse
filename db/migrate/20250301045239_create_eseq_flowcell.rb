@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This migration creates the initial eseq_flowcell table.
 class CreateEseqFlowcell < ActiveRecord::Migration[7.0]
   def change
     create_table :eseq_flowcell, id: false, options: 'CHARSET=utf8 COLLATE=utf8_unicode_ci' do |t|
