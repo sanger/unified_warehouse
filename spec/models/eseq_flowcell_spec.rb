@@ -25,7 +25,6 @@ describe EseqFlowcell do
       flowcell_barcode
       forward_read_length
       reverse_read_length
-      tag_index
       tag_set_id_lims
       tag_set_name
       tag_identifier
@@ -33,8 +32,9 @@ describe EseqFlowcell do
       tag2_set_name
       tag2_identifier
       cost_code
-      entity_id_lims
       is_r_and_d
+      tag_index
+      entity_id_lims
     ]
 
     it_behaves_like 'belongs to', %i[study sample], { lanes: :samples }
@@ -109,7 +109,9 @@ describe EseqFlowcell do
   end
 
   context 'a message with clashing samples' do
-    let(:expected_identifiers) { 'id_flowcell_lims, entity_type, lane, tag_sequence, tag2_sequence' }
+    let(:expected_identifiers) do
+      'id_flowcell_lims, lane, tag_sequence, tag2_sequence'
+    end
     let(:example_lims) { 'example' }
 
     include_examples 'small eseq flowcell json'
@@ -123,7 +125,11 @@ describe EseqFlowcell do
     it 'gets rejected' do
       expect do
         described_class.create_or_update_from_json(bad_json, example_lims)
-      end.to raise_error(CompositeResourceTools::InvalidMessage, "Contains two elements with the same composite identifier: combination of #{expected_identifiers} should be unique.")
+      end.to raise_error(
+        CompositeResourceTools::InvalidMessage,
+        'Contains two elements with the same composite identifier: ' \
+        "combination of #{expected_identifiers} should be unique."
+      )
     end
   end
 end

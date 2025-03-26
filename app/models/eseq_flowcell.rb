@@ -20,10 +20,13 @@ class EseqFlowcell < ApplicationRecord
   has_associated(:sample) # association using id_sample_tmp foreign key
 
   # We expand the flowcell message into multiple rows. The following keys are
-  # used to identify the rows. Note that iseq flowcell model has additional keys
-  # here such as tag_index, but we do not include them in eseq flowcell because
-  # we do not have columns for them in the eseq_flowcell table.
-  has_composition_keys(:id_flowcell_lims, :entity_type, :lane, :tag_sequence, :tag2_sequence)
+  # used to identify the rows.
+  has_composition_keys(
+    :id_flowcell_lims,
+    :lane,
+    :tag_sequence,
+    :tag2_sequence
+  )
 
   json do # rubocop:disable Metrics/BlockLength
     has_nested_model(:lanes) do # The message has nested lanes section.
@@ -51,7 +54,6 @@ class EseqFlowcell < ApplicationRecord
       :flowcell_barcode,
       :forward_read_length,
       :reverse_read_length,
-      :tag_index,
       :tag_set_id_lims,
       :tag_set_name,
       :tag_identifier,
@@ -59,12 +61,14 @@ class EseqFlowcell < ApplicationRecord
       :tag2_set_name,
       :tag2_identifier,
       :cost_code,
-      :entity_id_lims,
-      :is_r_and_d
+      :is_r_and_d,
+      :tag_index,
+      :entity_id_lims
     )
     # We translate the fields from the message to the columns of the table.
     # Note that the 'position' column of the iseq_flowcell table is named as
-    # 'lane' in the eseq_flowcell table.
+    # 'lane' in the eseq_flowcell table. If the mapping is done on the
+    # Sequencescape side, we need to update the translation accordingly.
     translate(flowcell_id: :id_flowcell_lims, position: :lane)
   end
 end
