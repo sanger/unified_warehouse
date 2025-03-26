@@ -66,10 +66,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_25_085628) do
     t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool"
     t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"
     t.string "primer_panel", comment: "Primer Panel name"
-    t.index ["id_flowcell_lims", "lane", "tag_sequence", "tag2_sequence"], name: "index_eseq_flowcell_composition_keys", unique: true
+    t.index ["id_flowcell_lims", "lane", "tag_sequence", "tag2_sequence", "id_lims"], name: "index_eseq_flowcell_on_composition_keys", unique: true
     t.index ["id_flowcell_lims"], name: "index_eseq_flowcell_on_id_flowcell_lims"
     t.index ["id_library_lims"], name: "index_eseq_flowcell_on_id_library_lims"
-    t.index ["id_lims"], name: "index_eseq_flowcell_on_id_lims"
     t.index ["id_pool_lims"], name: "index_eseq_flowcell_on_id_pool_lims"
     t.index ["id_sample_tmp"], name: "eseq_flowcell_sample_fk"
     t.index ["id_study_tmp"], name: "eseq_flowcell_study_fk"
