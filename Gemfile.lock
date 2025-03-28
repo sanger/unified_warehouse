@@ -4,6 +4,17 @@ GIT
   specs:
     views_schema (1.0.0)
 
+GIT
+  remote: https://github.com/sanger/warren.git
+  revision: 1b3c85befd621184284de376069a29e8431bde07
+  branch: test-connection-pooling
+  specs:
+    sanger_warren (0.4.1)
+      bunny (~> 2.17)
+      connection_pool (~> 2.2)
+      multi_json (~> 1.0)
+      thor (~> 1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -218,11 +229,6 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
-    sanger_warren (0.4.1)
-      bunny (~> 2.17)
-      connection_pool (~> 2.2)
-      multi_json (~> 1.0)
-      thor (~> 1.1)
     securerandom (0.4.1)
     set (1.1.1)
     shellany (0.0.1)
@@ -273,7 +279,7 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sanger_warren (~> 0.4.1)
+  sanger_warren!
   simplecov
   syslog
   views_schema!
