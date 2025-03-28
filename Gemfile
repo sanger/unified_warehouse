@@ -22,7 +22,7 @@ gem 'railties', '~> 7.2.2.1'
 # Remove and test without the following after rails and ruby are updated
 gem 'concurrent-ruby', '1.3.4'
 
-gem 'bunny', '>= 2.22.0'
+gem 'bunny', '>= 2.24.0'
 gem 'rbtree', '~> 0.4.5'
 gem 'sanger_warren', '~> 0.4.1'
 
