@@ -147,7 +147,7 @@ module ResourceTools::Json
     end
 
     # listening to these cops ensures all of the tests fail.
-    # rubocop:disable Naming/BlockForwarding, Style/ArgumentsForwarding
+    # rubocop:disable Naming/BlockForwarding, Style/ArgumentsForwarding, Lint/ShadowingOuterLocalVariable
     def initialize(*args, &block)
       super
       if self.class.custom_values.present?
@@ -158,7 +158,7 @@ module ResourceTools::Json
       convert_booleans
       delete_if { |k, _| ignoreable.include?(k) }
     end
-    # rubocop:enable Naming/BlockForwarding, Style/ArgumentsForwarding
+    # rubocop:enable Naming/BlockForwarding, Style/ArgumentsForwarding, Lint/ShadowingOuterLocalVariable
 
     def convert_booleans
       self.stored_as_boolean.each do |key|
