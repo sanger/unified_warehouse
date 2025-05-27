@@ -493,6 +493,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_113225) do
     t.string "ebi_library_strategy"
     t.string "ebi_library_source"
     t.string "ebi_library_selection"
+    t.string "data_release_timing_publication_comment"
+    t.string "data_share_in_preprint"
     t.index ["accession_number"], name: "study_accession_number_index"
     t.index ["id_lims", "id_study_lims"], name: "study_id_lims_id_study_lims_index", unique: true
     t.index ["id_study_lims"], name: "index_study_on_id_study_lims"
