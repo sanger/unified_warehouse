@@ -12,11 +12,11 @@ source 'https://rubygems.org'
 # Be aware when adding in new components that they may require an initializer
 # or additional configuration options.
 # RAILS DEPENDENCIES
-gem 'activemodel', '~> 7.2.2.1'
-gem 'activerecord', '~> 7.2.2.1'
-gem 'activesupport', '~> 7.2.2.1'
+gem 'activemodel', '~> 8.0.2'
+gem 'activerecord', '~> 8.0.2'
+gem 'activesupport', '~> 8.0.2'
 gem 'bundler', '>= 1.3.0'
-gem 'railties', '~> 7.2.2.1'
+gem 'railties', '~> 8.0.2'
 # # RAILS DEPENDENCIES
 
 # Remove and test without the following after rails and ruby are updated
