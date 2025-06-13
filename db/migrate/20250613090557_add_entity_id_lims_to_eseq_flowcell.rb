@@ -1,4 +1,5 @@
-# `entity_id_lims` varchar(20) COLLATE utf8mb3_unicode_ci NOT NULL COMMENT 'Most specific LIMs identifier associated with this lane or plex or spike',
+# frozen_string_literal: true
+
 class AddEntityIdLimsToEseqFlowcell < ActiveRecord::Migration[7.2]
   def up
     # Add the column without the 'not null' constraint first.
