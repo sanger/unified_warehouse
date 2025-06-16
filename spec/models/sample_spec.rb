@@ -45,6 +45,30 @@ describe Sample do
       }
     end
 
+    context 'when erroneous JSON is received' do
+      let!(:sample_json_received) do
+        {
+          id: 12_345,
+          name: 'compound_12345',
+          uuid: '012345-6789-UUID-0001',
+          component_samples: [
+            {
+              uuid: '012345-6789-UUID-0002'
+            },
+            {
+              uuid: '012345-6789-UUID-0003'
+            }
+          ]
+        }
+      end
+
+      it 'tries to create a sample with an improper schema' do
+        expect do
+          described_class.create_or_update_from_json(sample_json_received, example_lims)
+        end.to raise_error(ActiveRecord::ActiveRecordError)
+      end
+    end
+
     it 'sets up the association between compound and component sample' do
       described_class.create_or_update_from_json(json, example_lims)
 
