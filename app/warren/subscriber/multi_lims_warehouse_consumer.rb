@@ -107,7 +107,8 @@ module Warren
       rescue ActiveRecord::RecordNotFound => e
         delay(e)
       # When the association type is mismatched, we want to dead letter the message because it is unlikely
-      # that the message would be processed correctly in the future.
+      # that the message would be processed correctly in the future. ActiveRecord::AssociationTypeMismatch
+      # is raised when an object assigned to an association has an incorrect type.
       rescue ActiveRecord::AssociationTypeMismatch => e
         dead_letter(e)
       end
