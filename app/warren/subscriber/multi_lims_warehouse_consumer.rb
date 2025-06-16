@@ -106,6 +106,8 @@ module Warren
         Payload.from_json(payload).record
       rescue ActiveRecord::RecordNotFound => e
         delay(e)
+      rescue ActiveRecord::ActiveRecordError => e
+        dead_letter(e)
       end
     end
   end
