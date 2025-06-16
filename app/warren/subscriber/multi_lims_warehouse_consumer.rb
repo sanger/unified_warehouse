@@ -106,7 +106,9 @@ module Warren
         Payload.from_json(payload).record
       rescue ActiveRecord::RecordNotFound => e
         delay(e)
-      rescue ActiveRecord::ActiveRecordError => e
+      # When the association type is mismatched, we want to dead letter the message because it is unlikely
+      # that the message would be processed correctly in the future.
+      rescue ActiveRecord::AssociationTypeMismatch => e
         dead_letter(e)
       end
     end
