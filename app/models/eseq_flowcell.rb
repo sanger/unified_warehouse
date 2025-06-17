@@ -63,7 +63,6 @@ class EseqFlowcell < ApplicationRecord
       :cost_code,
       :is_r_and_d,
       :tag_index,
-      :entity_id_lims,
       :team,
       :suboptimal,
       :legacy_library_id
