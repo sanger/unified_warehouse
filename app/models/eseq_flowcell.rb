@@ -62,7 +62,10 @@ class EseqFlowcell < ApplicationRecord
       :tag2_identifier,
       :cost_code,
       :is_r_and_d,
-      :tag_index
+      :tag_index,
+      :team,
+      :suboptimal,
+      :legacy_library_id
     )
     # We translate the fields from the message to the columns of the table.
     # Note that the 'position' column of the iseq_flowcell table is named as
