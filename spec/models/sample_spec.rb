@@ -45,7 +45,7 @@ describe Sample do
       }
     end
 
-    context 'when erroneous JSON is received' do
+    context 'when JSON is received that does not conform to the schema' do
       let!(:sample_json_received) do
         {
           id: 12_345,
