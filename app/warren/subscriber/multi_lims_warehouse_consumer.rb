@@ -110,7 +110,7 @@ module Warren
       # that the message would be processed correctly in the future. ActiveRecord::AssociationTypeMismatch
       # is raised when an object assigned to an association has an incorrect type. This is the same for
       # an InvalidMessage, which is raised when the message does not conform to the expected JSON format.
-      rescue ActiveRecord::AssociationTypeMismatch, InvalidMessage => e
+      rescue ActiveRecord::AssociationTypeMismatch, ResourceTools::InvalidMessage => e
         dead_letter(e)
       end
     end
