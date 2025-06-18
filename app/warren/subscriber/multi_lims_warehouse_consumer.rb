@@ -108,8 +108,9 @@ module Warren
         delay(e)
       # When the association type is mismatched, we want to dead letter the message because it is unlikely
       # that the message would be processed correctly in the future. ActiveRecord::AssociationTypeMismatch
-      # is raised when an object assigned to an association has an incorrect type.
-      rescue ActiveRecord::AssociationTypeMismatch => e
+      # is raised when an object assigned to an association has an incorrect type. This is the same for
+      # an InvalidMessage, which is raised when the message does not conform to the expected JSON format.
+      rescue ActiveRecord::AssociationTypeMismatch, InvalidMessage => e
         dead_letter(e)
       end
     end
