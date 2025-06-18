@@ -104,8 +104,19 @@ module Warren
         # dead_letter(exception) => Dead Letters the message
         # requeue(exception) => Sends a nack, which causes the message to be placed back on the queue
         Payload.from_json(payload).record
+        # A message is sent to the delayed queue when the record is not found. This is useful when the record
+        # is not yet created or has been deleted. The message will be retried later with a TTL policy.
       rescue ActiveRecord::RecordNotFound => e
         delay(e)
+      # When the association type is mismatched, we want to dead letter the message because it is unlikely
+      # that the message would be processed correctly in the future. ActiveRecord::AssociationTypeMismatch
+      # is raised when an object assigned to an association has an incorrect type. This is the same for
+      # an InvalidMessage, which is raised when the message does not conform to the expected JSON format.
+      #
+      # It is better to have schema validations at both the client and server side to ensure that
+      # messages are correctly formatted and contain the expected data. That is probably for the future.
+      rescue ActiveRecord::AssociationTypeMismatch, Payload::InvalidMessage => e
+        dead_letter(e)
       end
     end
   end

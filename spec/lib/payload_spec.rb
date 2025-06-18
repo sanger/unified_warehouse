@@ -108,4 +108,30 @@ RSpec.describe Payload, type: :lib do
       expect { subject }.to raise_error(Payload::InvalidMessage)
     end
   end
+
+  context 'invalid json' do
+    let(:model_name) { 'sample' }
+    let(:message_json) do
+      '{
+        "sample": {
+          "id": 212,
+          "name": "compound_04fade61",
+          "uuid": "6fe5461d-35c2-4691-8ea5-4c9cdabbc182",
+          "component_samples": [
+            {
+              "uuid": "uuid-A
+            },
+            {
+              "uuid": "uuid-B"
+            }
+          ]
+        },
+        "lims": "SQSCP_ST"
+      }'
+    end
+
+    it 'raises InvalidMessage' do
+      expect { subject }.to raise_error(Payload::InvalidMessage, /Message is invalid json/)
+    end
+  end
 end
