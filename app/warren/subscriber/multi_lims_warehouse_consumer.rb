@@ -110,6 +110,9 @@ module Warren
       # that the message would be processed correctly in the future. ActiveRecord::AssociationTypeMismatch
       # is raised when an object assigned to an association has an incorrect type. This is the same for
       # an InvalidMessage, which is raised when the message does not conform to the expected JSON format.
+      #
+      # It is better to have schema validations at both the client and server side to ensure that
+      # messages are correctly formatted and contain the expected data. That is probably for the future.
       rescue ActiveRecord::AssociationTypeMismatch, Payload::InvalidMessage => e
         dead_letter(e)
       end
