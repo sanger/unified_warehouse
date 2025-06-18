@@ -8,11 +8,11 @@ class Payload
       begin
         parameters = JSON.parse(json)
       rescue JSON::ParserError => e
-        raise ResourceTools::InvalidMessage, "Message is invalid json: #{e.message}"
+        raise InvalidMessage, "Message is invalid json: #{e.message}"
       end
       lims = parameters.delete('lims') || raise(InvalidMessage, 'Message missing lims parameter')
-      raise(ResourceTools::InvalidMessage, 'Message contains multiple potential models') if parameters.length > 1
-      raise(ResourceTools::InvalidMessage, 'Message is missing main payload') if parameters.empty?
+      raise(InvalidMessage, 'Message contains multiple potential models') if parameters.length > 1
+      raise(InvalidMessage, 'Message is missing main payload') if parameters.empty?
 
       new(lims, *parameters.flatten)
     end

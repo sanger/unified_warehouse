@@ -64,7 +64,4 @@ module ResourceTools
   def remember_if_we_are_a_new_record
     @inserted_record = new_record?
   end
-
-  class InvalidMessage < StandardError
-  end
 end
