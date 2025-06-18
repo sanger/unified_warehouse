@@ -34,7 +34,6 @@ describe EseqFlowcell do
       cost_code
       is_r_and_d
       tag_index
-      entity_id_lims
     ]
 
     it_behaves_like 'belongs to', %i[study sample], { lanes: :samples }
