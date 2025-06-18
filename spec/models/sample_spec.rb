@@ -65,7 +65,7 @@ describe Sample do
       it 'tries to create a sample with an improper schema' do
         expect do
           described_class.create_or_update_from_json(sample_json_received, example_lims)
-        end.to raise_error(ActiveRecord::ActiveRecordError)
+        end.to raise_error(ActiveRecord::AssociationTypeMismatch)
       end
     end
 
