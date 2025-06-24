@@ -14,7 +14,7 @@ class AddPacBioTable < ActiveRecord::Migration
       t.string :id_lims,          limit: 10, null: false, comment: 'LIM system identifier'
 
       t.string :tag_identifier,   limit: 30,              comment: 'Tag index within tag set, NULL if untagged'
-      t.string :tag_sequence,     limit: 50,              comment: 'Tag sequence for tag'
+      t.string :tag_sequence,     limit: 30,              comment: 'Tag sequence for tag'
       t.string :tag_set_id_lims,  limit: 20,              comment: 'LIMs-specific identifier of the tag set for tag'
       t.string :tag_set_name,     limit: 100,             comment: 'WTSI-wide tag set name for tag'
 
