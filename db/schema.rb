@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_13_090557) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_24_092658) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -248,11 +248,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_13_090557) do
     t.datetime "deleted_at", precision: nil, comment: "Timestamp of any flowcell destruction"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier"
     t.string "tag_identifier", comment: "Position of the first tag within the tag group"
-    t.string "tag_sequence", comment: "Sequence of the first tag"
+    t.string "tag_sequence", limit: 50, comment: "Sequence of the first tag"
     t.string "tag_set_id_lims", comment: "LIMs-specific identifier of the tag set for the first tag"
     t.string "tag_set_name", comment: "WTSI-wide tag set name for the first tag"
     t.string "tag2_identifier", comment: "Position of the second tag within the tag group"
-    t.string "tag2_sequence", comment: "Sequence of the second tag"
+    t.string "tag2_sequence", limit: 50, comment: "Sequence of the second tag"
     t.string "tag2_set_id_lims", comment: "LIMs-specific identifier of the tag set for the second tag"
     t.string "tag2_set_name", comment: "WTSI-wide tag set name for the second tag"
     t.string "flowcell_id", comment: "The id of the flowcell. Supplied with the flowcell. Format FAVnnnn"
