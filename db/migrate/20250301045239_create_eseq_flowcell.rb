@@ -15,7 +15,7 @@ class CreateEseqFlowcell < ActiveRecord::Migration[7.0]
       t.column :lane, 'smallint unsigned', null: false, comment: 'Flowcell lane number, 1 or 2'
       t.string :entity_type, limit: 30, null: false, comment: 'Library type: library_indexed, library_indexed_spike'
       t.string :tag_sequence, limit: 50, null: true, comment: 'Tag sequence'
-      t.string :tag2_sequence, limit: 30, null: true, comment: 'Tag sequence for tag 2'
+      t.string :tag2_sequence, limit: 50, null: true, comment: 'Tag sequence for tag 2'
       t.string :pipeline_id_lims, limit: 60, null: true, comment: 'LIMs-specific pipeline identifier that unambiguously defines library type'
       t.string :bait_name, limit: 50, null: true, comment: 'WTSI-wide name that uniquely identifies a bait set'
       t.column :requested_insert_size_from, 'integer unsigned', null: true, comment: 'Requested insert size min value'
