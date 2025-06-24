@@ -57,7 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_13_090557) do
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.integer "lane", limit: 2, null: false, comment: "Flowcell lane number, 1 or 2", unsigned: true
     t.string "entity_type", limit: 30, null: false, comment: "Library type: library_indexed, library_indexed_spike"
-    t.string "tag_sequence", limit: 30, comment: "Tag sequence"
+    t.string "tag_sequence", limit: 50, comment: "Tag sequence"
     t.string "tag2_sequence", limit: 30, comment: "Tag sequence for tag 2"
     t.string "pipeline_id_lims", limit: 60, comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
     t.string "bait_name", limit: 50, comment: "WTSI-wide name that uniquely identifies a bait set"
@@ -113,7 +113,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_13_090557) do
     t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_control, library_indexed, library_indexed_spike"
     t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
     t.integer "tag_index", limit: 2, comment: "Tag index, NULL if lane is not a pool", unsigned: true
-    t.string "tag_sequence", limit: 30, comment: "Tag sequence"
+    t.string "tag_sequence", limit: 50, comment: "Tag sequence"
     t.string "tag_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set"
     t.string "tag_set_name", limit: 100, comment: "WTSI-wide tag set name"
     t.string "tag_identifier", limit: 30, comment: "The position of tag within the tag group"
@@ -275,7 +275,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_13_090557) do
     t.string "cost_code", limit: 20, null: false, comment: "Valid WTSI cost-code"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier"
     t.string "tag_identifier", limit: 30, comment: "Tag index within tag set, NULL if untagged"
-    t.string "tag_sequence", limit: 30, comment: "Tag sequence for tag"
+    t.string "tag_sequence", limit: 50, comment: "Tag sequence for tag"
     t.string "tag_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set for tag"
     t.string "tag_set_name", limit: 100, comment: "WTSI-wide tag set name for tag"
     t.string "tag2_sequence", limit: 30, comment: "Tag sequence for tag 2"
