@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_13_090557) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_24_092658) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -275,10 +275,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_13_090557) do
     t.string "cost_code", limit: 20, null: false, comment: "Valid WTSI cost-code"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier"
     t.string "tag_identifier", limit: 30, comment: "Tag index within tag set, NULL if untagged"
-    t.string "tag_sequence", limit: 30, comment: "Tag sequence for tag"
+    t.string "tag_sequence", limit: 50, comment: "Tag sequence for tag"
     t.string "tag_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set for tag"
     t.string "tag_set_name", limit: 100, comment: "WTSI-wide tag set name for tag"
-    t.string "tag2_sequence", limit: 30, comment: "Tag sequence for tag 2"
+    t.string "tag2_sequence", limit: 50, comment: "Tag sequence for tag 2"
     t.string "tag2_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set for tag 2"
     t.string "tag2_set_name", limit: 100, comment: "WTSI-wide tag set name for tag 2"
     t.string "tag2_identifier", limit: 30, comment: "The position of tag2 within the tag group"
