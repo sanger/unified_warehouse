@@ -103,7 +103,7 @@ module Warren
         # Handle message processing here. Additionally you have the following options:
         # dead_letter(exception) => Dead Letters the message
         # requeue(exception) => Sends a nack, which causes the message to be placed back on the queue
-        p "Payload received: #{payload}"
+        logger.info("Payload received: #{payload}")
         Payload.from_json(payload).record
         # A message is sent to the delayed queue when the record is not found. This is useful when the record
         # is not yet created or has been deleted. The message will be retried later with a TTL policy.
