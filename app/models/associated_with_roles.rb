@@ -47,8 +47,6 @@ module AssociatedWithRoles
           end
         end
       )
-
-      true
     end
     private :maintain_users
   end

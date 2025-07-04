@@ -147,7 +147,7 @@ module ResourceTools::Json
     end
 
     # listening to these cops ensures all of the tests fail.
-    # rubocop:disable Naming/BlockForwarding, Style/ArgumentsForwarding, Lint/ShadowingOuterLocalVariable
+    # rubocop:disable Naming/BlockForwarding, Style/ArgumentsForwarding
     def initialize(*args, &block)
       super
       if self.class.custom_values.present?
