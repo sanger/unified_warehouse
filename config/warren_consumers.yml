@@ -1,6 +1,7 @@
 ---
 MultiLimsWarehouseConsumer:
   desc: Default consumer for the warehouse
+  worker_count: 1
   queue:
     name: psd.mlwh.multi-lims-warehouse-consumer
     options:
