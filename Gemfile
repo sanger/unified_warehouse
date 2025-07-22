@@ -40,6 +40,8 @@ group :test, :development do
   gem 'pry'
   gem 'rspec-rails'
   gem 'simplecov', require: false
+  gem 'simplecov_json_formatter', require: false
+  gem 'simplecov-lcov', require: false
 end
 
 group :development do
