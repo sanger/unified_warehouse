@@ -139,7 +139,7 @@ describe Numeric do
     # trying to compare floats ... which means deltas ... which means tolerance ...
     let(:bounds) do
       tolerance_adjustment = subject.class.numeric_tolerance - 1.0e-15
-      (subject - tolerance_adjustment..subject + tolerance_adjustment)
+      (subject - tolerance_adjustment)..(subject + tolerance_adjustment)
     end
 
     it 'returns false if the value is nil' do

@@ -17,7 +17,7 @@ class Flowcell < ApplicationRecord
       )
 
       custom_value(:is_spiked) do
-        controls.present? && controls.count > 0
+        controls.present? && controls.any?
       end
 
       has_nested_model(:controls)

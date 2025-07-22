@@ -37,7 +37,7 @@ module AssociatedWithRoles
       self.class::User.owned_by(self)
     end
 
-    def maintain_users
+    def maintain_users # rubocop:disable Naming/PredicateMethod
       users.destroy_all
 
       users.create!(
