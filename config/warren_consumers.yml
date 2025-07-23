@@ -1,6 +1,7 @@
 ---
 MultiLimsWarehouseConsumer:
   desc: Default consumer for the warehouse
+  # Number of worker threads for this consumer; single worker means single writer to the database.
   worker_count: 1
   queue:
     name: psd.mlwh.multi-lims-warehouse-consumer
