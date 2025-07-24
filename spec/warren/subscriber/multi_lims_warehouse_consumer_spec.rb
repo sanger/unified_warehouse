@@ -43,5 +43,17 @@ RSpec.describe Warren::Subscriber::MultiLimsWarehouseConsumer, type: :lib do
         expect(event_consumer).to have_received(:delay).with(an_instance_of(ActiveRecord::RecordNotFound))
       end
     end
+
+    context 'when a deadlock occurs' do
+      before do
+        allow(event_consumer).to receive(:delay)
+        allow(a_payload).to receive(:record).and_raise(ActiveRecord::Deadlocked)
+        event_consumer.process
+      end
+
+      it 'delays the message' do
+        expect(event_consumer).to have_received(:delay).with(an_instance_of(ActiveRecord::Deadlocked))
+      end
+    end
   end
 end
