@@ -106,7 +106,7 @@ module Warren
         Payload.from_json(payload).record
         # A message is sent to the delayed queue when the record is not found. This is useful when the record
         # is not yet created or has been deleted. The message will be retried later with a TTL policy.
-      rescue ActiveRecord::RecordNotFound => e
+      rescue ActiveRecord::RecordNotFound, ActiveRecord::Deadlocked => e
         delay(e)
       # When the association type is mismatched, we want to dead letter the message because it is unlikely
       # that the message would be processed correctly in the future. ActiveRecord::AssociationTypeMismatch

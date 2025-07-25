@@ -125,6 +125,15 @@ The consumer will run in the foreground, logging to the console. You can stop it
 For more warren actions, either use `bundle exec warren help` or see the
 [warren documentation](https://rubydoc.info/gems/sanger_warren)
 
+#### worker_count
+
+The number of worker threads can be configured for the consumer in
+`warren_consumers.yml`. This setting is applied to the channel and affects how
+messages from the subscription on the queue are processed. Setting this value
+to one uses a single thread and, therefore, a single writer to the database. If
+only a few tables are written sequentially, a single worker has the advantage
+of avoiding lock contention. If not configured, the default value is 3.
+
 ### Preparing to run locally with Traction Service
 
 RabbitMQ is essential for this process, so if you haven't already, install it using:
