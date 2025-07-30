@@ -18,7 +18,7 @@ class AddCommentsTable < ActiveRecord::Migration[7.2]
       ALTER TABLE comments
       ADD CONSTRAINT fk_comments_iseq_flowcell
       FOREIGN KEY (batch_id, position, tag_index)
-      REFERENCES iseq_flowcell(id_flowcell_lims, position, tag_index)
+      REFERENCES iseq_flowcell(id_flowcell_lims, position, tag_index);
     SQL
   end
 end
