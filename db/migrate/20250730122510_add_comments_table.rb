@@ -6,13 +6,15 @@ class AddCommentsTable < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
+    add_column :comments, :position, :integer, limit: 2, null: false
     execute <<-SQL
       ALTER TABLE comments
-      ADD COLUMN position SMALLINT UNSIGNED NOT NULL;
+      MODIFY COLUMN position SMALLINT UNSIGNED;
     SQL
+    add_column :comments, :tag_index, :integer, limit: 2, null: false
     execute <<-SQL
       ALTER TABLE comments
-      ADD COLUMN tag_index SMALLINT UNSIGNED NOT NULL;
+      MODIFY COLUMN tag_index SMALLINT UNSIGNED;
     SQL
     execute <<-SQL
       ALTER TABLE comments
