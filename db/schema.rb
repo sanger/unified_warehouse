@@ -52,10 +52,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
     t.text "content"
     t.string "batch_id", null: false
     t.string "id_lims", limit: 10, null: false
+    t.integer "position", limit: 2, null: false, unsigned: true
+    t.integer "tag_index", limit: 2, null: false, unsigned: true
+    t.string "comment_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "position", limit: 2, unsigned: true
-    t.integer "tag_index", limit: 2, unsigned: true
   end
 
   create_table "eseq_flowcell", primary_key: "id_eseq_flowcell_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
