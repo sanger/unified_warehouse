@@ -6,6 +6,7 @@ class AddCommentsTable < ActiveRecord::Migration[7.2]
       t.string :id_lims, limit: 10, null: false
       t.integer :position, null: false, limit: 2, unsigned: true
       t.integer :tag_index, null: false, limit: 2, unsigned: true
+
       t.timestamps
     end
   end
