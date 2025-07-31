@@ -56,7 +56,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
     t.datetime "updated_at", null: false
     t.integer "position", limit: 2, unsigned: true
     t.integer "tag_index", limit: 2, unsigned: true
-    t.index ["batch_id", "position", "tag_index", "id_lims"], name: "fk_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims"
   end
 
   create_table "eseq_flowcell", primary_key: "id_eseq_flowcell_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -525,7 +524,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
 
   add_foreign_key "bmap_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_bmap_flowcell_to_sample"
   add_foreign_key "bmap_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_bmap_flowcell_to_study"
-  add_foreign_key "comments", "iseq_flowcell", column: ["batch_id", "position", "tag_index", "id_lims"], primary_key: ["id_flowcell_lims", "position", "tag_index", "id_lims"], name: "fk_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims"
   add_foreign_key "eseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "eseq_flowcell_sample_fk"
   add_foreign_key "eseq_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "eseq_flowcell_study_fk"
   add_foreign_key "flgen_plate", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "flgen_plate_sample_fk"

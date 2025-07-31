@@ -16,11 +16,5 @@ class AddCommentsTable < ActiveRecord::Migration[7.2]
       ALTER TABLE comments
       MODIFY COLUMN tag_index SMALLINT UNSIGNED;
     SQL
-    execute <<-SQL
-      ALTER TABLE comments
-      ADD CONSTRAINT fk_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims
-      FOREIGN KEY (batch_id, position, tag_index, id_lims)
-      REFERENCES iseq_flowcell(id_flowcell_lims, position, tag_index, id_lims);
-    SQL
   end
 end
