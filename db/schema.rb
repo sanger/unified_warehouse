@@ -49,7 +49,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
   end
 
   create_table "comments", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
-    t.text "value"
+    t.text "comment_value"
     t.string "batch_id", null: false
     t.string "id_lims", limit: 10, null: false
     t.integer "position", limit: 2, null: false, unsigned: true
