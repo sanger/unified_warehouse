@@ -20,7 +20,7 @@ gem 'railties', '~> 7.2.2.1'
 # # RAILS DEPENDENCIES
 
 # Remove and test without the following after rails and ruby are updated
-gem 'concurrent-ruby', '1.3.4'
+gem 'concurrent-ruby', '1.3.5'
 
 gem 'bunny', '>= 2.22.0'
 gem 'rbtree', '~> 0.4.5'
@@ -40,6 +40,8 @@ group :test, :development do
   gem 'pry'
   gem 'rspec-rails'
   gem 'simplecov', require: false
+  gem 'simplecov_json_formatter', require: false
+  gem 'simplecov-lcov', require: false
 end
 
 group :development do
