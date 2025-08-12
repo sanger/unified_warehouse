@@ -152,6 +152,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
     t.string "workflow", limit: 20, comment: "Workflow used when processing the flowcell"
     t.index ["flowcell_barcode", "position", "tag_index"], name: "index_iseqflowcell__flowcell_barcode__position__tag_index"
     t.index ["id_flowcell_lims", "position", "tag_index", "id_lims"], name: "index_iseq_flowcell_id_flowcell_lims_position_tag_index_id_lims", unique: true
+    t.index ["id_flowcell_lims", "position", "tag_index"], name: "index_iseqflowcell__id_flowcell_lims__position__tag_index"
     t.index ["id_library_lims"], name: "index_iseq_flowcell_on_id_library_lims"
     t.index ["id_lims", "id_flowcell_lims"], name: "iseq_flowcell_id_lims_id_flowcell_lims_index"
     t.index ["id_pool_lims"], name: "index_iseq_flowcell_on_id_pool_lims"
