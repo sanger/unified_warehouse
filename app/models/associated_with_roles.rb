@@ -37,7 +37,7 @@ module AssociatedWithRoles
       self.class::User.owned_by(self)
     end
 
-    def maintain_users # rubocop:disable Naming/PredicateMethod
+    def maintain_users
       users.destroy_all
 
       users.create!(
@@ -47,8 +47,6 @@ module AssociatedWithRoles
           end
         end
       )
-
-      true
     end
     private :maintain_users
   end
@@ -63,7 +61,6 @@ module AssociatedWithRoles
     module ClassMethods
       def associated_with(model)
         association_name = model.name.underscore
-        # alias_attribute(:uuid, "#{association_name}_uuid")
         alias_attribute(:associated_id, "id_#{association_name}_tmp")
 
         scope :owned_by, ->(record) { where("id_#{association_name}_tmp" => record.id) }

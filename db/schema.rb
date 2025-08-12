@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_24_092658) do
+ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -46,6 +46,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_24_092658) do
     t.index ["id_library_lims"], name: "index_bmap_flowcell_on_id_library_lims"
     t.index ["id_sample_tmp"], name: "fk_bmap_flowcell_to_sample"
     t.index ["id_study_tmp"], name: "fk_bmap_flowcell_to_study"
+  end
+
+  create_table "comments", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.text "comment_value", comment: "Value of the comment corresponding to the comment_type"
+    t.string "batch_id", null: false, comment: "Corresponds to id_flowcell_lims in iseq_flowcell table."
+    t.string "id_lims", limit: 10, null: false, comment: "ID of the LIMS"
+    t.integer "position", limit: 2, null: false, comment: "Position of the lane in the flowcell", unsigned: true
+    t.integer "tag_index", limit: 2, null: false, comment: "Index of the tag (check iseq_flowcell tag_index column)", unsigned: true
+    t.string "comment_type", null: false, comment: "Type of the comment e.g., under_representation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "eseq_flowcell", primary_key: "id_eseq_flowcell_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
