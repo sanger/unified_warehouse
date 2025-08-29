@@ -15,12 +15,12 @@ RSpec.describe 'psd_sample_compounds_components:link_kinnex_compound_samples', t
 
   let!(:samples) do
     [
-      Sample.create!(id_sample_lims: compound_sample_id, name: 'supplier_x', id_lims: 'Traction',
-                     accession_number: 'ACC123', uuid_sample_lims: 123_456, last_updated: '2012-03-11 10:22:42'),
-      Sample.create!(id_sample_lims: component_sample_id1, supplier_name: 'supplier_x', uuid_sample_lims: 123_457,
-                     last_updated: '2012-03-11 10:22:42', id_lims: 'SQSCP'),
-      Sample.create!(id_sample_lims: component_sample_id2, supplier_name: 'supplier_x', uuid_sample_lims: 123_458,
-                     last_updated: '2012-03-11 10:22:42', id_lims: 'SQSCP')
+      Sample.create!(id_sample_lims: compound_sample_id, name: 'SP09a', id_lims: 'Traction',
+                     uuid_sample_lims: 123_456, last_updated: '2012-03-11 10:22:42'),
+      Sample.create!(id_sample_lims: component_sample_id1, supplier_name: 'SP09a', uuid_sample_lims: 123_457,
+                     last_updated: '2012-03-11 10:22:42', id_lims: 'SQSCP', accession_number: 'ACC123'),
+      Sample.create!(id_sample_lims: component_sample_id2, supplier_name: 'SP09a', uuid_sample_lims: 123_458,
+                     last_updated: '2012-03-11 10:22:42', id_lims: 'SQSCP', accession_number: 'ACC124')
     ]
   end
 
@@ -37,7 +37,7 @@ RSpec.describe 'psd_sample_compounds_components:link_kinnex_compound_samples', t
       end
     end
 
-    describe 'kinnex compound samples with same supplier_name' do
+    describe 're-running the task should not import further changes to SampleCompoundComponent table' do
       before do
         Rake::Task['psd_sample_compounds_components:link_kinnex_compound_samples'].reenable
       end
