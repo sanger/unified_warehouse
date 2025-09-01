@@ -4,7 +4,6 @@ require 'spec_helper'
 require 'rake'
 Rails.application.load_tasks if Rake::Task.tasks.empty?
 RSpec.describe 'psd_sample_compounds_components:link_kinnex_compound_samples', type: :task do
-
   let(:compound_sample_id) { 12 }
   let(:component_sample_id1) { 10 }
   let(:component_sample_id2) { 11 }
