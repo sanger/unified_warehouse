@@ -1,0 +1,9 @@
+class Comment < ApplicationRecord
+  include ResourceTools
+  include SingularResourceVersionedTools
+
+  self.table_name = 'comments'
+  def self.base_resource_key
+    'batch_id'
+  end
+end

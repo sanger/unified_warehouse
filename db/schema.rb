@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_09_142351) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -55,8 +55,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
     t.integer "position", limit: 2, null: false, comment: "Position of the lane in the flowcell", unsigned: true
     t.integer "tag_index", limit: 2, null: false, comment: "Index of the tag (check iseq_flowcell tag_index column)", unsigned: true
     t.string "comment_type", null: false, comment: "Type of the comment e.g., under_representation"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "recorded_at", null: false, comment: "Timestamp of the latest warehouse update."
+    t.datetime "last_updated", null: false, comment: "The date the comment was last updated in LIMS."
   end
 
   create_table "eseq_flowcell", primary_key: "id_eseq_flowcell_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
@@ -524,19 +524,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
     t.index ["id_study_tmp"], name: "study_users_study_fk"
   end
 
-  add_foreign_key "bmap_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_bmap_flowcell_to_sample"
-  add_foreign_key "bmap_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_bmap_flowcell_to_study"
-  add_foreign_key "eseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "eseq_flowcell_sample_fk"
-  add_foreign_key "eseq_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "eseq_flowcell_study_fk"
-  add_foreign_key "flgen_plate", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "flgen_plate_sample_fk"
-  add_foreign_key "flgen_plate", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "flgen_plate_study_fk"
-  add_foreign_key "iseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "iseq_flowcell_sample_fk"
-  add_foreign_key "iseq_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "iseq_flowcell_study_fk"
-  add_foreign_key "oseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_oseq_flowcell_to_sample"
-  add_foreign_key "oseq_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_oseq_flowcell_to_study"
-  add_foreign_key "pac_bio_run", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_pac_bio_run_to_sample"
-  add_foreign_key "pac_bio_run", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_pac_bio_run_to_study"
-  add_foreign_key "qc_result", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_qc_result_to_sample"
   add_foreign_key "samples_extraction_activity", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp"
   add_foreign_key "stock_resource", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_stock_resource_to_sample"
   add_foreign_key "stock_resource", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_stock_resource_to_study"
