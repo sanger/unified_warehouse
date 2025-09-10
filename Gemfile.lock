@@ -270,6 +270,7 @@ DEPENDENCIES
   guard-rspec
   hashie (~> 5.0)
   mysql2 (~> 0.5.3)
+  ostruct
   pry
   railties (~> 7.2.2.1)
   rbtree (~> 0.4.5)
