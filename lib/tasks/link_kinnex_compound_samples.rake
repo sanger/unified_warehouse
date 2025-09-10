@@ -7,7 +7,7 @@ namespace :psd_sample_compounds_components do
     Rails.logger.info 'Linking compound Kinnex samples to their components in the database'
     kinnex_supplier_names.each do |supplier_name|
       # Select compound samples where accession_number is nil (unaccessioned)
-      compound_sample = Sample.where(name: supplier_name, accession_number: nil)
+      compound_sample = Sample.where(name: supplier_name, id_lims: 'Traction', accession_number: nil)
       # Skip if there are multiple compound samples for the same supplier name
       # Realistically, this should never happen — we expect only one source of truth for each supplier_name.
       next if compound_sample.empty? || compound_sample.many?
