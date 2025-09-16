@@ -4,6 +4,6 @@ class Comment < ApplicationRecord
 
   self.table_name = 'comments'
   def self.base_resource_key
-    'batch_id'
+    'id'
   end
 end
