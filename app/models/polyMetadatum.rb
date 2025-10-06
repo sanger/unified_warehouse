@@ -1,4 +1,4 @@
-class Comment < ApplicationRecord
+class PolyMetadatum < ApplicationRecord
   include ResourceTools
   include SingularResourceVersionedTools
 
