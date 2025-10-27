@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -524,6 +524,40 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
     t.index ["id_study_tmp"], name: "study_users_study_fk"
   end
 
+  create_table "useq_wafer", primary_key: "id_useq_wafer_tmp", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+    t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
+    t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
+    t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
+    t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
+    t.string "id_batch_lims", limit: 20, null: false, comment: "LIMs-specific batch_id for Sequencescape"
+    t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
+    t.integer "lane", limit: 2, null: false, comment: "Wafer lane number", unsigned: true
+    t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_control, library_indexed, library_indexed_spike"
+    t.string "tag_sequence", limit: 30, comment: "Tag sequence"
+    t.string "pipeline_id_lims", limit: 60, comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
+    t.string "bait_name", limit: 50, comment: "WTSI-wide name that uniquely identifies a bait set"
+    t.integer "requested_insert_size_from", comment: "Requested insert size min value", unsigned: true
+    t.integer "requested_insert_size_to", comment: "Requested insert size max value", unsigned: true
+    t.string "primer_panel", comment: "Primer Panel name"
+    t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool"
+    t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"
+    t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
+    t.string "otr_carrier_barcode", comment: "Opentron carrier barcode"
+    t.datetime "otr_carrier_expiry", precision: nil, comment: "Opentron carrier expiry date"
+    t.string "otr_reaction_mix_7_barcode", comment: "Opentron reaction mix 7 barcode"
+    t.datetime "otr_reaction_mix_7_expiry", precision: nil, comment: "Opentron reaction mix 7 expiry date"
+    t.string "otr_nfw_barcode", comment: "Opentron NFW barcode"
+    t.datetime "otr_nfw_expiry", precision: nil, comment: "Opentron NFW expiry date"
+    t.string "otr_oil_barcode", comment: "Opentron oil barcode"
+    t.datetime "otr_oil_expiry", precision: nil, comment: "Opentron oil expiry date"
+    t.string "otr_pipette_carousel", comment: "Opentron pipette carousel identifier"
+    t.string "otr_instrument_name", null: false, comment: "Opentron instrument name"
+    t.string "amp_assign_control_bead_tube", comment: "AMP assign control bead tube barcode"
+    t.string "amp_instrument_name", null: false, comment: "AMP instrument name"
+    t.index ["id_sample_tmp"], name: "useq_wafer_sample_fk"
+    t.index ["id_study_tmp"], name: "useq_wafer_study_fk"
+  end
+
   add_foreign_key "bmap_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_bmap_flowcell_to_sample"
   add_foreign_key "bmap_flowcell", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_bmap_flowcell_to_study"
   add_foreign_key "eseq_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "eseq_flowcell_sample_fk"
@@ -541,4 +575,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_07_30_122510) do
   add_foreign_key "stock_resource", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_stock_resource_to_sample"
   add_foreign_key "stock_resource", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "fk_stock_resource_to_study"
   add_foreign_key "study_users", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "study_users_study_fk"
+  add_foreign_key "useq_wafer", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "useq_wafer_sample_fk"
+  add_foreign_key "useq_wafer", "study", column: "id_study_tmp", primary_key: "id_study_tmp", name: "useq_wafer_study_fk"
 end
