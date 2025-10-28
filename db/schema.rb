@@ -529,7 +529,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
-    t.string "id_batch_lims", limit: 20, null: false, comment: "LIMs-specific batch_id for Sequencescape"
+    t.string "id_wafer_lims", limit: 20, null: false, comment: "LIMs-specific wafer id, batch_id for Sequencescape"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.integer "lane", limit: 2, null: false, comment: "Wafer lane number", unsigned: true
     t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_control, library_indexed, library_indexed_spike"
@@ -554,8 +554,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.string "otr_instrument_name", null: false, comment: "Opentron instrument name"
     t.string "amp_assign_control_bead_tube", comment: "AMP assign control bead tube barcode"
     t.string "amp_instrument_name", null: false, comment: "AMP instrument name"
+    t.index ["id_library_lims"], name: "index_useq_wafer_on_id_library_lims"
+    t.index ["id_lims"], name: "index_useq_wafer_on_id_lims"
+    t.index ["id_pool_lims"], name: "index_useq_wafer_on_id_pool_lims"
     t.index ["id_sample_tmp"], name: "useq_wafer_sample_fk"
     t.index ["id_study_tmp"], name: "useq_wafer_study_fk"
+    t.index ["id_wafer_lims", "lane", "tag_sequence", "id_lims"], name: "index_useq_wafer_on_composition_keys", unique: true
   end
 
   add_foreign_key "bmap_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_bmap_flowcell_to_sample"

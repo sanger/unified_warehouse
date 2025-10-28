@@ -8,7 +8,7 @@ describe UseqWafer do
 
   shared_examples_for 'a flowcell' do
     it_behaves_like 'maps JSON fields', {
-      flowcell_id: :id_batch_lims, position: :lane
+      flowcell_id: :id_wafer_lims, position: :lane
     }
 
     # Useq wafer has fewer fields than Iseq flowcell and ignores the fields
@@ -113,7 +113,7 @@ describe UseqWafer do
 
   context 'a message with clashing samples' do
     let(:expected_identifiers) do
-      'id_batch_lims, lane, tag_sequence'
+      'id_wafer_lims, lane, tag_sequence'
     end
     let(:example_lims) { 'example' }
 

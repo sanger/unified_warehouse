@@ -4,13 +4,13 @@
 class AddUltimaSeqWaferTable < ActiveRecord::Migration[7.2]
   def change
     create_table :useq_wafer, primary_key: :id_useq_wafer_tmp do |t|
-      # Columns required for NPG analysis and archival systems * TBD
+      # Columns required for NPG analysis and archival systems
       t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
       t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
       t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
       t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
-      t.string "id_batch_lims", limit: 20, null: false, comment: "LIMs-specific batch_id for Sequencescape"
-      t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
+      t.string "id_wafer_lims", limit: 20, null: false, comment: "LIMs-specific wafer id, batch_id for Sequencescape"
+      t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE", index: true
       t.integer "lane", limit: 2, null: false, comment: "Wafer lane number", unsigned: true
       t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_control, library_indexed, library_indexed_spike"
       t.string "tag_sequence", limit: 30, comment: "Tag sequence"
@@ -19,8 +19,8 @@ class AddUltimaSeqWaferTable < ActiveRecord::Migration[7.2]
       t.integer "requested_insert_size_from", comment: "Requested insert size min value", unsigned: true
       t.integer "requested_insert_size_to", comment: "Requested insert size max value", unsigned: true
       t.string "primer_panel", comment: "Primer Panel name"
-      t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool"
-      t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"
+      t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool", index: true
+      t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation", index: true
       t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
 
       # Columns required for lot number tracking
@@ -40,5 +40,11 @@ class AddUltimaSeqWaferTable < ActiveRecord::Migration[7.2]
 
     add_foreign_key :useq_wafer, :sample, column: :id_sample_tmp, primary_key: :id_sample_tmp, name: "useq_wafer_sample_fk"
     add_foreign_key :useq_wafer, :study, column: :id_study_tmp, primary_key: :id_study_tmp, name: "useq_wafer_study_fk"
+    add_index :useq_wafer, %i[
+      id_wafer_lims
+      lane
+      tag_sequence
+      id_lims
+    ], unique: true, name: 'index_useq_wafer_on_composition_keys'
   end
 end

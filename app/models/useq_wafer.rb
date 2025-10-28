@@ -17,7 +17,7 @@ class UseqWafer < ApplicationRecord
   # NOTE: The actual wafers have identifiers etched onto them, but we do not track them
   # and we do not want to confuse them with the LIMs-specific identifiers.
   def self.base_resource_key
-    'id_batch_lims'
+    'id_wafer_lims'
   end
 
   has_associated(:study)  # association using id_study_tmp foreign key
@@ -26,7 +26,7 @@ class UseqWafer < ApplicationRecord
   # We expand the wafer message into multiple rows. The following keys are
   # used to identify the rows.
   has_composition_keys(
-    :id_batch_lims,
+    :id_wafer_lims,
     :lane,
     :tag_sequence
   )
@@ -77,6 +77,6 @@ class UseqWafer < ApplicationRecord
     # Note that the 'position' column of the iseq_flowcell table is named as
     # 'lane' in the useq_wafer table. If the mapping is done on the
     # Sequencescape side, we need to update the translation accordingly.
-    translate(flowcell_id: :id_batch_lims, position: :lane)
+    translate(flowcell_id: :id_wafer_lims, position: :lane)
   end
 end
