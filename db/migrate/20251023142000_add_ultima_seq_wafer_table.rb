@@ -24,13 +24,13 @@ class AddUltimaSeqWaferTable < ActiveRecord::Migration[7.2]
       t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
 
       # Columns required for lot number tracking
-      t.string "otr_carrier_barcode", comment: "Opentron carrier barcode"
+      t.string "otr_carrier_lot_number", comment: "Opentron carrier lot number"
       t.datetime "otr_carrier_expiry", precision: nil, comment: "Opentron carrier expiry date"
-      t.string "otr_reaction_mix_7_barcode", comment: "Opentron reaction mix 7 barcode"
+      t.string "otr_reaction_mix_7_lot_number", comment: "Opentron reaction mix 7 lot number"
       t.datetime "otr_reaction_mix_7_expiry", precision: nil, comment: "Opentron reaction mix 7 expiry date"
-      t.string "otr_nfw_barcode", comment: "Opentron NFW barcode"
+      t.string "otr_nfw_lot_number", comment: "Opentron NFW lot number"
       t.datetime "otr_nfw_expiry", precision: nil, comment: "Opentron NFW expiry date"
-      t.string "otr_oil_barcode", comment: "Opentron oil barcode"
+      t.string "otr_oil_lot_number", comment: "Opentron oil lot number"
       t.datetime "otr_oil_expiry", precision: nil, comment: "Opentron oil expiry date"
       t.string "otr_pipette_carousel", comment: "Opentron pipette carousel identifier"
       t.string "otr_instrument_name", null: false, comment: "Opentron instrument name"
