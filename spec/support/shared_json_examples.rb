@@ -218,6 +218,16 @@ shared_examples 'large useq wafer json' do
       'updated_at' => '2012-03-11 10:22:42',
       'otr_instrument_name' => 'otr_inst_1',
       'amp_instrument_name' => 'amp_inst_1',
+      'otr_carrier_lot_number' => 'OC123456',
+      'otr_carrier_expiry' => '2025-10-20 12:22:12',
+      'otr_reaction_mix_7_lot_number' => 'ORM71234',
+      'otr_reaction_mix_7_expiry' => '2025-11-20 12:22:12',
+      'otr_nfw_lot_number' => 'ONFW1234',
+      'otr_nfw_expiry' => '2025-12-20 12:22:12',
+      'otr_oil_lot_number' => 'OOIL1234',
+      'otr_oil_expiry' => '2026-01-20 12:22:12',
+      'otr_pipette_carousel' => 'OPC1234',
+      'amp_assign_control_bead_tube' => 'AACBT1234',
       'lanes' => [
         {
           'manual_qc' => false,
@@ -230,7 +240,6 @@ shared_examples 'large useq wafer json' do
           'spiked_phix_percentage' => '30',
           'workflow' => 'Standard',
           'loading_concentration' => '20',
-
           'samples' => [
             {
               'tag_index' => 3,
