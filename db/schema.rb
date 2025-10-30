@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_09_142351) do
+ActiveRecord::Schema[7.2].define(version: 2025_10_30_171436) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_09_142351) do
     t.string "comment_type", null: false, comment: "Type of the comment e.g., under_representation"
     t.datetime "recorded_at", null: false, comment: "Timestamp of the latest warehouse update."
     t.datetime "last_updated", null: false, comment: "The date the comment was last updated in LIMS."
+    t.index ["batch_id", "id_lims", "position", "tag_index", "comment_type", "comment_value"], name: "comments_unique_constraint", unique: true, length: { comment_value: 255 }
   end
 
   create_table "eseq_flowcell", primary_key: "id_eseq_flowcell_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
