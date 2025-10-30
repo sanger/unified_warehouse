@@ -211,46 +211,27 @@ end
 shared_examples 'large useq wafer json' do
   let(:json) do
     {
-      'flowcell_barcode' => '12345678903',
-      'flowcell_id' => 1123,
-      'forward_read_length' => 222,
-      'reverse_read_length' => 222,
+      'wafer_id' => 1123,
       'updated_at' => '2012-03-11 10:22:42',
-      'otr_instrument_name' => 'otr_inst_1',
-      'amp_instrument_name' => 'amp_inst_1',
-      'otr_carrier_lot_number' => 'OC123456',
-      'otr_carrier_expiry' => '2025-10-20 12:22:12',
-      'otr_reaction_mix_7_lot_number' => 'ORM71234',
-      'otr_reaction_mix_7_expiry' => '2025-11-20 12:22:12',
-      'otr_nfw_lot_number' => 'ONFW1234',
-      'otr_nfw_expiry' => '2025-12-20 12:22:12',
-      'otr_oil_lot_number' => 'OOIL1234',
-      'otr_oil_expiry' => '2026-01-20 12:22:12',
-      'otr_pipette_carousel' => 'OPC1234',
-      'amp_assign_control_bead_tube' => 'AACBT1234',
       'lanes' => [
         {
-          'manual_qc' => false,
-          'position' => 1,
-          'priority' => 1,
+          'lane' => 1,
           'id_pool_lims' => 'NT1234567X',
-          'external_release' => true,
-          'purpose' => 'standard',
-          'spiked_phix_barcode' => 'NT12345Q',
-          'spiked_phix_percentage' => '30',
-          'workflow' => 'Standard',
-          'loading_concentration' => '20',
+          'otr_instrument_name' => 'otr_inst_1',
+          'amp_instrument_name' => 'amp_inst_1',
+          'otr_carrier_lot_number' => 'OC123456',
+          'otr_carrier_expiry' => '2025-10-20 12:22:12',
+          'otr_reaction_mix_7_lot_number' => 'ORM71234',
+          'otr_reaction_mix_7_expiry' => '2025-11-20 12:22:12',
+          'otr_nfw_lot_number' => 'ONFW1234',
+          'otr_nfw_expiry' => '2025-12-20 12:22:12',
+          'otr_oil_lot_number' => 'OOIL1234',
+          'otr_oil_expiry' => '2026-01-20 12:22:12',
+          'otr_pipette_carousel' => 'OPC1234',
+          'amp_assign_control_bead_tube' => 'AACBT1234',
           'samples' => [
             {
-              'tag_index' => 3,
               'tag_sequence' => 'ATAG',
-              'tag_set_id_lims' => '2',
-              'tag_set_name' => 'Sanger_168tags - 10 mer tags',
-              'tag_identifier' => 1,
-              'tag2_sequence' => 'GGGG',
-              'tag2_set_id_lims' => '1',
-              'tag2_set_name' => 'Tag 2 Set 1',
-              'tag2_identifier' => 1,
               'pipeline_id_lims' => 'Agilent Pulldown',
               'entity_type' => 'library_indexed',
               'bait_name' => 'DDD_V5_plus',
@@ -258,27 +239,9 @@ shared_examples 'large useq wafer json' do
               'requested_insert_size_to' => 200,
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'study_uuid' => '000000-0000-0000-0000-0000000001',
-              'cost_code' => '12345',
               'entity_id_lims' => 12_345,
-              'is_r_and_d' => false,
               'primer_panel' => 'PrimerPanel1',
-              'id_library_lims' => 'SQPP-1234-X:A1',
-              'team' => 'Team A',
-              'suboptimal' => 0,
-              'legacy_library_id' => '12345'
-            }
-          ],
-          'controls' => [
-            {
-              'sample_uuid' => '000000-0000-0000-0000-0000000000',
-              'study_uuid' => '000000-0000-0000-0000-0000000001',
-              'tag_index' => 168,
-              'entity_type' => 'library_indexed_spike',
-              'tag_sequence' => 'TAGA',
-              'tag_set_id_lims' => '2',
-              'entity_id_lims' => '12345',
-              'tag_set_name' => 'Sanger_168tags - 10 mer tags',
-              'id_library_lims' => 'NT1234567C'
+              'id_library_lims' => 'SQPP-1234-X:A1'
             }
           ]
         }
@@ -292,14 +255,14 @@ end
 shared_examples 'small useq wafer json' do
   let(:json) do
     {
-      'flowcell_id' => 1123,
+      'wafer_id' => 1123,
       'updated_at' => '2012-03-11 10:22:42',
-      'otr_instrument_name' => 'otr_inst_1',
-      'amp_instrument_name' => 'amp_inst_1',
       'lanes' => [
         {
-          'position' => 1,
+          'lane' => 1,
           'id_pool_lims' => 'NT1234567X',
+          'otr_instrument_name' => 'otr_inst_1',
+          'amp_instrument_name' => 'amp_inst_1',
           'samples' => [
             {
               'tag_sequence' => 'ATAG',

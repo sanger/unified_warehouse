@@ -6,52 +6,23 @@ describe UseqWafer do
   let!(:mock_sample) { create(:sample) }
   let!(:mock_study)  { create(:study)  }
 
-  shared_examples_for 'a flowcell' do
+  shared_examples_for 'a wafer' do
     it_behaves_like 'maps JSON fields', {
-      flowcell_id: :id_wafer_lims, position: :lane
+      wafer_id: :id_wafer_lims
     }
-
-    # Useq wafer has fewer fields than Iseq flowcell and ignores the fields
-    # that are not mapped to the columns of the useq_wafer table.
-    it_behaves_like 'ignores JSON fields', %w[
-      manual_qc
-      priority
-      external_release
-      purpose
-      spiked_phix_barcode
-      spiked_phix_percentage
-      workflow
-      loading_concentration
-      flowcell_barcode
-      forward_read_length
-      reverse_read_length
-      tag_set_id_lims
-      tag_set_name
-      tag_identifier
-      tag2_sequence
-      tag2_set_id_lims
-      tag2_set_name
-      tag2_identifier
-      cost_code
-      is_r_and_d
-      tag_index
-      team
-      suboptimal
-      legacy_library_id
-    ]
 
     it_behaves_like 'belongs to', %i[study sample], { lanes: :samples }
 
     it_behaves_like 'a nested resource'
   end
 
-  context 'with controls and all optional fields' do
-    # We have a row for the lane, the sample and the control.
-    let(:expected_entries) { 2 } # used by 'a nested resource'
+  context 'withall optional fields' do
+    # We have a row for the lane and the sample
+    let(:expected_entries) { 1 } # used by 'a nested resource'
 
     include_examples 'large useq wafer json'
 
-    it_behaves_like 'a flowcell'
+    it_behaves_like 'a wafer'
 
     context 'when non-composition fields are updated' do
       # The composition keys declared in the model are used for expanding nested
@@ -102,13 +73,13 @@ describe UseqWafer do
     end
   end
 
-  context 'without controls or other optional fields' do
+  context 'without other optional fields' do
     # We have a row for the lane, the sample
     let(:expected_entries) { 1 } # used by 'a nested resource'
 
     include_examples 'small useq wafer json'
 
-    it_behaves_like 'a flowcell'
+    it_behaves_like 'a wafer'
   end
 
   context 'a message with clashing samples' do
