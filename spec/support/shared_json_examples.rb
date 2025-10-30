@@ -229,6 +229,7 @@ shared_examples 'large useq wafer json' do
           'otr_oil_expiry' => '2026-01-20 12:22:12',
           'otr_pipette_carousel' => 'OPC1234',
           'amp_assign_control_bead_tube' => 'AACBT1234',
+          'ot_recipe' => 'Flex',
           'samples' => [
             {
               'tag_sequence' => 'ATAG',
@@ -237,7 +238,6 @@ shared_examples 'large useq wafer json' do
               'bait_name' => 'DDD_V5_plus',
               'requested_insert_size_from' => 100,
               'requested_insert_size_to' => 200,
-              'ot_recipe' => 'Flex',
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'study_uuid' => '000000-0000-0000-0000-0000000001',
               'entity_id_lims' => 12_345,
@@ -264,6 +264,7 @@ shared_examples 'small useq wafer json' do
           'id_pool_lims' => 'NT1234567X',
           'otr_instrument_name' => 'otr_inst_1',
           'amp_instrument_name' => 'amp_inst_1',
+          'ot_recipe' => 'Flex',
           'samples' => [
             {
               'tag_sequence' => 'ATAG',
@@ -272,7 +273,6 @@ shared_examples 'small useq wafer json' do
               'bait_name' => 'DDD_V5_plus',
               'requested_insert_size_from' => 100,
               'requested_insert_size_to' => 200,
-              'ot_recipe' => 'Flex',
               'sample_uuid' => '000000-0000-0000-0000-0000000000',
               'study_uuid' => '000000-0000-0000-0000-0000000001',
               'primer_panel' => 'PrimerPanel1',
