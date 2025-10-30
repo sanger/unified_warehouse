@@ -532,12 +532,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.string "id_wafer_lims", limit: 20, null: false, comment: "LIMs-specific wafer id, batch_id for Sequencescape"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.integer "lane", limit: 2, null: false, comment: "Wafer lane number", unsigned: true
-    t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_control, library_indexed, library_indexed_spike"
+    t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_indexed"
     t.string "tag_sequence", limit: 30, comment: "Tag sequence"
     t.string "pipeline_id_lims", limit: 60, comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
     t.string "bait_name", limit: 50, comment: "WTSI-wide name that uniquely identifies a bait set"
     t.integer "requested_insert_size_from", comment: "Requested insert size min value", unsigned: true
     t.integer "requested_insert_size_to", comment: "Requested insert size max value", unsigned: true
+    t.string "ot_recipe", comment: "Opentron recipe name: Flex or Free"
     t.string "primer_panel", comment: "Primer Panel name"
     t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool"
     t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"

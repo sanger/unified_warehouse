@@ -18,6 +18,7 @@ class AddUltimaSeqWaferTable < ActiveRecord::Migration[7.2]
       t.string "bait_name", limit: 50, comment: "WTSI-wide name that uniquely identifies a bait set"
       t.integer "requested_insert_size_from", comment: "Requested insert size min value", unsigned: true
       t.integer "requested_insert_size_to", comment: "Requested insert size max value", unsigned: true
+      t.string "ot_recipe", comment: "Opentron recipe name: Flex or Free"
       t.string "primer_panel", comment: "Primer Panel name"
       t.string "id_pool_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with the pool", index: true
       t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation", index: true
