@@ -34,9 +34,13 @@ class AddUltimaSeqWaferTable < ActiveRecord::Migration[7.2]
       t.string "otr_oil_lot_number", comment: "Opentron oil lot number"
       t.datetime "otr_oil_expiry", precision: nil, comment: "Opentron oil expiry date"
       t.string "otr_pipette_carousel", comment: "Opentron pipette carousel identifier"
-      t.string "otr_instrument_name", null: false, comment: "Opentron instrument name"
+      # Theoretically this should always be present (null: false), but we aren't enforcing that in SS at present, so we dont want to reject the record in case
+      # it is accidentally missing
+      t.string "otr_instrument_name", comment: "Opentron instrument name"
       t.string "amp_assign_control_bead_tube", comment: "AMP assign control bead tube barcode"
-      t.string "amp_instrument_name", null: false, comment: "AMP instrument name"
+      # Theoretically this should always be present (null: false), but we aren't enforcing that in SS at present, so we dont want to reject the record in case
+      # it is accidentally missing
+      t.string "amp_instrument_name", comment: "AMP instrument name"
     end
 
     add_foreign_key :useq_wafer, :sample, column: :id_sample_tmp, primary_key: :id_sample_tmp, name: "useq_wafer_sample_fk"
