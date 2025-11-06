@@ -29,12 +29,20 @@
 
 class Comment < ApplicationRecord
   include ResourceTools
-  include NestedResourceTools
+  include CompositeResourceTools
 
   self.table_name = 'comments'
   def self.base_resource_key
-    'id'
+    'batch_id'
   end
+
+  has_composition_keys(
+    :batch_id,
+    :position,
+    :tag_index,
+    :comment_type,
+    :comment_value
+  )
 
   json do
     has_nested_model(:comments)
