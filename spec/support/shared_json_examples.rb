@@ -206,6 +206,86 @@ shared_examples 'small eseq flowcell json' do
   end
 end
 
+# The following JSON for UseqWafer contains a nested controls section and
+# optional fields, similar to the Iseq Flowcell JSON.
+shared_examples 'large useq wafer json' do
+  let(:json) do
+    {
+      'wafer_id' => 1123,
+      'updated_at' => '2012-03-11 10:22:42',
+      'lanes' => [
+        {
+          'lane' => 1,
+          'id_pool_lims' => 'NT1234567X',
+          'otr_instrument_name' => 'otr_inst_1',
+          'amp_instrument_name' => 'amp_inst_1',
+          'otr_carrier_lot_number' => 'OC123456',
+          'otr_carrier_expiry' => '2025-10-20 12:22:12',
+          'otr_reaction_mix_7_lot_number' => 'ORM71234',
+          'otr_reaction_mix_7_expiry' => '2025-11-20 12:22:12',
+          'otr_nfw_lot_number' => 'ONFW1234',
+          'otr_nfw_expiry' => '2025-12-20 12:22:12',
+          'otr_oil_lot_number' => 'OOIL1234',
+          'otr_oil_expiry' => '2026-01-20 12:22:12',
+          'otr_pipette_carousel' => 'OPC1234',
+          'amp_assign_control_bead_tube' => 'AACBT1234',
+          'ot_recipe' => 'Flex',
+          'samples' => [
+            {
+              'tag_sequence' => 'ATAG',
+              'pipeline_id_lims' => 'Agilent Pulldown',
+              'entity_type' => 'library_indexed',
+              'bait_name' => 'DDD_V5_plus',
+              'requested_insert_size_from' => 100,
+              'requested_insert_size_to' => 200,
+              'sample_uuid' => '000000-0000-0000-0000-0000000000',
+              'study_uuid' => '000000-0000-0000-0000-0000000001',
+              'entity_id_lims' => 12_345,
+              'primer_panel' => 'PrimerPanel1',
+              'id_library_lims' => 'SQPP-1234-X:A1'
+            }
+          ]
+        }
+      ]
+    }
+  end
+end
+
+# The following JSON for UseqWafer contains only the samples section and no
+# optional fields.
+shared_examples 'small useq wafer json' do
+  let(:json) do
+    {
+      'wafer_id' => 1123,
+      'updated_at' => '2012-03-11 10:22:42',
+      'lanes' => [
+        {
+          'lane' => 1,
+          'id_pool_lims' => 'NT1234567X',
+          'otr_instrument_name' => 'otr_inst_1',
+          'amp_instrument_name' => 'amp_inst_1',
+          'ot_recipe' => 'Flex',
+          'samples' => [
+            {
+              'tag_sequence' => 'ATAG',
+              'pipeline_id_lims' => 'Agilent Pulldown',
+              'entity_type' => 'library_indexed',
+              'bait_name' => 'DDD_V5_plus',
+              'requested_insert_size_from' => 100,
+              'requested_insert_size_to' => 200,
+              'sample_uuid' => '000000-0000-0000-0000-0000000000',
+              'study_uuid' => '000000-0000-0000-0000-0000000001',
+              'primer_panel' => 'PrimerPanel1',
+              'id_library_lims' => 'SQPP-1234-X:A1',
+              'entity_id_lims' => 12_345
+            }
+          ]
+        }
+      ]
+    }
+  end
+end
+
 shared_examples 'sample json' do
   let(:json) do
     {
