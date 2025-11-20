@@ -554,7 +554,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_20_094444) do
     t.string "otr_instrument_name", comment: "Opentron instrument name"
     t.string "amp_assign_control_bead_tube", comment: "AMP assign control bead tube barcode"
     t.string "amp_instrument_name", comment: "AMP instrument name"
-    t.index ["batch_for_opentrons", "tag_sequence", "id_lims"], name: "index_useq_wafer_on_composition_keys", unique: true
+    t.index ["batch_for_opentrons", "id_pool_lims", "tag_sequence", "id_lims"], name: "index_useq_wafer_on_composition_keys", unique: true
     t.index ["id_library_lims"], name: "index_useq_wafer_on_id_library_lims"
     t.index ["id_lims"], name: "index_useq_wafer_on_id_lims"
     t.index ["id_pool_lims"], name: "index_useq_wafer_on_id_pool_lims"

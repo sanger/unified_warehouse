@@ -24,7 +24,8 @@ class UseqWafer < ApplicationRecord
   # used to identify the rows.
   has_composition_keys(
     :batch_for_opentrons,
-    :tag_sequence
+    :tag_sequence,
+    :id_pool_lims
   )
 
   json do

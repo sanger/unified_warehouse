@@ -15,6 +15,15 @@ class UpdateUseqWaferTable < ActiveRecord::Migration[7.2]
       MODIFY COLUMN id_useq_wafer_tmp integer unsigned NOT NULL AUTO_INCREMENT COMMENT 'Internal to this database, id value can change';
     SQL
   
+    # Recreate the unique index on composition keys with id_pool_lims
+    remove_index :useq_wafer, name: 'index_useq_wafer_on_composition_keys'
+    add_index :useq_wafer, %i[
+      batch_for_opentrons
+      id_pool_lims
+      tag_sequence
+      id_lims
+    ], unique: true, name: 'index_useq_wafer_on_composition_keys'
+
     # Remove lane column
     remove_column :useq_wafer, :lane
   end

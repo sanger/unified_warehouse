@@ -32,7 +32,7 @@ describe UseqWafer do
 
       let(:updated_json) do
         updated_json = JSON.parse(json.to_json) # deep copy
-        updated_json['lanes'].first['id_pool_lims'] = 'NT1234567U'
+        updated_json['lanes'].first['entity_type'] = 'library'
         updated_json['updated_at'] = '2025-03-11 12:22:42'
         updated_json
       end
@@ -84,7 +84,7 @@ describe UseqWafer do
 
   context 'a message with clashing samples' do
     let(:expected_identifiers) do
-      'batch_for_opentrons, tag_sequence'
+      'batch_for_opentrons, tag_sequence, id_pool_lims'
     end
     let(:example_lims) { 'example' }
 
