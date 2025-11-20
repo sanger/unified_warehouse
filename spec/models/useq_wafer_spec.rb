@@ -8,7 +8,7 @@ describe UseqWafer do
 
   shared_examples_for 'a wafer' do
     it_behaves_like 'maps JSON fields', {
-      wafer_id: :id_wafer_lims
+      wafer_id: :batch_for_opentrons
     }
 
     it_behaves_like 'belongs to', %i[study sample], { lanes: :samples }
@@ -84,7 +84,7 @@ describe UseqWafer do
 
   context 'a message with clashing samples' do
     let(:expected_identifiers) do
-      'id_wafer_lims, lane, tag_sequence'
+      'batch_for_opentrons, tag_sequence'
     end
     let(:example_lims) { 'example' }
 

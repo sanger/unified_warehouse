@@ -14,7 +14,7 @@ class UseqWafer < ApplicationRecord
   # NOTE: The actual wafers have identifiers etched onto them, but we do not track them
   # and we do not want to confuse them with the LIMs-specific identifiers.
   def self.base_resource_key
-    'id_wafer_lims'
+    'batch_for_opentrons'
   end
 
   has_associated(:study)  # association using id_study_tmp foreign key
@@ -23,8 +23,7 @@ class UseqWafer < ApplicationRecord
   # We expand the wafer message into multiple rows. The following keys are
   # used to identify the rows.
   has_composition_keys(
-    :id_wafer_lims,
-    :lane,
+    :batch_for_opentrons,
     :tag_sequence
   )
 
@@ -36,6 +35,6 @@ class UseqWafer < ApplicationRecord
 
     ignore(:lanes) # This key is for the nested section; not mapped to a column.
 
-    translate(wafer_id: :id_wafer_lims)
+    translate(wafer_id: :batch_for_opentrons)
   end
 end
