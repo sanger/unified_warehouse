@@ -3,15 +3,17 @@
 # Migration to add the 'useq_wafer' table to store Ultima Genomics instrument's wafer information
 class AddUltimaSeqWaferTable < ActiveRecord::Migration[7.2]
   def change
-    create_table :useq_wafer, primary_key: :id_useq_wafer_tmp do |t|
+    create_table :useq_wafer, id: false, options: 'CHARSET=utf8 COLLATE=utf8_unicode_ci' do |t|
       # Columns required for NPG linkage and basic tracking
+      t.column "id_useq_wafer_tmp", "integer unsigned auto_increment", primary_key: true, comment: "Internal to this database, id value can change"
       t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
       t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
       t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
       t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
-      t.string "id_wafer_lims", limit: 20, null: false, comment: "LIMs-specific wafer id, batch_id for Sequencescape"
+      t.string "id_wafer_lims", limit: 60, null: false, comment: "LIMs-specific wafer id, a concatenation of batch_for_opentrons, id_pool_lims and request_order"
+      t.string "batch_for_opentrons", limit: 20, null: false, comment: "LIMs-specific identifier, batch_id for Sequencescape"
       t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE", index: true
-      t.integer "lane", limit: 2, null: false, comment: "Wafer lane number", unsigned: true
+      t.integer "request_order", limit: 2, null: false, comment: "LIMs-specific identifier for order in a batch", unsigned: true
       t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_indexed"
       t.string "tag_sequence", limit: 30, comment: "Tag sequence"
       t.string "pipeline_id_lims", limit: 60, comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
@@ -46,8 +48,8 @@ class AddUltimaSeqWaferTable < ActiveRecord::Migration[7.2]
     add_foreign_key :useq_wafer, :sample, column: :id_sample_tmp, primary_key: :id_sample_tmp, name: "useq_wafer_sample_fk"
     add_foreign_key :useq_wafer, :study, column: :id_study_tmp, primary_key: :id_study_tmp, name: "useq_wafer_study_fk"
     add_index :useq_wafer, %i[
-      id_wafer_lims
-      lane
+      batch_for_opentrons
+      request_order
       tag_sequence
       id_lims
     ], unique: true, name: 'index_useq_wafer_on_composition_keys'

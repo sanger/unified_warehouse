@@ -215,7 +215,8 @@ shared_examples 'large useq wafer json' do
       'updated_at' => '2012-03-11 10:22:42',
       'lanes' => [
         {
-          'lane' => 1,
+          'request_order' => 1,
+          'id_wafer_lims' => '1123_NT1234567X_1',
           'id_pool_lims' => 'NT1234567X',
           'otr_instrument_name' => 'otr_inst_1',
           'amp_instrument_name' => 'amp_inst_1',
@@ -260,7 +261,8 @@ shared_examples 'small useq wafer json' do
       'updated_at' => '2012-03-11 10:22:42',
       'lanes' => [
         {
-          'lane' => 1,
+          'request_order' => 1,
+          'id_wafer_lims' => '1123_NT1234567X_1',
           'id_pool_lims' => 'NT1234567X',
           'otr_instrument_name' => 'otr_inst_1',
           'amp_instrument_name' => 'amp_inst_1',
