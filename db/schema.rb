@@ -524,14 +524,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.index ["id_study_tmp"], name: "study_users_study_fk"
   end
 
-  create_table "useq_wafer", primary_key: "id_useq_wafer_tmp", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+  create_table "useq_wafer", primary_key: "id_useq_wafer_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update"
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update"
     t.integer "id_sample_tmp", null: false, comment: "Sample id, see \"sample.id_sample_tmp\"", unsigned: true
     t.integer "id_study_tmp", null: false, comment: "Study id, see \"study.id_study_tmp\"", unsigned: true
-    t.string "id_wafer_lims", limit: 20, null: false, comment: "LIMs-specific wafer id, batch_id for Sequencescape"
+    t.string "id_wafer_lims", limit: 60, null: false, comment: "LIMs-specific wafer id, a concatenation of batch_for_opentrons, id_pool_lims and request_order"
+    t.string "batch_for_opentrons", limit: 20, null: false, comment: "LIMs-specific identifier, batch_id for Sequencescape"
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
-    t.integer "lane", limit: 2, null: false, comment: "Wafer lane number", unsigned: true
+    t.integer "request_order", limit: 2, null: false, comment: "LIMs-specific identifier for order in a batch", unsigned: true
     t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_indexed"
     t.string "tag_sequence", limit: 30, comment: "Tag sequence"
     t.string "pipeline_id_lims", limit: 60, comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
@@ -555,12 +556,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.string "otr_instrument_name", comment: "Opentron instrument name"
     t.string "amp_assign_control_bead_tube", comment: "AMP assign control bead tube barcode"
     t.string "amp_instrument_name", comment: "AMP instrument name"
+    t.index ["batch_for_opentrons", "request_order", "tag_sequence", "id_lims"], name: "index_useq_wafer_on_composition_keys", unique: true
     t.index ["id_library_lims"], name: "index_useq_wafer_on_id_library_lims"
     t.index ["id_lims"], name: "index_useq_wafer_on_id_lims"
     t.index ["id_pool_lims"], name: "index_useq_wafer_on_id_pool_lims"
     t.index ["id_sample_tmp"], name: "useq_wafer_sample_fk"
     t.index ["id_study_tmp"], name: "useq_wafer_study_fk"
-    t.index ["id_wafer_lims", "lane", "tag_sequence", "id_lims"], name: "index_useq_wafer_on_composition_keys", unique: true
   end
 
   add_foreign_key "bmap_flowcell", "sample", column: "id_sample_tmp", primary_key: "id_sample_tmp", name: "fk_bmap_flowcell_to_sample"
