@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/sanger/unified_warehouse.svg?branch=develop)](https://travis-ci.org/sanger/unified_warehouse)
 
-A denormalised warehouse for multiple LIMS.
+A denormalised warehouse for multiple LIMS. This project consumes messages from a message broker (RabbitMQ) and persists them in MLWH.
 
 Populating a table in the warehouse is done asynchronously. This project is a Railtie application that facilitate asynchronous database population through a message queue. This application listens to a message queue, consumes the message, converts the message into a database model, and persists in the corresponding table. 
 

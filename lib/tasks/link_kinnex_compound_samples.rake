@@ -4,6 +4,7 @@ namespace :psd_sample_compounds_components do
   desc 'Link compound Kinnex samples to their components in the database'
 
   task link_kinnex_compound_samples: :environment do
+    Rails.logger.info 'Linking compound Kinnex samples to their components in the database'
     kinnex_supplier_names.each do |supplier_name|
       # Select compound samples where accession_number is nil (unaccessioned)
       compound_sample = Sample.where(name: supplier_name, id_lims: 'Traction', accession_number: nil)
