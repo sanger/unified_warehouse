@@ -31,6 +31,7 @@ gem 'sanger_warren'
 gem 'bootsnap', '~> 1.7', '>= 1.7.3', require: false
 gem 'hashie', '~> 5.0'
 gem 'mysql2', '~> 0.5.3'
+gem 'ostruct' # No longer part of the default gems in Ruby 3.5
 gem 'syslog' # No longer part of the default gems in Ruby 3.4
 
 gem 'views_schema', github: 'sanger/views_schema'
