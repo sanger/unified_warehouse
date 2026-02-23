@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_20_113917) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -68,8 +68,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.integer "lane", limit: 2, null: false, comment: "Flowcell lane number, 1 or 2", unsigned: true
     t.string "entity_type", limit: 30, null: false, comment: "Library type: library_indexed, library_indexed_spike"
-    t.string "tag_sequence", limit: 30, comment: "Tag sequence"
-    t.string "tag2_sequence", limit: 30, comment: "Tag sequence for tag 2"
+    t.string "tag_sequence", comment: "Tag sequence"
+    t.string "tag2_sequence", comment: "Tag sequence for tag 2"
     t.string "pipeline_id_lims", limit: 60, comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
     t.string "bait_name", limit: 50, comment: "WTSI-wide name that uniquely identifies a bait set"
     t.integer "requested_insert_size_from", comment: "Requested insert size min value", unsigned: true
@@ -124,11 +124,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.string "entity_type", limit: 30, null: false, comment: "Lane type: library, library_control, library_indexed, library_indexed_spike"
     t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
     t.integer "tag_index", limit: 2, comment: "Tag index, NULL if lane is not a pool", unsigned: true
-    t.string "tag_sequence", limit: 30, comment: "Tag sequence"
+    t.string "tag_sequence", comment: "Tag sequence"
     t.string "tag_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set"
     t.string "tag_set_name", limit: 100, comment: "WTSI-wide tag set name"
     t.string "tag_identifier", limit: 30, comment: "The position of tag within the tag group"
-    t.string "tag2_sequence", limit: 30, comment: "Tag sequence for tag 2"
+    t.string "tag2_sequence", comment: "Tag sequence for tag 2"
     t.string "tag2_set_id_lims", limit: 20, comment: "LIMs-specific identifier of the tag set for tag 2"
     t.string "tag2_set_name", limit: 100, comment: "WTSI-wide tag set name for tag 2"
     t.string "tag2_identifier", limit: 30, comment: "The position of tag2 within the tag group"
@@ -534,7 +534,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.string "id_lims", limit: 10, null: false, comment: "LIM system identifier, e.g. CLARITY-GCLP, SEQSCAPE"
     t.integer "request_order", limit: 2, null: false, comment: "LIMs-specific identifier for order in a batch", unsigned: true
     t.string "entity_type", limit: 30, null: false, comment: "Entity type, e.g. library_indexed or in the future some other library type"
-    t.string "tag_sequence", limit: 30, comment: "Tag sequence"
+    t.string "tag_sequence", comment: "Tag sequence"
     t.string "pipeline_id_lims", limit: 60, comment: "LIMs-specific pipeline identifier that unambiguously defines library type"
     t.string "bait_name", limit: 50, comment: "WTSI-wide name that uniquely identifies a bait set"
     t.integer "requested_insert_size_from", comment: "Requested insert size min value", unsigned: true
