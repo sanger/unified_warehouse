@@ -25,8 +25,7 @@ gem 'concurrent-ruby', '1.3.5'
 gem 'bunny', '>= 2.22.0'
 gem 'rbtree', '~> 0.4.5'
 
-# RabbitMQ client
-gem 'sanger_warren'
+gem 'sanger_warren', github: 'sanger/sanger_warren', branch: 'troubleshooting-logs'
 
 gem 'bootsnap', '~> 1.7', '>= 1.7.3', require: false
 gem 'hashie', '~> 5.0'
