@@ -6,10 +6,10 @@ GIT
 
 GIT
   remote: https://github.com/sanger/warren.git
-  revision: fcee96dbf39e8187fe1759a0b0c80cdf98740d1d
+  revision: 9cf58d2f7366340276b84fdf06d732a4cf376984
   branch: master
   specs:
-    sanger_warren (0.5.1)
+    sanger_warren (0.5.2)
       bunny (~> 2.17)
       connection_pool (~> 2.2)
       multi_json (>= 1.0, < 1.18.0)
