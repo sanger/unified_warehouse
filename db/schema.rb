@@ -78,8 +78,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_07_081702) do
     t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"
     t.string "primer_panel", comment: "Primer Panel name"
     t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
-    t.string "quant_method_used", comment: "Quantification method used for the run"
-    t.string "custom_primer_kit_used", comment: "Custom primer kit used for the run, values: Yes, No"
+    t.string "quant_method_used", limit: 50, comment: "Quantification method used for the run"
+    t.string "custom_primer_kit_used", limit: 10, comment: "Has a custom primer kit been used for the run: Yes, No"
     t.index ["id_flowcell_lims", "lane", "tag_sequence", "tag2_sequence", "id_lims"], name: "index_eseq_flowcell_on_composition_keys", unique: true
     t.index ["id_library_lims"], name: "index_eseq_flowcell_on_id_library_lims"
     t.index ["id_pool_lims"], name: "index_eseq_flowcell_on_id_pool_lims"
