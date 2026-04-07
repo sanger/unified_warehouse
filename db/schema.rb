@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_07_081702) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -78,6 +78,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_23_142000) do
     t.string "id_library_lims", comment: "Earliest LIMs identifier associated with library creation"
     t.string "primer_panel", comment: "Primer Panel name"
     t.string "entity_id_lims", limit: 20, null: false, comment: "Most specific LIMs identifier associated with this lane or plex or spike"
+    t.string "quant_method_used", comment: "Quantification method used for the run"
+    t.string "custom_primer_kit_used", comment: "Custom primer kit used for the run, values: Yes, No"
     t.index ["id_flowcell_lims", "lane", "tag_sequence", "tag2_sequence", "id_lims"], name: "index_eseq_flowcell_on_composition_keys", unique: true
     t.index ["id_library_lims"], name: "index_eseq_flowcell_on_id_library_lims"
     t.index ["id_pool_lims"], name: "index_eseq_flowcell_on_id_pool_lims"
