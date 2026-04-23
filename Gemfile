@@ -25,8 +25,8 @@ gem 'concurrent-ruby', '1.3.5'
 gem 'bunny', '>= 2.22.0'
 gem 'rbtree', '~> 0.4.5'
 
-# RabbitMQ client
-gem 'sanger_warren', github: 'sanger/warren', branch: 'master'
+# RabbitMQ client - note: known typo in branch name: ...warre
+gem 'sanger_warren', github: 'sanger/warren', branch: 'y26-066-bug-handle-top-level-exceptions-in-unified_warehouse-warre'
 
 gem 'bootsnap', '~> 1.7', '>= 1.7.3', require: false
 gem 'hashie', '~> 5.0'
