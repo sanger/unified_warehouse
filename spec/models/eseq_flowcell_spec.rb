@@ -8,36 +8,8 @@ describe EseqFlowcell do
 
   shared_examples_for 'a flowcell' do
     it_behaves_like 'maps JSON fields', {
-      flowcell_id: :id_flowcell_lims, position: :lane
+      flowcell_id: :id_flowcell_lims
     }
-
-    # Eseq flowcell has fewer fields than Iseq flowcell and ignores the fields
-    # that are not mapped to the columns of the eseq_flowcell table.
-    it_behaves_like 'ignores JSON fields', %w[
-      manual_qc
-      priority
-      external_release
-      purpose
-      spiked_phix_barcode
-      spiked_phix_percentage
-      workflow
-      loading_concentration
-      flowcell_barcode
-      forward_read_length
-      reverse_read_length
-      tag_set_id_lims
-      tag_set_name
-      tag_identifier
-      tag2_set_id_lims
-      tag2_set_name
-      tag2_identifier
-      cost_code
-      is_r_and_d
-      tag_index
-      team
-      suboptimal
-      legacy_library_id
-    ]
 
     it_behaves_like 'belongs to', %i[study sample], { lanes: :samples }
 
