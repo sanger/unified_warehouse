@@ -28,7 +28,7 @@ class EseqFlowcell < ApplicationRecord
     :tag2_sequence
   )
 
-  json do # rubocop:disable Metrics/BlockLength
+  json do
     has_nested_model(:lanes) do # The message has nested lanes section.
       ignore(:samples, :controls) # These keys are not mapped to columns.
 
@@ -38,39 +38,7 @@ class EseqFlowcell < ApplicationRecord
 
     ignore(:lanes) # This key is for the nested section; not mapped to a column.
 
-    # The following fields are included in the Iseq flowcell mesage. We assume
-    # the same message for Eseq flowcell as well until the Sequencescape side of
-    # the messaging is implemented. However, we need to ignore the fields that
-    # are not mapped to the columns of the eseq_flowcell table.
-    ignore(
-      :manual_qc,
-      :priority,
-      :external_release,
-      :purpose,
-      :spiked_phix_barcode,
-      :spiked_phix_percentage,
-      :workflow,
-      :loading_concentration,
-      :flowcell_barcode,
-      :forward_read_length,
-      :reverse_read_length,
-      :tag_set_id_lims,
-      :tag_set_name,
-      :tag_identifier,
-      :tag2_set_id_lims,
-      :tag2_set_name,
-      :tag2_identifier,
-      :cost_code,
-      :is_r_and_d,
-      :tag_index,
-      :team,
-      :suboptimal,
-      :legacy_library_id
-    )
     # We translate the fields from the message to the columns of the table.
-    # Note that the 'position' column of the iseq_flowcell table is named as
-    # 'lane' in the eseq_flowcell table. If the mapping is done on the
-    # Sequencescape side, we need to update the translation accordingly.
-    translate(flowcell_id: :id_flowcell_lims, position: :lane)
+    translate(flowcell_id: :id_flowcell_lims)
   end
 end

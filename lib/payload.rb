@@ -1,7 +1,8 @@
 # A payload takes a message body, provides basic validation and
 # generates the corresponding record on record
 class Payload
-  InvalidMessage = Class.new(StandardError)
+  class InvalidMessage < StandardError
+  end
 
   module ClassMethods
     def from_json(json)
