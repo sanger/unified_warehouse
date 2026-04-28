@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_04_07_081702) do
+ActiveRecord::Schema[7.2].define(version: 2026_04_13_120000) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -558,8 +558,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_07_081702) do
     t.string "otr_instrument_name", comment: "Opentron instrument name"
     t.string "amp_assign_control_bead_tube", comment: "AMP assign control bead tube barcode"
     t.string "amp_instrument_name", comment: "AMP instrument name"
-    t.string "wafer_size", limit: 10, comment: "Wafer size, e.g. 10TB"
-    t.string "sequencer_type", limit: 10, comment: "Sequencer type, e.g. UG200"
+    t.string "wafer_size", limit: 10, comment: "Used to track UG200 wafer size only, defin
+ed in the sequencing request by SSR, default 10TB."
+    t.string "requested_sequencer_type", limit: 10, comment: "Requested sequencer model ty
+pe, currently there is two types: UG100 & UG200"
     t.index ["batch_for_opentrons", "request_order", "tag_sequence", "id_lims"], name: "index_useq_wafer_on_composition_keys", unique: true
     t.index ["id_library_lims"], name: "index_useq_wafer_on_id_library_lims"
     t.index ["id_lims"], name: "index_useq_wafer_on_id_lims"
