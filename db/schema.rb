@@ -558,8 +558,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_04_13_120000) do
     t.string "otr_instrument_name", comment: "Opentron instrument name"
     t.string "amp_assign_control_bead_tube", comment: "AMP assign control bead tube barcode"
     t.string "amp_instrument_name", comment: "AMP instrument name"
-    t.string "wafer_size", limit: 10, comment: "Used to track UG200 wafer size only, defined in the sequencing request by SSR, default 10TB."
-    t.string "requested_sequencer_type", limit: 10, comment: "Requested sequencer model type, currently there is two types: UG100 & UG200"
+    t.string "wafer_size", limit: 10, comment: "Used to track UG200 wafer size only, defined in the sequencing request by SSR."
+    t.string "requested_sequencer_type", limit: 10, comment: "Requested sequencer model, 'UG 100' & 'UG 200'"
     t.index ["batch_for_opentrons", "request_order", "tag_sequence", "id_lims"], name: "index_useq_wafer_on_composition_keys", unique: true
     t.index ["id_library_lims"], name: "index_useq_wafer_on_id_library_lims"
     t.index ["id_lims"], name: "index_useq_wafer_on_id_lims"
