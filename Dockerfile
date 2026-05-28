@@ -1,4 +1,4 @@
-FROM ruby:3.4.7
+FROM ruby:4.0.5
 
 RUN gem install bundler
 
