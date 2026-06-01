@@ -36,10 +36,10 @@ If the message above is consumed by `unified_warehouse`, it will create a new re
 
 ### Requirement
 
-1. MySQL (currently 8.0) is required and usually installed with homebrew:
+1. MySQL (currently 8.4) is required and usually installed with homebrew:
 
-       brew install mysql@8.0
-       brew link mysql@8.0 --force
+       brew install mysql@8.4
+       brew link mysql@8.4 --force
 
 ### Installation
 

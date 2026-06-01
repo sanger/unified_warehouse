@@ -19,9 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LOCALHOST: 127.0.0.1 # If we use localhost, rails tries to use a socket
+    strategy:
+      fail-fast: false
+      matrix:
+        mysql-version: ["8.0", "8.4"]
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:${{ matrix.mysql-version }}
         ports:
           - 3306:3306
         env:
