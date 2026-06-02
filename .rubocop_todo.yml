@@ -162,3 +162,9 @@ Style/SymbolProc:
 # URISchemes: http, https
 Layout/LineLength:
   Max: 252
+
+# Offense count: 1
+Style/OneClassPerFile:
+  Exclude:
+    - 'lib/resource_tools/core_extensions.rb'
+
