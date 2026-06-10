@@ -126,7 +126,8 @@ shared_examples 'large eseq flowcell json' do
               'study_uuid' => '000000-0000-0000-0000-0000000001',
               'primer_panel' => 'PrimerPanel1',
               'id_library_lims' => 'SQPP-1234-X:A1',
-              'entity_id_lims' => 12_345
+              'entity_id_lims' => 12_345,
+              'cost_code' => '12345'
             }
           ],
           'controls' => [
@@ -169,7 +170,8 @@ shared_examples 'small eseq flowcell json' do
               'study_uuid' => '000000-0000-0000-0000-0000000001',
               'primer_panel' => 'PrimerPanel1',
               'id_library_lims' => 'SQPP-1234-X:A1',
-              'entity_id_lims' => 12_345
+              'entity_id_lims' => 12_345,
+              'cost_code' => '12345'
             }
           ]
         }
