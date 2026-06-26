@@ -25,7 +25,6 @@ namespace :useq_wafer_table do
           entity_type,
           tag_sequence,
           id_pool_lims,
-          id_library_lims,
           entity_id_lims,
           requested_sequencer_type
       )
@@ -44,7 +43,6 @@ namespace :useq_wafer_table do
             ELSE 'library'
           END,
           upm.ultimagen_Index_Sequence,
-          'N/A',
           'N/A',
           'N/A',
           urm.instrument_model
