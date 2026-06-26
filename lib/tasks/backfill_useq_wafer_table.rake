@@ -33,7 +33,7 @@ namespace :useq_wafer_table do
           urm.last_changed,
           s.id_sample_tmp,
           sr.id_study_tmp,
-          'N/A',
+          urm.ultimagen_Library_Pool,
           urm.id_run,
           '#{ID_LIMS}',
           0,
