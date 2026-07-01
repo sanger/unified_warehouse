@@ -4,8 +4,4 @@ class AlterLighthouseSampleRowFormat < ActiveRecord::Migration[7.2]
   def up
     ActiveRecord::Base.connection.execute("ALTER TABLE `lighthouse_sample` ROW_FORMAT=DYNAMIC;")
   end
-
-  def down
-    ActiveRecord::Base.connection.execute("ALTER TABLE `lighthouse_sample` ROW_FORMAT=COMPACT;")
-  end
 end
