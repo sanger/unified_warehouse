@@ -16,6 +16,7 @@
 /doc
 
 coverage
+lcov.info
 
 # Allow custom config files if desired
 *.local.yml

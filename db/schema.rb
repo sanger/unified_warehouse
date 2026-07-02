@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_01_094718) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_01_125103) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
     t.string "aliquot_type", null: false, comment: "The type of the aliquot"
     t.string "source_type", null: false, comment: "The type of the source of the aliquot"
     t.string "source_barcode", null: false, comment: "The barcode of the source of the aliquot"
-    t.string "sample_name", null: false, comment: "The name of the sample that the aliquot was created from"
+    t.string "sample_name", limit: 512, null: false, comment: "The name of the sample, or colon separated list of sample names, that the aliquot was created from"
     t.string "used_by_type", null: false, comment: "The type of the entity that the aliquot is used by"
     t.string "used_by_barcode", null: false, comment: "The barcode of the entity that the aliquot is used by"
     t.decimal "volume", precision: 10, scale: 2, null: false, comment: "The volume of the aliquot (uL)"
