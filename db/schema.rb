@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_01_125103) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_20_105951) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "id_lims", null: false, comment: "The LIMS system that the aliquot was created in"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -510,6 +510,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_01_125103) do
     t.string "ebi_library_selection"
     t.string "data_release_timing_publication_comment"
     t.string "data_share_in_preprint"
+    t.string "data_release_prevention_reason", comment: "Reason for preventing data release for this study"
     t.index ["accession_number"], name: "study_accession_number_index"
     t.index ["id_lims", "id_study_lims"], name: "study_id_lims_id_study_lims_index", unique: true
     t.index ["id_study_lims"], name: "index_study_on_id_study_lims"
