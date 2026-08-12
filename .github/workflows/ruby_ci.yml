@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        mysql-version: ["8.0", "8.4"]
+        mysql-version: ["8.4"]
 
     # Services
     # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idservices
