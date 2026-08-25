@@ -134,21 +134,18 @@ describe Flowcell do
     end
   end
 
-  context 'a message with clashing samples' do
-    let(:expected_identifiers) { 'tag_index, id_flowcell_lims, entity_id_lims, entity_type, position, tag_sequence, tag2_sequence' }
+  context 'when resolving study associations for incoming messages' do
     let(:example_lims) { 'example' }
+    let(:study_uuid) { 'duplicate-study-uuid' }
 
     let(:json) do
       {
-
         'flowcell_barcode' => '12345678903',
         'flowcell_id' => '1123',
         'pipeline_id_lims' => 'Agilent Pulldown',
         'forward_read_length' => 222,
         'reverse_read_length' => 222,
-
         'updated_at' => '2012-03-11 10:22:42',
-
         'lanes' => [
           {
             'manual_qc' => true,
@@ -157,7 +154,122 @@ describe Flowcell do
             'priority' => 1,
             'id_pool_lims' => 'DN324095D A1:H2',
             'external_release' => true,
+            'samples' => [
+              {
+                'tag_index' => 3,
+                'tag_sequence' => 'ATAG',
+                'tag_set_id_lims' => '2',
+                'tag_set_name' => 'Sanger_168tags - 10 mer tags',
+                'bait_name' => 'DDD_V5_plus',
+                'requested_insert_size_from' => 100,
+                'requested_insert_size_to' => 200,
+                'sample_uuid' => mock_sample.uuid_sample_lims,
+                'study_uuid' => study_uuid,
+                'cost_code' => '12345',
+                'entity_id_lims' => '12345',
+                'is_r_and_d' => false
+              }
+            ]
+          }
+        ]
+      }
+    end
 
+    it 'links to the matching study when only one record is found' do
+      matching_study = create(
+        :study,
+        uuid_study_lims: study_uuid,
+        id_study_lims: '54321',
+        is_current: true
+      )
+
+      described_class.create_or_update_from_json(json, example_lims)
+
+      expect(described_class.last.study).to eq(matching_study)
+    end
+
+    it 'prefers study records where is_current is true when multiple uuid records match' do
+      # Non-current match
+      create(
+        :study,
+        uuid_study_lims: study_uuid,
+        id_study_lims: '54322',
+        is_current: false
+      )
+      current_match = create(
+        :study,
+        uuid_study_lims: study_uuid,
+        id_study_lims: '54323',
+        is_current: true
+      )
+
+      described_class.create_or_update_from_json(json, example_lims)
+
+      expect(described_class.last.study).to eq(current_match)
+    end
+
+    it 'uses the last record when multiple current study records still remain' do
+      # Create several matches
+      3.times do |index|
+        create(
+          :study,
+          uuid_study_lims: study_uuid,
+          is_current: true,
+          id_study_lims: "5432#{index}"
+        )
+      end
+      last_current_match = create(
+        :study,
+        uuid_study_lims: study_uuid,
+        id_study_lims: '54325',
+        is_current: true
+      )
+
+      described_class.create_or_update_from_json(json, example_lims)
+
+      expect(described_class.last.study).to eq(last_current_match)
+    end
+
+    it 'uses the given id_lims and id_study_lims to find the study when no uuid is given' do
+      id_study_lims = '54326'
+      # Create a study with the same ID but a different LIMS ID to ensure the correct one is chosen
+      create(:study, uuid_study_lims: nil, id_study_lims: id_study_lims, id_lims: 'Sapio')
+      matching_study = create(
+        :study,
+        uuid_study_lims: nil,
+        id_study_lims: id_study_lims,
+        id_lims: example_lims
+      )
+
+      json['lanes'].first['samples'].first['study_uuid'] = nil
+      json['lanes'].first['samples'].first['study_id'] = id_study_lims
+
+      described_class.create_or_update_from_json(json, example_lims)
+
+      expect(described_class.last.study).to eq(matching_study)
+    end
+  end
+
+  context 'a message with clashing samples' do
+    let(:expected_identifiers) { 'tag_index, id_flowcell_lims, entity_id_lims, entity_type, position, tag_sequence, tag2_sequence' }
+    let(:example_lims) { 'example' }
+
+    let(:json) do
+      {
+        'flowcell_barcode' => '12345678903',
+        'flowcell_id' => '1123',
+        'pipeline_id_lims' => 'Agilent Pulldown',
+        'forward_read_length' => 222,
+        'reverse_read_length' => 222,
+        'updated_at' => '2012-03-11 10:22:42',
+        'lanes' => [
+          {
+            'manual_qc' => true,
+            'entity_type' => 'library',
+            'position' => 1,
+            'priority' => 1,
+            'id_pool_lims' => 'DN324095D A1:H2',
+            'external_release' => true,
             'samples' => [
               {
                 'tag_index' => 3,
