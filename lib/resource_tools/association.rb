@@ -6,9 +6,10 @@ module ResourceTools::Association
   def choose_associated_uuid_record(candidates, association_name)
     return nil if candidates.nil?
 
-    # Prefer current study rows when duplicate UUIDs exist (studies only).
+    # Prefer is_current true rows when duplicate UUIDs exist (studies only).
     if association_name.to_sym == :study && candidates.many?
       current_scope = candidates.where(is_current: true)
+      # Update candidates to only include current records if any exist, otherwise keep the original candidates.
       candidates = current_scope if current_scope.exists?
     end
 
