@@ -230,6 +230,28 @@ describe Flowcell do
       expect(described_class.last.study).to eq(last_current_match)
     end
 
+    it 'uses the last record when multiple non-current study records remain' do
+      # Create several matches
+      3.times do |index|
+        create(
+          :study,
+          uuid_study_lims: study_uuid,
+          is_current: false,
+          id_study_lims: "5432#{index}"
+        )
+      end
+      last_non_current_match = create(
+        :study,
+        uuid_study_lims: study_uuid,
+        id_study_lims: '54325',
+        is_current: false
+      )
+
+      described_class.create_or_update_from_json(json, example_lims)
+
+      expect(described_class.last.study).to eq(last_non_current_match)
+    end
+
     it 'uses the given id_lims and id_study_lims to find the study when no uuid is given' do
       id_study_lims = '54326'
       # Create a study with the same ID but a different LIMS ID to ensure the correct one is chosen
@@ -247,6 +269,23 @@ describe Flowcell do
       described_class.create_or_update_from_json(json, example_lims)
 
       expect(described_class.last.study).to eq(matching_study)
+    end
+
+    it 'raises an error when no matching study is found' do
+      json['lanes'].first['samples'].first['study_uuid'] = 'nonexistent-uuid'
+
+      expect do
+        described_class.create_or_update_from_json(json, example_lims)
+      end.to raise_error(ActiveRecord::RecordNotFound, "No study with uuid 'nonexistent-uuid'")
+    end
+
+    it 'raises an error when no matching study is found by id_lims and id_study_lims' do
+      json['lanes'].first['samples'].first['study_uuid'] = nil
+      json['lanes'].first['samples'].first['study_id'] = 'nonexistent-id'
+
+      expect do
+        described_class.create_or_update_from_json(json, example_lims)
+      end.to raise_error(ActiveRecord::RecordNotFound, "No study for 'example' with_id 'nonexistent-id'")
     end
   end
 
