@@ -7,7 +7,7 @@ shared_examples_for 'has only one row' do
 
   it 'ensures that the row is current' do
     described_class.first.tap do |row|
-      expect(row.last_updated).to     eq(most_recent_time)
+      expect(row.last_updated).to eq(most_recent_time)
     end
   end
 
