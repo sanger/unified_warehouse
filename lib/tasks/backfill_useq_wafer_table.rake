@@ -7,7 +7,7 @@
 STUDY_NAME = 'HG_WC11479_IBD-Bioresource_WES'
 ID_LIMS = 'NPG DATA'
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 namespace :useq_wafer_table do
   desc 'backfill useq_wafer records'
 
@@ -76,4 +76,3 @@ namespace :useq_wafer_table do
     puts 'Rollback complete.'
   end
 end
-# rubocop:enable Metrics/BlockLength
