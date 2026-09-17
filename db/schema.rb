@@ -516,7 +516,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_04_122027) do
     t.index ["id_lims", "id_study_lims"], name: "study_id_lims_id_study_lims_index", unique: true
     t.index ["id_study_lims"], name: "index_study_on_id_study_lims"
     t.index ["name"], name: "study_name_index"
-    t.index ["uuid_study_lims"], name: "study_uuid_study_lims_index"
+    t.index ["uuid_study_lims", "id_lims"], name: "study_uuid_study_lims_index", unique: true
   end
 
   create_table "study_users", primary_key: "id_study_users_tmp", id: { type: :integer, unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
