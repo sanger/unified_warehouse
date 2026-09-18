@@ -193,12 +193,14 @@ describe Flowcell do
       create(
         :study,
         uuid_study_lims: study_uuid,
+        id_lims: 'SAPIO',
         id_study_lims: '54322',
         is_current: false
       )
       current_match = create(
         :study,
         uuid_study_lims: study_uuid,
+        id_lims: 'SQSCP',
         id_study_lims: '54323',
         is_current: true
       )
@@ -215,13 +217,15 @@ describe Flowcell do
           :study,
           uuid_study_lims: study_uuid,
           is_current: true,
-          id_study_lims: "5432#{index}"
+          id_study_lims: "5432#{index}",
+          id_lims: "UNIQUE #{index}"
         )
       end
       last_current_match = create(
         :study,
         uuid_study_lims: study_uuid,
         id_study_lims: '54325',
+        id_lims: 'SAPIO',
         is_current: true
       )
 
@@ -237,14 +241,16 @@ describe Flowcell do
           :study,
           uuid_study_lims: study_uuid,
           is_current: false,
-          id_study_lims: "5432#{index}"
+          id_study_lims: "5432#{index}",
+          id_lims: "UNIQUE #{index}"
         )
       end
       last_non_current_match = create(
         :study,
         uuid_study_lims: study_uuid,
         id_study_lims: '54325',
-        is_current: false
+        is_current: false,
+        id_lims: 'SAPIO'
       )
 
       described_class.create_or_update_from_json(json, example_lims)
