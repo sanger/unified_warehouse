@@ -4,16 +4,16 @@ module ResourceTools::Association
   private
 
   def choose_associated_uuid_record(candidates, association_name)
-    return nil if candidates.nil?
+    # This ensures the loaded records are in the correct order for .last to return
+    # the highest primary key record (latest record)
+    records = candidates.order(candidates.klass.primary_key => :asc).to_a
 
-    # Prefer is_current true rows when duplicate UUIDs exist (studies only).
-    if association_name.to_sym == :study && candidates.many?
-      current_scope = candidates.where(is_current: true)
-      # Update candidates to only include current records if any exist, otherwise keep the original candidates.
-      candidates = current_scope if current_scope.exists?
+    if association_name.to_sym == :study
+      current_records = records.select(&:is_current)
+      records = current_records if current_records.any?
     end
 
-    candidates.last
+    records.last
   end
 
   module ClassMethods
