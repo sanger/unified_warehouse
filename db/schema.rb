@@ -532,7 +532,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_16_125342) do
   create_table "useq_wafer", primary_key: "id_useq_wafer_tmp", id: { type: :integer, comment: "Internal to this database, id value can change", unsigned: true }, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "amp_assign_control_bead_tube", comment: "AMP assign control bead tube barcode"
     t.string "amp_instrument_name", comment: "AMP instrument name"
-    t.string "application_type", comment: "Ultima application type used"
+    t.string "application_type", comment: "Ultima application type used, e.g. converted-truseq"
     t.string "bait_name", limit: 50, comment: "WTSI-wide name that uniquely identifies a bait set"
     t.string "batch_for_opentrons", limit: 20, null: false, comment: "LIMs-specific identifier, batch_id for Sequencescape"
     t.string "converted_illumina_tag2_sequence", comment: "Illumina tag2 sequence used"
