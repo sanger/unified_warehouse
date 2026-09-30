@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 namespace :pac_bio_run_table do
   desc 'Update pac_bio_run_name column with the values from id_pac_bio_run_lims'
   list_of_runs = [
@@ -194,4 +194,3 @@ namespace :pac_bio_run_table do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength
