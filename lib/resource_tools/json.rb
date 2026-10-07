@@ -161,7 +161,7 @@ module ResourceTools::Json
     # rubocop:enable Naming/BlockForwarding, Style/ArgumentsForwarding, Lint/ShadowingOuterLocalVariable
 
     def convert_booleans
-      self.stored_as_boolean.each do |key|
+      stored_as_boolean.each do |key|
         self[key] = self[key].to_boolean_from_arguments if has_key?(key)
       end
     end
