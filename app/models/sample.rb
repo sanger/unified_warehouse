@@ -28,17 +28,7 @@ class Sample < ApplicationRecord
 
   attr_accessor :component_sample_uuids
 
-  before_validation do
-    self.component_samples =
-      if component_sample_uuids.nil?
-        []
-      else
-        component_sample_uuids.map do |uuid_hash|
-          uuid = uuid_hash['uuid_sample_lims']
-          Sample.with_uuid(uuid).first || raise(ActiveRecord::RecordNotFound, "No sample with uuid '#{uuid}'")
-        end
-      end
-  end
+  before_validation :link_component_samples
 
   json do
     ignore(
@@ -53,5 +43,38 @@ class Sample < ApplicationRecord
       id: :id_sample_lims,
       uuid: :uuid_sample_lims
     )
+  end
+
+  private
+
+  def link_component_samples
+    tags = component_tags_from_json # Sample => tag_sequence
+
+    wanted_ids = tags.keys(&:id_sample_tmp)
+    links = joins_as_compound_sample.index_by(&:component_id_sample_tmp)
+
+    links.each do |component_id, link|
+      joins_as_compound_sample.destroy(link) unless wanted_ids.include?(component_id)
+    end
+
+    tags.each do |component, tag_sequence|
+      link = links[component.id_sample_tmp]
+      if link
+        link.update!(tag_sequence: tag_sequence) unless link.tag_sequence == tag_sequence
+      else
+        joins_as_compound_sample.build(component_sample: component, tag_sequence: tag_sequence)
+      end
+    end
+  end
+
+  def component_tags_from_json
+    (component_sample_uuids || []).to_h do |entry|
+      key = component_sample_for(entry['uuid_sample_lims'])
+      [key, entry['tag_sequence']]
+    end
+  end
+
+  def component_sample_for(uuid)
+    Sample.with_uuid(uuid).first || raise(ActiveRecord::RecordNotFound, "No sample with uuid '#{uuid}'")
   end
 end
