@@ -50,7 +50,7 @@ class Sample < ApplicationRecord
   def link_component_samples
     tags = component_tags_from_json # Sample => tag_sequence
 
-    wanted_ids = tags.keys(&:id_sample_tmp)
+    wanted_ids = tags.keys.to_set(&:id_sample_tmp)
     links = joins_as_compound_sample.index_by(&:component_id_sample_tmp)
 
     links.each do |component_id, link|
@@ -68,7 +68,9 @@ class Sample < ApplicationRecord
   end
 
   def component_tags_from_json
+    # Return empty array if there are no components uuids
     (component_sample_uuids || []).to_h do |entry|
+      # uuid keys translate to uuid_sample_lims
       key = component_sample_for(entry['uuid_sample_lims'])
       [key, entry['tag_sequence']]
     end
