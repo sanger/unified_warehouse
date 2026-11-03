@@ -99,30 +99,26 @@ describe Sample do
     end
 
     it 'allows a compound sample to arrive before its component samples and links them on a later update' do
-      compound_json = {
-        updated_at: originally_created_at,
-        created_at: originally_created_at,
-        uuid: '012345-6789-UUID-0001',
-        id: 12_345,
-        name: 'compound_sample'
-      }
+      message = json.merge(
+        component_sample_uuids: [
+          { uuid: '012345-6789-UUID-LATE', tag_sequence: 'ACGT' }
+        ]
+      )
 
-      described_class.create_or_update_from_json(compound_json, example_lims)
+      expect do
+        described_class.create_or_update_from_json(message, example_lims)
+      end.to raise_error(ActiveRecord::RecordNotFound)
+
+      expect(Sample.find_by(name: 'compound_sample')).to be_nil
+      expect(SampleCompoundComponent.count).to eq(0)
+
+      late_component = create(:sample, uuid_sample_lims: '012345-6789-UUID-LATE')
+
+      described_class.create_or_update_from_json(message, example_lims)
 
       compound_sample = Sample.find_by!(name: 'compound_sample')
-      expect(Sample.count).to eq(1)
-      expect(compound_sample.component_samples).to be_empty
-
-      later_component = create(:sample, uuid_sample_lims: '012345-6789-UUID-0002')
-      updated_json = compound_json.merge(
-        component_sample_uuids: [{ uuid: later_component.uuid_sample_lims }],
-        updated_at: modified_at
-      )
-      described_class.create_or_update_from_json(updated_json, example_lims)
-
-      expect(Sample.count).to eq(2)
-      expect(compound_sample.reload.component_samples).to match_array [later_component]
-      expect(SampleCompoundComponent.count).to eq(1)
+      expect(compound_sample.component_samples).to match_array [late_component]
+      expect(compound_sample.joins_as_compound_sample.sole.tag_sequence).to eq('ACGT')
     end
 
     it 'raises ActiveRecord::RecordNotFound when the component sample UUID cannot be found' do
