@@ -41,7 +41,7 @@ describe Sample do
         uuid: '012345-6789-UUID-0001',
         id: 12_345,
         name: 'compound_sample',
-        component_sample_uuids: [{ uuid_sample_lims: component_sample[:uuid_sample_lims] }]
+        component_sample_uuids: [{ uuid: component_sample[:uuid_sample_lims] }]
       }
     end
 
@@ -115,7 +115,7 @@ describe Sample do
 
       later_component = create(:sample, uuid_sample_lims: '012345-6789-UUID-0002')
       updated_json = compound_json.merge(
-        component_sample_uuids: [{ uuid_sample_lims: later_component.uuid_sample_lims }],
+        component_sample_uuids: [{ uuid: later_component.uuid_sample_lims }],
         updated_at: modified_at
       )
       described_class.create_or_update_from_json(updated_json, example_lims)
@@ -126,7 +126,7 @@ describe Sample do
     end
 
     it 'raises ActiveRecord::RecordNotFound when the component sample UUID cannot be found' do
-      modified_json = json.merge({ component_sample_uuids: [{ uuid_sample_lims: 'MADE_UP_UUID' }] })
+      modified_json = json.merge({ component_sample_uuids: [{ uuid: 'MADE_UP_UUID' }] })
 
       expect do
         described_class.create_or_update_from_json(modified_json, example_lims)
@@ -193,7 +193,7 @@ describe Sample do
         updated_json = json.merge(
           updated_at: modified_at,
           component_sample_uuids: [{
-            uuid_sample_lims: other_component.uuid_sample_lims,
+            uuid: other_component.uuid_sample_lims,
             tag_sequence: 'NEW-TAG'
           }]
         )
@@ -212,8 +212,8 @@ describe Sample do
         updated_json = json.merge(
           updated_at: modified_at,
           component_sample_uuids: [
-            { uuid_sample_lims: component_sample.uuid_sample_lims },
-            { uuid_sample_lims: new_component.uuid_sample_lims, tag_sequence: 'NEW-TAG' }
+            { uuid: component_sample.uuid_sample_lims },
+            { uuid: new_component.uuid_sample_lims, tag_sequence: 'NEW-TAG' }
           ]
         )
 
