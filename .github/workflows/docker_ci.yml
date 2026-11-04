@@ -40,7 +40,7 @@ jobs:
           RABBITMQ_DEFAULT_USER: guest
           RABBITMQ_DEFAULT_PASS: guest
       ewh:
-        image: docker.pkg.github.com/sanger/event_warehouse/event_warehouse:develop
+        image: ghcr.io/sanger/event_warehouse/event_warehouse:develop
         credentials:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
