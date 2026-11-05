@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_16_125342) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_30_124511) do
   create_table "aliquot", charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "aliquot_type", null: false, comment: "The type of the aliquot"
     t.string "aliquot_uuid", null: false, comment: "The UUID of the aliquot in the LIMS system"
@@ -321,6 +321,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_16_125342) do
     t.integer "compound_id_sample_tmp", null: false, comment: "The warehouse ID of the compound sample in the association."
     t.datetime "last_updated", precision: nil, null: false, comment: "Timestamp of last update."
     t.datetime "recorded_at", precision: nil, null: false, comment: "Timestamp of warehouse update."
+    t.string "tag_sequence", comment: "The tag sequence of the component sample within the compound sample,  e.g. for Kinnex. Null when the components are not tagged."
   end
 
   create_table "qc_result", primary_key: "id_qc_result_tmp", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|

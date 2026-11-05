@@ -78,6 +78,47 @@ describe Sample do
       compound_sample = Sample.find_by(name: 'compound_sample')
       expect(compound_sample.component_samples).to match_array [component_sample]
       expect(component_sample.compound_samples).to match_array [compound_sample]
+      expect(compound_sample.joins_as_compound_sample.first.tag_sequence).to be_nil
+    end
+
+    it 'creates links for tagged components when all component samples already exist' do
+      second_component = create(:sample, uuid_sample_lims: '012345-6789-UUID-0003')
+      tagged_json = json.merge(
+        component_sample_uuids: [
+          { uuid: component_sample.uuid_sample_lims, tag_sequence: 'ACGT' },
+          { uuid: second_component.uuid_sample_lims, tag_sequence: 'TGCA' }
+        ]
+      )
+
+      described_class.create_or_update_from_json(tagged_json, example_lims)
+
+      compound_sample = Sample.find_by!(name: 'compound_sample')
+      expect(Sample.count).to eq(3)
+      expect(compound_sample.component_samples).to match_array [component_sample, second_component]
+      expect(compound_sample.joins_as_compound_sample.pluck(:tag_sequence)).to match_array %w[ACGT TGCA]
+    end
+
+    it 'allows a compound sample to arrive before its component samples and links them on a later update' do
+      message = json.merge(
+        component_sample_uuids: [
+          { uuid: '012345-6789-UUID-LATE', tag_sequence: 'ACGT' }
+        ]
+      )
+
+      expect do
+        described_class.create_or_update_from_json(message, example_lims)
+      end.to raise_error(ActiveRecord::RecordNotFound)
+
+      expect(Sample.find_by(name: 'compound_sample')).to be_nil
+      expect(SampleCompoundComponent.count).to eq(0)
+
+      late_component = create(:sample, uuid_sample_lims: '012345-6789-UUID-LATE')
+
+      described_class.create_or_update_from_json(message, example_lims)
+
+      compound_sample = Sample.find_by!(name: 'compound_sample')
+      expect(compound_sample.component_samples).to match_array [late_component]
+      expect(compound_sample.joins_as_compound_sample.sole.tag_sequence).to eq('ACGT')
     end
 
     it 'raises ActiveRecord::RecordNotFound when the component sample UUID cannot be found' do
@@ -115,7 +156,7 @@ describe Sample do
         described_class.create_or_update_from_json(updated_json, example_lims)
 
         expect(Sample.count).to be 3
-        expect(SampleCompoundComponent.count).to be 1
+        expect(SampleCompoundComponent.count).to eq(1)
 
         compound_sample.reload
         component_sample.reload
@@ -124,6 +165,60 @@ describe Sample do
         expect(compound_sample.component_samples).to match_array [component_sample]
         expect(component_sample.compound_samples).to match_array [compound_sample]
         expect(other_component.compound_samples).to be_empty
+      end
+
+      it 'removes existing links whose UUIDs are absent from the payload' do
+        retained_component = create(:sample, uuid_sample_lims: '012345-6789-UUID-0004')
+        compound_sample.component_samples = [other_component, retained_component]
+        compound_sample.reload
+
+        updated_json = json.merge(
+          updated_at: modified_at,
+          component_sample_uuids: [{ uuid: retained_component.uuid_sample_lims }]
+        )
+        described_class.create_or_update_from_json(updated_json, example_lims)
+
+        expect(SampleCompoundComponent.count).to eq(1)
+        expect(compound_sample.reload.component_samples).to match_array [retained_component]
+        expect(other_component.reload.compound_samples).to be_empty
+      end
+
+      it 'updates an existing link when its tag sequence changes' do
+        existing_link = compound_sample.joins_as_compound_sample.find_by!(component_sample: other_component)
+        existing_link.update!(tag_sequence: 'OLD-TAG')
+        updated_json = json.merge(
+          updated_at: modified_at,
+          component_sample_uuids: [{
+            uuid: other_component.uuid_sample_lims,
+            tag_sequence: 'NEW-TAG'
+          }]
+        )
+
+        described_class.create_or_update_from_json(updated_json, example_lims)
+
+        expect(SampleCompoundComponent.count).to eq(1)
+        link = compound_sample.joins_as_compound_sample.find_by!(component_sample: other_component)
+        expect(link.id).to eq(existing_link.id)
+        expect(link.tag_sequence).to eq('NEW-TAG')
+      end
+
+      it 'adds a link when the payload contains a new component UUID' do
+        new_component = create(:sample, uuid_sample_lims: '012345-6789-UUID-0005')
+        compound_sample.component_samples = [component_sample]
+        updated_json = json.merge(
+          updated_at: modified_at,
+          component_sample_uuids: [
+            { uuid: component_sample.uuid_sample_lims },
+            { uuid: new_component.uuid_sample_lims, tag_sequence: 'NEW-TAG' }
+          ]
+        )
+
+        described_class.create_or_update_from_json(updated_json, example_lims)
+
+        expect(SampleCompoundComponent.count).to eq(2)
+        expect(compound_sample.reload.component_samples).to match_array [component_sample, new_component]
+        expect(compound_sample.joins_as_compound_sample.find_by!(component_sample: new_component).tag_sequence)
+          .to eq('NEW-TAG')
       end
     end
   end
